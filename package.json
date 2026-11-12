@@ -20,9 +20,11 @@
     "verify": "node scripts/verify.mjs",
     "smoke": "node scripts/smoke.mjs",
     "verify:lifecycle": "node scripts/lifecycle-smoke.mjs verify",
-    "lifecycle": "node scripts/lifecycle-smoke.mjs"
+    "lifecycle": "node scripts/lifecycle-smoke.mjs",
+    "m0": "node --import tsx scripts/m0-foundation.mjs"
   },
   "devDependencies": {
+    "@getpaseo/client": "0.15.4",
     "@getpaseo/plugin": "0.15.4",
     "@tanstack/react-query": "^5.90.11",
     "@types/node": "^24.19.2",
@@ -31,6 +33,7 @@
     "react-native": "0.81.5",
     "tsx": "^4.23.15",
     "typescript": "^5.9.3",
+    "ws": "8.22.2",
     "zod": "^4.4.3"
   },
   "type": "module"

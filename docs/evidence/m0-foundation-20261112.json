@@ -1,0 +1,369 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-12",
+  "runId": "m0-20261112-foundation-001",
+  "sourceBaseline": "7a675a918408419e5a245da4e086c04bced4716c",
+  "sandboxBaseline": "86e00e0c80cc0822eaa2e5e70b406530f7c7749a",
+  "versions": {
+    "node": "24.19.0",
+    "npm": "11.17.0",
+    "git": "2.55.0.windows.5",
+    "paseo": "0.15.4",
+    "ws": "8.22.2"
+  },
+  "checks": {
+    "typecheck": "passed",
+    "unitTests": 27,
+    "verify": "passed",
+    "verifyLifecycle": "passed",
+    "scriptSyntax": "passed",
+    "gui": "not applicable; no UI changes",
+    "documentValidation": "15 Markdown files, 64 local links, encoding, fences, plan status and evidence: passed"
+  },
+  "responseLoss": [
+    {
+      "kind": "workspace",
+      "at": "2026-11-12T05:34:22.432Z",
+      "responseType": "workspace.create.response",
+      "callerSettled": false,
+      "resourceId": "wks_53a1d9144213fb49",
+      "independentObservation": "found"
+    },
+    {
+      "kind": "agent",
+      "at": "2026-11-12T05:34:24.176Z",
+      "responseType": "agent.create.response",
+      "callerSettled": false,
+      "resourceId": "e12c2b22-08ab-4c51-8246-b88a70446ee9",
+      "independentObservation": "found"
+    },
+    {
+      "kind": "message",
+      "at": "2026-11-12T05:35:06.724Z",
+      "responseType": "send_agent_message_response",
+      "callerSettled": false,
+      "resourceId": "56ce4f99-342c-4a53-8b9f-9b2a250e66c1",
+      "independentObservation": "found"
+    }
+  ],
+  "checkpoints": {
+    "fault-workspace": {
+      "key": "fault-workspace",
+      "payloadHash": "536a3f12c23ae78cdb3824c957eb2a382ec1a443db198690dc4a21300ac3c9cb",
+      "state": "applied",
+      "value": "wks_53a1d9144213fb49"
+    },
+    "fault-agent": {
+      "key": "fault-agent",
+      "payloadHash": "555d30cceae6c1e6f483261ba29a53bea1770cd2f7f80e8d0002e9c0a1955841",
+      "state": "applied",
+      "value": "e12c2b22-08ab-4c51-8246-b88a70446ee9"
+    },
+    "fault-message": {
+      "key": "fault-message",
+      "payloadHash": "017301ff0192e3b9277fc0975a411b7ebc362d3ffb8c3090fe005c5c80ef2851",
+      "state": "unknown"
+    }
+  },
+  "events": [
+    {
+      "kind": "moving-ref-pinned",
+      "at": "2026-11-12T05:35:49.563Z",
+      "workspaceId": "wks_c6e38ed1afab4bd0",
+      "confirmed": "47c21d41376600f79e602fd669bc382dd13b3816",
+      "movedTo": "86e00e0c80cc0822eaa2e5e70b406530f7c7749a",
+      "head": "47c21d41376600f79e602fd669bc382dd13b3816"
+    },
+    {
+      "kind": "owned-process-killed",
+      "at": "2026-11-12T05:35:52.359Z",
+      "pid": 2796,
+      "exit": [
+        null,
+        "SIGKILL"
+      ],
+      "boundary": "B3",
+      "checkpoint": "pending"
+    },
+    {
+      "kind": "connection-failure-disposed",
+      "at": "2026-11-12T05:36:20.687Z",
+      "state": "disposed"
+    },
+    {
+      "kind": "payload-conflicts",
+      "at": "2026-11-12T05:37:00.475Z",
+      "workspace": "rejected",
+      "agent": "rejected",
+      "message": "rejected"
+    },
+    {
+      "kind": "crash-reconciled",
+      "at": "2026-11-12T05:38:58.875Z",
+      "messageId": "m0-20261112-foundation-001-crash-message",
+      "delivery": "unknown",
+      "noResend": true,
+      "fixtureTextCount": 1
+    },
+    {
+      "kind": "verified",
+      "at": "2026-11-12T05:43:16.752Z",
+      "workspaceId": "wks_2bef685f5eda4267",
+      "agentId": "56ce4f99-342c-4a53-8b9f-9b2a250e66c1",
+      "message": {
+        "kind": "unknown",
+        "reason": "Restored history lacks client message identities."
+      },
+      "messageCount": 1,
+      "olderPageSupported": true,
+      "status": "idle",
+      "activeTurn": false
+    },
+    {
+      "kind": "probe-generations",
+      "at": "2026-11-12T05:41:16.555Z",
+      "generations": [
+        {
+          "generation": "c63b9bbf-a607-44c9-a258-ea7bcfb63bdb",
+          "pid": 24468,
+          "start": "2026-11-12T05:31:24.1Z",
+          "observations": 41,
+          "firstRpcCalls": 0,
+          "closed": true,
+          "closedAt": "2026-11-12T05:32:15.525Z",
+          "failed": false
+        },
+        {
+          "generation": "f86ee297-31d7-4617-89a9-cca7683b229c",
+          "pid": 21508,
+          "start": "2026-11-12T05:32:20.797Z",
+          "observations": 68,
+          "firstRpcCalls": 0,
+          "closed": true,
+          "closedAt": "2026-11-12T05:33:45.836Z",
+          "failed": false
+        },
+        {
+          "generation": "5c3d1475-dbc7-4357-b769-e33bcfa18a59",
+          "pid": 12948,
+          "start": "2026-11-12T05:33:51.314Z",
+          "observations": 66,
+          "firstRpcCalls": 0,
+          "closed": true,
+          "closedAt": "2026-11-12T05:35:12.847Z",
+          "failed": false
+        },
+        {
+          "generation": "9b03c9f3-1714-4f1a-88a4-5dca7d963be7",
+          "pid": 24752,
+          "start": "2026-11-12T05:35:18.204Z",
+          "observations": 51,
+          "firstRpcCalls": 0,
+          "closed": true,
+          "closedAt": "2026-11-12T05:36:23.062Z",
+          "failed": false
+        },
+        {
+          "generation": "1afda8a9-9b7a-49b0-bb73-48dafc993ed7",
+          "pid": 26360,
+          "start": "2026-11-12T05:36:34.06Z",
+          "observations": 159,
+          "firstRpcCalls": 0,
+          "closed": true,
+          "closedAt": "2026-11-12T05:39:53.621Z",
+          "failed": false
+        }
+      ]
+    },
+    {
+      "kind": "live-uncertain-held",
+      "at": "2026-11-12T05:39:51.618Z",
+      "token": "m0-20261112-foundation-001-pending",
+      "agentId": "56ce4f99-342c-4a53-8b9f-9b2a250e66c1",
+      "attempt": 2,
+      "noResend": true,
+      "newInstructionRejected": true
+    },
+    {
+      "kind": "probe-disabled",
+      "at": "2026-11-12T05:39:52.753Z"
+    },
+    {
+      "kind": "legacy-result-refresh-audited",
+      "at": "2026-11-12T05:43:15.74Z",
+      "changes": [
+        {
+          "token": "mwcyphtz-fnthmzhhky",
+          "previousHash": "3de5dccfeeb2280e4cd8ca45a207b4ab9ad79c65e2c43f6f811b0ec87075067a",
+          "currentHash": "8036d7ea72423b61917cdb693606d86d0520ac27e364f1f91f4270db270817b3",
+          "resultId": "bc173646-402a-45c2-9197-2ce2023bef52",
+          "collectedAt": "2026-11-12T05:41:18.836Z",
+          "reason": "Legacy request.list recollected unreviewed results after timeline restoration; previous result envelope was not backed up. Original fixture files and IDs match."
+        },
+        {
+          "token": "smoke-20261112-001",
+          "previousHash": "578ed5cd2b6ecb20e80cd0fff39d9d6b2fc20b7f6a063f6125972223b9a5baf7",
+          "currentHash": "10916f4564d8478dab6c1651e05de8ddcc33602b69035af5b3cf3310fe871362",
+          "resultId": "c42bf672-d83c-41be-81a8-486f80c89c3a",
+          "collectedAt": "2026-11-12T05:41:20.237Z",
+          "reason": "Legacy request.list recollected unreviewed results after timeline restoration; previous result envelope was not backed up. Original fixture files and IDs match."
+        }
+      ],
+      "fileSha256": [
+        {
+          "token": "lifecycle-failure-20261112-001",
+          "files": {
+            "feature.test.mjs": "ac419489fa43b8ab51e67c33cd6df419abcab32cbc465745cb03ec53dba4a3aa"
+          }
+        },
+        {
+          "token": "lifecycle-success-20261112-001",
+          "files": {
+            "feature.test.mjs": "0ccd6b98d12acb4d08a689215da893a6e7ff9bc11599d09f30dfe46d7e4e68e9"
+          }
+        },
+        {
+          "token": "mwcyphtz-fnthmzhhky",
+          "files": {
+            "GUI_PROOF.md": "62189dc12d8fd54215d232618a17b02a873fb13ddc78b844f616830ab53175ba"
+          }
+        },
+        {
+          "token": "smoke-20261112-001",
+          "files": {
+            "POC_PROOF.md": "e343370ca29b9bd06b17c4f206fe9dfac87eec091b285bf246d7c179fbf7f9b8"
+          }
+        }
+      ]
+    }
+  ],
+  "originalBaselines": [
+    {
+      "token": "lifecycle-failure-20261112-001",
+      "agentId": "463829e1-6849-42e9-95ad-9fa315bf0711",
+      "workspaceId": "wks_075655fb9cbf26bd",
+      "hash": "4c602f85c89fe944b585ba5611323ed9d1e9094d13c0ac6187cfc2baa4f8809a",
+      "files": {
+        "feature.test.mjs": "d1199f747ce4a23c0d3dd291a351ad6ca90a192b6a568ccfbbe799e5ec619403"
+      }
+    },
+    {
+      "token": "lifecycle-success-20261112-001",
+      "agentId": "7c8b0a20-bdfb-4a08-8a1c-027264f0bf8e",
+      "workspaceId": "wks_57e0ea26286066df",
+      "hash": "d25cbedfcda64e64ad35d0a8fb20a60172cb6bbd1e4e86461356ec8d1f635237",
+      "files": {
+        "feature.test.mjs": "70822cfd7f19090ae7d433c96c16a5bee32f61dd20166839fbc55d7d5bc6c92b"
+      }
+    },
+    {
+      "token": "mwcyphtz-fnthmzhhky",
+      "agentId": "a6fe3328-c50c-41fe-a6f9-0c0f92ea2d86",
+      "workspaceId": "wks_1737c02ccf142bd6",
+      "hash": "3de5dccfeeb2280e4cd8ca45a207b4ab9ad79c65e2c43f6f811b0ec87075067a",
+      "files": {
+        "GUI_PROOF.md": "066f94dc91e4df138f26974d6e764cb8ca7969962e9c82e58cfc6d50ee069b93"
+      }
+    },
+    {
+      "token": "smoke-20261112-001",
+      "agentId": "9eee15c0-42ad-4bf2-bd1e-279d0962f3cb",
+      "workspaceId": "wks_27788f0772544638",
+      "hash": "578ed5cd2b6ecb20e80cd0fff39d9d6b2fc20b7f6a063f6125972223b9a5baf7",
+      "files": {
+        "POC_PROOF.md": "d99f95051b0042016b532b0d7eaab5452c6802eff4524954759d40e860b138be"
+      }
+    }
+  ],
+  "legacyRefresh": [
+    {
+      "token": "mwcyphtz-fnthmzhhky",
+      "previousHash": "3de5dccfeeb2280e4cd8ca45a207b4ab9ad79c65e2c43f6f811b0ec87075067a",
+      "currentHash": "8036d7ea72423b61917cdb693606d86d0520ac27e364f1f91f4270db270817b3",
+      "resultId": "bc173646-402a-45c2-9197-2ce2023bef52",
+      "collectedAt": "2026-11-12T05:41:18.836Z",
+      "reason": "Legacy request.list recollected unreviewed results after timeline restoration; previous result envelope was not backed up. Original fixture files and IDs match."
+    },
+    {
+      "token": "smoke-20261112-001",
+      "previousHash": "578ed5cd2b6ecb20e80cd0fff39d9d6b2fc20b7f6a063f6125972223b9a5baf7",
+      "currentHash": "10916f4564d8478dab6c1651e05de8ddcc33602b69035af5b3cf3310fe871362",
+      "resultId": "c42bf672-d83c-41be-81a8-486f80c89c3a",
+      "collectedAt": "2026-11-12T05:41:20.237Z",
+      "reason": "Legacy request.list recollected unreviewed results after timeline restoration; previous result envelope was not backed up. Original fixture files and IDs match."
+    }
+  ],
+  "limitations": [
+    "Two unreviewed legacy result envelopes were recollected by request.list; pre-run raw JSON was not backed up and is not recoverable.",
+    "Client message IDs may be absent after daemon history restoration; uncertain recovery is held without resend.",
+    "Long-history boundary tests use mocked pages; real API before pagination was separately verified.",
+    "M0 observer is opt-in, not a production scheduler."
+  ],
+  "failedFixture": [
+    {
+      "kind": "workspace",
+      "at": "2026-11-12T05:33:21.834Z",
+      "payloadHash": "2a59c997406b6a4aa1992bea144dd0bb7950a39b737f1483604fc2b1e1414cf9",
+      "testFailure": "Response proxy did not intercept session envelope; original intent preserved."
+    }
+  ],
+  "postRegressionSnapshot": {
+    "runId": "m0-20261112-snapshot-001",
+    "createdAt": "2026-11-12T05:49:57.533Z",
+    "note": "Post-regression snapshot validation, not pre-regression backup",
+    "files": [
+      {
+        "token": "lifecycle-failure-20261112-001",
+        "bytesMatch": true,
+        "sha256": "8faf15d407878d8133532401d8d6475f57200e6f73c41f433472e21ce76d7400"
+      },
+      {
+        "token": "lifecycle-success-20261112-001",
+        "bytesMatch": true,
+        "sha256": "9a2ef718a284c40cfc80dd993904d282ad332eb4372e4e2ca5738e4cba8fa0d0"
+      },
+      {
+        "token": "mwcyphtz-fnthmzhhky",
+        "bytesMatch": true,
+        "sha256": "9fffcf989c32c405416b16e450687a463fad95a112e6c8c392f7ab89e3ccf301"
+      },
+      {
+        "token": "smoke-20261112-001",
+        "bytesMatch": true,
+        "sha256": "0f6654f8aa7368e221a523509e9a867983898c8b513047398d5ea822d98f9d7d"
+      }
+    ]
+  },
+  "finalState": {
+    "probeEnabled": false,
+    "activeTurns": 0,
+    "testResourcesPreserved": true,
+    "remotePushed": false
+  },
+  "postRestartReconciliation": [
+    {
+      "kind": "workspace",
+      "at": "2026-11-12T05:41:14.129Z",
+      "resourceId": "wks_53a1d9144213fb49",
+      "delivery": "found",
+      "noDuplicate": true,
+      "noMessageResend": false
+    },
+    {
+      "kind": "agent",
+      "at": "2026-11-12T05:41:14.159Z",
+      "resourceId": "e12c2b22-08ab-4c51-8246-b88a70446ee9",
+      "delivery": "found",
+      "noDuplicate": true,
+      "noMessageResend": false
+    },
+    {
+      "kind": "message",
+      "at": "2026-11-12T05:41:14.184Z",
+      "resourceId": "56ce4f99-342c-4a53-8b9f-9b2a250e66c1",
+      "delivery": "unknown",
+      "noDuplicate": true,
+      "noMessageResend": true
+    }
+  ]
+}

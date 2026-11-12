@@ -93,6 +93,21 @@ test("old PoC records acquire lifecycle defaults without losing original data", 
   assert.equal(migrated.attempt, 1); assert.deepEqual(migrated.checks, []); assert.equal(migrated.result, null); assert.equal(migrated.id, old.id);
 });
 
+test("unknown recovery after restart neither resends nor permits a replacement instruction", async t => {
+  const f = await fixture(t); f.state.observation.status = "ended"; f.state.passed = false;
+  await f.tracker.refresh(f.record.token, f.runtime); f.state.uncertain = true;
+  await f.tracker.resume({ token: f.record.token, key: "unknown-key-001", instruction: "Fix" }, f.runtime);
+  const checkpoint = (await f.store.get(f.record.token))!;
+  const tracker = new TrackExecution(f.store, f.locks);
+  for (let i = 0; i < 2; i++) {
+    const record = await tracker.refresh(f.record.token, f.runtime);
+    assert.equal(record.status, "needs-input"); assert.equal(record.recovery?.pending, true);
+    assert.equal(record.attempt, checkpoint.attempt); assert.deepEqual(record.attempts, checkpoint.attempts);
+  }
+  await assert.rejects(tracker.resume({ token: f.record.token, key: "replacement-key-001", instruction: "Try again" }, f.runtime), /pending recovery/);
+  assert.equal(f.state.sends, 1);
+});
+
 test("explicit refresh reruns checks but preserves a known canceled execution", async t => {
   const f = await fixture(t); f.state.observation.status = "ended"; f.state.passed = false;
   await f.tracker.refresh(f.record.token, f.runtime);

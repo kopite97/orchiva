@@ -36,7 +36,10 @@ export class TrackExecution {
     }
     // A persisted pending send is reconciled before any result can be accepted.
     if (record.recovery?.pending) {
-      if (!observed.seenRecovery) { await runtime.resume(record); record.recovery.pending = false; this.transition(record, "running", "Recovered the pending resume command."); return; }
+      if (!observed.seenRecovery) {
+        this.transition(record, "needs-input", "Recovery delivery is unconfirmed; automatic resend is disabled.");
+        throw new Error("Recovery delivery is unconfirmed. Preserve this checkpoint and reconcile the original message before continuing.");
+      }
       record.recovery.pending = false;
     }
     if (record.result?.sourceKey === observed.sourceKey) {
@@ -63,6 +66,7 @@ export class TrackExecution {
         if (record.recovery.instruction !== parsed.instruction) throw new Error("Recovery key belongs to different instructions.");
         return record;
       }
+      if (record.recovery?.pending) throw new Error("Resolve the pending recovery delivery before sending another instruction.");
       if (!["failed", "needs-input", "awaiting-review"].includes(record.status) || !record.agentId) throw new Error("Only stopped tasks with an existing session can be resumed.");
       const observed = await runtime.observe(record);
       if (["running", "needs-input"].includes(observed.status)) throw new Error("Resolve the active turn or pending permission in Paseo first.");

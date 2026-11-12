@@ -8,7 +8,7 @@ Orchiva의 기본 소스 폴더는 이 `orchiva-plugin` 폴더이며 소스 원�
 
 작업은 [AGENTS.md](AGENTS.md)에서 시작하세요. [작업 흐름](docs/agents/workflow.md), [프로젝트 규칙](docs/agents/repository-guidelines.md), [소스 규칙](docs/agents/source-conventions.md), [검증 기준](docs/agents/validation.md)을 경로와 변경 범위에 맞게 적용합니다.
 
-MVP의 단계별 상태는 [계획 목록](docs/plans/README.md)에서 관리합니다. 첫 계획인 [M0 실행 기반 확인](docs/plans/m0-runtime-foundation.md)은 `proposed`이며 계획 작성 단계입니다. 아래 실행 안내는 현재 PoC 구현 기준입니다.
+MVP의 단계별 상태는 [계획 목록](docs/plans/README.md)에서 관리합니다. [M0 실행 기반 확인](docs/plans/m0-runtime-foundation.md)은 구현·검증을 완료했습니다. 확인한 API와 제약은 [M0 결과](docs/decisions/m0-runtime-foundation.md)에 기록했습니다. M1 이후의 화면·저장 모델은 아직 구현 전이며 아래 실행 안내는 현재 PoC 기준입니다.
 
 ## 실행
 
@@ -22,6 +22,8 @@ Set-Location C:\Users\USER\lib\orchiva-plugin
 최근 요청에서 실행 상태, 최종 응답, 변경 파일, 테스트 종료 코드·로그를 확인합니다. 테스트가 통과하면 **완료 조건 검토 대기**가 됩니다. 완료 조건과 근거를 확인하고 체크박스·판정 근거를 입력한 뒤 **완료 확정**을 누릅니다. 실패한 작업은 원인을 확인하고 **기존 Worktree에서 재개**할 수 있습니다. 세션·Worktree는 유지되고 이전 실패 증거는 보존됩니다.
 
 **상태·결과 새로고침**은 미완료 작업의 검증을 다시 실행합니다. 완료 확정은 검증 당시 결과에 대한 기록입니다. 자동 검증이 없으면 수동 확인이 필요하며, Codex의 종료 또는 성공 보고만으로 자동 완료하지 않습니다.
+
+복구 메시지 전달 여부가 불확실하면 `needs-input`에 보존하고 자동 재전송과 다른 키의 재개를 차단합니다. daemon이 복원한 이력에서 전달 식별자가 없어질 수 있으므로 메시지 내용만 보고 재전송하지 않습니다.
 
 daemon을 Codex 앱에서 잘못된 환경으로 시작했다면 `scripts\start-paseo.ps1 -Restart`로 supervisor까지 다시 시작하세요. 이 스크립트는 두 데스크톱 패키지 실행 선택 변수만 자식 프로세스 환경에서 제외하며, Windows sandbox와 승인 정책은 변경하지 않습니다.
 
@@ -39,6 +41,8 @@ npm run verify:lifecycle
 `verify`는 이 PC에 남겨둔 RPC·GUI 검증 요청 2개의 계획, Git 원본과 브랜치, Codex 상태, 증거 파일 및 중복 실행 방지를 검사합니다. 새 세션을 만들지 않습니다. `npm run smoke`는 고정 테스트 키로 최초 1회 실행하거나 기존 실행을 조회합니다. 검증 이력을 지운 새 PC에서는 `verify`의 테스트 키를 해당 실행에 맞춰야 합니다.
 
 `verify:lifecycle`은 실제 성공·실패 복구 사례의 완료 판정, 실패 로그, 테스트 불변성, 재시작 후 중복 요청 방지를 검사하고 원래 테스트를 다시 실행합니다. `npm run lifecycle -- status`로 두 사례를 조회할 수 있습니다. 실연동 생성·복구·판정용 명령은 `start`, `recover`, `approve`이며 고정 PoC 키를 사용합니다. 기존 완료 이력을 삭제하지 말고 새 검증이 필요하면 별도 키와 사례를 정의하세요.
+
+`npm run m0 -- help`는 M0 시험 명령을 안내합니다. 시험 observer는 로컬 설정이 있을 때만 활성화되며 운영 스케줄러가 아닙니다. 실제 장애 시험의 단계와 보존 데이터는 [M0 재검증 안내](docs/decisions/m0-runtime-foundation.md#재검증과-정상-상태)를 따릅니다.
 
 ## 구성
 

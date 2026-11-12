@@ -1,4 +1,5 @@
 import type { ExecutionResult, RequestRecord } from "../../shared/contracts/feature-request";
+export type Lookup<T> = { kind: "found"; value: T } | { kind: "absent" } | { kind: "unknown"; reason: string };
 export interface RequestStore {
   get(token: string): Promise<RequestRecord | null>;
   save(record: RequestRecord): Promise<void>;

@@ -1,10 +1,10 @@
 # M0 실행 기반 확인
 
-- 상태: `proposed`
+- 상태: `completed`
 - 작성일: 2026-11-12 · Asia/Seoul
 - 관련 설계: [MVP 설계](../mvp-design.md)의 M0, 구현 시작 시 해소할 의존 사항
 - 선행 조건: [하네스](../../AGENTS.md), 기존 PoC 소스·증거, 로컬 Paseo 환경
-- 실행 근거: 사용자가 하네스 설정과 M0 상세 계획 작성을 요청했다. 이 문서는 구현·실험 시작 전 계획이다.
+- 실행 근거: 2026-11-12 사용자가 초기 커밋과 작성된 M0 계획의 구현·검증을 지시했다. 소스 기준 커밋은 `7a675a918408419e5a245da4e086c04bced4716c`다.
 - 소스: 기본 소스 폴더 `orchiva-plugin`, 원격 `https://github.com/kopite97/orchiva.git`
 
 ## 목표
@@ -14,6 +14,8 @@ M1의 명령·상태 모델과 M3의 백그라운드 동기화가 의존할 실�
 M0의 결과는 작은 실행 어댑터와 재현 가능한 시험, 확인된 API·제약·채택 정책이다. 완성된 MVP 상태 머신이나 백그라운드 스케줄러를 이 단계에서 구현하지 않는다.
 
 ## 현재 근거와 확인할 사항
+
+아래 표는 착수 당시 근거다. 구현·검증 후 확정한 결과는 [M0 결정과 증거](../decisions/m0-runtime-foundation.md)에 기록했다.
 
 | 확인한 근거 | 현재 의미 | M0에서 확인할 사항 |
 | --- | --- | --- |
@@ -34,7 +36,7 @@ API 선언이 있다는 사실은 실제 동작·재시작 내구성의 증거�
 
 M0 구현에 포함하지 않는 항목은 v2 운영 데이터 마이그레이션, 완성된 명령 큐·프로젝트 슬롯, 주기적인 전체 요청 처리, 신규 UI, 제품 수준 자동 복구, 저장소 변경·자동 push·merge다. 기존 PoC 4건은 회귀 검증에 사용하고 새로운 장애 시험 대상으로 사용하지 않는다.
 
-실제 시험에는 sandbox의 새 Worktree와 Codex 세션 생성, 해당 시험 클라이언트의 연결 차단, 시험 소유 프로세스 종료와 독립 daemon 재시작이 포함된다. 이는 계획 실행 범위이며 이번 문서 작성 중에는 수행하지 않는다.
+실제 시험에는 sandbox의 새 Worktree와 Codex 세션 생성, 해당 시험 클라이언트의 연결 차단, 시험 소유 프로세스 종료와 독립 daemon 재시작이 포함된다. 계획 작성 후 사용자의 구현 지시에 따라 아래 실행 기록의 범위에서 수행했다.
 
 ## 작업 순서와 산출물
 
@@ -100,21 +102,21 @@ workspace 생성, agent 생성, 재개 메시지를 별개 효과로 시험한�
 4. 기존 `typecheck`, `test`, 두 `verify` 명령으로 회귀를 확인한다. 실행 전 보존한 기존 증거와 대조한다. 외부 호출 때문에 갱신될 수 있는 필드와 불변 증거를 구분하여 비교한다.
 5. API 지원 표, 시험 결과, 미확정 항목, M1·M3·M5가 사용할 계약을 기록하고 설계의 가정을 확인된 선택으로 갱신한다.
 
-### 파일별 변경 예상
+### 파일별 변경
 
-아래 새 파일과 명령은 구현 예정이며 현재 존재하는 실행 기능이 아니다. 구현 과정에서 더 작은 구성이 가능하면 책임과 검증을 유지하며 조정한다.
+아래 파일을 구현했다. 고정 SHA 생성은 `pinned-workspace.ts`, 메시지 대조는 `reconciliation.ts`, Plugin 시험 관측은 `m0-probe.ts`로 분리했다. `effect-checkpoint.ts`는 직렬 호출용 최소 계약이며 v2 명령 저장소가 아니다. `track-execution.ts`에는 미확정 복구의 자동 재전송 차단을 적용했다. 응답 유실 시험에는 `scripts/m0-response-proxy.mjs`를 추가했다.
 
-| 파일 또는 영역 | 예정 작업 |
+| 파일 또는 영역 | 구현 내용 |
 | --- | --- |
 | `server/adapters/paseo/connection.ts` | 독립 연결·인증 접근·수명 관리 |
-| `server/adapters/paseo/runtime.ts` | 검증된 고정 커밋·외부 대조 경로를 작은 메서드로 추출 |
+| `server/adapters/paseo/runtime.ts` | 복구 메시지 생성·페이지 대조 경로 추출. 고정 커밋 생성은 별도 어댑터로 구현 |
 | `server/application/ports.ts` | 연결·관측·대조의 최소 포트. v2 전체 계약은 M1로 미룸 |
 | `index.server.ts` | 명시적인 시험 모드의 초기화·cleanup 연결. 완성된 운영 루프는 M3 |
 | `server/tests/paseo-connection.test.ts` | 연결·종료·취소·중복 초기화 테스트 |
 | `server/tests/runtime-reconciliation.test.ts` | 경계별 응답 유실·found/absent/unknown·오래된 timeline |
 | `scripts/m0-foundation.mjs` | 실행 ID·manifest·단계 선택을 갖춘 probe와 결과 검사 |
 | `package.json`, `package-lock.json` | 필요한 직접 의존성과 시험 명령. 버전 변경은 확인한 근거 기록 |
-| `docs/decisions/m0-runtime-foundation.md` | 구현 때 작성할 API 선택·제약·결과 근거 |
+| `docs/decisions/m0-runtime-foundation.md` | 확인한 API 선택·제약·결과 근거 |
 | `docs/mvp-design.md`, 이 계획과 목록 | 확인된 계약·제약·완료 상태 반영 |
 
 ## 검증 계획
@@ -133,7 +135,7 @@ workspace 생성, agent 생성, 재개 메시지를 별개 효과로 시험한�
 | V10 | 정적·모의 | `npm run typecheck`, `npm test` | 타입과 기존·신규 회귀 통과 | 명령·통과 수·실패 분석 |
 | V11 | 실제 연동 | 정상 상태 복원 후 `npm run verify`, `npm run verify:lifecycle` | 기존 네 요청의 의미·ID·실패 증거·테스트 기준 유지 | 기존 증거 대조와 명령 결과 |
 
-새 스크립트 인터페이스는 `inspect`, `connect`, `base-ref`, `effects`, `cleanup`, `verify` 같은 단계와 `--run-id`를 갖추는 방향으로 설계한다. 실제 명령과 플래그는 구현 후 이 표에 정확히 기록한다. 인수 없이 실행했을 때 세션 생성·강제 종료를 시작하지 않도록 한다. GUI 기능 변경은 없으므로 화면 배치 검증은 M0 대상이 아니며 V02의 브라우저 미사용 조건만 확인한다.
+실제 스크립트는 `npm run m0 -- <단계> --run-id <실행 ID>`로 호출한다. 준비는 `init`, `inspect`, `assert-idle`; 생성은 `workspace`, `agent`, `send`; 관측 수명은 `probe-on`, `probe-off`, `probe-report`; 장애는 `fault-workspace`, `fault-agent`, `fault-message`, `crash`, `connection-failure`; 대조는 `verify`, `verify-faults`, `verify-crash`, `verify-uncertain`; 기타 시험은 `base-ref`, `replay`, `conflicts`, `history`, `wait`다. `crash-child`는 부모가 호출하는 내부 단계이며 `audit-legacy-refresh`는 이번 사전 원본 백업 없는 최초 manifest만의 명시적 차이 기록이다. 인수가 없으면 help만 출력한다. GUI 기능 변경은 없으므로 화면 배치 검증은 M0 대상이 아니며 V02의 브라우저 미사용 조건만 확인한다.
 
 증거는 실행별 manifest와 비밀값을 제거한 결과 요약으로 보존한다. 필수 항목은 실행 ID, 소스 기준점, SDK 버전, 시험 대상·키·입력 해시, 주입 경계, 전후 리소스 수, 시간, 실제 결과와 오류다. 로컬 원본 경로는 결과 문서에 기록하고 인증 정보는 포함하지 않는다.
 
@@ -148,15 +150,15 @@ workspace 생성, agent 생성, 재개 메시지를 별개 효과로 시험한�
 
 ## 완료 조건
 
-- [ ] 브라우저와 최초 Plugin RPC 없이 시작한 연결·관측이 실제 Plugin 환경에서 확인됨
-- [ ] connection 초기화·취소·cleanup·reload에서 자원 누적이 없고 소유 관계가 문서화됨
-- [ ] 확인한 commit SHA로 Worktree를 생성하거나 불일치를 거부하는 경로가 실제로 검증됨
-- [ ] workspace·agent·message 각각의 재호출·응답 유실·재시작 동작과 한계가 기록됨
-- [ ] 부재·발견·불확실을 구분하고 불확실 상태에서 중복 실행하지 않는 정책이 검증됨
-- [ ] V01~V11 수행 결과와 근거가 있으며 미실행 필수 항목이 없음
-- [ ] 기존 PoC 네 요청의 의미·식별자·검사 기준·실패 증거가 보존됨
-- [ ] 정상 실행 환경으로 복원하고 M1·M3·M5에 넘길 계약과 결정을 기록함
-- [ ] 제품 설계·이 계획·목록을 함께 갱신함
+- [x] 브라우저와 최초 Plugin RPC 없이 시작한 연결·관측이 실제 Plugin 환경에서 확인됨
+- [x] connection 초기화·취소·cleanup·reload에서 자원 누적이 없고 소유 관계가 문서화됨
+- [x] 확인한 commit SHA로 Worktree를 생성하거나 불일치를 거부하는 경로가 실제로 검증됨
+- [x] workspace·agent·message 각각의 재호출·응답 유실·재시작 동작과 한계가 기록됨
+- [x] 부재·발견·불확실을 구분하고 불확실 상태에서 중복 실행하지 않는 정책이 검증됨
+- [x] V01~V11 수행 결과와 근거가 있으며 미실행 필수 항목이 없음
+- [x] 기존 PoC 네 요청의 의미·식별자·검사 기준·실패 증거가 보존됨. 초기 미승인 2건의 최신 결과 envelope 재수집은 [보존 한계](../decisions/m0-runtime-foundation.md#기존-poc-증거-대조)로 별도 기록
+- [x] 정상 실행 환경으로 복원하고 M1·M3·M5에 넘길 계약과 결정을 기록함
+- [x] 제품 설계·이 계획·목록을 함께 갱신함
 
 안전한 `unknown` 처리는 해당 장애 사례의 유효한 결과다. 다만 모든 정상 연결에서도 조회·대조를 할 수 없거나 시작 시 연결 자체가 불가능하면 M0 목표를 충족하지 못한 것이다. 이 경우 원인을 해결하거나 근거 있는 설계 변경 후 필요한 검증을 수행한다.
 
@@ -165,9 +167,10 @@ workspace 생성, agent 생성, 재개 메시지를 별개 효과로 시험한�
 | 날짜 | 변경 기준점 | 실행한 절차 | 실제 결과와 증거 | 남은 작업 |
 | --- | --- | --- | --- | --- |
 | 2026-11-12 | 기존 PoC 소스, 신규 소스 remote 연결 | 코드·SDK 선언·검증 스크립트 읽기, 하네스와 계획 작성 | 위 현재 근거 확인. M0 런타임 구현·연동·장애 시험은 미실행 | M0 구현 시작 지시 후 기준점 확보와 V01부터 진행 |
+| 2026-11-12 | 소스 `7a675a9`, sandbox `86e00e0` | V01~V11: 연결 어댑터·고정 SHA·체크포인트·Plugin 관측·응답 차단·B3 강제 종료·회귀 | 타입 검사·27개 테스트·기존 verify 2종 통과. 실제 5세대 종료·RPC 전 관측·새 리소스 중복 없음·미확정 전송 보류. [결정](../decisions/m0-runtime-foundation.md), [기계 판독 증거](../evidence/m0-foundation-20261112.json) | M0 범위 완료. 초기 미승인 결과 재수집과 메시지 ID 복원 제약은 후속 설계 입력 |
 
 ## 결정과 후속 작업
 
-현재 채택한 방향은 로컬 인증을 사용하는 소유권 명확한 연결, 효과 전 의도 기록, 불확실할 때 보류, 고정 SHA와 생성 후 검증이다. Plugin 환경의 연결 방식과 멱등성의 내구성은 실험 후 최종 확정한다.
+로컬 인증을 사용하는 `createHostClient`·`createPaseoApi` 연결, 효과 전 의도 기록, 불확실할 때 보류, 고정 SHA와 생성 후 검증을 채택했다. workspace·agent 동일 키는 시험에서 같은 ID로 수렴했지만 복원 메시지의 client ID는 소실될 수 있다. M0의 연결은 시작 재시도·종료까지이며 운영 중 재접속은 M3 범위다.
 
 M1에는 명령 상태·외부 참조·오류 분류·실행 슬롯 복원에 필요한 필드를, M3에는 연결 수명·시작 순서·재접속·종료 계약을, M5에는 메시지 조회와 안전한 재전송 조건을 넘긴다. 이 계획 작성만으로 후속 단계에 착수하지 않는다.

@@ -5,6 +5,11 @@ import type { RequestRecord } from "../../../shared/contracts/feature-request";
 import type { Runtime, LifecycleRuntime, Observation } from "../../application/ports";
 import { assertSandbox, assertWorktree, type ProjectConfig } from "../../config/project-config";
 import { collectEvidence, snapshot } from "../storage/evidence";
+import { findMessage } from "./reconciliation";
+function recoveryMessage(record: RequestRecord) {
+  if (!record.recovery) throw new Error("Missing recovery checkpoint.");
+  return `Resume task ${record.taskId} in the SAME worktree. Read .orchiva/plans/${record.taskPlan.id}.md again. Do not push, merge, or access other repositories.\nRecovery instructions:\n${record.recovery.instruction}\nIndependent checks: ${JSON.stringify(record.checks)}`;
+}
 export class PaseoRuntime implements Runtime, LifecycleRuntime {
   constructor(private paseo: PluginHandlerContext["paseo"], private config: ProjectConfig) {}
   async validate() { await assertSandbox(this.config); }
@@ -49,11 +54,12 @@ export class PaseoRuntime implements Runtime, LifecycleRuntime {
     const lastUser = entries.filter(entry => entry.item.type === "user_message").at(-1);
     const answer = entries.filter(entry => entry.item.type === "assistant_message" && (!lastUser || entry.seqEnd > lastUser.seqEnd)).at(-1);
     const failure = agent.status === "error" ? agent.lastError ?? "Provider failed." : !answer ? "No final response after the latest request; execution may have been interrupted." : null;
+    const recovery = record.recovery?.pending ? await findMessage(agent.timeline, record.recovery.messageId, recoveryMessage(record)) : null;
     return { status: failure ? "failed" : "ended", agentStatus: agent.status ?? "unknown",
       sourceKey: `${timeline.epoch}:${timeline.window.maxSeq}`,
       finalResponse: answer?.item.type === "assistant_message" ? answer.item.text : "", failure,
       turnId: answer?.turnId ?? lastUser?.turnId,
-      seenRecovery: !!record.recovery && entries.some(entry => entry.item.type === "user_message" && entry.item.clientMessageId === record.recovery!.messageId),
+      seenRecovery: recovery?.kind === "found",
     };
   }
   async collect(record: RequestRecord, observation: Observation) { return collectEvidence(record, this.config, observation); }
@@ -62,7 +68,7 @@ export class PaseoRuntime implements Runtime, LifecycleRuntime {
     if (!record.agentId || !record.worktreePath || !record.recovery) throw new Error("Missing recovery checkpoint.");
     await assertWorktree(this.config, record.worktreePath);
     await this.paseo.agents.ref(record.agentId).send(
-      `Resume task ${record.taskId} in the SAME worktree. Read .orchiva/plans/${record.taskPlan.id}.md again. Do not push, merge, or access other repositories.\nRecovery instructions:\n${record.recovery.instruction}\nIndependent checks: ${JSON.stringify(record.checks)}`,
+      recoveryMessage(record),
       { messageId: record.recovery.messageId, activeTurnBehavior: "steer" },
     );
   }
