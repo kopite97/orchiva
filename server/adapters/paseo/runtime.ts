@@ -1,11 +1,16 @@
 import type { PluginHandlerContext } from "@getpaseo/plugin/server";
-import { mkdir, writeFile, readFile } from "node:fs/promises";
-import { join } from "node:path";
+import { mkdir, writeFile, readFile, realpath } from "node:fs/promises";
+import { join, resolve, dirname, sep } from "node:path";
+import { execFile } from "node:child_process";
+import { promisify } from "node:util";
 import type { RequestRecord } from "../../../shared/contracts/feature-request";
 import type { Runtime, LifecycleRuntime, Observation } from "../../application/ports";
-import { assertSandbox, assertWorktree, type ProjectConfig } from "../../config/project-config";
+import { assertSandbox, assertWorktree, git, type ProjectConfig } from "../../config/project-config";
 import { collectEvidence, snapshot } from "../storage/evidence";
 import { findMessage } from "./reconciliation";
+import { createPinnedWorkspace } from "./pinned-workspace";
+import { checkSchema } from "../../../shared/contracts/feature-request";
+const execute = promisify(execFile);
 function recoveryMessage(record: RequestRecord) {
   if (!record.recovery) throw new Error("Missing recovery checkpoint.");
   return `Resume task ${record.taskId} in the SAME worktree. Read .orchiva/plans/${record.taskPlan.id}.md again. Do not push, merge, or access other repositories.\nRecovery instructions:\n${record.recovery.instruction}\nIndependent checks: ${JSON.stringify(record.checks)}`;
@@ -14,12 +19,30 @@ export class PaseoRuntime implements Runtime, LifecycleRuntime {
   get projectSnapshot() { return { repositoryPath: this.config.repositoryPath, baseRef: this.config.baseRef, provider: this.config.provider, maxActiveTasks: 1 as const }; }
   constructor(private paseo: PluginHandlerContext["paseo"], private config: ProjectConfig) {}
   async validate() { await assertSandbox(this.config); }
+  async preflight(checks: RequestRecord["checks"]) {
+    await this.validate();
+    await this.paseo.agents.list();
+    try { await execute("where.exe", ["codex"], { windowsHide: true, timeout: 10000 }); }
+    catch { throw new Error("ENVIRONMENT_NOT_READY: daemon 환경에서 Codex 실행 경로를 찾을 수 없습니다."); }
+    const root = await realpath(this.config.repositoryPath);
+    for (const raw of checks) {
+      const check = checkSchema.parse(raw);
+      let ancestor = resolve(root, check.path);
+      while (true) {
+        try { const actual = (await realpath(ancestor)).toLowerCase(); if (actual !== root.toLowerCase() && !actual.startsWith(root.toLowerCase() + sep)) throw new Error("INVALID_INPUT: 검사 경로가 저장소 밖을 가리킵니다."); break; }
+        catch (error) { if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error; const parent = dirname(ancestor); if (parent === ancestor) throw error; ancestor = parent; }
+      }
+      try { await execute("git", ["-C", root, "check-ignore", "--no-index", "-q", "--", check.path], { windowsHide: true, timeout: 10000 }); }
+      catch (error) { if ((error as { code?: number }).code === 1) continue; throw error; }
+      throw new Error(`INVALID_INPUT: ignored 검사 경로: ${check.path}`);
+    }
+    return { baseCommit: await git(root, "rev-parse", "--verify", `${this.config.baseRef}^{commit}`), projectSnapshot: this.projectSnapshot };
+  }
   async createWorkspace(record: RequestRecord) {
-    const workspace = await this.paseo.workspaces.create({ idempotencyKey: `orchiva-workspace-${record.token}`, title: `${record.taskId}: ${record.feature.title}`,
-      source: { kind: "worktree", cwd: this.config.repositoryPath, action: "branch-off", refName: this.config.baseRef, branchName: `orchiva/${record.taskId.toLowerCase()}` } });
-    if (!workspace.directory) throw new Error("Paseo returned no worktree directory.");
-    await assertWorktree(this.config, workspace.directory);
-    return { id: workspace.id, directory: workspace.directory };
+    const plan = record.plans.find(item => item.revision === record.confirmedPlanRevision);
+    if (record.confirmationSource !== "confirmed-plan" || !plan?.baseCommit) throw new Error("PLAN_REQUIRED");
+    const workspace = await createPinnedWorkspace(this.paseo, this.config, { key: `orchiva-workspace-${record.token}`, title: `${record.taskId}: ${record.feature.title}`, branch: `orchiva/${record.taskId.toLowerCase()}`, commit: plan.baseCommit });
+    return { id: workspace.id, directory: workspace.directory! };
   }
   async writePlans(record: RequestRecord) {
     if (!record.worktreePath) throw new Error("No worktree path.");

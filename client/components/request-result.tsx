@@ -5,6 +5,7 @@ import { useRpc, type PluginScreenProps } from "@getpaseo/plugin/client";
 import { refreshRpc, resumeRpc, reviewRpc, startRpc, type RequestRecord } from "../../shared/contracts/feature-request";
 
 const labels: Record<RequestRecord["status"], string> = {
+  draft: "초안", ready: "계획 확인 대기",
   planned: "계획 생성됨", "creating-worktree": "Worktree 생성 중", "writing-plan": "계획 기록 중", "starting-session": "세션 생성 중",
   started: "실행 상태 확인 중", running: "실행 중", "needs-input": "사용자 확인 필요", validating: "검증 중",
   "awaiting-review": "완료 조건 검토 대기", completed: "완료", failed: "실패",

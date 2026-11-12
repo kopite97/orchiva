@@ -6,6 +6,8 @@
 
 개발 절차는 [지침 지도](../AGENTS.md), 단계별 실행 상태는 [계획 목록](plans/README.md)을 따른다. 첫 상세 계획은 [M0 실행 기반 확인](plans/m0-runtime-foundation.md)이다.
 
+2026-11-12 현재 M0~M2를 구현했다. [M2 결과](decisions/m2-draft-plan-start.md)의 초안·계획 확인·고정 SHA 실행까지 실제 검증했다. 아래의 백그라운드 복원, 상세 이력·조건별 판정, 초기 재시도 및 성능 목표는 M3~M6 설계다.
+
 ## 목표와 설계 기준
 
 첫 MVP는 사용자가 작은 개발 요청 하나를 등록하고, 실행할 계획을 확인한 뒤, Codex가 만든 결과를 근거와 함께 검토하여 완료하거나 같은 작업에서 수정을 이어가는 로컬 도구다. 핵심 흐름은 **요청 작성 → 계획 확인 → 단일 작업 실행 → 결과 검토 → 완료 또는 실패 재개**다.
@@ -266,16 +268,16 @@ erDiagram
 | `server/adapters/storage` | v2 저장과 마이그레이션, 프로세스 점유, 파일 증거와 검증기 |
 | `server/application/reconcile` | 시작 시 복원, 단일 백그라운드 루프, 종료 시 정리 |
 
-다음은 새 계약 설계이며 모든 API가 PoC에 이미 구현되어 있다는 뜻은 아니다. 변경 명령에는 `commandKey`를 붙이고 입력 편집·실행·판정에는 적절한 `expectedRevision`도 전달한다. 같은 명령의 재전송 판정은 revision 충돌 검사보다 먼저 한다.
+다음은 목표 계약이며 모든 필드가 구현된 것은 아니다. M2는 `project.preflight`, `request.save-draft`, `request.prepare-plan`, 확인 입력의 `request.start`, token 조회의 `request.get`을 제공한다. SDK 이름 제약에 맞춰 RPC에는 소문자와 하이픈을 쓴다. 현재 list는 전체 저장 기록, get은 요청 전체를 반환하며 페이지네이션·resultId 선택·allowedActions는 후속 단계다. 시작은 의도 저장 후 생성 절차를 기다려 응답하며 접수 즉시 반환·재시작 worker는 M3/M5에서 구현한다. 변경 명령에는 `commandKey`를 붙이고 입력 편집·실행·판정에는 적절한 `expectedRevision`도 전달한다. 같은 명령의 재전송 판정은 revision 충돌 검사보다 먼저 한다.
 
 | RPC | 주요 입력 | 응답과 부수 효과 |
 | --- | --- | --- |
 | `project.read` | 없음 | 기존 설정과 대상 표시 |
 | `project.preflight` | 없음 | 환경 점검 결과. 세션을 만들거나 전역 설정을 바꾸지 않음 |
-| `request.saveDraft` | `token`, `feature`, `criteria`, `checks`, `expectedRevision` | 초안 저장. 실행을 시작한 요청은 거부 |
-| `request.preparePlan` | `token`, `expectedRevision` | 입력 검증, 계획 생성, 기준 커밋 확인 후 `ready`로 전환 |
+| `request.save-draft` | `token`, `feature`, `criteria`, `checks`, `expectedRevision` | 초안 저장. 실행을 시작한 요청은 거부 |
+| `request.prepare-plan` | `token`, `expectedRevision` | 입력 검증, 계획 생성, 기준 커밋 확인 후 `ready`로 전환 |
 | `request.start` | `token`, `planRevision`, `inputHash`, `expectedRevision` | 계획 확인과 실행 의도를 저장하고 준비 시작. 무거운 처리를 RPC 연결 유지에 의존시키지 않음 |
-| `request.retryStart` | `token`, `expectedRevision` | 확정된 초기 준비 실패에 새 명령 키로 재시도. 고정된 계획과 기존 리소스를 사용하며 전달 불확실 상태에서는 거부 |
+| `request.retry-start` | `token`, `expectedRevision` | 후속 설계. 확정된 초기 준비 실패에 새 명령 키로 재시도. 고정된 계획과 기존 리소스를 사용하며 전달 불확실 상태에서는 거부 |
 | `request.list` | `filter`, `cursor`, `limit` | 최대 20건 요약과 다음 커서. 외부 관측·검증은 수행하지 않음 |
 | `request.get` | `token`, `resultId?` | 상세·지정 결과·허용 행동. 과거 결과는 명시적으로 선택하여 조회 |
 | `request.refresh` | `token` | 외부 상태 재대조. 기존 결과의 검사를 무조건 다시 실행하지 않음 |
@@ -283,7 +285,7 @@ erDiagram
 | `request.review` | `token`, `resultId`, `approved`, `criteriaReviews`, `note`, `expectedRevision`, 검사 변경 확인 | 결과의 최신 여부와 근거를 검사하고 판정 저장 |
 | `request.resume` | `token`, `instruction`, `expectedRevision` | 다음 시도와 전달 의도를 저장하고 기존 세션에 전송 |
 
-계획 표시 후 기준 브랜치의 커밋이 바뀌면 `PLAN_STALE`로 재확인을 요구한다. 저장한 커밋에서 Worktree를 만들 수 있는지 구현 전에 확인하고 생성 후 HEAD도 대조한다. `BUSY`는 실행 중인 요청 ID를, `ENVIRONMENT_NOT_READY`는 해결 가능한 진단 항목을 반환한다. 이외에 `INVALID_STATE`, `DELIVERY_UNKNOWN`, `RESOURCE_MISSING`을 구분한다.
+계획 표시 후 기준 브랜치의 커밋이 바뀌면 `PLAN_STALE`로 재확인을 요구한다. M0에서 SHA 기반 생성을 실증했고 M2는 저장한 SHA를 사용하여 생성 후 HEAD도 대조한다. `BUSY`는 실행 중인 요청 ID를, `ENVIRONMENT_NOT_READY`는 해결 가능한 진단 항목을 반환한다. 목표 오류 계약은 이외에 `INVALID_STATE`, `DELIVERY_UNKNOWN`, `RESOURCE_MISSING`을 구분한다.
 
 PoC의 기존 `request.start`가 입력과 동시에 실행하는 방식은 새 UI에서 사용하지 않는다. 기존 기록에 대한 동일 입력 재호출은 참조를 반환하는 호환 경로를 유지하되 새 요청이 계획 확인을 우회하도록 허용하지 않는다. 기존 `verify` 스크립트에도 이 차이를 반영한다.
 

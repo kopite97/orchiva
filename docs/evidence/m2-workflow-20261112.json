@@ -1,0 +1,91 @@
+{
+  "runId": "m2-20261112-workflow-001",
+  "date": "2026-11-12",
+  "baseline": "bd08ace3941236c77c124566665d0305cb742f14",
+  "environment": {
+    "os": "Windows",
+    "node": "24.19.0",
+    "paseo": "0.15.4",
+    "ui": "local bundled web UI"
+  },
+  "originals": [
+    {
+      "file": "lifecycle-failure-20261112-001.json",
+      "sha256": "1030abef249dca3948c16dfcb65caf5bcaa1a8b759e2a1322276622d289845dd"
+    },
+    {
+      "file": "lifecycle-success-20261112-001.json",
+      "sha256": "9e1660c7b4c42aa0d714506224b5dbe4bf204d2efee0dbf57db6dd7b55aa23c7"
+    },
+    {
+      "file": "mwcyphtz-fnthmzhhky.json",
+      "sha256": "f617bbc3a2ce1301cdcd34ec032538c9d45227038bb09eac1d423340310d989a"
+    },
+    {
+      "file": "smoke-20261112-001.json",
+      "sha256": "c1fb34d441a4506341bdf918c096bd27526ebac434ebbe89f371080397ff4834"
+    }
+  ],
+  "baselineCounts": {
+    "agents": 6,
+    "workspaces": 8
+  },
+  "preparation": {
+    "status": "ready",
+    "newAgents": 0,
+    "newWorkspaces": 0,
+    "planRevision": 1
+  },
+  "refCheck": {
+    "confirmed": "47c21d41376600f79e602fd669bc382dd13b3816",
+    "movedTo": "86e00e0c80cc0822eaa2e5e70b406530f7c7749a",
+    "rejected": "PLAN_STALE",
+    "resourcesCreated": 0
+  },
+  "execution": {
+    "at": "2026-11-12T06:42:59.06Z",
+    "token": "m2-20261112-workflow-001-request",
+    "agentId": "06cbeffa-ddc3-49e6-a686-70980957f3b1",
+    "workspaceId": "wks_fe7df70ba34046db",
+    "head": "86e00e0c80cc0822eaa2e5e70b406530f7c7749a",
+    "planRevision": 1,
+    "inputHash": "58f2dccf96bc18d77537b3c3c5942c12bf08d0b3bce6fbda354621f69f53ba6e",
+    "status": "awaiting-review",
+    "checksPassed": true,
+    "startReplaySameId": true,
+    "originalBytesUnchanged": 4,
+    "newAgents": 1,
+    "newWorkspaces": 1,
+    "sourceOrigin": "https://github.com/kopite97/orchiva.git",
+    "sandboxHead": "86e00e0c80cc0822eaa2e5e70b406530f7c7749a"
+  },
+  "verification": {
+    "typecheck": "PASS",
+    "testsPassed": 48,
+    "testsFailed": 0,
+    "verify": "PASS",
+    "verifyLifecycle": "PASS"
+  },
+  "gui": {
+    "wide": "1280x900",
+    "compact": "390x844",
+    "checks": [
+      "incomplete draft save and reopen",
+      "required input errors preserve values",
+      "criterion and check add/remove",
+      "manual-only preview",
+      "dirty navigation keep and discard",
+      "plan edit invalidates ready and increments revision",
+      "confirmed start from compact screen",
+      "awaiting-review and independent check visible"
+    ],
+    "editorDraftFinalState": "draft; never executed",
+    "screenshot": "m2-result-wide-20261112.png"
+  },
+  "limits": [
+    "ref movement after confirmation: mocked in M2; actual pinned workspace covered in M0",
+    "no new daemon crash or network loss injection in M2",
+    "no final user approval submitted",
+    "M3 background reconciliation and M4 criterion reviews not implemented"
+  ]
+}

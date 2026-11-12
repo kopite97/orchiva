@@ -1,15 +1,24 @@
 import { defineRpc } from "@getpaseo/plugin";
 import { z } from "zod";
 const field = z.string().trim().min(1).max(12000);
-export const featureSchema = z.object({ title: field.max(160), goal: field, scope: field, constraints: field, validation: field, completionCriteria: field });
+export const featureSchema = z.object({ title: field.max(160), goal: field, scope: field, constraints: field, validation: field, completionCriteria: z.string().trim().min(1).max(24000) });
+const draftField = z.string().max(12000);
+export const draftFeatureSchema = z.object({ title: z.string().max(160), goal: draftField, scope: draftField, constraints: draftField, validation: draftField, completionCriteria: z.string().max(24000).default("") });
 export const tokenSchema = z.string().regex(/^[a-zA-Z0-9-]{8,80}$/);
 const relativePath = z.string().min(1).max(200).refine(value => !value.includes("..") && !/^[\\/]|[:\x00-\x1f]/.test(value), "Use a worktree-relative path without '..'.");
 export const checkSchema = z.discriminatedUnion("kind", [
-  z.object({ kind: z.literal("node-test"), path: relativePath, label: z.string().min(1).max(200) }),
-  z.object({ kind: z.literal("file-contains"), path: relativePath, text: z.string().min(1).max(4000), label: z.string().min(1).max(200) }),
+  z.object({ id: z.string().optional(), kind: z.literal("node-test"), path: relativePath, label: z.string().min(1).max(200) }),
+  z.object({ id: z.string().optional(), kind: z.literal("file-contains"), path: relativePath, text: z.string().min(1).max(4000), label: z.string().min(1).max(200) }),
 ]);
-export const startSchema = z.object({ token: tokenSchema, feature: featureSchema, checks: z.array(checkSchema).max(8).default([]) });
-export const statusSchema = z.enum(["planned", "creating-worktree", "writing-plan", "starting-session", "started", "running", "needs-input", "validating", "awaiting-review", "completed", "failed"]);
+export const draftCheckSchema = z.discriminatedUnion("kind", [
+  z.object({ id: z.string().max(80).optional(), kind: z.literal("node-test"), path: z.string().max(200), label: z.string().max(200) }),
+  z.object({ id: z.string().max(80).optional(), kind: z.literal("file-contains"), path: z.string().max(200), text: z.string().max(4000), label: z.string().max(200) }),
+]);
+export const criterionSchema = z.object({ id: z.string().min(1).max(80), text: z.string().max(12000), checkIds: z.array(z.string()).max(8), manualMethod: z.string().max(12000), legacy: z.boolean().default(false) });
+export const legacyStartSchema = z.object({ token: tokenSchema, feature: featureSchema, checks: z.array(checkSchema).max(8).default([]) }).strict();
+export const confirmedStartSchema = z.object({ token: tokenSchema, commandKey: tokenSchema, expectedRevision: z.number().int().nonnegative(), planRevision: z.number().int().positive(), inputHash: z.string().regex(/^[a-f0-9]{64}$/) }).strict();
+export const startSchema = z.union([confirmedStartSchema, legacyStartSchema]);
+export const statusSchema = z.enum(["draft", "ready", "planned", "creating-worktree", "writing-plan", "starting-session", "started", "running", "needs-input", "validating", "awaiting-review", "completed", "failed"]);
 export const resultSchema = z.object({
   id: z.string(), sourceKey: z.string(), collectedAt: z.string(), finalResponse: z.string(), agentStatus: z.string(),
   changedFiles: z.array(z.string()), diffStat: z.string(), fingerprint: z.string(),
@@ -30,7 +39,7 @@ export const legacyRecordSchema = z.object({
   decision: z.object({ approved: z.boolean(), note: z.string(), at: z.string(), resultId: z.string() }).nullable().default(null),
 });
 export const commandSchema = z.object({
-  key: z.string().min(1), kind: z.enum(["start", "resume", "review", "revalidate"]), payloadHash: z.string(),
+  key: z.string().min(1), kind: z.enum(["save-draft", "prepare-plan", "start", "resume", "review", "revalidate"]), payloadHash: z.string(),
   status: z.enum(["pending", "applied", "failed", "unknown"]), phase: z.string(),
   messageId: z.string().nullable().default(null), resourceIds: z.record(z.string(), z.string()).default({}),
   outcomeRef: z.string().nullable().default(null), createdAt: z.string(), resolvedAt: z.string().nullable().default(null),
@@ -38,9 +47,10 @@ export const commandSchema = z.object({
 export const storedResultSchema = resultSchema.extend({ attemptNumber: z.number().int().positive(), validationRun: z.number().int().positive(), legacy: z.boolean() });
 export const storedDecisionSchema = z.object({ id: z.string(), resultId: z.string(), approved: z.boolean(), note: z.string(), at: z.string(), fingerprint: z.string(), legacy: z.boolean() });
 export const recordSchema = legacyRecordSchema.extend({
+  feature: draftFeatureSchema, checks: z.array(draftCheckSchema).max(8).default([]),
   schemaVersion: z.literal(2).default(2), revision: z.number().int().nonnegative().default(0), updatedAt: z.string().default(""),
-  criteria: z.array(z.object({ id: z.string(), text: z.string(), checkIds: z.array(z.string()), manualMethod: z.string(), legacy: z.boolean() })).default([]),
-  plans: z.array(z.object({ revision: z.number().int().positive(), inputHash: z.string(), requestPlan: planSchema, taskPlan: planSchema, baseCommit: z.string().nullable(), createdAt: z.string() })).default([]),
+  criteria: z.array(criterionSchema).max(20).default([]),
+  plans: z.array(z.object({ revision: z.number().int().positive(), inputHash: z.string(), requestPlan: planSchema, taskPlan: planSchema, baseCommit: z.string().nullable(), createdAt: z.string(), projectSnapshot: z.object({ repositoryPath: z.string(), baseRef: z.string(), provider: z.string(), maxActiveTasks: z.literal(1) }).optional() })).default([]),
   confirmationSource: z.enum(["legacy-execution", "poc-direct", "confirmed-plan"]).nullable().default(null),
   confirmedPlanRevision: z.number().int().positive().nullable().default(null),
   projectSnapshot: z.object({ repositoryPath: z.string(), baseRef: z.string(), provider: z.string(), maxActiveTasks: z.literal(1) }).nullable().default(null),
@@ -65,3 +75,10 @@ export const storageDiagnosticsSchema = z.object({ records: z.number(), bytes: z
 export const diagnosticsRpc = defineRpc({ name: "storage.diagnostics", input: z.object({}), output: storageDiagnosticsSchema });
 export const revalidateSchema = z.object({ token: tokenSchema, resultId: z.string(), commandKey: tokenSchema, expectedRevision: z.number().int().nonnegative() });
 export const revalidateRpc = defineRpc({ name: "request.revalidate", input: revalidateSchema, output: recordSchema });
+export const saveDraftSchema = z.object({ token: tokenSchema, commandKey: tokenSchema, expectedRevision: z.number().int().nonnegative(), feature: draftFeatureSchema, criteria: z.array(criterionSchema.extend({ text: z.string().max(1000), manualMethod: z.string().max(4000), legacy: z.literal(false).default(false) })).max(20), checks: z.array(draftCheckSchema).max(8) });
+export const preparePlanSchema = z.object({ token: tokenSchema, commandKey: tokenSchema, expectedRevision: z.number().int().nonnegative() });
+export const saveDraftRpc = defineRpc({ name: "request.save-draft", input: saveDraftSchema, output: recordSchema });
+export const preparePlanRpc = defineRpc({ name: "request.prepare-plan", input: preparePlanSchema, output: recordSchema });
+export const getRpc = defineRpc({ name: "request.get", input: z.object({ token: tokenSchema }), output: recordSchema.nullable() });
+export const preflightSchema = z.object({ ready: z.boolean(), baseCommit: z.string().nullable(), checks: z.array(z.object({ label: z.string(), passed: z.boolean(), detail: z.string() })) });
+export const preflightRpc = defineRpc({ name: "project.preflight", input: z.object({}), output: preflightSchema });

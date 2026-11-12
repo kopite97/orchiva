@@ -9,6 +9,7 @@ export function payloadHash(value: unknown): string {
 
 /** Populate available history only. Never infer a missing old result or approval. */
 export function captureHistory(record: RequestRecord, legacy = false) {
+  if (["draft", "ready"].includes(record.status)) return record;
   if (!record.criteria.length) record.criteria.push({ id: "legacy", text: record.feature.completionCriteria, checkIds: [], manualMethod: record.feature.validation, legacy: true });
   if (!record.plans.length) record.plans.push({ revision: record.requestPlan.revision, inputHash: payloadHash({ feature: record.feature, checks: record.checks }), requestPlan: structuredClone(record.requestPlan), taskPlan: structuredClone(record.taskPlan), baseCommit: null, createdAt: record.createdAt });
   for (const entry of [...record.attempts, { attempt: record.attempt, result: record.result }]) {
@@ -52,6 +53,8 @@ export function occupiesSlot(record: RequestRecord) {
 }
 
 export function assertAppendOnly(previous: RequestRecord, next: RequestRecord) {
+  if (previous.confirmationSource === "confirmed-plan" && next.confirmationSource !== "confirmed-plan") throw new Error("IMMUTABLE_EXECUTION_INPUT");
+  if (previous.confirmationSource === "confirmed-plan" && payloadHash({ feature: previous.feature, criteria: previous.criteria, checks: previous.checks, confirmedPlanRevision: previous.confirmedPlanRevision, projectSnapshot: previous.projectSnapshot, requestPlan: previous.requestPlan, taskPlan: previous.taskPlan }) !== payloadHash({ feature: next.feature, criteria: next.criteria, checks: next.checks, confirmedPlanRevision: next.confirmedPlanRevision, projectSnapshot: next.projectSnapshot, requestPlan: next.requestPlan, taskPlan: next.taskPlan })) throw new Error("IMMUTABLE_EXECUTION_INPUT");
   for (const field of ["results", "decisions", "plans"] as const) {
     for (const old of previous[field]) {
       const key = "id" in old ? old.id : old.revision;

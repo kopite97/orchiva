@@ -22,6 +22,7 @@ export interface LifecycleRuntime {
 export interface Runtime {
   projectSnapshot?: RequestRecord["projectSnapshot"];
   validate(): Promise<void>;
+  preflight?(checks: RequestRecord["checks"]): Promise<{ baseCommit: string; projectSnapshot: NonNullable<RequestRecord["projectSnapshot"]> }>;
   createWorkspace(record: RequestRecord): Promise<{ id: string; directory: string }>;
   writePlans(record: RequestRecord): Promise<void>;
   startAgent(record: RequestRecord): Promise<string>;

@@ -9,6 +9,7 @@ import { createRequest } from "../domain/request";
 import { legacyRecordSchema, type ExecutionResult } from "../../shared/contracts/feature-request";
 import { StartFeatureRequest } from "../application/start-feature-request";
 import { assertSlot } from "../application/execution-slot";
+import { prepare, project, commit } from "./helpers/prepared";
 
 const feature = { title: "Storage", goal: "Preserve", scope: "One task", constraints: "Sandbox", validation: "Tests", completionCriteria: "History retained" };
 const result = (id: string): ExecutionResult => ({ id, sourceKey: "e:1", collectedAt: "2026-11-12", finalResponse: "Done", agentStatus: "idle", changedFiles: [], diffStat: "", fingerprint: "hash", checks: [], failure: null, executionFailure: null });
@@ -75,8 +76,9 @@ test("revision conflicts and immutable history prevent stale overwrites and evid
 
 test("different request starts share the project lock even through different use case instances", async t => {
   const f = await fixture(t), store = f.store(); let workspaces = 0, agents = 0;
-  const runtime = { validate: async () => {}, createWorkspace: async () => { workspaces++; return { id: "w", directory: "sandbox" }; }, writePlans: async () => {}, startAgent: async () => { agents++; return "a"; } };
-  const results = await Promise.allSettled([new StartFeatureRequest(store).start({ token: "concurrent-first-001", feature }, runtime), new StartFeatureRequest(store).start({ token: "concurrent-second-001", feature }, runtime)]);
+  const runtime = { preflight: async () => ({ baseCommit: commit, projectSnapshot: project }), validate: async () => {}, createWorkspace: async () => { workspaces++; return { id: "w", directory: "sandbox" }; }, writePlans: async () => {}, startAgent: async () => { agents++; return "a"; } };
+  const first = await prepare(store, runtime, "concurrent-first-001", feature), second = await prepare(store, runtime, "concurrent-second-001", feature);
+  const results = await Promise.allSettled([new StartFeatureRequest(store).start(first, runtime), new StartFeatureRequest(store).start(second, runtime)]);
   assert.equal(results.filter(x => x.status === "fulfilled").length, 1); assert.equal(workspaces, 1); assert.equal(agents, 1);
   const rejected = results.find(x => x.status === "rejected") as PromiseRejectedResult; assert.match(String(rejected.reason), /BUSY/);
   await store.close(); const reloaded = f.store(); await assert.rejects(assertSlot(reloaded, "new-request-001"), /BUSY/);

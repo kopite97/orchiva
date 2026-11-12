@@ -22,7 +22,8 @@
     "verify:lifecycle": "node scripts/lifecycle-smoke.mjs verify",
     "lifecycle": "node scripts/lifecycle-smoke.mjs",
     "m0": "node --import tsx scripts/m0-foundation.mjs",
-    "m1": "node --import tsx scripts/m1-storage.mjs"
+    "m1": "node --import tsx scripts/m1-storage.mjs",
+    "m2": "node --import tsx scripts/m2-workflow.mjs"
   },
   "devDependencies": {
     "@getpaseo/client": "0.15.4",
