@@ -24,6 +24,7 @@
 | `npm run m0 -- help` | 명시적 M0 시험 단계 안내. 실제 연동은 실행 ID와 보존 manifest 필요. [결과·재검증](../decisions/m0-runtime-foundation.md) 참조 |
 | `npm run m1 -- help` | v1 원본 백업과 v2 실제 대조. 기존 실행 재검증은 [M1 결과](../decisions/m1-storage-state.md) 참조 |
 | `npm run m2 -- help` | 초안·계획·고정 SHA 실행 시험. 보존 실행 대조와 새 실행 구분은 [M2 결과](../decisions/m2-draft-plan-start.md) 참조 |
+| `npm run m3 -- help` | 백그라운드 실행·Plugin 복원·idle daemon 재시작 시험. 디스크만 관측하는 wait와 보존 실행 대조는 [M3 결과](../decisions/m3-progress-reconciliation.md) 참조 |
 | `npm run verify` | 기존 초기 PoC 두 요청의 PLAN·Worktree·파일·재호출 검사. 기존 데이터와 daemon 필요 |
 | `npm run verify:lifecycle` | 기존 생명주기 두 요청의 판정·복구 증거·재호출과 원래 테스트 재실행. 기존 데이터와 daemon 필요 |
 | `.\scripts\start-paseo.ps1` | 독립 daemon 시작. 상태와 작업 범위를 먼저 확인 |

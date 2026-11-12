@@ -10,7 +10,27 @@ export class StartFeatureRequest {
     const parsed = startSchema.parse(input);
     return this.store.exclusive(() => this.locks.run(parsed.token, () => this.execute(parsed, runtime)));
   }
-  private async execute(input: ReturnType<typeof startSchema.parse>, runtime: Runtime) {
+  async accept(input: unknown, runtime: Runtime, beforeAccept?: () => void): Promise<RequestRecord> {
+    const parsed = startSchema.parse(input);
+    return this.store.exclusive(() => this.locks.run(parsed.token, () => this.execute(parsed, runtime, true, beforeAccept)));
+  }
+  async advance(token: string, runtime: Runtime) {
+    return this.store.exclusive(() => this.locks.run(token, async () => {
+      const record = await this.store.get(token);
+      if (!record) throw new Error("NOT_FOUND");
+      const command = record.commands.find(x => x.kind === "start" && x.status === "pending");
+      if (!command) return record;
+      // A persisted external-call phase cannot prove whether the effect happened.
+      if (!["accepted", "plans"].includes(command.phase)) {
+        command.status = "unknown"; record.status = "needs-input";
+        record.error = "실행 준비 중 연결이 끊겼습니다. 생성 결과를 확인하기 전에는 다시 전송하지 않습니다.";
+        await this.store.save(record); return record;
+      }
+      await assertSlot(this.store, token);
+      return this.perform(record, command, runtime);
+    }));
+  }
+  private async execute(input: ReturnType<typeof startSchema.parse>, runtime: Runtime, queued = false, beforeAccept?: () => void) {
     const record = await this.store.get(input.token);
     if ("feature" in input) {
       if (record && (payloadHash(record.feature) !== payloadHash(input.feature) || payloadHash(record.checks) !== payloadHash(input.checks))) throw new Error("IDEMPOTENCY_CONFLICT: different input");
@@ -20,6 +40,7 @@ export class StartFeatureRequest {
     if (!record) throw new Error("PLAN_REQUIRED");
     const key = input.commandKey, payload = { planRevision: input.planRevision, inputHash: input.inputHash };
     if (previousCommand(record, key, "start", payload)) return record;
+    beforeAccept?.();
     assertRevision(record, input.expectedRevision);
     const plan = record.plans.at(-1);
     if (record.status !== "ready" || !plan?.baseCommit || plan.revision !== input.planRevision || plan.inputHash !== input.inputHash || draftHash(record) !== input.inputHash) throw new Error("PLAN_STALE: 계획을 다시 확인하세요.");
@@ -34,7 +55,11 @@ export class StartFeatureRequest {
     const command = beginCommand(record, key, "start", payload);
     record.error = null;
     await this.store.save(record);
+    return queued ? record : this.perform(record, command, runtime);
+  }
+  private async perform(record: RequestRecord, command: RequestRecord["commands"][number], runtime: Runtime) {
     try {
+      if (runtime.projectSnapshot && payloadHash(runtime.projectSnapshot) !== payloadHash(record.projectSnapshot)) throw new Error("PLAN_STALE: 접수 이후 프로젝트 설정이 변경됐습니다.");
       if (!record.workspaceId) {
         command.phase = "workspace";
         record.status = "creating-worktree"; await this.store.save(record);

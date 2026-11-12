@@ -46,7 +46,9 @@ export const commandSchema = z.object({
 });
 export const storedResultSchema = resultSchema.extend({ attemptNumber: z.number().int().positive(), validationRun: z.number().int().positive(), legacy: z.boolean() });
 export const storedDecisionSchema = z.object({ id: z.string(), resultId: z.string(), approved: z.boolean(), note: z.string(), at: z.string(), fingerprint: z.string(), legacy: z.boolean() });
+export const observationSchema = z.object({ lastAttemptAt: z.string(), lastSuccessAt: z.string().nullable(), consecutiveFailures: z.number(), nextAttemptAt: z.string().nullable(), error: z.string().nullable() });
 export const recordSchema = legacyRecordSchema.extend({
+  observation: observationSchema.optional(),
   feature: draftFeatureSchema, checks: z.array(draftCheckSchema).max(8).default([]),
   schemaVersion: z.literal(2).default(2), revision: z.number().int().nonnegative().default(0), updatedAt: z.string().default(""),
   criteria: z.array(criterionSchema).max(20).default([]),
@@ -82,3 +84,10 @@ export const preparePlanRpc = defineRpc({ name: "request.prepare-plan", input: p
 export const getRpc = defineRpc({ name: "request.get", input: z.object({ token: tokenSchema }), output: recordSchema.nullable() });
 export const preflightSchema = z.object({ ready: z.boolean(), baseCommit: z.string().nullable(), checks: z.array(z.object({ label: z.string(), passed: z.boolean(), detail: z.string() })) });
 export const preflightRpc = defineRpc({ name: "project.preflight", input: z.object({}), output: preflightSchema });
+export const actionSchema = z.enum(["edit", "plan", "observe", "open-session", "review", "resume", "revalidate"]);
+export const summarySchema = z.object({ token: tokenSchema, title: z.string(), status: statusSchema, statusReason: z.string().nullable(), attempt: z.number(), updatedAt: z.string(), createdAt: z.string(), active: z.boolean(), allowedActions: z.array(actionSchema) });
+export const pageInputSchema = z.object({ filter: z.enum(["all", "draft", "active", "attention", "completed"]).default("all"), cursor: z.string().max(1000).nullable().optional(), limit: z.number().int().min(1).max(20).default(20) });
+export const pageRpc = defineRpc({ name: "request.page", input: pageInputSchema, output: z.object({ items: z.array(summarySchema), nextCursor: z.string().nullable(), active: z.array(summarySchema), total: z.number() }) });
+export const detailRpc = defineRpc({ name: "request.detail", input: z.object({ token: tokenSchema }), output: z.object({ record: recordSchema, allowedActions: z.array(actionSchema) }).nullable() });
+export const serviceStatusSchema = z.object({ state: z.enum(["starting", "connected", "reconnecting", "stopped"]), startedAt: z.string(), lastSuccessAt: z.string().nullable(), lastError: z.string().nullable(), nextAttemptAt: z.string().nullable(), cycles: z.number(), failures: z.number(), restoring: z.boolean() });
+export const serviceStatusRpc = defineRpc({ name: "runtime.status", input: z.object({}), output: serviceStatusSchema });

@@ -6,7 +6,7 @@
 
 개발 절차는 [지침 지도](../AGENTS.md), 단계별 실행 상태는 [계획 목록](plans/README.md)을 따른다. 첫 상세 계획은 [M0 실행 기반 확인](plans/m0-runtime-foundation.md)이다.
 
-2026-11-12 현재 M0~M2를 구현했다. [M2 결과](decisions/m2-draft-plan-start.md)의 초안·계획 확인·고정 SHA 실행까지 실제 검증했다. 아래의 백그라운드 복원, 상세 이력·조건별 판정, 초기 재시도 및 성능 목표는 M3~M6 설계다.
+2026-11-12 현재 M0~M3를 구현했다. [M2 결과](decisions/m2-draft-plan-start.md)의 초안·계획 확인·고정 SHA 실행과 [M3 결과](decisions/m3-progress-reconciliation.md)의 독립 관측·진행/이력 화면·정상 재시작 복원을 검증했다. 조건별 판정·과거 결과 상세·초기 실패 재시도·unknown 해결·성능 수용은 M4~M6 설계다.
 
 ## 목표와 설계 기준
 
@@ -179,6 +179,8 @@ flowchart TD
 
 Hook은 빠른 상태 갱신에 사용하고, daemon 내 단일 백그라운드 루프가 비종료 작업을 5초 간격으로 대조한다. 화면은 표시 중인 상세를 2초 간격으로 조회하지만 조회 자체가 테스트를 다시 실행하지 않는다. 브라우저를 닫아도 daemon이 살아 있으면 관측과 결과 수집이 계속된다. daemon이 꺼져 있는 동안은 갱신되지 않으며 재시작 때 복원한다.
 
+M3의 주기 대상은 실행 슬롯 점유 요청과 결과 없는 실행 요청이다. 안정된 검토 대기·확정 실패·완료는 반복 수집하지 않는다. 외부 세션 변화는 Hook 또는 명시적 상태 확인으로 관측한다. 미착수 accepted와 알려진 Worktree의 PLAN 기록은 이어갈 수 있으며, 외부 생성 응답이 불확실한 checkpoint는 unknown으로 보존한다. 재시도/해결 UI는 M5다. 연결 소유·재접속·종료와 실제/모의 검증 경계는 [M3 결과](decisions/m3-progress-reconciliation.md)를 따른다.
+
 관측 실패는 마지막 확정 상태와 분리해 저장한다. 연속 실패 시 5초, 10초, 20초, 최대 30초 간격으로 재조회한다. 15초 이상 성공한 관측이 없으면 연결 지연을 표시한다. 재조회는 새 Codex 실행이나 코드 수정 재시도를 발생시키지 않는다.
 
 관측 시각만 갱신된 경우에는 명령의 충돌 검사에 쓰는 `revision`을 올리지 않는다. 상태·입력·결과가 실제로 바뀌면 올린다. 검토 중 새 결과가 생기면 작성 중인 메모는 유지하되 조건 확인을 초기화하고 새 결과를 검토하도록 안내한다.
@@ -268,7 +270,7 @@ erDiagram
 | `server/adapters/storage` | v2 저장과 마이그레이션, 프로세스 점유, 파일 증거와 검증기 |
 | `server/application/reconcile` | 시작 시 복원, 단일 백그라운드 루프, 종료 시 정리 |
 
-다음은 목표 계약이며 모든 필드가 구현된 것은 아니다. M2는 `project.preflight`, `request.save-draft`, `request.prepare-plan`, 확인 입력의 `request.start`, token 조회의 `request.get`을 제공한다. SDK 이름 제약에 맞춰 RPC에는 소문자와 하이픈을 쓴다. 현재 list는 전체 저장 기록, get은 요청 전체를 반환하며 페이지네이션·resultId 선택·allowedActions는 후속 단계다. 시작은 의도 저장 후 생성 절차를 기다려 응답하며 접수 즉시 반환·재시작 worker는 M3/M5에서 구현한다. 변경 명령에는 `commandKey`를 붙이고 입력 편집·실행·판정에는 적절한 `expectedRevision`도 전달한다. 같은 명령의 재전송 판정은 revision 충돌 검사보다 먼저 한다.
+다음은 목표 계약이며 모든 필드가 구현된 것은 아니다. M2는 `project.preflight`, `request.save-draft`, `request.prepare-plan`, 확인 입력의 `request.start`, token 조회의 `request.get`을 제공한다. M3는 `request.page`의 요약·필터·20건 cursor, `request.detail`의 요청과 allowedActions, `runtime.status`의 운영 진단을 추가했다. 기존 list/get은 호환 계약을 유지하고 resultId별 상세 선택은 후속 단계다. 시작은 의도와 슬롯을 저장한 `planned` 접수 후 반환하며 독립 worker가 이어간다. SDK 이름 제약에 맞춰 RPC에는 소문자와 하이픈을 쓴다. 변경 명령에는 `commandKey`를 붙이고 입력 편집·실행·판정에는 적절한 `expectedRevision`도 전달한다. 같은 명령의 재전송 판정은 revision 충돌 검사보다 먼저 한다.
 
 | RPC | 주요 입력 | 응답과 부수 효과 |
 | --- | --- | --- |
@@ -278,8 +280,9 @@ erDiagram
 | `request.prepare-plan` | `token`, `expectedRevision` | 입력 검증, 계획 생성, 기준 커밋 확인 후 `ready`로 전환 |
 | `request.start` | `token`, `planRevision`, `inputHash`, `expectedRevision` | 계획 확인과 실행 의도를 저장하고 준비 시작. 무거운 처리를 RPC 연결 유지에 의존시키지 않음 |
 | `request.retry-start` | `token`, `expectedRevision` | 후속 설계. 확정된 초기 준비 실패에 새 명령 키로 재시도. 고정된 계획과 기존 리소스를 사용하며 전달 불확실 상태에서는 거부 |
-| `request.list` | `filter`, `cursor`, `limit` | 최대 20건 요약과 다음 커서. 외부 관측·검증은 수행하지 않음 |
-| `request.get` | `token`, `resultId?` | 상세·지정 결과·허용 행동. 과거 결과는 명시적으로 선택하여 조회 |
+| `request.page` | `filter`, `cursor`, `limit` | M3: 최대20건 요약과 다음 커서·진행 중 고정 목록. 기존 list는 전체 반환 유지 |
+| `request.detail` | `token` | M3: 현재 요청과 허용 행동. 기존 get은 요청 전체 반환 유지; resultId 선택은 후속 |
+| `runtime.status` | 없음 | M3: 독립 연결·복원 상태·마지막 성공·다음 시도·오류 |
 | `request.refresh` | `token` | 외부 상태 재대조. 기존 결과의 검사를 무조건 다시 실행하지 않음 |
 | `request.revalidate` | `token`, `resultId`, `expectedRevision` | 멈춘 세션인지 확인하고 같은 시도에 새 검증 회차 생성 |
 | `request.review` | `token`, `resultId`, `approved`, `criteriaReviews`, `note`, `expectedRevision`, 검사 변경 확인 | 결과의 최신 여부와 근거를 검사하고 판정 저장 |
@@ -291,11 +294,11 @@ PoC의 기존 `request.start`가 입력과 동시에 실행하는 방식은 새 
 
 ### 실행 기반 확인 결과와 후속 의존 사항
 
-SDK의 `PluginServerContext`에는 초기화 시 사용할 `paseo` 속성이 없다. M0에서 `createHostClient`와 `createPaseoApi`를 소유하는 독립 연결을 구현하고, 화면·최초 RPC 없는 Plugin 초기화 관측과 종료를 확인했다. 시험 모드는 기본 비활성이다. M3는 이 연결 수명에 운영 중 재접속·요청 대조를 연결해야 하며, 기존 `list`를 그대로 주기 호출하지 않는다. 콜백 컨텍스트를 무기한 보관하지 않는다.
+SDK의 `PluginServerContext`에는 초기화 시 사용할 `paseo` 속성이 없다. M0에서 `createHostClient`와 `createPaseoApi`를 소유하는 독립 연결을 구현하고, 화면·최초 RPC 없는 Plugin 초기화 관측과 종료를 확인했다. M0 시험 모드는 기본 비활성이다. M3는 소유 연결 위에 운영 중 재접속·요청 대조를 구현했으며 초기 store 준비가 끝나면 자동 시작한다. 기존 list RPC를 주기 호출하거나 콜백 컨텍스트를 무기한 보관하지 않는다.
 
 M0 실제 연동에서 workspace·agent의 동일 `idempotencyKey` 재호출은 응답 유실·daemon 재시작 후 같은 ID로 수렴했다. 고정 SHA의 Worktree 생성과 생성 후 HEAD 대조도 확인했다. 반면 provider에서 복원된 메시지는 `clientMessageId`가 소실될 수 있다. 페이지 조회를 추가했으며 식별자가 없는 이력·관측 실패는 `unknown`으로 다룬다. 현재 PoC에서는 pending 복구를 `needs-input`에 보존하고 자동 재전송·새 키의 재개를 차단한다. MVP의 상세 `delivery-unknown` 표현과 사용자 해결 절차는 M1·M5 범위다.
 
-M0에서 초기 미승인 2건의 최신 결과가 목록 조회로 재수집됐다. M1은 현재 존재하는 4건을 원본 백업 후 변환하고 불변 결과·판정 이력을 도입했으며, 목록 조회의 외부 수집을 제거했다. M3는 운영 관측과 수집의 구분을 완성한다. M0에서 이미 소실된 envelope는 복원하지 못했으며 보존 한계는 [M0 결과](decisions/m0-runtime-foundation.md)를 참조한다.
+M0에서 초기 미승인 2건의 최신 결과가 목록 조회로 재수집됐다. M1은 현재 존재하는 4건을 원본 백업 후 변환하고 불변 결과·판정 이력을 도입했으며, 목록 조회의 외부 수집을 제거했다. M3는 조회·관측·명시적 재검증을 분리하고 기존6건의 바이트 보존을 확인했다. M0에서 이미 소실된 envelope는 복원하지 못했으며 보존 한계는 [M0 결과](decisions/m0-runtime-foundation.md)를 참조한다.
 
 ## 개발 순서
 

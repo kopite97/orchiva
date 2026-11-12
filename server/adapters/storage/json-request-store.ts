@@ -74,9 +74,10 @@ export class JsonRequestStore implements RequestStore {
       captureHistory(next);
       if (previous) assertAppendOnly(previous, next);
       validateReferences(next);
-      const meaningful = (value: RequestRecord) => { const { revision, updatedAt, observationError, ...rest } = value; return payloadHash(rest); };
+      const meaningful = (value: RequestRecord) => { const { revision, updatedAt, observationError, observation, ...rest } = value; return payloadHash(rest); };
       next.revision = previous ? previous.revision + Number(meaningful(previous) !== meaningful(next)) : 1;
-      next.updatedAt = new Date().toISOString();
+      next.updatedAt = previous && next.revision === previous.revision ? previous.updatedAt : new Date().toISOString();
+      if (previous && payloadHash(previous) === payloadHash(next)) return;
       await this.atomic(this.path(record.token), next);
       for (const key of ["revision", "updatedAt", "results", "decisions", "attemptHistory", "criteria", "plans", "statusReason"] as const) Object.assign(record, { [key]: next[key] });
     });

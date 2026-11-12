@@ -4,6 +4,7 @@ import { RequestLocks } from "./request-locks";
 import { assertSlot, assertRevision, beginCommand, finishCommand, previousCommand } from "./execution-slot";
 import { payloadHash } from "../domain/record-v2";
 import { randomUUID } from "node:crypto";
+class CollectionFailure extends Error {}
 
 export class TrackExecution {
   constructor(private store: RequestStore, private locks: RequestLocks) {}
@@ -23,7 +24,9 @@ export class TrackExecution {
       // still needs observation, never a second validation/send command.
       if (!input && revalidate && (!record.agentId || record.recovery?.pending || record.commands.some(item => ["pending", "unknown"].includes(item.status)) || ["started", "running", "needs-input"].includes(record.status))) revalidate = false;
       let command: RequestRecord["commands"][number] | undefined;
-      if (revalidate) {
+      const interruptedValidation = !input && record.commands.find(x => x.kind === "revalidate" && x.status === "pending");
+      if (interruptedValidation) { command = interruptedValidation; revalidate = true; }
+      else if (revalidate) {
         const key = input?.commandKey ?? `revalidate-${randomUUID()}`;
         const payload = { resultId: input?.resultId ?? record.result?.id ?? null };
         if (previousCommand(record, key, "revalidate", payload)) return record;
@@ -39,13 +42,20 @@ export class TrackExecution {
       }
       if (!record.agentId) return record;
       if (record.status === "completed") return record;
-      try { await this.reconcile(record, runtime, outcome, revalidate); record.observationError = null; }
-      catch (error) {
-        if (command) { command.status = "failed"; command.phase = "validation-failed"; command.resolvedAt = new Date().toISOString(); }
-        record.observationError = error instanceof Error ? error.message : String(error);
-        if (record.status === "validating") { record.error = record.observationError; this.transition(record, "failed", "Evidence collection failed."); }
+      const attemptedAt = new Date().toISOString();
+      let succeeded = false;
+      try {
+        await this.reconcile(record, runtime, outcome, revalidate); record.observationError = null;
+        succeeded = true;
+        record.observation = { lastAttemptAt: attemptedAt, lastSuccessAt: new Date().toISOString(), consecutiveFailures: 0, nextAttemptAt: null, error: null };
       }
-      if (command?.status === "pending" && record.result) finishCommand(command, record.result.id);
+      catch (error) {
+        if (command && (error instanceof CollectionFailure || (error instanceof Error && error.message.startsWith("INVALID_STATE")))) { command.status = "failed"; command.phase = "validation-failed"; command.resolvedAt = new Date().toISOString(); }
+        record.observationError = error instanceof Error ? error.message : String(error);
+        const failures = (record.observation?.consecutiveFailures ?? 0) + 1;
+        record.observation = { lastAttemptAt: attemptedAt, lastSuccessAt: record.observation?.lastSuccessAt ?? null, consecutiveFailures: failures, nextAttemptAt: new Date(Date.now() + Math.min(5000 * 2 ** (failures - 1), 30000)).toISOString(), error: record.observationError };
+      }
+      if (succeeded && command?.status === "pending" && record.result) finishCommand(command, record.result.id);
       await this.store.save(record);
       return record;
     }));
@@ -81,7 +91,12 @@ export class TrackExecution {
     await assertSlot(this.store, record.token);
     this.transition(record, "validating", "Collecting response, changed files and independent validation results.");
     await this.store.save(record);
-    record.result = await runtime.collect(record, observed);
+    try { record.result = await runtime.collect(record, observed); }
+    catch (error) {
+      record.error = error instanceof Error ? error.message : String(error);
+      this.transition(record, "failed", "Evidence collection failed.");
+      throw new CollectionFailure(record.error);
+    }
     record.decision = null;
     record.error = record.result.failure;
     this.transition(record, record.result.failure ? "failed" : "awaiting-review", record.result.failure ?? "Validation finished. Review the stated completion criteria.");

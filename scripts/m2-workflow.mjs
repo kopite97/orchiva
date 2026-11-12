@@ -4,6 +4,7 @@ import { join } from 'node:path';
 import { homedir } from 'node:os';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
+import { setTimeout as delay } from 'node:timers/promises';
 import { createHostClient } from '@getpaseo/client/node';
 import { createPaseoApi } from '@getpaseo/client';
 import { JsonRequestStore } from '../server/adapters/storage/json-request-store.ts';
@@ -63,16 +64,24 @@ try {
       } finally { await store.close(); const current = git(config.repositoryPath,'rev-parse',ref); assert.ok([head,older].includes(current)); git(config.repositoryPath,'update-ref','-d',ref,current); }
     }
     if (action === 'verify') {
-      let record = await rpc('request.get',{ token: manifest.token }); assert.ok(record.agentId);
+      let record = await rpc('request.get',{ token: manifest.token });
+      const deadline = Date.now() + 45000;
+      while (!record.agentId && !['failed','needs-input'].includes(record.status) && Date.now() < deadline) { await delay(500); record = await rpc('request.get',{ token: manifest.token }); }
+      assert.ok(record.agentId);
       const agent = api.agents.ref(record.agentId); await agent.refresh(); if (agent.activeTurn || ['running','initializing'].includes(agent.status)) await agent.waitForFinish(45000);
       await agent.refresh(); assert.ok(!agent.activeTurn && !agent.pendingPermissions?.length);
-      record = await rpc('request.refresh', { token: record.token }); assert.equal(record.status, 'awaiting-review'); assert.equal(record.result.checks[0].passed, true);
+      const collectionDeadline = Date.now() + 45000;
+      do { record = await rpc('request.get', { token: record.token }); if (['awaiting-review','failed','needs-input'].includes(record.status)) break; await delay(500); } while (Date.now() < collectionDeadline);
+      assert.equal(record.status, 'awaiting-review'); assert.equal(record.result.checks[0].passed, true);
       const config = await loadConfig(); assert.equal(git(record.worktreePath,'rev-parse','HEAD'),manifest.baseCommit); assert.equal(record.confirmationSource,'confirmed-plan');
       for(const plan of [record.requestPlan,record.taskPlan]) assert.equal(await readFile(join(record.worktreePath,'.orchiva/plans',`${plan.id}.md`),'utf8'),plan.content);
       const command = record.commands.find(x=>x.kind==='start'); assert.ok(command); const replay = await rpc('request.start', { ...manifest.startInput, commandKey: command.key }); assert.equal(replay.agentId,record.agentId);
       await assert.rejects(rpc('request.start',{ token:`${runId}-bypass`, feature:record.feature, checks:record.checks }),/PLAN_REQUIRED/);
       for(const original of manifest.originals) assert.equal(sha(await readFile(join(root,'requests',original.file))),original.sha256,`Original changed: ${original.file}`);
-      const afterAgents = await api.agents.list(), afterWorkspaces = await api.workspaces.list(); assert.equal(afterAgents.entries.length,manifest.agents+1); assert.equal(afterWorkspaces.entries.length,manifest.workspaces+1);
+      const afterAgents = await api.agents.list(), afterWorkspaces = await api.workspaces.list(); assert.ok(!afterAgents.pageInfo.hasMore && !afterWorkspaces.pageInfo.hasMore);
+      const title = `${record.taskId}: ${record.feature.title}`;
+      assert.deepEqual(afterAgents.entries.filter(({agent})=>agent.title===title).map(({agent})=>agent.id),[record.agentId]);
+      assert.deepEqual(afterWorkspaces.entries.filter(workspace=>workspace.title===title).map(workspace=>workspace.id),[record.workspaceId]);
       manifest.result = { at:new Date().toISOString(), token:record.token, agentId:record.agentId, workspaceId:record.workspaceId, head:git(record.worktreePath,'rev-parse','HEAD'), planRevision:record.confirmedPlanRevision, inputHash:record.plans.at(-1).inputHash, status:record.status, checksPassed:true, startReplaySameId:true, originalBytesUnchanged:manifest.originals.length, newAgents:1, newWorkspaces:1, sourceOrigin:git(process.cwd(),'remote','get-url','origin'), sandboxHead:git(config.repositoryPath,'rev-parse',config.baseRef) }; await persist(); console.log(JSON.stringify(manifest.result,null,2));
     }
   }

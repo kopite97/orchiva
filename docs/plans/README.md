@@ -9,8 +9,9 @@
 | 1 | [M0 실행 기반 확인](m0-runtime-foundation.md) | `completed` | 브라우저 없는 연결, 생성·전송 대조, 기준 커밋 고정, 종료 처리 |
 | 2 | [M1 저장·상태·실행 슬롯](m1-storage-state.md) | `completed` | v2 마이그레이션, 결과·판정·명령 이력, 프로세스 소유권과 단일 실행 슬롯 |
 | 3 | [M2 초안·계획·실행](m2-draft-plan-start.md) | `completed` | 구조화 초안, 계획 확인, 기준 커밋 검증과 고정 SHA 실행 |
+| 4 | [M3 진행·관측·복원](m3-progress-reconciliation.md) | `completed` | 독립 관측 루프, 재시작 대조, 요약 목록과 진행 상세 |
 
-2026년 11월 12일 사용자의 지시에 따라 M0를 완료했다. 소스 초기 커밋은 `7a675a9`, M0는 `4397aaf`, M1은 `bd08ace`다. [M1 결과](../decisions/m1-storage-state.md)에 실제 4건 변환과 40개 테스트를 기록했다. 후속 지시에 따라 M2를 완료했으며 [M2 결과](../decisions/m2-draft-plan-start.md)에 48개 테스트, 실제 확인 실행 1건, GUI·ref 이동·기존 원본 보존 근거를 기록했다. M3 이후는 시작하지 않았다.
+2026년 11월 12일 사용자의 지시에 따라 M0~M3를 완료했다. 소스 초기 커밋은 `7a675a9`, M0는 `4397aaf`, M1은 `bd08ace`, M2는 `ca31b4c`다. [M1 결과](../decisions/m1-storage-state.md)에 실제4건 변환, [M2 결과](../decisions/m2-draft-plan-start.md)에 계획 확인 실행, [M3 결과](../decisions/m3-progress-reconciliation.md)에61개 테스트와 브라우저 없는 실행·진행 중 Plugin 복원·정상 daemon 재시작·기존6건 보존을 기록했다. M4 이후는 시작하지 않았다.
 
 ## 후속 단계
 
