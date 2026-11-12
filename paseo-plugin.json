@@ -1,0 +1,6 @@
+{
+  "id": "orchiva-plugin",
+  "name": "Orchiva",
+  "description": "Feature Request에서 PLAN, sandbox Worktree, Codex 실행까지 연결합니다.",
+  "requirements": { "paseo": ">=0.15.4 <0.16.0" }
+}
