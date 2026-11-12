@@ -8,6 +8,7 @@ import { RequestResult, labels } from "./request-result";
 export function TaskDetail(props: PluginScreenProps & { record: RequestRecord; actions: z.infer<typeof actionSchema>[]; onChanged(): Promise<unknown> }) {
   const { record, theme, actions } = props, color = theme.colors.foreground;
   const [tab, setTab] = useState("progress"), [expanded, setExpanded] = useState(false), [busy, setBusy] = useState(false), [error, setError] = useState("");
+  const [selectedResultId, setSelectedResultId] = useState<string | null>(null);
   const refresh = useRpc(refreshRpc);
   const button = (label: string, action: () => void, selected = false, disabled = false) => <Pressable accessibilityRole="button" accessibilityLabel={label} accessibilityState={{ selected, disabled: disabled || busy }} disabled={disabled || busy} onPress={action} style={{ padding: 12, borderRadius: 8, backgroundColor: selected ? theme.colors.accent : theme.colors.surface2, opacity: disabled || busy ? .5 : 1 }}><Text style={{ color: selected ? theme.colors.accentForeground : color }}>{label}</Text></Pressable>;
   const start = record.commands.find(x => x.kind === "start")?.createdAt ?? record.createdAt;
@@ -35,10 +36,10 @@ export function TaskDetail(props: PluginScreenProps & { record: RequestRecord; a
       {button(expanded ? "작업 정보 접기" : "작업 정보 펼치기", () => setExpanded(!expanded))}
       {expanded && <View style={{ gap: 12 }}><Text selectable style={{ color }}>Worktree: {record.worktreePath ?? "미생성"}{"\n"}세션: {record.agentId ?? "미생성"}{"\n"}기준 커밋: {record.plans.find(x => x.revision === record.confirmedPlanRevision)?.baseCommit ?? "기존 실행"}</Text>{[record.requestPlan, record.taskPlan].map(x => <Text key={x.id} selectable style={{ color }}>{x.content}</Text>)}</View>}
     </View>
-    <View style={{ display: tab === "result" ? "flex" : "none" }}><RequestResult {...props} /></View>
+    <View style={{ display: tab === "result" ? "flex" : "none" }}><View style={{ gap: 10 }}><View style={{ flexDirection: "row", flexWrap: "wrap", gap: 8 }}>{button("최신 결과 보기", () => setSelectedResultId(null), !selectedResultId)}{record.results.map(r => <View key={r.id}>{button(`시도 ${r.attemptNumber} · 검증 ${r.validationRun} 보기`, () => setSelectedResultId(r.id), selectedResultId === r.id)}</View>)}</View><RequestResult {...props} selectedResultId={selectedResultId} /></View></View>
     <View style={{ display: tab === "history" ? "flex" : "none", gap: 12 }}>
       <Text style={{ color }}>시도 {record.attemptHistory.length}건 · 검증 결과 {record.results.length}건 · 판정 {record.decisions.length}건</Text>
-      {record.attemptHistory.map(x => <View key={x.number} style={{ gap: 8, padding: 12, borderWidth: 1, borderColor: theme.colors.border }}><Text style={{ color }}>시도 {x.number} · {x.trigger === "resume" ? "수정 재개" : x.trigger === "legacy" ? "기존 실행" : "최초 실행"}</Text>{x.instruction && <Text style={{ color }}>{x.instruction}</Text>}{record.results.filter(r => r.attemptNumber === x.number).map(r => <Text key={r.id} selectable style={{ color }}>검증 {r.validationRun} · {r.failure ? "실패" : "검토 가능"} · {r.collectedAt}{"\n"}{r.id}</Text>)}</View>)}
+      {record.attemptHistory.map(x => <View key={x.number} style={{ gap: 8, padding: 12, borderWidth: 1, borderColor: theme.colors.border }}><Text style={{ color }}>시도 {x.number} · {x.trigger === "resume" ? "수정 재개" : x.trigger === "legacy" ? "기존 실행" : "최초 실행"}</Text>{x.instruction && <Text style={{ color }}>{x.instruction}</Text>}{record.results.filter(r => r.attemptNumber === x.number).map(r => <View key={r.id}><Text selectable style={{ color }}>검증 {r.validationRun} · {r.failure ? "실패" : "수집 완료"} · {r.collectedAt}{"\n"}{r.id}</Text>{button(`시도 ${r.attemptNumber} 검증 ${r.validationRun} 상세`, () => { setSelectedResultId(r.id); setTab("result"); })}</View>)}</View>)}
       {record.decisions.map(x => <Text key={x.id} style={{ color }}>{x.approved ? "완료 판정" : "수정 요청"} · {x.at}{"\n"}{x.note}</Text>)}
       <Text style={{ color, opacity: .7 }}>각 시도의 검증 회차와 판정 기록을 보존합니다.</Text>
     </View>

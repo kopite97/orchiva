@@ -66,7 +66,9 @@ try {
   const replay=await rpc('request.start',manifest.startInput); assert.equal(replay.agentId,r.agentId);
   const beforeRead=sha(await readFile(recordPath)); await rpc('request.page',{filter:'all',limit:20}); await rpc('request.detail',{token:r.token}); assert.equal(sha(await readFile(recordPath)),beforeRead);
   for(const original of manifest.originals) assert.equal(sha(await readFile(join(root,'requests',original.file))),original.sha256,`Original changed: ${original.file}`);
-  assert.equal(agents.entries.length,manifest.agents+1); assert.equal(workspaces.entries.length,manifest.workspaces+1);
+  const title = `${r.taskId}: ${r.feature.title}`;
+  assert.deepEqual(agents.entries.filter(({agent})=>agent.title===title).map(({agent})=>agent.id),[r.agentId]);
+  assert.deepEqual(workspaces.entries.filter(workspace=>workspace.title===title).map(workspace=>workspace.id),[r.workspaceId]);
   manifest.result={at:new Date().toISOString(),status:r.status,agentId:r.agentId,workspaceId:r.workspaceId,attempt:r.attempt,resultId:r.result.id,results:r.results.length,checksPassed:true,head:manifest.baseCommit,originalBytesUnchanged:manifest.originals.length,newAgents:1,newWorkspaces:1,readOnlyQueries:true,startReplaySameId:true,startupBeforeRpc:manifest.daemonStartup}; await persist(); console.log(JSON.stringify(manifest.result,null,2));
  }
  console.log(`${action}: PASS`);

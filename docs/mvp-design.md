@@ -6,7 +6,7 @@
 
 개발 절차는 [지침 지도](../AGENTS.md), 단계별 실행 상태는 [계획 목록](plans/README.md)을 따른다. 첫 상세 계획은 [M0 실행 기반 확인](plans/m0-runtime-foundation.md)이다.
 
-2026-11-12 현재 M0~M3를 구현했다. [M2 결과](decisions/m2-draft-plan-start.md)의 초안·계획 확인·고정 SHA 실행과 [M3 결과](decisions/m3-progress-reconciliation.md)의 독립 관측·진행/이력 화면·정상 재시작 복원을 검증했다. 조건별 판정·과거 결과 상세·초기 실패 재시도·unknown 해결·성능 수용은 M4~M6 설계다.
+2026-11-12 현재 M0~M4를 구현했다. [M2 결과](decisions/m2-draft-plan-start.md)의 초안·계획 확인·고정 SHA 실행과 [M3 결과](decisions/m3-progress-reconciliation.md)의 독립 관측·진행/이력 화면·정상 재시작 복원을 검증했다. [M4 결과](decisions/m4-evidence-review.md)의 조건별 판정·과거 결과 상세·검사 변경 확인·명시적 파일 지문 비교도 구현·검증했다. 초기 실패 재시도·unknown 해결·성능 수용은 M5~M6 설계다.
 
 ## 목표와 설계 기준
 
@@ -229,7 +229,7 @@ erDiagram
 | `FileEvidence` | `path`, `changeType`, `sha256`, `size`, `deleted`, `isCheckInput` | 변경·미추적 파일과 명시한 검사 입력을 식별한다. 삭제 파일은 삭제 사실을 저장한다. |
 | `CheckResult` | `checkId`, `status`, `exitCode`, `output`, `durationMs`, `failureKind`, `inputFingerprint` | `status`는 `passed`, `failed`, `error`, `skipped`다. 프로세스 종료 코드와 오류 분류를 구분한다. |
 | `ReviewDecision` | `id`, `resultId`, `approved`, `note`, `reviewedAt`, `criteriaReviews[]`, `testChangesAcknowledged`, `testChangeNote` | 결과 ID에 연결된 불변 기록이다. 수정 요청 판정도 보존하고 재개 시 삭제하지 않는다. |
-| `CriterionReview` | `criterionId`, `satisfied`, `evidenceRefs[]`, `note` | 참조는 같은 결과의 검사 ID·파일 경로다. 수동 확인에는 구체적인 `note`가 필요하다. |
+| `CriterionReview` | `criterionId`, `satisfied`, `evidenceRefs[]`, `note` | 참조는 같은 결과의 검사 ID·파일 경로다. 수동 확인에는 구체적인 `note`가 필요하다. M4는 최소 10자를 요구하며 자동 검사 0건에서는 모든 조건에 수동 근거를 요구한다. |
 | `Command` | `key`, `kind`, `payloadHash`, `status`, `phase`, `messageId`, `resourceIds`, `outcomeRef`, `createdAt`, `resolvedAt` | `pending`, `applied`, `failed`, `unknown`을 기록한다. 응답 재전송에 필요한 원래 결과 참조를 보존한다. |
 | `StateEvent` | `at`, `from`, `to`, `reason`, `attemptId`, `commandKey` | 표시용 최근 100건과 생략 건수를 저장한다. 결과·판정·명령 이력에는 이 제한을 적용하지 않는다. |
 
@@ -244,7 +244,7 @@ erDiagram
 
 지문은 기존 HEAD·변경·미추적 파일을 기본으로 삼고 등록한 검사 파일도 명시적으로 포함한다. ignored 파일을 산출물로 취급하는 기능은 MVP에서 지원하지 않는다. 검사 대상이 ignored라면 계획 확인 시 거부하고, 실행 후 무시 대상이 된 경우에도 검증 오류로 처리한다. 판정은 확인 당시 결과를 기록하며 외부 편집기의 동시 쓰기까지 원자적으로 고정하는 보장은 아니다.
 
-검사 파일의 최초 수집 해시를 기준으로 저장하고 복구 후 결과에도 실제 해시를 기록한다. 해시가 달라지면 `검사 파일이 변경되었습니다`를 표시하고, 검사 변경 확인과 사유가 추가되기 전에는 완료를 확정할 수 없다. 파일이 같다면 PoC처럼 원래 검사를 유지한 복구였음을 설명할 수 있다. 에이전트가 작성한 검사 자체의 정확성은 수동 검토 대상이다.
+검사 파일의 최초 수집 해시를 기준으로 저장하고 복구 후 결과에도 실제 해시를 기록한다. 해시가 달라지면 `검사 파일이 변경되었습니다`를 표시하고, 검사 변경 확인과 사유가 추가되기 전에는 완료를 확정할 수 없다. 완료 후 현재 파일 비교는 명시적 읽기 전용 작업이며 기존 결과와 판정을 변경하지 않는다. 과거 파일 해시가 없으면 비교 불가로 안내한다. 파일이 같다면 PoC처럼 원래 검사를 유지한 복구였음을 설명할 수 있다. 에이전트가 작성한 검사 자체의 정확성은 수동 검토 대상이다.
 
 ### 저장과 마이그레이션
 

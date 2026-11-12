@@ -19,10 +19,17 @@ export const legacyStartSchema = z.object({ token: tokenSchema, feature: feature
 export const confirmedStartSchema = z.object({ token: tokenSchema, commandKey: tokenSchema, expectedRevision: z.number().int().nonnegative(), planRevision: z.number().int().positive(), inputHash: z.string().regex(/^[a-f0-9]{64}$/) }).strict();
 export const startSchema = z.union([confirmedStartSchema, legacyStartSchema]);
 export const statusSchema = z.enum(["draft", "ready", "planned", "creating-worktree", "writing-plan", "starting-session", "started", "running", "needs-input", "validating", "awaiting-review", "completed", "failed"]);
+export const evidenceRefSchema = z.object({ kind: z.enum(["check", "file"]), id: z.string().min(1) });
+export const criterionReviewSchema = z.object({ criterionId: z.string(), satisfied: z.boolean(), evidenceRefs: z.array(evidenceRefSchema).max(320), note: z.string().trim().max(4000) });
+const reviewDetails = { criteriaReviews: z.array(criterionReviewSchema).max(20).optional(), testChangesAcknowledged: z.boolean().optional(), testChangeNote: z.string().trim().max(4000).optional() };
+export const fileEvidenceSchema = z.object({ path: z.string(), changeType: z.enum(["modified", "untracked", "deleted", "check-input"]), sha256: z.string().nullable(), size: z.number(), deleted: z.boolean(), isCheckInput: z.boolean() });
 export const resultSchema = z.object({
   id: z.string(), sourceKey: z.string(), collectedAt: z.string(), finalResponse: z.string(), agentStatus: z.string(),
+  files: z.array(fileEvidenceSchema).optional(),
+  testChanges: z.array(z.object({ checkId: z.string(), path: z.string(), baselineResultId: z.string(), before: z.string().nullable(), after: z.string().nullable() })).optional(),
+  truncation: z.object({ finalResponse: z.boolean(), diffStat: z.boolean() }).optional(),
   changedFiles: z.array(z.string()), diffStat: z.string(), fingerprint: z.string(),
-  checks: z.array(z.object({ label: z.string(), command: z.string(), passed: z.boolean(), exitCode: z.number().nullable(), output: z.string(), durationMs: z.number() })),
+  checks: z.array(z.object({ checkId: z.string().optional(), status: z.enum(["passed", "failed", "error", "skipped"]).optional(), failureKind: z.string().nullable().optional(), inputFingerprint: z.string().nullable().optional(), truncated: z.boolean().optional(), label: z.string(), command: z.string(), passed: z.boolean(), exitCode: z.number().nullable(), output: z.string(), durationMs: z.number() })),
   failure: z.string().nullable(), executionFailure: z.string().nullable().default(null),
 });
 const planSchema = z.object({ id: z.string(), ownerType: z.enum(["request", "task"]), ownerId: z.string(), revision: z.number(), content: z.string() });
@@ -36,7 +43,7 @@ export const legacyRecordSchema = z.object({
   events: z.array(z.object({ at: z.string(), status: statusSchema, detail: z.string() })).default([]),
   observationError: z.string().nullable().default(null),
   recovery: z.object({ key: tokenSchema, instruction: z.string(), messageId: z.string(), pending: z.boolean() }).nullable().default(null),
-  decision: z.object({ approved: z.boolean(), note: z.string(), at: z.string(), resultId: z.string() }).nullable().default(null),
+  decision: z.object({ ...reviewDetails, approved: z.boolean(), note: z.string(), at: z.string(), resultId: z.string() }).nullable().default(null),
 });
 export const commandSchema = z.object({
   key: z.string().min(1), kind: z.enum(["save-draft", "prepare-plan", "start", "resume", "review", "revalidate"]), payloadHash: z.string(),
@@ -45,7 +52,7 @@ export const commandSchema = z.object({
   outcomeRef: z.string().nullable().default(null), createdAt: z.string(), resolvedAt: z.string().nullable().default(null),
 });
 export const storedResultSchema = resultSchema.extend({ attemptNumber: z.number().int().positive(), validationRun: z.number().int().positive(), legacy: z.boolean() });
-export const storedDecisionSchema = z.object({ id: z.string(), resultId: z.string(), approved: z.boolean(), note: z.string(), at: z.string(), fingerprint: z.string(), legacy: z.boolean() });
+export const storedDecisionSchema = z.object({ ...reviewDetails, id: z.string(), resultId: z.string(), approved: z.boolean(), note: z.string(), at: z.string(), fingerprint: z.string(), legacy: z.boolean() });
 export const observationSchema = z.object({ lastAttemptAt: z.string(), lastSuccessAt: z.string().nullable(), consecutiveFailures: z.number(), nextAttemptAt: z.string().nullable(), error: z.string().nullable() });
 export const recordSchema = legacyRecordSchema.extend({
   observation: observationSchema.optional(),
@@ -70,7 +77,7 @@ export type Check = z.infer<typeof checkSchema>;
 export type ExecutionResult = z.infer<typeof resultSchema>;
 export const resumeSchema = z.object({ token: tokenSchema, key: tokenSchema, instruction: z.string().trim().min(1).max(12000), expectedRevision: z.number().int().nonnegative().optional() });
 export const resumeRpc = defineRpc({ name: "request.resume", input: resumeSchema, output: recordSchema });
-export const reviewSchema = z.object({ token: tokenSchema, resultId: z.string(), approved: z.boolean(), note: z.string().trim().min(1).max(4000), commandKey: tokenSchema.optional(), expectedRevision: z.number().int().nonnegative().optional() });
+export const reviewSchema = z.object({ ...reviewDetails, token: tokenSchema, resultId: z.string(), approved: z.boolean(), note: z.string().trim().min(1).max(4000), commandKey: tokenSchema.optional(), expectedRevision: z.number().int().nonnegative().optional() });
 export const reviewRpc = defineRpc({ name: "request.review", input: reviewSchema, output: recordSchema });
 export const refreshRpc = defineRpc({ name: "request.refresh", input: z.object({ token: tokenSchema, revalidate: z.boolean().optional() }), output: recordSchema });
 export const storageDiagnosticsSchema = z.object({ records: z.number(), bytes: z.number(), results: z.number(), decisions: z.number(), issues: z.array(z.object({ file: z.string(), code: z.string() })), activeTokens: z.array(z.string()) });
@@ -91,3 +98,5 @@ export const pageRpc = defineRpc({ name: "request.page", input: pageInputSchema,
 export const detailRpc = defineRpc({ name: "request.detail", input: z.object({ token: tokenSchema }), output: z.object({ record: recordSchema, allowedActions: z.array(actionSchema) }).nullable() });
 export const serviceStatusSchema = z.object({ state: z.enum(["starting", "connected", "reconnecting", "stopped"]), startedAt: z.string(), lastSuccessAt: z.string().nullable(), lastError: z.string().nullable(), nextAttemptAt: z.string().nullable(), cycles: z.number(), failures: z.number(), restoring: z.boolean() });
 export const serviceStatusRpc = defineRpc({ name: "runtime.status", input: z.object({}), output: serviceStatusSchema });
+
+export const inspectRpc = defineRpc({ name: "request.inspect-result", input: z.object({ token: tokenSchema, resultId: z.string() }), output: z.object({ resultId: z.string(), inspectedAt: z.string(), matches: z.boolean(), fingerprint: z.string() }) });

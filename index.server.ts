@@ -1,6 +1,6 @@
 import type { PluginServerContext } from "@getpaseo/plugin/server";
 import { join } from "node:path";
-import { configRpc, listRpc, startRpc, refreshRpc, resumeRpc, reviewRpc, diagnosticsRpc, revalidateRpc, saveDraftRpc, preparePlanRpc, getRpc, preflightRpc, pageRpc, detailRpc, serviceStatusRpc } from "./shared/contracts/feature-request";
+import { inspectRpc, configRpc, listRpc, startRpc, refreshRpc, resumeRpc, reviewRpc, diagnosticsRpc, revalidateRpc, saveDraftRpc, preparePlanRpc, getRpc, preflightRpc, pageRpc, detailRpc, serviceStatusRpc } from "./shared/contracts/feature-request";
 import { configDirectory, loadConfig } from "./server/config/project-config";
 import { JsonRequestStore } from "./server/adapters/storage/json-request-store";
 import { PaseoRuntime } from "./server/adapters/paseo/runtime";
@@ -46,6 +46,7 @@ export default function contribute(server: PluginServerContext) {
   server.handle(startRpc, async (input, { paseo }) => { stopProbe.rpc(); const record = await start.accept(input, await runtime(paseo), () => reconciler.assertReady()); reconciler.wake(); return record; });
   server.handle(refreshRpc, async ({ token, revalidate }, { paseo }) => { stopProbe.rpc(); return tracker.refresh(token, await runtime(paseo), undefined, revalidate); });
   server.handle(resumeRpc, async (input, { paseo }) => { stopProbe.rpc(); return tracker.resume(input, await runtime(paseo)); });
+  server.handle(inspectRpc, async (input, { paseo }) => tracker.inspect(input.token, input.resultId, await runtime(paseo)));
   server.handle(reviewRpc, async (input, { paseo }) => { stopProbe.rpc(); return tracker.review(input, await runtime(paseo)); });
   const remove = [
     server.addHook("agent.turn.before", async ({ agent }) => { reconciler.hint(agent.id); }),

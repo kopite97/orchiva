@@ -3,6 +3,7 @@ import type { RequestStore, LifecycleRuntime, Observation } from "./ports";
 import { RequestLocks } from "./request-locks";
 import { assertSlot, assertRevision, beginCommand, finishCommand, previousCommand } from "./execution-slot";
 import { payloadHash } from "../domain/record-v2";
+import { validateReview } from "../domain/review";
 import { randomUUID } from "node:crypto";
 class CollectionFailure extends Error {}
 
@@ -135,25 +136,34 @@ export class TrackExecution {
       return record;
     }));
   }
+  async inspect(token: string, resultId: string, runtime: LifecycleRuntime) {
+    return this.store.exclusive(() => this.locks.run(token, async () => {
+      const record = await this.required(token);
+      const result = record.results.find(item => item.id === resultId);
+      if (!result) throw new Error("STALE_RESULT: result not found");
+      if (!result.files) throw new Error("LEGACY_EVIDENCE: 기존 결과에는 파일 해시가 없어 현재 파일과 비교할 수 없습니다.");
+      const fingerprint = await runtime.fingerprint(record);
+      return { resultId, inspectedAt: new Date().toISOString(), matches: fingerprint === result.fingerprint, fingerprint };
+    }));
+  }
   async review(input: unknown, runtime: LifecycleRuntime) {
     const parsed = reviewSchema.parse(input);
     return this.store.exclusive(() => this.locks.run(parsed.token, async () => {
       const record = await this.required(parsed.token);
-      const payload = { resultId: parsed.resultId, approved: parsed.approved, note: parsed.note };
+      const { token, commandKey, expectedRevision, ...payload } = parsed;
       const key = parsed.commandKey ?? `review-${payloadHash(payload)}`;
       if (previousCommand(record, key, "review", payload)) return record;
-      if (record.decision?.resultId === parsed.resultId && record.decision.approved === parsed.approved && record.decision.note === parsed.note) return record;
+      if (!parsed.criteriaReviews && !record.decision?.criteriaReviews && record.decision?.resultId === parsed.resultId && record.decision.approved === parsed.approved && record.decision.note === parsed.note) return record;
       assertRevision(record, parsed.expectedRevision);
       if (record.recovery?.pending || record.commands.some(item => ["unknown", "pending"].includes(item.status))) throw new Error("DELIVERY_UNKNOWN");
-      if (record.status !== "awaiting-review" || !record.result || record.result.id !== parsed.resultId) throw new Error("The result changed or is not ready for review. Refresh first.");
+      if (record.status !== "awaiting-review" || !record.result || record.result.id !== parsed.resultId) throw new Error("STALE_RESULT: The result changed or is not ready for review. Refresh first.");
       const observed = await runtime.observe(record);
       if (observed.status !== "ended" || observed.sourceKey !== record.result.sourceKey) throw new Error("Agent execution changed. Refresh before reviewing.");
       if (await runtime.fingerprint(record) !== record.result.fingerprint) {
-        await assertSlot(this.store, record.token);
-        record.result = null; this.transition(record, "validating", "Files changed since validation; refresh to validate again.");
-        await this.store.save(record); throw new Error("Files changed since validation. Refresh before reviewing.");
+        throw new Error("STALE_RESULT: Files changed since validation. Revalidate before reviewing.");
       }
-      record.decision = { approved: parsed.approved, note: parsed.note, resultId: parsed.resultId, at: new Date().toISOString() };
+      validateReview(record, parsed);
+      record.decision = { ...payload, at: new Date().toISOString() };
       const command = beginCommand(record, key, "review", payload);
       finishCommand(command, parsed.resultId);
       record.error = parsed.approved ? null : parsed.note;

@@ -1,0 +1,111 @@
+{
+  "runId": "m4-20261112-review-001",
+  "baseline": "efcb9ad4b7ed7a2081e38af8976c6875ca0308d3",
+  "baseCommit": "86e00e0c80cc0822eaa2e5e70b406530f7c7749a",
+  "firstResultId": "1023b1ff-1ebc-458c-b84c-b7e6d3edc9e6",
+  "exercise": {
+    "at": "2026-11-12T07:32:33.547Z",
+    "secondResultId": "cf4a339d-fd05-47ce-bccc-7ccbe6b89ca3",
+    "oldResultPreserved": true,
+    "missingCriteriaRejected": true,
+    "staleFileRejected": true,
+    "oldResultRejected": true,
+    "testChangeRequired": true,
+    "revalidationReplay": true,
+    "attempt": 1
+  },
+  "result": {
+    "at": "2026-11-12T07:41:46.623Z",
+    "status": "completed",
+    "agentId": "508cb1e1-29fb-4187-9ab5-5a5371a48f37",
+    "workspaceId": "wks_da9dadc1cf47efc2",
+    "attempt": 1,
+    "results": 2,
+    "decisions": 1,
+    "criteriaReviews": [
+      {
+        "criterionId": "positive",
+        "satisfied": true,
+        "evidenceRefs": [
+          {
+            "kind": "check",
+            "id": "sum-test"
+          }
+        ],
+        "note": ""
+      },
+      {
+        "criterionId": "negative",
+        "satisfied": true,
+        "evidenceRefs": [
+          {
+            "kind": "check",
+            "id": "sum-test"
+          }
+        ],
+        "note": ""
+      }
+    ],
+    "checkChangesAcknowledged": true,
+    "postCompletionDifference": true,
+    "completedBytesUnchanged": true,
+    "originalBytesUnchanged": 7,
+    "newAgents": 1,
+    "newWorkspaces": 1
+  },
+  "originals": [
+    {
+      "file": "lifecycle-failure-20261112-001.json",
+      "sha256": "1030abef249dca3948c16dfcb65caf5bcaa1a8b759e2a1322276622d289845dd"
+    },
+    {
+      "file": "lifecycle-success-20261112-001.json",
+      "sha256": "9e1660c7b4c42aa0d714506224b5dbe4bf204d2efee0dbf57db6dd7b55aa23c7"
+    },
+    {
+      "file": "m2-20261112-workflow-001-request.json",
+      "sha256": "61765c6784270173388f7bffd451330aa7557a61261301827e0fed0c5079b65b"
+    },
+    {
+      "file": "m3-20261112-reconcile-001-request.json",
+      "sha256": "28b9b63e04339799e7447b9ffb14d9bf4d55bc7506333da1c74304d96a414314"
+    },
+    {
+      "file": "mwcyphtz-fnthmzhhky.json",
+      "sha256": "f617bbc3a2ce1301cdcd34ec032538c9d45227038bb09eac1d423340310d989a"
+    },
+    {
+      "file": "mwd6c7bv-itu88vwvjs.json",
+      "sha256": "6b348c9017a5e61416c79c06cfd154fb4fbcc4d84f96e5ec61064dc858499440"
+    },
+    {
+      "file": "smoke-20261112-001.json",
+      "sha256": "c1fb34d441a4506341bdf918c096bd27526ebac434ebbe89f371080397ff4834"
+    }
+  ],
+  "validation": {
+    "typecheck": "PASS",
+    "tests": 70,
+    "verify": "PASS",
+    "lifecycle": "PASS",
+    "m2": "PASS",
+    "m3": "PASS",
+    "gui": {
+      "wide": [
+        1280,
+        900
+      ],
+      "compact": [
+        390,
+        844
+      ],
+      "missingEvidenceDisabled": true,
+      "checkChangeAckRequired": true,
+      "tabMemoPreserved": true,
+      "pastResultReadOnly": true,
+      "pastApproveButtons": 0,
+      "horizontalOverflow": false
+    },
+    "limits": "Ignore/timeout/budget/collector failures tested with local Git fixtures; no model crash injected."
+  }
+}

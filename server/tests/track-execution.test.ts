@@ -39,7 +39,7 @@ test("tracks running and permission states; a completed turn requires evidence a
   const result = await f.tracker.refresh(f.record.token, f.runtime);
   assert.equal(result.status, "awaiting-review");
   assert.equal(result.result?.checks[0]?.exitCode, 0);
-  const decision = { token: f.record.token, resultId: result.result!.id, approved: true, note: "Expected behavior verified" };
+  const decision = { token: f.record.token, resultId: result.result!.id, approved: true, note: "Expected behavior verified", expectedRevision: result.revision, commandKey: "approve-criteria-001", criteriaReviews: result.criteria.map(c => ({ criterionId: c.id, satisfied: true, evidenceRefs: [], note: "Expected behavior independently verified" })) };
   assert.equal((await f.tracker.review(decision, f.runtime)).status, "completed");
   await f.tracker.refresh(f.record.token, f.runtime, { kind: "completed" });
   assert.equal((await f.store.get(f.record.token))?.status, "completed");
@@ -68,7 +68,7 @@ test("review rejects stale results and changed worktree contents", async t => {
   await assert.rejects(f.tracker.review({ token: result.token, resultId: "old", approved: true, note: "Reviewed" }, f.runtime), /changed/);
   f.state.fingerprint = "changed";
   await assert.rejects(f.tracker.review({ token: result.token, resultId: result.result!.id, approved: true, note: "Reviewed" }, f.runtime), /Files changed/);
-  assert.equal((await f.store.get(result.token))?.status, "validating");
+  assert.equal((await f.store.get(result.token))?.status, "awaiting-review");
 });
 test("missed hooks are reconciled after restart; canceled turns fail and stale turn events do not corrupt new results", async t => {
   const f = await fixture(t); f.state.observation.status = "ended";
@@ -123,7 +123,7 @@ test("explicit refresh reruns checks but preserves a known canceled execution", 
 test("revalidation and resume preserve rejected decisions and all result versions", async t => {
   const f = await fixture(t); f.state.observation.status = "ended";
   const first = await f.tracker.refresh(f.record.token, f.runtime);
-  const decision = { token: first.token, resultId: first.result!.id, approved: false, note: "Needs refinement", commandKey: "review-history-001", expectedRevision: first.revision };
+  const decision = { token: first.token, resultId: first.result!.id, approved: false, note: "Needs refinement", commandKey: "review-history-001", expectedRevision: first.revision, criteriaReviews: first.criteria.map(c => ({ criterionId: c.id, satisfied: false, evidenceRefs: [], note: "Expected behavior needs refinement" })) };
   await f.tracker.review(decision, f.runtime);
   const second = await f.tracker.refresh(first.token, f.runtime, undefined, true);
   assert.equal(second.results.length, 2); assert.equal(second.decisions.length, 1);
@@ -147,7 +147,7 @@ test("stale review revision is rejected before mutation and original result surv
   await assert.rejects(f.tracker.review({ token: record.token, resultId: record.result!.id, approved: true, note: "Review", expectedRevision: 0 }, f.runtime), /REVISION_CONFLICT/);
   f.state.fingerprint = "edited";
   await assert.rejects(f.tracker.review({ token: record.token, resultId: record.result!.id, approved: true, note: "Review" }, f.runtime), /Files changed/);
-  const after = (await f.store.get(record.token))!; assert.equal(after.result, null); assert.equal(after.results[0].id, record.result!.id);
+  const after = (await f.store.get(record.token))!; assert.deepEqual(after.result, record.result); assert.equal(after.results[0].id, record.result!.id);
 });
 
 test("revalidation command replay returns its original result reference without a second validation", async t => {
