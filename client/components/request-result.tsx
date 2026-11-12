@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
 import { useMutation } from "@tanstack/react-query";
 import { useRpc, type PluginScreenProps } from "@getpaseo/plugin/client";
-import { inspectRpc, revalidateRpc, resumeRpc, reviewRpc, type RequestRecord, type ExecutionResult, criterionReviewSchema } from "../../shared/contracts/feature-request";
+import { inspectRpc, revalidateRpc, reviewRpc, type RequestRecord, type ExecutionResult, criterionReviewSchema } from "../../shared/contracts/feature-request";
 import type { z } from "zod";
 
 export const labels: Record<RequestRecord["status"], string> = {
@@ -15,11 +15,8 @@ export function RequestResult(props: Props) {
   if (!result) return <MissingResult {...props} />;
   return <ResultPanel key={result.id} {...props} result={result} />;
 }
-function MissingResult({ record, theme, onChanged, actions }: Props) {
-  const [instruction, setInstruction] = useState("");
-  const resume = useRpc(resumeRpc);
-  const action = useMutation({ mutationFn: () => resume({ token: record.token, key: `resume-${globalThis.crypto.randomUUID()}`, expectedRevision: record.revision, instruction }), onSettled: onChanged });
-  return <View style={{ gap: 12 }}><Text style={{ color: theme.colors.foreground }}>{record.error ?? "아직 수집된 결과가 없습니다. 진행 탭에서 상태를 확인하세요."}</Text>{record.status === "failed" && actions?.includes("resume") && <><TextInput accessibilityLabel="같은 작업 재개 지시" value={instruction} onChangeText={setInstruction} multiline style={{ color: theme.colors.foreground, padding: 12, borderWidth: 1, borderColor: theme.colors.border }} /><Pressable accessibilityRole="button" disabled={!instruction.trim() || action.isPending} onPress={() => action.mutate()}><Text style={{ color: theme.colors.foreground }}>같은 작업에서 재개</Text></Pressable></>}{action.error && <Text style={{ color: theme.colors.foreground }}>{action.error.message}</Text>}</View>;
+function MissingResult({ record, theme }: Props) {
+  return <Text style={{ color: theme.colors.foreground }}>{record.error ?? "아직 수집된 결과가 없습니다. 진행 탭에서 상태를 확인하세요."}</Text>;
 }
 function reviewError(message: string) {
   if (message.includes("STALE_RESULT")) return "결과 또는 파일이 변경되었습니다. 최신 결과를 선택하고 검증을 다시 실행하세요.";
@@ -35,15 +32,14 @@ function ResultPanel({ record, theme, onChanged, actions, result }: Props & { re
   const editable = latest && record.status === "awaiting-review" && (!actions || actions.includes("review"));
   const [reviews, setReviews] = useState<z.infer<typeof criterionReviewSchema>[]>(() => record.criteria.map(c => ({ criterionId: c.id, satisfied: false, evidenceRefs: [], note: "" })));
   const [note, setNote] = useState(record.decision?.approved === false ? record.decision.note : ""), [ack, setAck] = useState(false), [changeNote, setChangeNote] = useState("");
-  const review = useRpc(reviewRpc), revalidate = useRpc(revalidateRpc), resume = useRpc(resumeRpc), inspect = useRpc(inspectRpc);
+  const review = useRpc(reviewRpc), revalidate = useRpc(revalidateRpc), inspect = useRpc(inspectRpc);
   const comparison = useMutation({ mutationFn: () => inspect({ token: record.token, resultId: result.id }) });
   const command = useRef({ signature: "", key: "" });
-  const action = useMutation({ mutationFn: async (kind: "approve" | "reject" | "revalidate" | "resume") => {
+  const action = useMutation({ mutationFn: async (kind: "approve" | "reject" | "revalidate") => {
     const signature = JSON.stringify({ kind, resultId: result.id, revision: record.revision, reviews, note, ack, changeNote });
     if (command.current.signature !== signature) command.current = { signature, key: `m4-${globalThis.crypto.randomUUID()}` };
     const commandKey = command.current.key;
     if (kind === "revalidate") return revalidate({ token: record.token, resultId: result.id, expectedRevision: record.revision, commandKey });
-    if (kind === "resume") return resume({ token: record.token, key: commandKey, instruction: note, expectedRevision: record.revision });
     return review({ token: record.token, resultId: result.id, expectedRevision: record.revision, commandKey, approved: kind === "approve", note, criteriaReviews: reviews, testChangesAcknowledged: ack, testChangeNote: changeNote });
   }, onSettled: onChanged });
   const update = (id: string, patch: Partial<z.infer<typeof criterionReviewSchema>>) => setReviews(old => old.map(x => x.criterionId === id ? { ...x, ...patch } : x));
@@ -97,7 +93,6 @@ function ResultPanel({ record, theme, onChanged, actions, result }: Props & { re
     {result.checks.map((x, i) => <View key={i} style={{ gap: 6, padding: 12, backgroundColor: theme.colors.surface1 }}><Text selectable style={text}>{x.label} · 종료 코드 {x.exitCode ?? "없음"} · {x.durationMs}ms{"\n"}{x.command}{"\n"}{x.output}</Text>{x.truncated && <Text style={text}>출력 앞부분이 잘렸습니다 (마지막 16,000자).</Text>}</View>)}
     {decisions.map(d => <View key={d.id} style={{ gap: 8 }}><Text selectable style={text}>{d.approved ? "완료 확정" : "수정 요청"} · {d.at}{"\n"}{d.note}</Text>{d.testChangesAcknowledged && <Text style={text}>검사 변경 확인: {d.testChangeNote}</Text>}{!d.criteriaReviews && <Text style={muted}>기존 판정: 조건별 근거 미수집</Text>}</View>)}
     {editable && <View style={{ gap: 10 }}>{input("최종 판정 메모", note, setNote)}{!canApprove && <Text style={muted}>모든 조건 충족·조건별 근거·최종 메모가 있어야 완료할 수 있습니다. 검사 변경 시 확인과 10자 이상의 사유도 필요합니다.</Text>}<View style={{ flexDirection: "row", flexWrap: "wrap", gap: 8 }}>{button("완료 확정", () => action.mutate("approve"), !canApprove)}{button("수정 요청", () => action.mutate("reject"), !grounded || !note.trim())}</View></View>}
-    {latest && record.status === "failed" && actions?.includes("resume") && <View style={{ gap: 8 }}>{input("같은 작업 재개 지시", note, setNote)}{button("같은 작업에서 재개", () => action.mutate("resume"), !note.trim())}</View>}
     {latest && actions?.includes("revalidate") && button("검증 다시 실행", () => action.mutate("revalidate"))}
     {button("현재 파일과 비교", () => comparison.mutate(), comparison.isPending)}
     {comparison.error && <Text accessibilityRole="alert" style={text}>{comparison.error.message}</Text>}

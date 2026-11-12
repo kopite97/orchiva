@@ -62,6 +62,10 @@ export function assertAppendOnly(previous: RequestRecord, next: RequestRecord) {
       if (!entry || payloadHash(entry) !== payloadHash(old)) throw new Error(`IMMUTABLE_HISTORY: ${field}`);
     }
   }
+  for (const old of previous.deliveryChecks ?? []) {
+    const entry = next.deliveryChecks?.find(x => x.id === old.id);
+    if (!entry || payloadHash(entry) !== payloadHash(old)) throw new Error("IMMUTABLE_HISTORY: delivery check");
+  }
   for (const old of previous.commands) {
     const entry = next.commands.find(item => item.key === old.key);
     if (!entry || entry.kind !== old.kind || entry.payloadHash !== old.payloadHash || entry.createdAt !== old.createdAt || (old.status === "applied" && payloadHash(entry) !== payloadHash(old))) throw new Error("IMMUTABLE_HISTORY: command");
@@ -76,6 +80,8 @@ export function validateReferences(record: RequestRecord) {
   const unique = (values: (string | number)[]) => { if (new Set(values).size !== values.length) throw new Error("INVALID_REFERENCE: duplicate identity"); };
   unique(record.results.map(x => x.id)); unique(record.decisions.map(x => x.id)); unique(record.commands.map(x => x.key));
   unique(record.attemptHistory.map(x => x.number)); unique(record.plans.map(x => x.revision));
+  unique((record.deliveryChecks ?? []).map(x => x.id));
+  for (const check of record.deliveryChecks ?? []) if (!record.commands.some(x => x.key === check.commandKey)) throw new Error("INVALID_REFERENCE: delivery command");
   for (const result of record.results) {
     if (!record.attemptHistory.some(x => x.number === result.attemptNumber && x.resultIds.includes(result.id))) throw new Error("INVALID_REFERENCE: result attempt");
   }

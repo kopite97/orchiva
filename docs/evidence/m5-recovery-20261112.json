@@ -1,0 +1,130 @@
+{
+  "runId": "m5-20261112-recovery-002",
+  "baseline": "3104e97b570f56ecd521ce4140d26b24ff709567",
+  "baseCommit": "86e00e0c80cc0822eaa2e5e70b406530f7c7749a",
+  "fixture": {
+    "token": "m5-20261112-recovery-002-fixture",
+    "status": "awaiting-review",
+    "agentId": "7353d7cd-12e9-4c44-a904-ff2ea10d71fa",
+    "workspaceId": "wks_55928fe68f85f743",
+    "attempt": 2,
+    "results": 2,
+    "creates": 1,
+    "agentCreates": 1,
+    "sends": 1,
+    "matchingMessages": 1,
+    "deliveryChecks": [
+      {
+        "id": "123e2d09-f190-44cb-b0fa-9ba4eb8842c7",
+        "commandKey": "m5-20261112-recovery-002-fixture-retry",
+        "at": "2026-11-12T08:11:15.989Z",
+        "outcome": "found",
+        "detail": "원래 생성·전송 식별자와 외부 근거가 일치합니다.",
+        "resourceId": "7353d7cd-12e9-4c44-a904-ff2ea10d71fa"
+      },
+      {
+        "id": "17895918-115a-4924-88f5-bd7980df3d6c",
+        "commandKey": "m5-20261112-recovery-002-fixture-resume",
+        "at": "2026-11-12T08:11:54.921Z",
+        "outcome": "found",
+        "detail": "원래 생성·전송 식별자와 외부 근거가 일치합니다.",
+        "resourceId": "orchiva-m5-20261112-recovery-002-fixture-2"
+      }
+    ]
+  },
+  "main": {
+    "at": "2026-11-12T08:29:27.021Z",
+    "status": "completed",
+    "attempt": 3,
+    "results": 4,
+    "decisions": 2,
+    "agentId": "7cf22560-36eb-44a2-bf21-9a6c7d6de752",
+    "workspaceId": "wks_9964f44d99ea2b0f",
+    "testHash": "b9b94b1ea8c13d38159610a9e34990b8a22053a59b5a416a54ffb2e4d0b1bc8a",
+    "testChanges": 0,
+    "initialFailurePreserved": true,
+    "rejectedDecisionPreserved": true,
+    "oldCommandReplayNoWrites": true,
+    "originalBytesUnchanged": 8,
+    "mainMessages": 3,
+    "newAgents": 2,
+    "newWorkspaces": 2
+  },
+  "first": {
+    "agentId": "7cf22560-36eb-44a2-bf21-9a6c7d6de752",
+    "workspaceId": "wks_9964f44d99ea2b0f",
+    "resultId": "4e987195-fc30-4656-a80c-4daf5735e9b8",
+    "resultHash": "b656a368b2fed8251f3c3130e50f2ae1109d5344bdb2f661005af5b96c7ce01d",
+    "testHash": "b9b94b1ea8c13d38159610a9e34990b8a22053a59b5a416a54ffb2e4d0b1bc8a"
+  },
+  "revalidation": {
+    "resultId": "b0a00b74-e7c0-4151-804f-6870528977f4",
+    "results": 2,
+    "attempt": 1
+  },
+  "recovered": {
+    "resultId": "a0601acf-32b4-42a3-8334-3e6cd3ab2e53",
+    "status": "awaiting-review",
+    "attempt": 2
+  },
+  "rejected": {
+    "decisionHash": "9144572b4298c0f2b29825c50998600289caaafa2037d64dfb01e680fef6f5db",
+    "resultId": "a0601acf-32b4-42a3-8334-3e6cd3ab2e53",
+    "note": "동작 테스트는 통과했지만 increment 함수에 음수 입력도 같은 규칙으로 처리한다는 짧은 설명 주석을 추가해 주세요. 기존 테스트 파일과 단언은 유지하세요."
+  },
+  "environmentFailure": {
+    "runId": "m5-20261112-recovery-001",
+    "workspaceId": "wks_e9a44fc1d2122230",
+    "agentId": null,
+    "status": "needs-input",
+    "outcome": "absent",
+    "error": "Provider 'codex' is not available. Available providers: copilot. Use one of those providers, or install/configure 'codex'.",
+    "retained": true,
+    "remediation": "Backed up daemon config and replaced removed application executable path with installed application executable; config reload only. No model or approval/sandbox setting changes."
+  },
+  "verification": {
+    "typecheck": "PASS",
+    "tests": {
+      "pass": 83,
+      "fail": 0
+    },
+    "regressions": [
+      "verify",
+      "verify:lifecycle",
+      "m2 verify",
+      "m3 verify"
+    ],
+    "gui": {
+      "sizes": [
+        "1280x900",
+        "390x844"
+      ],
+      "failureResume": true,
+      "rejectedNotePreserved": true,
+      "pendingButtonDisabled": true,
+      "completion": true,
+      "historyReadOnly": true,
+      "copyWithoutSave": true,
+      "horizontalOverflow": false,
+      "uncertainDeliveryLiveScreen": "PASS in isolated identical-client integration preview; actual SDK lookup, copied unknown record"
+    },
+    "publicRefreshMutationRejected": true
+  },
+  "guiUnknown": {
+    "harness": "identical client; copied real fixture; lookup-only RPCs; no background worker or creation/send RPC",
+    "at": "2026-11-12T08:25:05.291Z",
+    "outcome": "absent",
+    "status": "needs-input",
+    "attempt": 1,
+    "checks": 2,
+    "originalBytesUnchanged": true,
+    "productionRecordsUntouched": true,
+    "resumeButtons": 0,
+    "retryButtons": 0,
+    "temporaryPluginRemoved": true,
+    "sizes": [
+      "1280x900",
+      "390x844"
+    ]
+  }
+}

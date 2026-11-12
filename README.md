@@ -8,7 +8,7 @@ Orchiva의 기본 소스 폴더는 이 `orchiva-plugin` 폴더이며 소스 원�
 
 작업은 [AGENTS.md](AGENTS.md)에서 시작하세요. [작업 흐름](docs/agents/workflow.md), [프로젝트 규칙](docs/agents/repository-guidelines.md), [소스 규칙](docs/agents/source-conventions.md), [검증 기준](docs/agents/validation.md)을 경로와 변경 범위에 맞게 적용합니다.
 
-MVP의 단계별 상태는 [계획 목록](docs/plans/README.md)에서 관리합니다. M0 실행 기반, M1 저장·상태, M2 초안·계획 확인·고정 커밋 실행, M3 진행 화면·백그라운드 관측·복원, M4 조건별 판정·과거 결과 상세를 구현했습니다. [M0 결과](docs/decisions/m0-runtime-foundation.md), [M1 결과](docs/decisions/m1-storage-state.md), [M2 결과](docs/decisions/m2-draft-plan-start.md), [M3 결과](docs/decisions/m3-progress-reconciliation.md), [M4 결과](docs/decisions/m4-evidence-review.md)에 검증과 제약을 기록했습니다.
+MVP의 단계별 상태는 [계획 목록](docs/plans/README.md)에서 관리합니다. M0 실행 기반, M1 저장·상태, M2 초안·계획 확인·고정 커밋 실행, M3 진행 화면·백그라운드 관측·복원, M4 조건별 판정·과거 결과 상세, M5 실패별 복구·전달 대조·중복 명령 처리를 구현했습니다. [M0 결과](docs/decisions/m0-runtime-foundation.md), [M1 결과](docs/decisions/m1-storage-state.md), [M2 결과](docs/decisions/m2-draft-plan-start.md), [M3 결과](docs/decisions/m3-progress-reconciliation.md), [M4 결과](docs/decisions/m4-evidence-review.md), [M5 결과](docs/decisions/m5-recovery.md)에 검증과 제약을 기록했습니다.
 
 ## 실행
 
@@ -25,9 +25,11 @@ Set-Location C:\Users\USER\lib\orchiva-plugin
 
 **상태 확인**은 실행 상태를 대조하며 같은 결과의 검사를 다시 실행하지 않습니다. **검증 다시 실행**은 같은 시도의 새 검증 결과를 만듭니다. 완료 확정은 검증 당시 결과에 대한 기록입니다. **현재 파일과 비교**는 완료 당시 결과와 현재 차이를 조회하며 이전 판정을 바꾸지 않습니다. 파일 해시가 없는 기존 결과는 비교할 수 없고, 새 판정을 하려면 재검증해야 합니다. 자동 검증이 없으면 모든 조건에 수동 확인이 필요하며, Codex의 종료 또는 성공 보고만으로 자동 완료하지 않습니다.
 
-목록·상세 조회는 결과를 재수집하지 않습니다. Plugin이 소유한 단일 관측 루프와 Hook이 진행 상태를 갱신합니다. 화면을 닫아도 daemon이 살아 있으면 검증까지 진행합니다. 연결이 끊기면 마지막 확정 상태를 유지하고 재연결하며, daemon 재시작 후 기존 ID·슬롯을 대조합니다. 검토 대기·확정 실패·완료 결과는 주기적으로 재검증하지 않습니다. 이력 탭은 시도·검증 회차·판정을 보여주며 과거 결과 상세 선택과 조건별 판정은 후속 단계입니다.
+목록·상세 조회는 결과를 재수집하지 않습니다. Plugin이 소유한 단일 관측 루프와 Hook이 진행 상태를 갱신합니다. 화면을 닫아도 daemon이 살아 있으면 검증까지 진행합니다. 연결이 끊기면 마지막 확정 상태를 유지하고 재연결하며, daemon 재시작 후 기존 ID·슬롯을 대조합니다. 검토 대기·확정 실패·완료 결과는 주기적으로 재검증하지 않습니다. 이력 탭은 시도·검증 회차·판정과 재개·재검증·대조 명령을 보여주며 과거 결과 상세를 선택할 수 있습니다.
 
-복구 메시지 전달 여부가 불확실하면 `needs-input`에 보존하고 자동 재전송과 다른 키의 재개를 차단합니다. daemon이 복원한 이력에서 전달 식별자가 없어질 수 있으므로 메시지 내용만 보고 재전송하지 않습니다.
+확정된 준비 실패는 **초기 실행 재시도**, 검증기·수집 오류는 **검증 다시 실행**, 코드 실패·수정 요청은 **같은 작업에서 재개**를 사용합니다. 수정 요청 사유는 입력란에 남고 재개 버튼을 눌러야 전송됩니다. 완료·리소스 유실 작업은 **내용을 복사해 새 요청**으로 별도 계획을 만들 수 있습니다.
+
+생성·복구 메시지 전달 여부가 불확실하면 `needs-input`과 슬롯을 보존하고 자동 재전송과 다른 키의 재개를 차단합니다. **전달 결과 대조**는 원래 식별자·외부 근거가 일치할 때만 기존 리소스와 연결합니다. 부재·모호함·조회 실패·복원 후 식별자 소실이면 계속 확인 대기를 유지합니다. 원래 명령·단계·마지막 대조를 화면에서 확인할 수 있습니다.
 
 daemon을 Codex 앱에서 잘못된 환경으로 시작했다면 `scripts\start-paseo.ps1 -Restart`로 supervisor까지 다시 시작하세요. 이 스크립트는 두 데스크톱 패키지 실행 선택 변수만 자식 프로세스 환경에서 제외하며, Windows sandbox와 승인 정책은 변경하지 않습니다.
 
@@ -56,6 +58,8 @@ npm run verify:lifecycle
 
 `npm run m4 -- verify m4-20261112-review-001`은 보존된 M4 완료 판정·결과 2건·기존 7건 원본을 대조합니다. 해당 시험 Worktree의 구현 파일을 잠시 편집 후 복원하여 완료 후 차이 표시도 확인합니다. 새 시험과 안전한 재현 절차는 [M4 결과](docs/decisions/m4-evidence-review.md)를 따릅니다.
 
+`npm run m5 -- verify m5-20261112-recovery-002`는 같은 세션의 3개 시도·4개 결과·2개 판정, 원래 검사 파일, 중복 명령 무쓰기 및 기존 8건을 대조합니다. 새 시험은 `npm run m5 -- help`와 [M5 결과](docs/decisions/m5-recovery.md)를 따릅니다. 응답 유실 시험과 주 GUI 시험은 별도 요청을 사용합니다.
+
 ## 구성
 
 | 위치 | 용도 |
@@ -80,4 +84,4 @@ npm run verify:lifecycle
 
 MVP 설계 전 검토할 구현 범위, 실제 성공·실패·복구 결과, 한계와 후속 결정 사항은 [PoC 결과 보고서](docs/poc-results.md)에 정리했습니다.
 
-단일 작업 흐름의 기능 범위, 화면 흐름, 데이터 모델, 개발 순서와 수용 기준은 [프로토타입 MVP 설계](docs/mvp-design.md)를 참고하세요. 설계의 전체 MVP 목표와 M0~M4 현재 구현을 구분합니다.
+단일 작업 흐름의 기능 범위, 화면 흐름, 데이터 모델, 개발 순서와 수용 기준은 [프로토타입 MVP 설계](docs/mvp-design.md)를 참고하세요. 설계의 전체 MVP 목표와 M0~M5 현재 구현을 구분합니다.

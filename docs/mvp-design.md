@@ -6,7 +6,7 @@
 
 개발 절차는 [지침 지도](../AGENTS.md), 단계별 실행 상태는 [계획 목록](plans/README.md)을 따른다. 첫 상세 계획은 [M0 실행 기반 확인](plans/m0-runtime-foundation.md)이다.
 
-2026-11-12 현재 M0~M4를 구현했다. [M2 결과](decisions/m2-draft-plan-start.md)의 초안·계획 확인·고정 SHA 실행과 [M3 결과](decisions/m3-progress-reconciliation.md)의 독립 관측·진행/이력 화면·정상 재시작 복원을 검증했다. [M4 결과](decisions/m4-evidence-review.md)의 조건별 판정·과거 결과 상세·검사 변경 확인·명시적 파일 지문 비교도 구현·검증했다. 초기 실패 재시도·unknown 해결·성능 수용은 M5~M6 설계다.
+2026-11-12 현재 M0~M5를 구현했다. [M2 결과](decisions/m2-draft-plan-start.md)의 초안·계획 확인·고정 SHA 실행과 [M3 결과](decisions/m3-progress-reconciliation.md)의 독립 관측·진행/이력 화면·정상 재시작 복원을 검증했다. [M4 결과](decisions/m4-evidence-review.md)의 조건별 판정·과거 결과 상세·검사 변경 확인·명시적 파일 지문 비교도 구현·검증했다. [M5 결과](decisions/m5-recovery.md)의 초기 실패 재시도·확실한 전달 대조·같은 세션 재개·명령 중복 처리를 구현·검증했다. 강제 종료·장시간·성능 및 전체 수용 검증은 M6 범위다.
 
 ## 목표와 설계 기준
 
@@ -179,7 +179,7 @@ flowchart TD
 
 Hook은 빠른 상태 갱신에 사용하고, daemon 내 단일 백그라운드 루프가 비종료 작업을 5초 간격으로 대조한다. 화면은 표시 중인 상세를 2초 간격으로 조회하지만 조회 자체가 테스트를 다시 실행하지 않는다. 브라우저를 닫아도 daemon이 살아 있으면 관측과 결과 수집이 계속된다. daemon이 꺼져 있는 동안은 갱신되지 않으며 재시작 때 복원한다.
 
-M3의 주기 대상은 실행 슬롯 점유 요청과 결과 없는 실행 요청이다. 안정된 검토 대기·확정 실패·완료는 반복 수집하지 않는다. 외부 세션 변화는 Hook 또는 명시적 상태 확인으로 관측한다. 미착수 accepted와 알려진 Worktree의 PLAN 기록은 이어갈 수 있으며, 외부 생성 응답이 불확실한 checkpoint는 unknown으로 보존한다. 재시도/해결 UI는 M5다. 연결 소유·재접속·종료와 실제/모의 검증 경계는 [M3 결과](decisions/m3-progress-reconciliation.md)를 따른다.
+M3의 주기 대상은 실행 슬롯 점유 요청과 결과 없는 실행 요청이다. 안정된 검토 대기·확정 실패·완료는 반복 수집하지 않는다. 외부 세션 변화는 Hook 또는 명시적 상태 확인으로 관측한다. 미착수 accepted와 알려진 Worktree의 PLAN 기록은 이어갈 수 있으며, 외부 생성 응답이 불확실한 checkpoint는 unknown으로 보존한다. M5는 확정 준비 실패의 재시도와 검증 가능한 found만 적용하는 명시적 대조 UI를 제공한다. 연결 소유·재접속·종료와 실제/모의 검증 경계는 [M3 결과](decisions/m3-progress-reconciliation.md)를 따른다.
 
 관측 실패는 마지막 확정 상태와 분리해 저장한다. 연속 실패 시 5초, 10초, 20초, 최대 30초 간격으로 재조회한다. 15초 이상 성공한 관측이 없으면 연결 지연을 표시한다. 재조회는 새 Codex 실행이나 코드 수정 재시도를 발생시키지 않는다.
 
@@ -279,14 +279,15 @@ erDiagram
 | `request.save-draft` | `token`, `feature`, `criteria`, `checks`, `expectedRevision` | 초안 저장. 실행을 시작한 요청은 거부 |
 | `request.prepare-plan` | `token`, `expectedRevision` | 입력 검증, 계획 생성, 기준 커밋 확인 후 `ready`로 전환 |
 | `request.start` | `token`, `planRevision`, `inputHash`, `expectedRevision` | 계획 확인과 실행 의도를 저장하고 준비 시작. 무거운 처리를 RPC 연결 유지에 의존시키지 않음 |
-| `request.retry-start` | `token`, `expectedRevision` | 후속 설계. 확정된 초기 준비 실패에 새 명령 키로 재시도. 고정된 계획과 기존 리소스를 사용하며 전달 불확실 상태에서는 거부 |
+| `request.retry-start` | `token`, `commandKey`, `expectedRevision`, `targetCommandKey` | M5: 마지막 확정 초기 실패만 안전한 단계부터 재시도. 고정 PLAN·리소스·외부 생성 키 유지 |
+| `request.reconcile` | `token`, `commandKey`, `expectedRevision`, `targetCommandKey` | M5: unknown 명령 대조 이력 추가. 확실한 found만 연결, 나머지는 unknown·슬롯 유지 |
 | `request.page` | `filter`, `cursor`, `limit` | M3: 최대20건 요약과 다음 커서·진행 중 고정 목록. 기존 list는 전체 반환 유지 |
-| `request.detail` | `token` | M3: 현재 요청과 허용 행동. 기존 get은 요청 전체 반환 유지; resultId 선택은 후속 |
+| `request.detail` | `token` | 현재 요청·실패 설명·허용 행동. 과거 결과는 반환된 results에서 선택 |
 | `runtime.status` | 없음 | M3: 독립 연결·복원 상태·마지막 성공·다음 시도·오류 |
 | `request.refresh` | `token` | 외부 상태 재대조. 기존 결과의 검사를 무조건 다시 실행하지 않음 |
-| `request.revalidate` | `token`, `resultId`, `expectedRevision` | 멈춘 세션인지 확인하고 같은 시도에 새 검증 회차 생성 |
+| `request.revalidate` | `token`, `commandKey`, `resultId`, `expectedRevision` | 멈춘 세션인지 확인하고 같은 시도에 새 검증 회차 생성. 수집 실패로 결과가 없으면 resultId null |
 | `request.review` | `token`, `resultId`, `approved`, `criteriaReviews`, `note`, `expectedRevision`, 검사 변경 확인 | 결과의 최신 여부와 근거를 검사하고 판정 저장 |
-| `request.resume` | `token`, `instruction`, `expectedRevision` | 다음 시도와 전달 의도를 저장하고 기존 세션에 전송 |
+| `request.resume` | `token`, `key`, `instruction`, `resultId`, `expectedRevision` | M5: 신규 명령은 현재 결과·revision·리소스·멈춘 세션 확인 후 시도와 전달 의도를 저장하고 기존 세션에 전송. 기존 명령 재호출은 이전 형식 호환 |
 
 계획 표시 후 기준 브랜치의 커밋이 바뀌면 `PLAN_STALE`로 재확인을 요구한다. M0에서 SHA 기반 생성을 실증했고 M2는 저장한 SHA를 사용하여 생성 후 HEAD도 대조한다. `BUSY`는 실행 중인 요청 ID를, `ENVIRONMENT_NOT_READY`는 해결 가능한 진단 항목을 반환한다. 목표 오류 계약은 이외에 `INVALID_STATE`, `DELIVERY_UNKNOWN`, `RESOURCE_MISSING`을 구분한다.
 
@@ -296,7 +297,7 @@ PoC의 기존 `request.start`가 입력과 동시에 실행하는 방식은 새 
 
 SDK의 `PluginServerContext`에는 초기화 시 사용할 `paseo` 속성이 없다. M0에서 `createHostClient`와 `createPaseoApi`를 소유하는 독립 연결을 구현하고, 화면·최초 RPC 없는 Plugin 초기화 관측과 종료를 확인했다. M0 시험 모드는 기본 비활성이다. M3는 소유 연결 위에 운영 중 재접속·요청 대조를 구현했으며 초기 store 준비가 끝나면 자동 시작한다. 기존 list RPC를 주기 호출하거나 콜백 컨텍스트를 무기한 보관하지 않는다.
 
-M0 실제 연동에서 workspace·agent의 동일 `idempotencyKey` 재호출은 응답 유실·daemon 재시작 후 같은 ID로 수렴했다. 고정 SHA의 Worktree 생성과 생성 후 HEAD 대조도 확인했다. 반면 provider에서 복원된 메시지는 `clientMessageId`가 소실될 수 있다. 페이지 조회를 추가했으며 식별자가 없는 이력·관측 실패는 `unknown`으로 다룬다. 현재 PoC에서는 pending 복구를 `needs-input`에 보존하고 자동 재전송·새 키의 재개를 차단한다. MVP의 상세 `delivery-unknown` 표현과 사용자 해결 절차는 M1·M5 범위다.
+M0 실제 연동에서 workspace·agent의 동일 `idempotencyKey` 재호출은 응답 유실·daemon 재시작 후 같은 ID로 수렴했다. 고정 SHA의 Worktree 생성과 생성 후 HEAD 대조도 확인했다. 반면 provider에서 복원된 메시지는 `clientMessageId`가 소실될 수 있다. 페이지 조회를 추가했으며 식별자가 없는 이력·관측 실패는 `unknown`으로 다룬다. 현재 PoC에서는 pending 복구를 `needs-input`에 보존하고 자동 재전송·새 키의 재개를 차단한다. M5는 `delivery-unknown` 설명과 명시적 대조를 제공하며 부재·식별자 소실을 강제 해소하지 않는다. 새 Agent에 요청 label을 기록하고 경로·PLAN·HEAD를 대조한다. 선택적 failure·deliveryChecks·recovery.previousSourceKey를 저장하며 대조 이력은 불변이다. failure의 retryAction은 별도 저장하지 않고 allowedActions로 계산한다.
 
 M0에서 초기 미승인 2건의 최신 결과가 목록 조회로 재수집됐다. M1은 현재 존재하는 4건을 원본 백업 후 변환하고 불변 결과·판정 이력을 도입했으며, 목록 조회의 외부 수집을 제거했다. M3는 조회·관측·명시적 재검증을 분리하고 기존6건의 바이트 보존을 확인했다. M0에서 이미 소실된 envelope는 복원하지 못했으며 보존 한계는 [M0 결과](decisions/m0-runtime-foundation.md)를 참조한다.
 

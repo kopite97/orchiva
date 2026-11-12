@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { pageInputSchema, type RequestRecord, actionSchema } from "../../shared/contracts/feature-request";
+import { failureView, retryablePreparation } from "./failure";
 import { occupiesSlot } from "./record-v2";
 
 export function allowedActions(record: RequestRecord): z.infer<typeof actionSchema>[] {
@@ -7,9 +8,11 @@ export function allowedActions(record: RequestRecord): z.infer<typeof actionSche
   if (record.status === "ready") return ["edit", "plan"];
   const actions: z.infer<typeof actionSchema>[] = ["observe"];
   if (record.agentId) actions.push("open-session");
-  if (record.recovery?.pending || record.commands.some(x => ["pending", "unknown"].includes(x.status))) return actions;
+  if (record.recovery?.pending || record.commands.some(x => ["pending", "unknown"].includes(x.status))) { if (record.commands.some(x => x.status === "unknown")) actions.push("reconcile"); return actions; }
+  if (failureView(record)?.kind === "resource-missing") return actions;
+  if (retryablePreparation(record)) actions.push("retry-start");
   if (record.agentId && ["awaiting-review", "failed"].includes(record.status)) {
-    actions.push("resume"); if (record.result) actions.push("revalidate");
+    actions.push("resume", "revalidate");
     if (record.status === "awaiting-review") actions.push("review");
   }
   return actions;

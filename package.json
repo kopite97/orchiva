@@ -25,7 +25,8 @@
     "m1": "node --import tsx scripts/m1-storage.mjs",
     "m2": "node --import tsx scripts/m2-workflow.mjs",
     "m3": "node scripts/m3-reconcile.mjs",
-    "m4": "node scripts/m4-review.mjs"
+    "m4": "node scripts/m4-review.mjs",
+    "m5": "node --import tsx scripts/m5-recovery.mjs"
   },
   "devDependencies": {
     "@getpaseo/client": "0.15.4",

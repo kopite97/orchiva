@@ -99,6 +99,6 @@ export function FeatureRequestScreen(props: PluginScreenProps) {
       </View><Text style={{ color, opacity: 0.7 }}>실행하면 현재 요청·조건·검사·계획을 고정합니다. 기준 커밋이나 설정이 바뀌면 계획 재생성이 필요합니다.</Text>
     </View>}
     {screen === "detail" && selected.error && <Text accessibilityRole="alert" style={{ color }}>상세 조회가 지연됩니다. 마지막 저장 상태를 표시합니다.</Text>}
-    {screen === "detail" && detail && <TaskDetail key={token} {...props} record={detail} actions={selected.data?.allowedActions ?? ["observe"]} onChanged={refresh} />}
+    {screen === "detail" && detail && <TaskDetail key={token} {...props} record={detail} failure={selected.data?.failure} onCopy={() => { fresh(); setValues({ feature: { ...detail.feature, title: `${detail.feature.title} (복사)` }, criteria: detail.criteria.map(c => ({ ...c, legacy: false })), checks: detail.checks }); }} actions={selected.data?.allowedActions ?? ["observe"]} onChanged={refresh} />}
   </ScrollView>;
 }

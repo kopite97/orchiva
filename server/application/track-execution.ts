@@ -5,7 +5,9 @@ import { assertSlot, assertRevision, beginCommand, finishCommand, previousComman
 import { payloadHash } from "../domain/record-v2";
 import { validateReview } from "../domain/review";
 import { randomUUID } from "node:crypto";
+import { isPreparation, failureView } from "../domain/failure";
 class CollectionFailure extends Error {}
+class ResourceFailure extends Error {}
 
 export class TrackExecution {
   constructor(private store: RequestStore, private locks: RequestLocks) {}
@@ -18,7 +20,7 @@ export class TrackExecution {
     if (!record) throw new Error("Request not found.");
     return record;
   }
-  async refresh(token: string, runtime: LifecycleRuntime, outcome?: { kind: string; error?: { message: string }; reason?: string; turnId?: string | null }, revalidate = false, input?: { commandKey: string; resultId: string; expectedRevision: number }) {
+  async refresh(token: string, runtime: LifecycleRuntime, outcome?: { kind: string; error?: { message: string }; reason?: string; turnId?: string | null }, revalidate = false, input?: { commandKey: string; resultId: string | null; expectedRevision: number }) {
     return this.store.exclusive(() => this.locks.run(token, async () => {
       const record = await this.required(token);
       // The PoC button combines observation and revalidation. Pending delivery
@@ -29,11 +31,11 @@ export class TrackExecution {
       if (interruptedValidation) { command = interruptedValidation; revalidate = true; }
       else if (revalidate) {
         const key = input?.commandKey ?? `revalidate-${randomUUID()}`;
-        const payload = { resultId: input?.resultId ?? record.result?.id ?? null };
+        const payload = { resultId: input ? input.resultId : record.result?.id ?? null };
         if (previousCommand(record, key, "revalidate", payload)) return record;
         assertRevision(record, input?.expectedRevision);
         if (input && (!record.agentId || !["awaiting-review", "failed"].includes(record.status))) throw new Error("INVALID_STATE: no stopped result to revalidate");
-        if (input && record.result?.id !== input.resultId) throw new Error("STALE_RESULT");
+        if (input && (record.result?.id ?? null) !== input.resultId) throw new Error("STALE_RESULT");
         if (record.status !== "completed") {
           if (record.recovery?.pending || record.commands.some(item => ["pending", "unknown"].includes(item.status))) throw new Error("DELIVERY_UNKNOWN");
           await assertSlot(this.store, token);
@@ -43,6 +45,7 @@ export class TrackExecution {
       }
       if (!record.agentId) return record;
       if (record.status === "completed") return record;
+      if (record.commands.some(x => isPreparation(x) && x.status === "unknown")) return record;
       const attemptedAt = new Date().toISOString();
       let succeeded = false;
       try {
@@ -51,17 +54,33 @@ export class TrackExecution {
         record.observation = { lastAttemptAt: attemptedAt, lastSuccessAt: new Date().toISOString(), consecutiveFailures: 0, nextAttemptAt: null, error: null };
       }
       catch (error) {
-        if (command && (error instanceof CollectionFailure || (error instanceof Error && error.message.startsWith("INVALID_STATE")))) { command.status = "failed"; command.phase = "validation-failed"; command.resolvedAt = new Date().toISOString(); }
-        record.observationError = error instanceof Error ? error.message : String(error);
-        const failures = (record.observation?.consecutiveFailures ?? 0) + 1;
-        record.observation = { lastAttemptAt: attemptedAt, lastSuccessAt: record.observation?.lastSuccessAt ?? null, consecutiveFailures: failures, nextAttemptAt: new Date(Date.now() + Math.min(5000 * 2 ** (failures - 1), 30000)).toISOString(), error: record.observationError };
+        if (command && (error instanceof CollectionFailure || error instanceof ResourceFailure || (error instanceof Error && error.message.startsWith("INVALID_STATE")))) { command.status = "failed"; command.phase = "validation-failed"; command.resolvedAt = new Date().toISOString(); }
+        if (error instanceof CollectionFailure || error instanceof ResourceFailure) {
+          record.observationError = null;
+          record.observation = { lastAttemptAt: attemptedAt, lastSuccessAt: new Date().toISOString(), consecutiveFailures: 0, nextAttemptAt: null, error: null };
+        } else {
+          record.observationError = error instanceof Error ? error.message : String(error);
+          const failures = (record.observation?.consecutiveFailures ?? 0) + 1;
+          record.observation = { lastAttemptAt: attemptedAt, lastSuccessAt: record.observation?.lastSuccessAt ?? null, consecutiveFailures: failures, nextAttemptAt: new Date(Date.now() + Math.min(5000 * 2 ** (failures - 1), 30000)).toISOString(), error: record.observationError };
+        }
       }
       if (succeeded && command?.status === "pending" && record.result) finishCommand(command, record.result.id);
       await this.store.save(record);
       return record;
     }));
   }
+  private async verifyResources(record: RequestRecord, runtime: LifecycleRuntime) {
+    try { await runtime.verifyResources?.(record); }
+    catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      if (!message.startsWith("RESOURCE_")) throw error;
+      record.failure = { kind: "resource-missing", code: "RESOURCE_MISSING", message }; record.error = message;
+      this.transition(record, "failed", message); await this.store.save(record);
+      throw new ResourceFailure(message);
+    }
+  }
   private async reconcile(record: RequestRecord, runtime: LifecycleRuntime, outcome?: { kind: string; error?: { message: string }; reason?: string; turnId?: string | null }, revalidate = false) {
+    await this.verifyResources(record, runtime);
     const observed = await runtime.observe(record);
     if (revalidate && ["running", "needs-input"].includes(observed.status)) throw new Error("INVALID_STATE: stop the active turn before revalidation");
     if (outcome?.turnId && observed.turnId && outcome.turnId !== observed.turnId) outcome = undefined;
@@ -80,6 +99,10 @@ export class TrackExecution {
       const command = record.commands.find(item => item.key === record.recovery!.key);
       if (command && command.status !== "applied") finishCommand(command, `attempt:${record.attempt}`);
     }
+    if (record.recovery?.previousSourceKey && observed.sourceKey === record.recovery.previousSourceKey) {
+      this.transition(record, "started", "재개 전송은 확인됐으며 새 실행의 관측을 기다립니다.");
+      return;
+    }
     if (record.result?.sourceKey === observed.sourceKey) {
       if ((!revalidate || record.status === "completed") && ["completed", "awaiting-review", "failed"].includes(record.status) && (!outcome || outcome.kind === "completed" || record.result.failure)) return;
       // Rechecking tests must not erase a known cancellation or provider failure.
@@ -95,34 +118,42 @@ export class TrackExecution {
     try { record.result = await runtime.collect(record, observed); }
     catch (error) {
       record.error = error instanceof Error ? error.message : String(error);
+      record.failure = { kind: "verification-system", code: "COLLECTION_FAILED", message: record.error };
       this.transition(record, "failed", "Evidence collection failed.");
       throw new CollectionFailure(record.error);
     }
     record.decision = null;
     record.error = record.result.failure;
+    record.failure = null;
     this.transition(record, record.result.failure ? "failed" : "awaiting-review", record.result.failure ?? "Validation finished. Review the stated completion criteria.");
+    record.failure = failureView(record);
   }
   async resume(input: unknown, runtime: LifecycleRuntime) {
     const parsed = resumeSchema.parse(input);
     return this.store.exclusive(() => this.locks.run(parsed.token, async () => {
       const record = await this.required(parsed.token);
-      if (previousCommand(record, parsed.key, "resume", { instruction: parsed.instruction })) return record;
+      const payload = { instruction: parsed.instruction, ...(parsed.resultId !== undefined ? { resultId: parsed.resultId } : {}) };
+      if (previousCommand(record, parsed.key, "resume", payload)) return record;
       assertRevision(record, parsed.expectedRevision);
       if (record.recovery?.key === parsed.key) {
         if (record.recovery.instruction !== parsed.instruction) throw new Error("Recovery key belongs to different instructions.");
         return record;
       }
+      if (parsed.expectedRevision === undefined || parsed.resultId === undefined) throw new Error("COMMAND_REQUIRED: revision and result required for a new resume");
+      if ((record.result?.id ?? null) !== parsed.resultId) throw new Error("STALE_RESULT");
       if (record.recovery?.pending) throw new Error("Resolve the pending recovery delivery before sending another instruction.");
       if (record.commands.some(item => ["pending", "unknown"].includes(item.status))) throw new Error("DELIVERY_UNKNOWN: reconcile the pending command first");
       if (!["failed", "needs-input", "awaiting-review"].includes(record.status) || !record.agentId) throw new Error("Only stopped tasks with an existing session can be resumed.");
+      await this.verifyResources(record, runtime);
       const observed = await runtime.observe(record);
+      if (observed.agentStatus === "missing") throw new Error("RESOURCE_MISSING: existing session missing");
       if (["running", "needs-input"].includes(observed.status)) throw new Error("Resolve the active turn or pending permission in Paseo first.");
       await assertSlot(this.store, record.token);
       record.attempts.push({ attempt: record.attempt, result: record.result, error: record.error });
       record.attempt += 1;
-      record.result = null; record.decision = null; record.error = null;
-      record.recovery = { key: parsed.key, instruction: parsed.instruction, messageId: `orchiva-${parsed.token}-${record.attempt}`, pending: true };
-      const command = beginCommand(record, parsed.key, "resume", { instruction: parsed.instruction });
+      record.result = null; record.decision = null; record.error = null; record.failure = null; record.observationError = null; delete record.observation;
+      record.recovery = { key: parsed.key, instruction: parsed.instruction, messageId: `orchiva-${parsed.token}-${record.attempt}`, pending: true, previousSourceKey: observed.sourceKey };
+      const command = beginCommand(record, parsed.key, "resume", payload);
       command.phase = "message"; command.messageId = record.recovery.messageId; command.resourceIds = { agentId: record.agentId };
       this.transition(record, "running", `Attempt ${record.attempt}: ${parsed.instruction}`);
       await this.store.save(record);
@@ -168,6 +199,7 @@ export class TrackExecution {
       finishCommand(command, parsed.resultId);
       record.error = parsed.approved ? null : parsed.note;
       this.transition(record, parsed.approved ? "completed" : "failed", parsed.note);
+      record.failure = parsed.approved ? null : { kind: "review-rejected", code: "REVIEW_REJECTED", message: parsed.note };
       await this.store.save(record);
       return record;
     }));

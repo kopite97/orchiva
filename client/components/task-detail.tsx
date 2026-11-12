@@ -3,9 +3,10 @@ import { Pressable, Text, View } from "react-native";
 import { useRpc, type PluginScreenProps } from "@getpaseo/plugin/client";
 import { refreshRpc, type RequestRecord, actionSchema } from "../../shared/contracts/feature-request";
 import type { z } from "zod";
+import { RecoveryPanel } from "./recovery-panel";
 import { RequestResult, labels } from "./request-result";
 
-export function TaskDetail(props: PluginScreenProps & { record: RequestRecord; actions: z.infer<typeof actionSchema>[]; onChanged(): Promise<unknown> }) {
+export function TaskDetail(props: PluginScreenProps & { record: RequestRecord; failure?: RequestRecord["failure"]; onCopy?: () => void; actions: z.infer<typeof actionSchema>[]; onChanged(): Promise<unknown> }) {
   const { record, theme, actions } = props, color = theme.colors.foreground;
   const [tab, setTab] = useState("progress"), [expanded, setExpanded] = useState(false), [busy, setBusy] = useState(false), [error, setError] = useState("");
   const [selectedResultId, setSelectedResultId] = useState<string | null>(null);
@@ -27,6 +28,7 @@ export function TaskDetail(props: PluginScreenProps & { record: RequestRecord; a
       {actions.includes("open-session") && button("Codex 세션 열기", () => props.navigation?.openAgent({ agentId: record.agentId!, serverId: props.host.id }))}
       {actions.includes("observe") && button("상태 확인", () => { setBusy(true); setError(""); void refresh({ token: record.token, revalidate: false }).then(props.onChanged).catch(() => setError("상태를 확인하지 못했습니다. 연결 상태를 확인한 뒤 다시 시도하세요.")).finally(() => setBusy(false)); })}
     </View>
+    <RecoveryPanel {...props} />
     <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 8 }}>{button("진행", () => setTab("progress"), tab === "progress")}{button("결과", () => setTab("result"), tab === "result")}{button("이력", () => setTab("history"), tab === "history")}</View>
     <View style={{ display: tab === "progress" ? "flex" : "none", gap: 12 }}>
       <Text style={{ color }}>{record.status === "awaiting-review" ? "결과 탭에서 검사와 완료 조건을 검토하세요." : record.status === "needs-input" ? "Codex 세션과 전달 상태를 확인하세요." : record.status === "failed" ? "결과 탭에서 실패 원인과 근거를 확인하세요." : record.status === "completed" ? "저장된 완료 판정과 결과를 확인할 수 있습니다." : "화면을 닫아도 daemon이 실행 상태를 확인합니다."}</Text>
@@ -41,6 +43,8 @@ export function TaskDetail(props: PluginScreenProps & { record: RequestRecord; a
       <Text style={{ color }}>시도 {record.attemptHistory.length}건 · 검증 결과 {record.results.length}건 · 판정 {record.decisions.length}건</Text>
       {record.attemptHistory.map(x => <View key={x.number} style={{ gap: 8, padding: 12, borderWidth: 1, borderColor: theme.colors.border }}><Text style={{ color }}>시도 {x.number} · {x.trigger === "resume" ? "수정 재개" : x.trigger === "legacy" ? "기존 실행" : "최초 실행"}</Text>{x.instruction && <Text style={{ color }}>{x.instruction}</Text>}{record.results.filter(r => r.attemptNumber === x.number).map(r => <View key={r.id}><Text selectable style={{ color }}>검증 {r.validationRun} · {r.failure ? "실패" : "수집 완료"} · {r.collectedAt}{"\n"}{r.id}</Text>{button(`시도 ${r.attemptNumber} 검증 ${r.validationRun} 상세`, () => { setSelectedResultId(r.id); setTab("result"); })}</View>)}</View>)}
       {record.decisions.map(x => <Text key={x.id} style={{ color }}>{x.approved ? "완료 판정" : "수정 요청"} · {x.at}{"\n"}{x.note}</Text>)}
+      {record.commands.filter(x => ["retry-start", "resume", "revalidate", "reconcile"].includes(x.kind)).map(x => <Text key={x.key} selectable style={{ color }}>명령: {x.kind} · {x.status}{"\n"}{x.key}{"\n"}결과 참조: {x.outcomeRef ?? "확인 중"}</Text>)}
+      {record.deliveryChecks?.map(x => <Text key={x.id} style={{ color }}>대조: {x.outcome} · {x.at}{"\n"}{x.detail}</Text>)}
       <Text style={{ color, opacity: .7 }}>각 시도의 검증 회차와 판정 기록을 보존합니다.</Text>
     </View>
   </View>;

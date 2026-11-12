@@ -4,6 +4,7 @@ import { RequestLocks } from "./request-locks";
 import { assertSlot, assertRevision, beginCommand, finishCommand, previousCommand } from "./execution-slot";
 import { draftHash, validatePlanInput } from "../domain/request-plan";
 import { payloadHash } from "../domain/record-v2";
+import { isPreparation } from "../domain/failure";
 export class StartFeatureRequest {
   constructor(private store: RequestStore, readonly locks = new RequestLocks()) {}
   async start(input: unknown, runtime: Runtime): Promise<RequestRecord> {
@@ -18,7 +19,7 @@ export class StartFeatureRequest {
     return this.store.exclusive(() => this.locks.run(token, async () => {
       const record = await this.store.get(token);
       if (!record) throw new Error("NOT_FOUND");
-      const command = record.commands.find(x => x.kind === "start" && x.status === "pending");
+      const command = record.commands.find(x => isPreparation(x) && x.status === "pending");
       if (!command) return record;
       // A persisted external-call phase cannot prove whether the effect happened.
       if (!["accepted", "plans"].includes(command.phase)) {
@@ -75,12 +76,13 @@ export class StartFeatureRequest {
       record.agentId ??= await runtime.startAgent(record);
       command.resourceIds.agentId = record.agentId;
       finishCommand(command, record.taskId);
-      record.status = "started"; await this.store.save(record);
+      record.status = "started"; record.failure = null; await this.store.save(record);
     } catch (error) {
       const uncertain = ["workspace", "agent", "done"].includes(command.phase);
       command.status = uncertain ? "unknown" : "failed";
       record.status = uncertain ? "needs-input" : "failed";
       record.error = error instanceof Error ? error.message : String(error);
+      record.failure = { kind: uncertain ? "delivery-unknown" : record.error.startsWith("RESOURCE_") ? "resource-missing" : "setup", code: uncertain ? "DELIVERY_UNKNOWN" : "SETUP_FAILED", message: record.error };
       await this.store.save(record);
     }
     return record;

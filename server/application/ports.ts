@@ -14,6 +14,7 @@ export interface Observation {
   turnId?: string;
 }
 export interface LifecycleRuntime {
+  verifyResources?(record: RequestRecord): Promise<void>;
   observe(record: RequestRecord): Promise<Observation>;
   collect(record: RequestRecord, observation: Observation): Promise<ExecutionResult>;
   fingerprint(record: RequestRecord): Promise<string>;
@@ -26,4 +27,8 @@ export interface Runtime {
   createWorkspace(record: RequestRecord): Promise<{ id: string; directory: string }>;
   writePlans(record: RequestRecord): Promise<void>;
   startAgent(record: RequestRecord): Promise<string>;
+}
+
+export interface RecoveryRuntime {
+  lookupDelivery(record: RequestRecord, command: RequestRecord["commands"][number]): Promise<Lookup<{ id: string; directory?: string }>>;
 }

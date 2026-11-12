@@ -10,6 +10,8 @@ import { createRequest } from "../domain/request";
 import { recordSchema } from "../../shared/contracts/feature-request";
 import type { LifecycleRuntime, Observation } from "../application/ports";
 
+async function resumeTarget(f: { store: JsonRequestStore; record: { token: string } }) { const r = (await f.store.get(f.record.token))!; return { expectedRevision: r.revision, resultId: r.result?.id ?? null }; }
+
 async function fixture(t: TestContext) {
   const directory = await mkdtemp(join(tmpdir(), "orchiva-lifecycle-"));
   t.after(async () => { await store.close(); await rm(directory, { recursive: true, force: true }); });
@@ -51,7 +53,7 @@ test("failed tests cannot be approved; recovery retains session and worktree and
   const failed = await f.tracker.refresh(f.record.token, f.runtime);
   assert.equal(failed.status, "failed");
   await assert.rejects(f.tracker.review({ token: failed.token, resultId: failed.result!.id, approved: true, note: "Ignore failed test" }, f.runtime), /not ready/);
-  const input = { token: failed.token, key: "recovery-key-001", instruction: "Fix the failing implementation" };
+  const input = { expectedRevision: failed.revision, resultId: failed.result!.id, token: failed.token, key: "recovery-key-001", instruction: "Fix the failing implementation" };
   await Promise.all([f.tracker.resume(input, f.runtime), f.tracker.resume(input, f.runtime)]);
   assert.equal(f.state.sends, 1);
   const resumed = (await f.store.get(failed.token))!;
@@ -79,7 +81,7 @@ test("missed hooks are reconciled after restart; canceled turns fail and stale t
 test("uncertain resume is reconciled from delivered message without a duplicate send", async t => {
   const f = await fixture(t); f.state.observation.status = "ended"; f.state.passed = false;
   await f.tracker.refresh(f.record.token, f.runtime); f.state.uncertain = true;
-  await f.tracker.resume({ token: f.record.token, key: "uncertain-key-001", instruction: "Fix" }, f.runtime);
+  await f.tracker.resume({ ...await resumeTarget(f), token: f.record.token, key: "uncertain-key-001", instruction: "Fix" }, f.runtime);
   const pending = (await f.store.get(f.record.token))!;
   assert.equal(pending.recovery?.pending, true);
   f.state.observation.seenRecovery = true; f.state.observation.sourceKey = "turn-2"; f.state.passed = true;
@@ -96,7 +98,7 @@ test("old PoC records acquire lifecycle defaults without losing original data", 
 test("unknown recovery after restart neither resends nor permits a replacement instruction", async t => {
   const f = await fixture(t); f.state.observation.status = "ended"; f.state.passed = false;
   await f.tracker.refresh(f.record.token, f.runtime); f.state.uncertain = true;
-  await f.tracker.resume({ token: f.record.token, key: "unknown-key-001", instruction: "Fix" }, f.runtime);
+  await f.tracker.resume({ ...await resumeTarget(f), token: f.record.token, key: "unknown-key-001", instruction: "Fix" }, f.runtime);
   const checkpoint = (await f.store.get(f.record.token))!;
   const tracker = new TrackExecution(f.store, f.locks);
   for (let i = 0; i < 2; i++) {
@@ -104,7 +106,7 @@ test("unknown recovery after restart neither resends nor permits a replacement i
     assert.equal(record.status, "needs-input"); assert.equal(record.recovery?.pending, true);
     assert.equal(record.attempt, checkpoint.attempt); assert.deepEqual(record.attempts, checkpoint.attempts);
   }
-  await assert.rejects(tracker.resume({ token: f.record.token, key: "replacement-key-001", instruction: "Try again" }, f.runtime), /pending recovery/);
+  await assert.rejects(tracker.resume({ ...await resumeTarget(f), token: f.record.token, key: "replacement-key-001", instruction: "Try again" }, f.runtime), /pending recovery/);
   assert.equal(f.state.sends, 1);
 });
 
@@ -128,13 +130,13 @@ test("revalidation and resume preserve rejected decisions and all result version
   const second = await f.tracker.refresh(first.token, f.runtime, undefined, true);
   assert.equal(second.results.length, 2); assert.equal(second.decisions.length, 1);
   assert.equal(second.decisions[0].resultId, first.result!.id); assert.equal(second.decisions[0].approved, false);
-  await f.tracker.resume({ token: first.token, key: "resume-history-001", instruction: "Refine" }, f.runtime);
+  await f.tracker.resume({ expectedRevision: second.revision, resultId: second.result!.id, token: first.token, key: "resume-history-001", instruction: "Refine" }, f.runtime);
   f.state.observation = { ...f.state.observation, status: "ended", sourceKey: "turn-2" };
   await f.tracker.refresh(first.token, f.runtime);
-  await f.tracker.resume({ token: first.token, key: "resume-history-002", instruction: "Refine more" }, f.runtime);
+  await f.tracker.resume({ ...await resumeTarget(f), token: first.token, key: "resume-history-002", instruction: "Refine more" }, f.runtime);
   const before = (await f.store.get(first.token))!;
   // Old command replay wins over revision mismatch and cannot resend or change the current decision.
-  const replay = await f.tracker.resume({ token: first.token, key: "resume-history-001", instruction: "Refine", expectedRevision: 0 }, f.runtime);
+  const replay = await f.tracker.resume({ token: first.token, key: "resume-history-001", instruction: "Refine", resultId: second.result!.id, expectedRevision: 0 }, f.runtime);
   assert.equal(replay.attempt, 3); assert.equal(f.state.sends, 2); assert.deepEqual(replay.results, before.results);
   await assert.rejects(f.tracker.resume({ token: first.token, key: "resume-history-001", instruction: "Changed" }, f.runtime), /IDEMPOTENCY_CONFLICT/);
   await f.tracker.review(decision, f.runtime); assert.equal((await f.store.get(first.token))!.revision, before.revision);
@@ -170,7 +172,7 @@ test("legacy refresh button observes pending recovery and running tasks without 
   f.state.observation.status = "ended";
   await f.tracker.refresh(f.record.token, f.runtime);
   f.state.uncertain = true;
-  await f.tracker.resume({ token: f.record.token, key: "button-pending-001", instruction: "Fix" }, f.runtime);
+  await f.tracker.resume({ ...await resumeTarget(f), token: f.record.token, key: "button-pending-001", instruction: "Fix" }, f.runtime);
   f.state.observation.seenRecovery = true; f.state.observation.sourceKey = "next";
   const reconciled = await f.tracker.refresh(f.record.token, f.runtime, undefined, true);
   assert.equal(reconciled.recovery?.pending, false); assert.equal(reconciled.status, "awaiting-review");

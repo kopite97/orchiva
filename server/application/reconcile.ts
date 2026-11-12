@@ -4,6 +4,7 @@ import type { RequestStore, Runtime, LifecycleRuntime } from "./ports";
 import type { StartFeatureRequest } from "./start-feature-request";
 import type { TrackExecution } from "./track-execution";
 import { occupiesSlot } from "../domain/record-v2";
+import { isPreparation } from "../domain/failure";
 
 export type Outcome = { kind: string; error?: { message: string }; reason?: string; turnId?: string | null };
 export interface RuntimeLease { runtime(): Promise<Runtime & LifecycleRuntime>; ping(): Promise<void>; close(): Promise<void> }
@@ -52,7 +53,7 @@ export class Reconciler {
       await this.lease.ping();
       if (this.stopped) return;
       const records = await this.store.list();
-      if (!records.some(x => x.commands.some(c => c.kind === "start" && c.status === "pending"))) {
+      if (!records.some(x => x.commands.some(c => isPreparation(c) && c.status === "pending"))) {
         for (const id of this.hints.keys()) if (!records.some(x => x.agentId === id)) this.hints.delete(id);
       }
       for (const record of records) {
@@ -63,7 +64,7 @@ export class Reconciler {
         const outcome = record.agentId ? this.hints.get(record.agentId) : undefined;
         if (record.agentId) this.hints.delete(record.agentId);
         // Safe preparation checkpoints may continue; uncertain external phases only hold.
-        if (record.commands.some(x => x.kind === "start" && x.status === "pending")) await this.starter.advance(record.token, runtime);
+        if (record.commands.some(x => isPreparation(x) && x.status === "pending")) await this.starter.advance(record.token, runtime);
         if (this.stopped) return;
         const latest = await this.store.get(record.token);
         if (latest?.agentId) await this.tracker.refresh(record.token, runtime, outcome);

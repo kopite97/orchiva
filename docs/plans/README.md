@@ -11,8 +11,9 @@
 | 3 | [M2 초안·계획·실행](m2-draft-plan-start.md) | `completed` | 구조화 초안, 계획 확인, 기준 커밋 검증과 고정 SHA 실행 |
 | 4 | [M3 진행·관측·복원](m3-progress-reconciliation.md) | `completed` | 독립 관측 루프, 재시작 대조, 요약 목록과 진행 상세 |
 | 5 | [M4 조건별 판정·과거 결과](m4-evidence-review.md) | `completed` | 조건별 근거, 검사 변경, 결과 상세와 지문 확인 |
+| 6 | [M5 실패·재개·중복 명령](m5-recovery.md) | `completed` | 실패별 복구, 초기 재시도, 미확정 대조, 동일 세션 재개 |
 
-2026년 11월 12일 사용자의 지시에 따라 M0~M4를 완료했다. 소스 초기 커밋은 `7a675a9`, M0는 `4397aaf`, M1은 `bd08ace`, M2는 `ca31b4c`, M3는 `efcb9ad`다. [M1 결과](../decisions/m1-storage-state.md)에 실제4건 변환, [M2 결과](../decisions/m2-draft-plan-start.md)에 계획 확인 실행, [M3 결과](../decisions/m3-progress-reconciliation.md)에61개 테스트와 브라우저 없는 실행·진행 중 Plugin 복원·정상 daemon 재시작·기존6건 보존을 기록했다. [M4 결과](../decisions/m4-evidence-review.md)에70개 테스트·조건별 판정·과거 결과 상세·실제 재검증·기존7건 보존을 기록했다. M5 이후는 시작하지 않았다.
+2026년 11월 12일 사용자의 지시에 따라 M0~M5를 완료했다. 소스 초기 커밋은 `7a675a9`, M0는 `4397aaf`, M1은 `bd08ace`, M2는 `ca31b4c`, M3는 `efcb9ad`다. [M1 결과](../decisions/m1-storage-state.md)에 실제4건 변환, [M2 결과](../decisions/m2-draft-plan-start.md)에 계획 확인 실행, [M3 결과](../decisions/m3-progress-reconciliation.md)에61개 테스트와 브라우저 없는 실행·진행 중 Plugin 복원·정상 daemon 재시작·기존6건 보존을 기록했다. [M4 결과](../decisions/m4-evidence-review.md)에70개 테스트·조건별 판정·과거 결과 상세·실제 재검증·기존7건 보존을 기록했다. [M5 결과](../decisions/m5-recovery.md)에 83개 테스트, 실제 준비 실패·응답 유실 대조, 동일 세션의 실패→재개→수정 요청→재개→완료, 격리 미확정 UI와 기존 8건 보존을 기록했다.
 
 
 ## 후속 단계
