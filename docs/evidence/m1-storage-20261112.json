@@ -1,0 +1,129 @@
+{
+  "runId": "m1-20261112-storage-001",
+  "at": "2026-11-12T06:16:05.989Z",
+  "sourceBaseline": "4397aaf8896d597b5a1a13ceb32c9b5e08e14945",
+  "comparisons": [
+    {
+      "token": "lifecycle-failure-20261112-001",
+      "status": "completed",
+      "revision": 1,
+      "agentId": "463829e1-6849-42e9-95ad-9fa315bf0711",
+      "workspaceId": "wks_075655fb9cbf26bd",
+      "results": [
+        "78baddae-570e-4c50-89fd-5b56ad552f3f",
+        "88c1fbf4-07e2-43ce-b42f-e6a0785c998d"
+      ],
+      "decisions": 1,
+      "attempts": [
+        1,
+        2
+      ],
+      "legacyProjectionUnchanged": true,
+      "sourceSha256": "8faf15d407878d8133532401d8d6475f57200e6f73c41f433472e21ce76d7400",
+      "backupBytesMatch": true,
+      "files": {
+        "feature.test.mjs": "ac419489fa43b8ab51e67c33cd6df419abcab32cbc465745cb03ec53dba4a3aa"
+      }
+    },
+    {
+      "token": "lifecycle-success-20261112-001",
+      "status": "completed",
+      "revision": 1,
+      "agentId": "7c8b0a20-bdfb-4a08-8a1c-027264f0bf8e",
+      "workspaceId": "wks_57e0ea26286066df",
+      "results": [
+        "ea81a759-b0e4-49d4-b23a-d990fb0e664c"
+      ],
+      "decisions": 1,
+      "attempts": [
+        1
+      ],
+      "legacyProjectionUnchanged": true,
+      "sourceSha256": "9a2ef718a284c40cfc80dd993904d282ad332eb4372e4e2ca5738e4cba8fa0d0",
+      "backupBytesMatch": true,
+      "files": {
+        "feature.test.mjs": "0ccd6b98d12acb4d08a689215da893a6e7ff9bc11599d09f30dfe46d7e4e68e9"
+      }
+    },
+    {
+      "token": "mwcyphtz-fnthmzhhky",
+      "status": "awaiting-review",
+      "revision": 1,
+      "agentId": "a6fe3328-c50c-41fe-a6f9-0c0f92ea2d86",
+      "workspaceId": "wks_1737c02ccf142bd6",
+      "results": [
+        "bc173646-402a-45c2-9197-2ce2023bef52"
+      ],
+      "decisions": 0,
+      "attempts": [
+        1
+      ],
+      "legacyProjectionUnchanged": true,
+      "sourceSha256": "9fffcf989c32c405416b16e450687a463fad95a112e6c8c392f7ab89e3ccf301",
+      "backupBytesMatch": true,
+      "files": {
+        "GUI_PROOF.md": "62189dc12d8fd54215d232618a17b02a873fb13ddc78b844f616830ab53175ba"
+      }
+    },
+    {
+      "token": "smoke-20261112-001",
+      "status": "awaiting-review",
+      "revision": 1,
+      "agentId": "9eee15c0-42ad-4bf2-bd1e-279d0962f3cb",
+      "workspaceId": "wks_27788f0772544638",
+      "results": [
+        "c42bf672-d83c-41be-81a8-486f80c89c3a"
+      ],
+      "decisions": 0,
+      "attempts": [
+        1
+      ],
+      "legacyProjectionUnchanged": true,
+      "sourceSha256": "0f6654f8aa7368e221a523509e9a867983898c8b513047398d5ea822d98f9d7d",
+      "backupBytesMatch": true,
+      "files": {
+        "POC_PROOF.md": "e343370ca29b9bd06b17c4f206fe9dfac87eec091b285bf246d7c179fbf7f9b8"
+      }
+    }
+  ],
+  "diagnostics": {
+    "records": 4,
+    "bytes": 51688,
+    "results": 5,
+    "decisions": 2,
+    "issues": [],
+    "activeTokens": []
+  },
+  "listReads": 4,
+  "listWrites": 0,
+  "secondWriterBlocked": true,
+  "agents": 6,
+  "workspaces": 8,
+  "newResources": 0,
+  "validation": {
+    "typecheck": "passed",
+    "tests": 40,
+    "verify": "passed",
+    "verifyLifecycle": "passed",
+    "platform": "Windows",
+    "runtime": "Node 24.19.0 / Paseo 0.15.4",
+    "ownership": "Windows named pipe",
+    "mocked": [
+      "external runtime concurrency and message effects"
+    ],
+    "actual": [
+      "JSON migration and interruption boundaries",
+      "child process ownership and crash",
+      "Plugin reload and second writer rejection",
+      "original PoC regression"
+    ],
+    "newModelRuns": 0,
+    "remotePushed": false
+  },
+  "knownLimits": [
+    "Legacy RPC callers may omit expectedRevision; new revalidate RPC requires it.",
+    "M2 plan confirmation, M3 production scheduler, M4 detailed evidence and M5 uncertain delivery resolution remain future scope.",
+    "Previously lost M0 result envelopes were not reconstructed.",
+    "Power-loss durability and non-Windows operation were not verified."
+  ]
+}

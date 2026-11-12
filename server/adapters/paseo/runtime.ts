@@ -11,6 +11,7 @@ function recoveryMessage(record: RequestRecord) {
   return `Resume task ${record.taskId} in the SAME worktree. Read .orchiva/plans/${record.taskPlan.id}.md again. Do not push, merge, or access other repositories.\nRecovery instructions:\n${record.recovery.instruction}\nIndependent checks: ${JSON.stringify(record.checks)}`;
 }
 export class PaseoRuntime implements Runtime, LifecycleRuntime {
+  get projectSnapshot() { return { repositoryPath: this.config.repositoryPath, baseRef: this.config.baseRef, provider: this.config.provider, maxActiveTasks: 1 as const }; }
   constructor(private paseo: PluginHandlerContext["paseo"], private config: ProjectConfig) {}
   async validate() { await assertSandbox(this.config); }
   async createWorkspace(record: RequestRecord) {

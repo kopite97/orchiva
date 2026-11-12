@@ -8,7 +8,7 @@ Orchiva의 기본 소스 폴더는 이 `orchiva-plugin` 폴더이며 소스 원�
 
 작업은 [AGENTS.md](AGENTS.md)에서 시작하세요. [작업 흐름](docs/agents/workflow.md), [프로젝트 규칙](docs/agents/repository-guidelines.md), [소스 규칙](docs/agents/source-conventions.md), [검증 기준](docs/agents/validation.md)을 경로와 변경 범위에 맞게 적용합니다.
 
-MVP의 단계별 상태는 [계획 목록](docs/plans/README.md)에서 관리합니다. [M0 실행 기반 확인](docs/plans/m0-runtime-foundation.md)은 구현·검증을 완료했습니다. 확인한 API와 제약은 [M0 결과](docs/decisions/m0-runtime-foundation.md)에 기록했습니다. M1 이후의 화면·저장 모델은 아직 구현 전이며 아래 실행 안내는 현재 PoC 기준입니다.
+MVP의 단계별 상태는 [계획 목록](docs/plans/README.md)에서 관리합니다. M0 실행 기반과 M1 저장·상태 기반을 구현했습니다. [M0 결과](docs/decisions/m0-runtime-foundation.md), [M1 결과](docs/decisions/m1-storage-state.md)에 검증과 제약을 기록했습니다. 아래 화면 안내는 현재 PoC 기준이며 M2 이후의 새 화면·운영 루프는 구현 전입니다.
 
 ## 실행
 
@@ -22,6 +22,8 @@ Set-Location C:\Users\USER\lib\orchiva-plugin
 최근 요청에서 실행 상태, 최종 응답, 변경 파일, 테스트 종료 코드·로그를 확인합니다. 테스트가 통과하면 **완료 조건 검토 대기**가 됩니다. 완료 조건과 근거를 확인하고 체크박스·판정 근거를 입력한 뒤 **완료 확정**을 누릅니다. 실패한 작업은 원인을 확인하고 **기존 Worktree에서 재개**할 수 있습니다. 세션·Worktree는 유지되고 이전 실패 증거는 보존됩니다.
 
 **상태·결과 새로고침**은 미완료 작업의 검증을 다시 실행합니다. 완료 확정은 검증 당시 결과에 대한 기록입니다. 자동 검증이 없으면 수동 확인이 필요하며, Codex의 종료 또는 성공 보고만으로 자동 완료하지 않습니다.
+
+목록 조회는 결과를 재수집하지 않습니다. 진행 상태는 Hook과 명시적 새로고침으로 갱신합니다. 실행 중이거나 전달 확인을 기다리는 작업의 새로고침은 상태를 관측하며 새 검증 명령을 만들지 않습니다. 이전 결과·판정은 v2 이력에 보존되며 전체 이력 화면은 후속 단계입니다.
 
 복구 메시지 전달 여부가 불확실하면 `needs-input`에 보존하고 자동 재전송과 다른 키의 재개를 차단합니다. daemon이 복원한 이력에서 전달 식별자가 없어질 수 있으므로 메시지 내용만 보고 재전송하지 않습니다.
 
@@ -44,6 +46,8 @@ npm run verify:lifecycle
 
 `npm run m0 -- help`는 M0 시험 명령을 안내합니다. 시험 observer는 로컬 설정이 있을 때만 활성화되며 운영 스케줄러가 아닙니다. 실제 장애 시험의 단계와 보존 데이터는 [M0 재검증 안내](docs/decisions/m0-runtime-foundation.md#재검증과-정상-상태)를 따릅니다.
 
+`npm run m1 -- help`는 기존 요청 백업·마이그레이션 대조 절차를 안내합니다. v1 원본은 `requests/backups/v1`에 보존됩니다. 같은 데이터 디렉터리의 두 번째 writer는 거부하며, 준비·실행·검증·전달 미확정 작업이 있으면 다른 작업의 실행을 `BUSY`로 차단합니다. `storage.diagnostics` RPC로 손상 파일·미래 버전·이력 수·점유 요청을 확인할 수 있습니다.
+
 ## 구성
 
 | 위치 | 용도 |
@@ -60,7 +64,7 @@ npm run verify:lifecycle
 
 대상은 `C:\Users\USER\lib\orchiva-PoC`와 `kopite97/PoC-sandbox` origin으로 제한됩니다. RNG는 사용하지 않습니다. Plugin 소스와 대상 저장소는 분리되어 있습니다. 원격 push와 merge는 하지 않습니다.
 
-주요 상태는 `running → validating → awaiting-review → completed`이며 오류·검증 실패는 `failed`, 권한 대기는 `needs-input`으로 표시합니다. 실패 복구는 같은 TASK의 시도 번호를 올립니다. Hook과 화면의 2초 간격 조회가 상태를 동기화하고, 재시작 중 놓친 Hook은 다음 조회에서 보완합니다.
+주요 상태는 `running → validating → awaiting-review → completed`이며 오류·검증 실패는 `failed`, 권한·전달 확인 대기는 `needs-input`으로 표시합니다. 실패 복구는 같은 TASK의 시도 번호를 올립니다. 화면은 2초 간격으로 저장 상태를 조회합니다. 재시작 중 놓친 Hook은 명시적 새로고침으로 보완하며 자동 백그라운드 대조는 M3 범위입니다.
 
 단일 로컬 daemon·단일 TASK 흐름까지 검증했습니다. 자동 검증은 Node 내장 테스트 및 문자열 검사만 지원합니다. Node 검증은 Worktree 읽기만 허용하고 쓰기·자식 프로세스를 차단하며, 테스트당 10초·전체 20초로 제한합니다. 이는 임의 코드를 위한 완전한 보안 격리나 네트워크 차단을 보장하지 않습니다. 증거 파일은 파일당 2 MiB·최대 300개입니다. 다중 daemon, 장시간 부하, 일반 빌드 명령, Unity 빌드, 자동 merge는 후속 범위입니다.
 

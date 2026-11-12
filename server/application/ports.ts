@@ -1,6 +1,8 @@
 import type { ExecutionResult, RequestRecord } from "../../shared/contracts/feature-request";
 export type Lookup<T> = { kind: "found"; value: T } | { kind: "absent" } | { kind: "unknown"; reason: string };
 export interface RequestStore {
+  exclusive<T>(action: () => Promise<T>): Promise<T>;
+  diagnostics(): Promise<{ issues: { file: string; code: string }[]; activeTokens: string[] }>;
   get(token: string): Promise<RequestRecord | null>;
   save(record: RequestRecord): Promise<void>;
   list(): Promise<RequestRecord[]>;
@@ -18,6 +20,7 @@ export interface LifecycleRuntime {
   resume(record: RequestRecord): Promise<void>;
 }
 export interface Runtime {
+  projectSnapshot?: RequestRecord["projectSnapshot"];
   validate(): Promise<void>;
   createWorkspace(record: RequestRecord): Promise<{ id: string; directory: string }>;
   writePlans(record: RequestRecord): Promise<void>;

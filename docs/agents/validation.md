@@ -22,12 +22,13 @@
 | `npm run typecheck` | TypeScript 정적 검사 |
 | `npm test` | 현재 `server/tests/*.test.ts` 테스트. 최신 통과 수는 실행 결과로 기록 |
 | `npm run m0 -- help` | 명시적 M0 시험 단계 안내. 실제 연동은 실행 ID와 보존 manifest 필요. [결과·재검증](../decisions/m0-runtime-foundation.md) 참조 |
+| `npm run m1 -- help` | v1 원본 백업과 v2 실제 대조. 기존 실행 재검증은 [M1 결과](../decisions/m1-storage-state.md) 참조 |
 | `npm run verify` | 기존 초기 PoC 두 요청의 PLAN·Worktree·파일·재호출 검사. 기존 데이터와 daemon 필요 |
 | `npm run verify:lifecycle` | 기존 생명주기 두 요청의 판정·복구 증거·재호출과 원래 테스트 재실행. 기존 데이터와 daemon 필요 |
 | `.\scripts\start-paseo.ps1` | 독립 daemon 시작. 상태와 작업 범위를 먼저 확인 |
 | `.\scripts\start-paseo.ps1 -Restart` | daemon 재시작. 일반 회귀는 활성 작업이 없을 때, 장애 시험은 시험 소유 작업만 있을 때 수행 |
 
-`verify` 계열은 새 세션을 만들지 않지만 현재 PoC의 목록 조회가 상태 수집·저장을 수행할 수 있으므로 완전한 읽기 전용 검사가 아니다. `smoke`, `lifecycle -- start`, `recover`, `approve`는 생성·재개·판정 동작을 포함한다. 기존 완료 기록을 새 시험의 재료로 변경하지 않는다.
+M1 이후 목록 조회는 외부 관측·검증을 수행하지 않는다. 저장소 첫 로드 시 v1 마이그레이션은 원본 백업 후 수행된다. `verify` 계열은 새 세션을 만들지 않지만 생명주기 검사는 원래 검사 파일을 실행하고 기존 명령을 재호출하므로 명령별 부수 효과를 확인한다. `smoke`, `lifecycle -- start`, `recover`, `approve`는 생성·재개·판정 동작을 포함한다. 기존 완료 기록을 새 시험의 재료로 변경하지 않는다.
 
 ## 실제 연동과 장애 시험
 

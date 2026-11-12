@@ -11,7 +11,7 @@ import { featureSchema } from "../../shared/contracts/feature-request";
 const input = { token: "test-request-001", feature: { title: "Smoke", goal: "Write proof", scope: "One file", constraints: "No production access", validation: "Read file", completionCriteria: "Proof exists" } };
 async function fixture(t: TestContext) {
   const directory = await mkdtemp(join(tmpdir(), "orchiva-test-"));
-  t.after(() => rm(directory, { recursive: true, force: true }));
+  t.after(async () => { await store.close(); await rm(directory, { recursive: true, force: true }); });
   const store = new JsonRequestStore(directory);
   const calls: string[] = [];
   const runtime: Runtime = {
@@ -31,17 +31,18 @@ test("simultaneous duplicate requests create one worktree and agent, surviving r
   await new StartFeatureRequest(store).start(input, runtime);
   assert.equal(calls.length, 4);
 });
-test("failed agent creation retains worktree and retries with the original request identity", async t => {
+test("lost agent creation response retains worktree and holds the original intent without replay", async t => {
   const { app, store, runtime, calls } = await fixture(t);
   let first = true;
   runtime.startAgent = async record => { calls.push(`agent:${record.token}`); if (first) { first = false; throw new Error("response lost"); } return "agent-1"; };
   const failed = await app.start(input, runtime);
-  assert.equal(failed.status, "failed");
+  assert.equal(failed.status, "needs-input");
+  assert.equal(failed.commands[0].status, "unknown");
   assert.equal(failed.workspaceId, "ws-1");
   const recovered = await new StartFeatureRequest(store).start(input, runtime);
-  assert.equal(recovered.status, "started");
+  assert.equal(recovered.status, "needs-input");
   assert.equal(calls.filter(x => x === "workspace").length, 1);
-  assert.equal(calls.filter(x => x === `agent:${input.token}`).length, 2);
+  assert.equal(calls.filter(x => x === `agent:${input.token}`).length, 1);
 });
 test("same token with changed input is rejected, including concurrent requests", async t => {
   const { app, runtime } = await fixture(t);

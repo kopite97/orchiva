@@ -12,7 +12,7 @@ import type { LifecycleRuntime, Observation } from "../application/ports";
 
 async function fixture(t: TestContext) {
   const directory = await mkdtemp(join(tmpdir(), "orchiva-lifecycle-"));
-  t.after(() => rm(directory, { recursive: true, force: true }));
+  t.after(async () => { await store.close(); await rm(directory, { recursive: true, force: true }); });
   const store = new JsonRequestStore(directory), locks = new RequestLocks();
   const record = createRequest("lifecycle-test-001", { title: "Lifecycle", goal: "Small feature", scope: "One module", constraints: "Sandbox", validation: "Tests pass", completionCriteria: "Expected behavior" });
   record.agentId = "agent-1"; record.workspaceId = "workspace-1"; record.worktreePath = "sandbox-worktree"; record.status = "started";
@@ -118,4 +118,61 @@ test("explicit refresh reruns checks but preserves a known canceled execution", 
   const refreshed = await f.tracker.refresh(f.record.token, f.runtime, undefined, true);
   assert.equal(refreshed.status, "failed");
   assert.equal(refreshed.result?.failure, "User stopped the task");
+});
+
+test("revalidation and resume preserve rejected decisions and all result versions", async t => {
+  const f = await fixture(t); f.state.observation.status = "ended";
+  const first = await f.tracker.refresh(f.record.token, f.runtime);
+  const decision = { token: first.token, resultId: first.result!.id, approved: false, note: "Needs refinement", commandKey: "review-history-001", expectedRevision: first.revision };
+  await f.tracker.review(decision, f.runtime);
+  const second = await f.tracker.refresh(first.token, f.runtime, undefined, true);
+  assert.equal(second.results.length, 2); assert.equal(second.decisions.length, 1);
+  assert.equal(second.decisions[0].resultId, first.result!.id); assert.equal(second.decisions[0].approved, false);
+  await f.tracker.resume({ token: first.token, key: "resume-history-001", instruction: "Refine" }, f.runtime);
+  f.state.observation = { ...f.state.observation, status: "ended", sourceKey: "turn-2" };
+  await f.tracker.refresh(first.token, f.runtime);
+  await f.tracker.resume({ token: first.token, key: "resume-history-002", instruction: "Refine more" }, f.runtime);
+  const before = (await f.store.get(first.token))!;
+  // Old command replay wins over revision mismatch and cannot resend or change the current decision.
+  const replay = await f.tracker.resume({ token: first.token, key: "resume-history-001", instruction: "Refine", expectedRevision: 0 }, f.runtime);
+  assert.equal(replay.attempt, 3); assert.equal(f.state.sends, 2); assert.deepEqual(replay.results, before.results);
+  await assert.rejects(f.tracker.resume({ token: first.token, key: "resume-history-001", instruction: "Changed" }, f.runtime), /IDEMPOTENCY_CONFLICT/);
+  await f.tracker.review(decision, f.runtime); assert.equal((await f.store.get(first.token))!.revision, before.revision);
+  assert.equal((await f.store.get(first.token))!.attemptHistory.length, 3);
+});
+
+test("stale review revision is rejected before mutation and original result survives fingerprint failure", async t => {
+  const f = await fixture(t); f.state.observation.status = "ended";
+  const record = await f.tracker.refresh(f.record.token, f.runtime);
+  await assert.rejects(f.tracker.review({ token: record.token, resultId: record.result!.id, approved: true, note: "Review", expectedRevision: 0 }, f.runtime), /REVISION_CONFLICT/);
+  f.state.fingerprint = "edited";
+  await assert.rejects(f.tracker.review({ token: record.token, resultId: record.result!.id, approved: true, note: "Review" }, f.runtime), /Files changed/);
+  const after = (await f.store.get(record.token))!; assert.equal(after.result, null); assert.equal(after.results[0].id, record.result!.id);
+});
+
+test("revalidation command replay returns its original result reference without a second validation", async t => {
+  const f = await fixture(t); f.state.observation.status = "ended";
+  const record = await f.tracker.refresh(f.record.token, f.runtime);
+  const input = { commandKey: "revalidate-command-001", resultId: record.result!.id, expectedRevision: record.revision };
+  const validated = await f.tracker.refresh(record.token, f.runtime, undefined, true, input);
+  assert.equal(f.state.collections, 2);
+  const command = validated.commands.find(x => x.key === input.commandKey)!;
+  assert.equal(command.status, "applied"); assert.equal(command.outcomeRef, validated.result!.id);
+  await f.tracker.refresh(record.token, f.runtime, undefined, true, input);
+  assert.equal(f.state.collections, 2);
+  await assert.rejects(f.tracker.refresh(record.token, f.runtime, undefined, true, { ...input, resultId: "different" }), /IDEMPOTENCY_CONFLICT/);
+});
+
+test("legacy refresh button observes pending recovery and running tasks without creating validation commands", async t => {
+  const f = await fixture(t);
+  const running = await f.tracker.refresh(f.record.token, f.runtime, undefined, true);
+  assert.equal(running.status, "running"); assert.equal(running.commands.length, 0);
+  f.state.observation.status = "ended";
+  await f.tracker.refresh(f.record.token, f.runtime);
+  f.state.uncertain = true;
+  await f.tracker.resume({ token: f.record.token, key: "button-pending-001", instruction: "Fix" }, f.runtime);
+  f.state.observation.seenRecovery = true; f.state.observation.sourceKey = "next";
+  const reconciled = await f.tracker.refresh(f.record.token, f.runtime, undefined, true);
+  assert.equal(reconciled.recovery?.pending, false); assert.equal(reconciled.status, "awaiting-review");
+  assert.equal(reconciled.commands.length, 1); assert.equal(reconciled.commands[0].status, "applied"); assert.equal(f.state.sends, 1);
 });
