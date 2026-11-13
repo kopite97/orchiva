@@ -178,7 +178,7 @@ npm run verify:lifecycle
 
 | 자료 | 위치 |
 | --- | --- |
-| 상세 검증 기록 | [verification.md](C:/Users/USER/lib/orchiva-plugin/docs/verification.md) |
+| 상세 검증 기록 | [verification.md](verification.md) |
 | 실행·개발 안내 | [README.md](C:/Users/USER/lib/orchiva-plugin/README.md) |
 | 실행 생명주기 구현 | [track-execution.ts](C:/Users/USER/lib/orchiva-plugin/server/application/track-execution.ts) |
 | 독립 검증기 | [evidence.ts](C:/Users/USER/lib/orchiva-plugin/server/adapters/storage/evidence.ts) |

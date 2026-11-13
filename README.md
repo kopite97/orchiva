@@ -4,11 +4,13 @@ Paseo 안에서 Feature Request를 입력하고 REQ → Request PLAN → TASK �
 
 Orchiva의 기본 소스 폴더는 이 `orchiva-plugin` 폴더이며 소스 원격은 [kopite97/orchiva](https://github.com/kopite97/orchiva)입니다. 실제 연동 작업 대상은 별도 `orchiva-PoC` sandbox입니다.
 
-다른 PC에서 개발을 이어가려면 [데스크톱 전환 방향과 개발 인계](docs/desktop-handoff.md)를 확인하세요. 프로젝트별 게임 제작 흐름, 지침 파일 편집, .NET 앱과 기존 Paseo 실행부 연결에 대한 사용자 합의와 미정 사항을 정리했습니다. 현재 실행 가능한 제품은 아래의 브라우저 MVP이며, 데스크톱 앱은 아직 구현하지 않았습니다.
+다른 PC에서 개발을 이어가려면 [데스크톱 전환 방향과 개발 인계](docs/design/desktop-handoff.md)를 확인하세요. 프로젝트별 게임 제작 흐름, 지침 파일 편집, .NET 앱과 기존 Paseo 실행부 연결에 대한 사용자 합의와 미정 사항을 정리했습니다. 현재 실행 가능한 제품은 아래의 브라우저 MVP이며, 데스크톱 앱은 아직 구현하지 않았습니다.
 
 ## 개발 지침과 계획
 
 작업은 [AGENTS.md](AGENTS.md)에서 시작하세요. [작업 흐름](docs/agents/workflow.md), [프로젝트 규칙](docs/agents/repository-guidelines.md), [소스 규칙](docs/agents/source-conventions.md), [검증 기준](docs/agents/validation.md)을 경로와 변경 범위에 맞게 적용합니다.
+
+문서는 설계·인계(`docs/design`), 사용 안내(`docs/guides`), 개발 지침(`docs/agents`), 구현 계획(`docs/plans`), 결정·검증 결과(`docs/decisions`), 증거 자료(`docs/evidence`)로 분류합니다. 문서 작성과 이동 기준은 [문서 규칙](docs/AGENTS.md)을 따릅니다.
 
 MVP의 단계별 상태는 [계획 목록](docs/plans/README.md)에서 관리합니다. M0 실행 기반, M1 저장·상태, M2 초안·계획 확인·고정 커밋 실행, M3 진행 화면·백그라운드 관측·복원, M4 조건별 판정·과거 결과 상세, M5 실패별 복구·전달 대조·중복 명령 처리를 구현했습니다. [M0 결과](docs/decisions/m0-runtime-foundation.md), [M1 결과](docs/decisions/m1-storage-state.md), [M2 결과](docs/decisions/m2-draft-plan-start.md), [M3 결과](docs/decisions/m3-progress-reconciliation.md), [M4 결과](docs/decisions/m4-evidence-review.md), [M5 결과](docs/decisions/m5-recovery.md)에 검증과 제약을 기록했습니다.
 
@@ -64,7 +66,7 @@ npm run verify:lifecycle
 
 `npm run m5 -- verify m5-20261112-recovery-002`는 같은 세션의 3개 시도·4개 결과·2개 판정, 원래 검사 파일, 중복 명령 무쓰기 및 기존 8건을 대조합니다. 새 시험은 `npm run m5 -- help`와 [M5 결과](docs/decisions/m5-recovery.md)를 따릅니다. 응답 유실 시험과 주 GUI 시험은 별도 요청을 사용합니다.
 
-첫 설치·초안부터 완료까지의 화면 흐름·백업/종료 절차는 [사용자 안내](docs/user-guide.md), 오류별 복구 방법은 [문제 해결 안내](docs/troubleshooting.md)를 참고하세요. M6 수용 결과·한계는 [결과 기록](docs/decisions/m6-acceptance.md)에서 확인할 수 있습니다. M6 시험 명령은 `npm run m6 -- help`로 확인하며, `performance`와 `d06`은 실제 Agent/Workspace를 만들고 `a11`은 daemon을 재시작합니다.
+첫 설치·초안부터 완료까지의 화면 흐름·백업/종료 절차는 [사용자 안내](docs/guides/user-guide.md), 오류별 복구 방법은 [문제 해결 안내](docs/guides/troubleshooting.md)를 참고하세요. M6 수용 결과·한계는 [결과 기록](docs/decisions/m6-acceptance.md)에서 확인할 수 있습니다. M6 시험 명령은 `npm run m6 -- help`로 확인하며, `performance`와 `d06`은 실제 Agent/Workspace를 만들고 `a11`은 daemon을 재시작합니다.
 
 ## 구성
 
@@ -86,8 +88,8 @@ npm run verify:lifecycle
 
 단일 로컬 daemon·단일 TASK 흐름까지 검증했습니다. 자동 검증은 Node 내장 테스트 및 문자열 검사만 지원합니다. Node 검증은 Worktree 읽기만 허용하고 쓰기·자식 프로세스를 차단하며, 테스트당 10초·전체 20초로 제한합니다. 이는 임의 코드를 위한 완전한 보안 격리나 네트워크 차단을 보장하지 않습니다. 증거 파일은 파일당 2 MiB·최대 300개입니다. 다중 daemon, 장시간 부하, 일반 빌드 명령, Unity 빌드, 자동 merge는 후속 범위입니다.
 
-환경과 검증 근거는 [검증 기록](docs/verification.md)을 참고하세요.
+환경과 검증 근거는 [검증 기록](docs/decisions/verification.md)을 참고하세요.
 
-MVP 설계 전 검토할 구현 범위, 실제 성공·실패·복구 결과, 한계와 후속 결정 사항은 [PoC 결과 보고서](docs/poc-results.md)에 정리했습니다.
+MVP 설계 전 검토할 구현 범위, 실제 성공·실패·복구 결과, 한계와 후속 결정 사항은 [PoC 결과 보고서](docs/decisions/poc-results.md)에 정리했습니다.
 
-단일 작업 흐름의 기능 범위, 화면 흐름, 데이터 모델, 개발 순서와 수용 기준은 [프로토타입 MVP 설계](docs/mvp-design.md)를 참고하세요. M0~M6 구현과 검증 범위는 각 결과 문서에 기록했습니다.
+단일 작업 흐름의 기능 범위, 화면 흐름, 데이터 모델, 개발 순서와 수용 기준은 [프로토타입 MVP 설계](docs/design/mvp-design.md)를 참고하세요. M0~M6 구현과 검증 범위는 각 결과 문서에 기록했습니다.

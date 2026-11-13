@@ -10,9 +10,9 @@ Orchiva의 다음 방향은 Windows .NET 앱에서 사용자의 게임 프로젝
 
 - 소스 원격: [kopite97/orchiva](https://github.com/kopite97/orchiva). 기준 브랜치는 main이다.
 - 이번 문서 작업 전의 구현 기준: [7950654 — M6 구현·검증 완료](https://github.com/kopite97/orchiva/commit/7950654dc2e70909d86b8edc4d10403bce9c05d4).
-- M0~M6는 [계획 목록](plans/README.md)에서 completed다. 현재 구현은 TypeScript·React Native 기반 Paseo Plugin과 Node.js 실행 로직이다.
+- M0~M6는 [계획 목록](../plans/README.md)에서 completed다. 현재 구현은 TypeScript·React Native 기반 Paseo Plugin과 Node.js 실행 로직이다.
 - 현재 제품은 로컬 브라우저에서 사용하며, 등록된 PoC sandbox 하나와 단일 활성 TASK를 대상으로 한다. 아래에서 합의한 프로젝트 선택, 분야별 작업, 자유 질문, 지침 편집, .NET exe는 아직 구현하지 않았다. .NET 솔루션·프로젝트 파일도 아직 없다.
-- [M6 결과](decisions/m6-acceptance.md)에 89개 자동 테스트, 통합 수용·장애·성능 측정과 사람 첫 사용 확인을 기록했다. 실제/모의 검증의 경계가 있으며 새 PC 설치·인증과 장기 운영까지 보장한 결과는 아니다. 이번 문서 작업에서 그 시험을 다시 수행한 것은 아니다.
+- [M6 결과](../decisions/m6-acceptance.md)에 89개 자동 테스트, 통합 수용·장애·성능 측정과 사람 첫 사용 확인을 기록했다. 실제/모의 검증의 경계가 있으며 새 PC 설치·인증과 장기 운영까지 보장한 결과는 아니다. 이번 문서 작업에서 그 시험을 다시 수행한 것은 아니다.
 - 기존 MVP 범위의 완료는 사용자가 최종적으로 원하는 게임 제작 도구 전체의 완료를 뜻하지 않는다.
 
 ## 사용자와 합의한 방향
@@ -94,7 +94,7 @@ flowchart LR
 - C#·.NET 10 LTS·WinUI 3를 우선 후보로 제안했다. 사용자가 확정한 것은 .NET 앱과 기존 Paseo 실행부를 연결하는 1차 방향이다. 정확한 UI 프레임워크·SDK 버전·배포 형식은 구현 계획에서 결정한다.
 - WPF는 검토 가능한 대안이며 Electron은 이전 후보였다. Paseo 제거와 Codex App Server 직접 연결은 1차 확정 범위가 아니다.
 
-현재 UI·RPC는 Paseo Plugin에 의존한다. [클라이언트 진입점](../index.client.tsx), [서버 진입점](../index.server.ts), [실행 포트](../server/application/ports.ts), [Paseo 연결](../server/adapters/paseo/runtime.ts)을 함께 확인한다. 기존 코드를 무변경으로 새 UI에 연결할 수 있다고 가정하지 않는다.
+현재 UI·RPC는 Paseo Plugin에 의존한다. [클라이언트 진입점](../../index.client.tsx), [서버 진입점](../../index.server.ts), [실행 포트](../../server/application/ports.ts), [Paseo 연결](../../server/adapters/paseo/runtime.ts)을 함께 확인한다. 기존 코드를 무변경으로 새 UI에 연결할 수 있다고 가정하지 않는다.
 
 ## 상세 계획에서 결정할 사항
 
@@ -106,7 +106,7 @@ flowchart LR
 6. 수동 검사 입력을 대체할 자동 검사와 최종 검토. 아트·사운드·특수효과의 실제 생성·미리보기 도구 연결은 아직 구현·검증하지 않았다.
 7. exe 배포 시 Node.js·Paseo·Codex 설치와 인증, 새 PC 설치, 앱 종료 중 작업 유지·복원.
 
-이 목록은 설계 질문이며 M7 같은 새 구현 단계의 등록이나 전체 구현 승인을 뜻하지 않는다. 세부 계획을 요청받으면 [계획 지침](plans/AGENTS.md)에 따라 작성하고 [계획 목록](plans/README.md)에 등록한다. 명시적으로 승인된 구현 범위 안에서는 같은 허가를 반복해서 묻지 않는다.
+이 목록은 설계 질문이며 M7 같은 새 구현 단계의 등록이나 전체 구현 승인을 뜻하지 않는다. 세부 계획을 요청받으면 [계획 지침](../plans/AGENTS.md)에 따라 작성하고 [계획 목록](../plans/README.md)에 등록한다. 명시적으로 승인된 구현 범위 안에서는 같은 허가를 반복해서 묻지 않는다.
 
 ## 다른 PC에서 개발을 이어가는 절차
 
@@ -128,11 +128,11 @@ git status --short --branch
 git pull --ff-only origin main
 ```
 
-처음 읽을 순서는 [루트 지침](../AGENTS.md) → 이 문서 → [기존 MVP 설계](mvp-design.md) → [계획 목록](plans/README.md) → [M6 결과](decisions/m6-acceptance.md)다. 다음 PC의 작업 폴더가 기존 PC의 절대 경로와 같을 필요는 없다. 저장소 이름은 orchiva이며 기존 기본 소스 폴더 이름은 orchiva-plugin이다.
+처음 읽을 순서는 [루트 지침](../../AGENTS.md) → 이 문서 → [기존 MVP 설계](mvp-design.md) → [계획 목록](../plans/README.md) → [M6 결과](../decisions/m6-acceptance.md)다. 다음 PC의 작업 폴더가 기존 PC의 절대 경로와 같을 필요는 없다. 저장소 이름은 orchiva이며 기존 기본 소스 폴더 이름은 orchiva-plugin이다.
 
 ### 기존 구현 확인과 실행 구분
 
-현재 Node.js 소스를 확인하려면 package-lock.json을 유지하고 다음 명령을 소스 루트에서 사용한다. 필요한 Node.js 버전 등 기존 검증 환경은 [사용자 안내](user-guide.md)를 따른다.
+현재 Node.js 소스를 확인하려면 package-lock.json을 유지하고 다음 명령을 소스 루트에서 사용한다. 필요한 Node.js 버전 등 기존 검증 환경은 [사용자 안내](../guides/user-guide.md)를 따른다.
 
 ```powershell
 npm ci
@@ -142,7 +142,7 @@ npm test
 
 이는 기존 TypeScript 구현의 확인 절차다. 아직 .NET 프로젝트가 없으므로 이 단계에서 dotnet build나 exe 실행을 기존 기능처럼 안내하지 않는다. .NET 개발 도구 설치와 프로젝트 생성은 후속 구현 계획에 포함한다.
 
-실제 브라우저 MVP를 새 PC에서 실행하려면 별도 sandbox, Paseo·Codex 설치와 인증, Plugin 등록, 로컬 설정이 필요하다. Git clone만으로 기존 실행 환경과 과거 요청이 복원되지 않는다. 현재 [프로젝트 검사](../server/config/project-config.ts)는 사용자 홈의 lib/orchiva-PoC와 PoC-sandbox 원격을 제한하므로, 다른 게임 경로를 넣어서 우회하지 않는다. 자세한 현재 실행 절차는 [사용자 안내](user-guide.md)와 [문제 해결](troubleshooting.md)을 확인한다.
+실제 브라우저 MVP를 새 PC에서 실행하려면 별도 sandbox, Paseo·Codex 설치와 인증, Plugin 등록, 로컬 설정이 필요하다. Git clone만으로 기존 실행 환경과 과거 요청이 복원되지 않는다. 현재 [프로젝트 검사](../../server/config/project-config.ts)는 사용자 홈의 lib/orchiva-PoC와 PoC-sandbox 원격을 제한하므로, 다른 게임 경로를 넣어서 우회하지 않는다. 자세한 현재 실행 절차는 [사용자 안내](../guides/user-guide.md)와 [문제 해결](../guides/troubleshooting.md)을 확인한다.
 
 npm run verify 및 verify:lifecycle은 기존 PC의 PoC 요청·Worktree·daemon 데이터에 의존한다. 새 PC에서 그 데이터 없이 실패한 결과를 일반 코드 회귀 실패로 오해하지 않는다. 새 실연동 시험은 새 실행 식별자와 허용된 sandbox에서 준비한다.
 
@@ -162,10 +162,10 @@ npm run verify 및 verify:lifecycle은 기존 PC의 PoC 요청·Worktree·daemon
 
 ## 다음 개발자에게 전달할 문장
 
-> AGENTS.md와 docs/desktop-handoff.md를 먼저 읽고 현재 Git 상태 및 M0~M6의 구현 기준을 확인해 주세요. 다음 방향은 .NET 데스크톱 앱과 기존 Orchiva·Paseo 실행부의 연결입니다. 프로젝트별 기획·코딩·아트·사운드·특수효과·질문, 새 요청·수정 요청, 실제 지침 파일 편집, PLAN 기반 작업, 소스·결과물 분리를 반영해야 합니다. 확정 방향과 미정 세부 사항을 구분하고, 현재 요청한 범위에 맞춰 상세 계획 또는 구현을 이어가 주세요. 기존 증거와 사용자 변경을 보존하고 운영 게임 저장소를 시험 대상으로 사용하지 마세요.
+> AGENTS.md와 docs/design/desktop-handoff.md를 먼저 읽고 현재 Git 상태 및 M0~M6의 구현 기준을 확인해 주세요. 다음 방향은 .NET 데스크톱 앱과 기존 Orchiva·Paseo 실행부의 연결입니다. 프로젝트별 기획·코딩·아트·사운드·특수효과·질문, 새 요청·수정 요청, 실제 지침 파일 편집, PLAN 기반 작업, 소스·결과물 분리를 반영해야 합니다. 확정 방향과 미정 세부 사항을 구분하고, 현재 요청한 범위에 맞춰 상세 계획 또는 구현을 이어가 주세요. 기존 증거와 사용자 변경을 보존하고 운영 게임 저장소를 시험 대상으로 사용하지 마세요.
 
 ## 관련 자료
 
-- [현재 개발 절차](agents/workflow.md)와 [프로젝트 규칙](agents/repository-guidelines.md)
-- [PoC 결과](poc-results.md), [현재 MVP 설계](mvp-design.md), [M6 수용 결과](decisions/m6-acceptance.md)
+- [현재 개발 절차](../agents/workflow.md)와 [프로젝트 규칙](../agents/repository-guidelines.md)
+- [PoC 결과](../decisions/poc-results.md), [현재 MVP 설계](mvp-design.md), [M6 수용 결과](../decisions/m6-acceptance.md)
 - 기술 후보 검토 자료: [WinUI 3](https://learn.microsoft.com/en-us/windows/apps/winui/winui3/), [.NET 지원 정책](https://dotnet.microsoft.com/en-us/platform/support/policy), [Codex App Server](https://learn.chatgpt.com/docs/app-server)

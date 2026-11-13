@@ -2,7 +2,7 @@
 
 - 상태: `completed`
 - 작성일: 2026-11-12 · Asia/Seoul
-- 관련 설계: [MVP](../mvp-design.md), [M4 결과](../decisions/m4-evidence-review.md)
+- 관련 설계: [MVP](../design/mvp-design.md), [M4 결과](../decisions/m4-evidence-review.md)
 - 선행 조건: M0~M4 완료, 기준 커밋 `3104e97`, 기존 요청 8건
 - 실행 근거: 사용자의 M5 상세 계획 작성·구현·검증 지시. 브라우저 UI와 로컬 daemon 구조 유지, exe 패키징 제외.
 

@@ -4,8 +4,6 @@
   "version": "0.0.0",
   "files": [
     "paseo-plugin.json",
-    "OVERVIEW.md",
-    "OVERVIEW.*.md",
     "index.client.ts",
     "index.client.tsx",
     "index.server.ts",

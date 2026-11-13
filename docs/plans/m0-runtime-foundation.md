@@ -2,7 +2,7 @@
 
 - 상태: `completed`
 - 작성일: 2026-11-12 · Asia/Seoul
-- 관련 설계: [MVP 설계](../mvp-design.md)의 M0, 구현 시작 시 해소할 의존 사항
+- 관련 설계: [MVP 설계](../design/mvp-design.md)의 M0, 구현 시작 시 해소할 의존 사항
 - 선행 조건: [하네스](../../AGENTS.md), 기존 PoC 소스·증거, 로컬 Paseo 환경
 - 실행 근거: 2026-11-12 사용자가 초기 커밋과 작성된 M0 계획의 구현·검증을 지시했다. 소스 기준 커밋은 `7a675a918408419e5a245da4e086c04bced4716c`다.
 - 소스: 기본 소스 폴더 `orchiva-plugin`, 원격 `https://github.com/kopite97/orchiva.git`
@@ -117,7 +117,7 @@ workspace 생성, agent 생성, 재개 메시지를 별개 효과로 시험한�
 | `scripts/m0-foundation.mjs` | 실행 ID·manifest·단계 선택을 갖춘 probe와 결과 검사 |
 | `package.json`, `package-lock.json` | 필요한 직접 의존성과 시험 명령. 버전 변경은 확인한 근거 기록 |
 | `docs/decisions/m0-runtime-foundation.md` | 확인한 API 선택·제약·결과 근거 |
-| `docs/mvp-design.md`, 이 계획과 목록 | 확인된 계약·제약·완료 상태 반영 |
+| `docs/design/mvp-design.md`, 이 계획과 목록 | 확인된 계약·제약·완료 상태 반영 |
 
 ## 검증 계획
 

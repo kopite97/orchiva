@@ -2,7 +2,7 @@
 
 - 상태: `completed`
 - 작성일: 2026-11-12 · Asia/Seoul
-- 관련 설계: [MVP 설계](../mvp-design.md)의 입력·계획 규칙, 요청 작성·계획 확인, M2
+- 관련 설계: [MVP 설계](../design/mvp-design.md)의 입력·계획 규칙, 요청 작성·계획 확인, M2
 - 선행 조건: [M1 결과](../decisions/m1-storage-state.md), 기준 커밋 `bd08ace`
 - 실행 근거: 사용자가 M2 상세 계획과 그 계획의 구현·검증을 지시했다. 등록 후 같은 작업에서 활성화한다.
 

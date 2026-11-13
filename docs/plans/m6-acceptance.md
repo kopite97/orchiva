@@ -2,7 +2,7 @@
 
 - 상태: `completed`
 - 작성일: 2026-11-12 · Asia/Seoul
-- 관련 설계: [MVP 수용 기준](../mvp-design.md#수용-기준), [검증 기준](../agents/validation.md)
+- 관련 설계: [MVP 수용 기준](../design/mvp-design.md#수용-기준), [검증 기준](../agents/validation.md)
 - 선행 조건: M0~M5 완료. 구현 기준 커밋 `8346ec8`, M5 자동 테스트 83개 통과 기록.
 - 실행 근거: 2026-11-13 사용자가 “작성한 M6 계획대로 구현과 통합 수용·장애 시험·성능 측정·사용 안내 작성을 진행”하라고 요청했다. M6 구현과 계획된 시험을 시작한다. 작업 기준은 `a74f8bd`이며 소스 작업은 `codex/m6-integrated-acceptance` 브랜치에서 진행한다.
 
@@ -66,7 +66,7 @@ M6는 검증 스크립트·시험 계측·안내 문서를 중심으로 진행�
 | 4. 장애 수용 | `server/tests/m6-faults.test.ts`, `scripts/m6/p04-restarts.mjs`, `p05-soak.mjs`, `a11-daemon-stop-start.mjs`, `d06-worker-kill.mjs`, `d06-recovery.mjs` | 저장 교체 전후 종료, transient/persistent EPERM, worker 3회 재시작, 안정 30분, daemon graceful stop/start, 실행 중 worker kill 및 같은 세션 복구 | D03/D05/D06, P04/P05, A11 통과. D07 등 미실행 경계는 결과표에 분리 |
 | 5. 성능·운영 | P01/P02/P04/P05 스크립트 | 저장/목록/상세 30회, 실제 SDK start/resume 30건, 재시작 및 30분 관측 | P01/P04/P05 통과. P02 start 계측 표본 미달, P03 미실행 |
 | 6. 결함 수정 | `server/adapters/storage/json-request-store.ts` | `EPERM`/`EBUSY` rename에 10/20/40/80ms 간격으로 최대 5회 시도. 지속 실패는 기존 JSON·temp 보존 | fault 단위시험·전체 회귀 통과 |
-| 7. 사용 안내 | `docs/user-guide.md`, `docs/troubleshooting.md`, `README.md` | 설치, 단일 흐름, worker 중단 복구, EPERM, 백업·종료, M6 개발 도구 제한 | 문서 작성. 새 PC/사람의 첫 사용 안내 재현은 미실행 |
+| 7. 사용 안내 | `docs/guides/user-guide.md`, `docs/guides/troubleshooting.md`, `README.md` | 설치, 단일 흐름, worker 중단 복구, EPERM, 백업·종료, M6 개발 도구 제한 | 문서 작성. 새 PC/사람의 첫 사용 안내 재현은 미실행 |
 | 8. 결과 판단 | `docs/decisions/m6-acceptance.md`, `docs/evidence/m6-acceptance-20261113.json` | A/D/P 결과표, raw manifest 위치·해시, 한계·남은 시험 기록 | 판정과 링크 정합성 기록. 미충족 항목 때문에 M6는 `active` 유지 |
 
 기존 M0~M5 명령은 과거 실행을 지우거나 다시 생성하지 않고 전용 `verify` 절차만 회귀로 실행했다. `npm run m6 -- help`에는 단계별 실제 영향이 안내된다. M6 전체 자동화 명령은 없으며 실행 ID·fixture별로 측정·실제 리소스 생성·재시작·verify를 구분한다.

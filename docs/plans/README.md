@@ -1,6 +1,6 @@
 # Orchiva 구현 계획 목록
 
-제품 범위는 [MVP 설계](../mvp-design.md), 작업 절차는 [공통 흐름](../agents/workflow.md), 계획 작성·상태 규칙은 [계획 규칙](AGENTS.md)을 따른다.
+제품 범위는 [MVP 설계](../design/mvp-design.md), 작업 절차는 [공통 흐름](../agents/workflow.md), 계획 작성·상태 규칙은 [계획 규칙](AGENTS.md)을 따른다.
 
 ## 등록된 계획
 

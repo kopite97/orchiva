@@ -109,8 +109,8 @@ Copy-Item -LiteralPath (Join-Path $env:USERPROFILE '.orchiva\project.json') -Des
 
 ## MVP 제한
 
-단일 로컬 daemon·단일 활성 TASK를 대상으로 한다. 독립 설치형 exe, 병렬 요청, 다중 사용자/프로젝트, 원격 daemon, 자동 Git push/merge는 포함하지 않는다. Node 검사는 제한된 파일 읽기·시간·출력 범위에서만 동작하며 모든 임의 코드를 격리하는 보안 경계가 아니다. 지원 검사, timeout, 증거 수집 한도, 알려진 제한은 [문제 해결 안내](troubleshooting.md)와 [검증 기록](verification.md)을 확인한다.
+단일 로컬 daemon·단일 활성 TASK를 대상으로 한다. 독립 설치형 exe, 병렬 요청, 다중 사용자/프로젝트, 원격 daemon, 자동 Git push/merge는 포함하지 않는다. Node 검사는 제한된 파일 읽기·시간·출력 범위에서만 동작하며 모든 임의 코드를 격리하는 보안 경계가 아니다. 지원 검사, timeout, 증거 수집 한도, 알려진 제한은 [문제 해결 안내](troubleshooting.md)와 [검증 기록](../decisions/verification.md)을 확인한다.
 
 ## 수용 시험 도구
 
-M6 명령은 개발·수용 시험 전용이며 일상 사용 절차가 아니다. 기존 요청·설정의 백업을 만들고 새 실행 ID를 사용한다. `npm run m6 -- help`에서 명령을 확인한다. `preflight`는 대상 sandbox·daemon·provider·Plugin·기존 요청 보존을 검사하고, `measure`는 별도 합성 100건을 사용한다. `performance`와 `d06`은 실제 Agent/Workspace 또는 메시지를 만들고, `restart`, `a11`은 daemon 프로세스를 재시작한다. 승인된 격리 환경에서만 실행하며 완료된 run ID를 새 실행에 재사용하지 않는다. `verify-baseline`은 최초 요청 파일의 바이트 보존을 대조한다. 실제/모의 검증의 범위와 남은 제품 제약은 [M6 결과](decisions/m6-acceptance.md)를 확인한다.
+M6 명령은 개발·수용 시험 전용이며 일상 사용 절차가 아니다. 기존 요청·설정의 백업을 만들고 새 실행 ID를 사용한다. `npm run m6 -- help`에서 명령을 확인한다. `preflight`는 대상 sandbox·daemon·provider·Plugin·기존 요청 보존을 검사하고, `measure`는 별도 합성 100건을 사용한다. `performance`와 `d06`은 실제 Agent/Workspace 또는 메시지를 만들고, `restart`, `a11`은 daemon 프로세스를 재시작한다. 승인된 격리 환경에서만 실행하며 완료된 run ID를 새 실행에 재사용하지 않는다. `verify-baseline`은 최초 요청 파일의 바이트 보존을 대조한다. 실제/모의 검증의 범위와 남은 제품 제약은 [M6 결과](../decisions/m6-acceptance.md)를 확인한다.

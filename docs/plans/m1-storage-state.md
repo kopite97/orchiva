@@ -2,7 +2,7 @@
 
 - 상태: `completed`
 - 작성일: 2026-11-12 · Asia/Seoul
-- 관련 설계: [MVP 설계](../mvp-design.md)의 데이터 모델, 저장·마이그레이션, 실행 슬롯
+- 관련 설계: [MVP 설계](../design/mvp-design.md)의 데이터 모델, 저장·마이그레이션, 실행 슬롯
 - 선행 조건: [M0 결과](../decisions/m0-runtime-foundation.md), 소스 기준 `4397aaf`
 - 실행 근거: 사용자가 M0 제약을 반영한 다음 상세 계획 작성과 그 계획의 구현·검증을 지시했다. proposed 등록 후 같은 작업에서 활성화하여 구현·검증을 완료했다.
 

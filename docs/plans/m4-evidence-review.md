@@ -2,7 +2,7 @@
 
 - 상태: `completed`
 - 작성일: 2026-11-12 · Asia/Seoul
-- 관련 설계: [MVP 설계](../mvp-design.md)
+- 관련 설계: [MVP 설계](../design/mvp-design.md)
 - 선행 조건: [M3 완료](m3-progress-reconciliation.md), 소스 기준 `efcb9ad`
 - 실행 근거: 사용자의 M4 상세 계획 작성·구현·검증 지시
 

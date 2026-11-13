@@ -4,19 +4,19 @@
 상태: M0~M6 구현·통합 수용을 완료한 로컬 프로토타입
 대상: 제품 범위와 개발 순서를 결정하는 담당자 및 구현 개발자
 
-개발 절차는 [지침 지도](../AGENTS.md), 단계별 실행 상태는 [계획 목록](plans/README.md)을 따른다. 첫 상세 계획은 [M0 실행 기반 확인](plans/m0-runtime-foundation.md)이다.
+개발 절차는 [지침 지도](../../AGENTS.md), 단계별 실행 상태는 [계획 목록](../plans/README.md)을 따른다. 첫 상세 계획은 [M0 실행 기반 확인](../plans/m0-runtime-foundation.md)이다.
 
 2026-11-13 후속 개발 방향은 [데스크톱 전환 방향과 개발 인계](desktop-handoff.md)에 기록했다. .NET 앱과 기존 Orchiva·Paseo 실행부 연결, 프로젝트별 게임 제작 흐름은 사용자와 합의한 후속 범위이며 아직 구현하지 않았다. 아래의 단일 프로젝트·브라우저·수동 검사 입력 범위는 M0~M6에서 구현한 MVP의 기준이다.
 
-2026-11-12 현재 M0~M5를 구현했다. [M2 결과](decisions/m2-draft-plan-start.md)의 초안·계획 확인·고정 SHA 실행과 [M3 결과](decisions/m3-progress-reconciliation.md)의 독립 관측·진행/이력 화면·정상 재시작 복원을 검증했다. [M4 결과](decisions/m4-evidence-review.md)의 조건별 판정·과거 결과 상세·검사 변경 확인·명시적 파일 지문 비교도 구현·검증했다. [M5 결과](decisions/m5-recovery.md)의 초기 실패 재시도·확실한 전달 대조·같은 세션 재개·명령 중복 처리를 구현·검증했다. 강제 종료·장시간·성능 및 전체 수용 검증은 M6 범위다.
+2026-11-12 현재 M0~M5를 구현했다. [M2 결과](../decisions/m2-draft-plan-start.md)의 초안·계획 확인·고정 SHA 실행과 [M3 결과](../decisions/m3-progress-reconciliation.md)의 독립 관측·진행/이력 화면·정상 재시작 복원을 검증했다. [M4 결과](../decisions/m4-evidence-review.md)의 조건별 판정·과거 결과 상세·검사 변경 확인·명시적 파일 지문 비교도 구현·검증했다. [M5 결과](../decisions/m5-recovery.md)의 초기 실패 재시도·확실한 전달 대조·같은 세션 재개·명령 중복 처리를 구현·검증했다. 강제 종료·장시간·성능 및 전체 수용 검증은 M6 범위다.
 
-2026-11-13 [M6 결과](decisions/m6-acceptance.md)에 통합 수용, 저장·전송·프로세스 장애, 실제 RPC 성능, 30분 관측과 사용자 첫 사용 확인을 추가했다. 최초 실행의 부분 결과는 보존하고 보완 실행으로 완료했다. exe 배포·다중 사용자·원격 실행은 범위에 포함하지 않는다. 실제 질문/권한 요청의 재현은 미실행이며 해당 화면은 격리 fixture로 검증했다. 새 PC 설치 검증과 장기 운영 보장은 이 결과에서 주장하지 않는다.
+2026-11-13 [M6 결과](../decisions/m6-acceptance.md)에 통합 수용, 저장·전송·프로세스 장애, 실제 RPC 성능, 30분 관측과 사용자 첫 사용 확인을 추가했다. 최초 실행의 부분 결과는 보존하고 보완 실행으로 완료했다. exe 배포·다중 사용자·원격 실행은 범위에 포함하지 않는다. 실제 질문/권한 요청의 재현은 미실행이며 해당 화면은 격리 fixture로 검증했다. 새 PC 설치 검증과 장기 운영 보장은 이 결과에서 주장하지 않는다.
 
 ## 목표와 설계 기준
 
 첫 MVP는 사용자가 작은 개발 요청 하나를 등록하고, 실행할 계획을 확인한 뒤, Codex가 만든 결과를 근거와 함께 검토하여 완료하거나 같은 작업에서 수정을 이어가는 로컬 도구다. 핵심 흐름은 **요청 작성 → 계획 확인 → 단일 작업 실행 → 결과 검토 → 완료 또는 실패 재개**다.
 
-[PoC 결과](poc-results.md)는 요청별 Worktree, Codex 실행 추적, 독립 검증, 명시적 완료 판정, 동일 세션 복구의 기능 타당성을 확인했다. 이 설계는 그 구조를 재사용하고, 실제 사용에 필요한 계획 확인, 화면 분리, 근거 연결, 백그라운드 상태 동기화와 복구 일관성을 추가한다. 아래 기능과 수용 기준은 MVP 개발 목표이며 PoC에서 이미 검증된 사실과 구분한다.
+[PoC 결과](../decisions/poc-results.md)는 요청별 Worktree, Codex 실행 추적, 독립 검증, 명시적 완료 판정, 동일 세션 복구의 기능 타당성을 확인했다. 이 설계는 그 구조를 재사용하고, 실제 사용에 필요한 계획 확인, 화면 분리, 근거 연결, 백그라운드 상태 동기화와 복구 일관성을 추가한다. 아래 기능과 수용 기준은 MVP 개발 목표이며 PoC에서 이미 검증된 사실과 구분한다.
 
 | 항목 | 첫 MVP의 선택 | 이유 |
 | --- | --- | --- |
@@ -183,7 +183,7 @@ flowchart TD
 
 Hook은 빠른 상태 갱신에 사용하고, daemon 내 단일 백그라운드 루프가 비종료 작업을 5초 간격으로 대조한다. 화면은 표시 중인 상세를 2초 간격으로 조회하지만 조회 자체가 테스트를 다시 실행하지 않는다. 브라우저를 닫아도 daemon이 살아 있으면 관측과 결과 수집이 계속된다. daemon이 꺼져 있는 동안은 갱신되지 않으며 재시작 때 복원한다.
 
-M3의 주기 대상은 실행 슬롯 점유 요청과 결과 없는 실행 요청이다. 안정된 검토 대기·확정 실패·완료는 반복 수집하지 않는다. 외부 세션 변화는 Hook 또는 명시적 상태 확인으로 관측한다. 미착수 accepted와 알려진 Worktree의 PLAN 기록은 이어갈 수 있으며, 외부 생성 응답이 불확실한 checkpoint는 unknown으로 보존한다. M5는 확정 준비 실패의 재시도와 검증 가능한 found만 적용하는 명시적 대조 UI를 제공한다. 연결 소유·재접속·종료와 실제/모의 검증 경계는 [M3 결과](decisions/m3-progress-reconciliation.md)를 따른다.
+M3의 주기 대상은 실행 슬롯 점유 요청과 결과 없는 실행 요청이다. 안정된 검토 대기·확정 실패·완료는 반복 수집하지 않는다. 외부 세션 변화는 Hook 또는 명시적 상태 확인으로 관측한다. 미착수 accepted와 알려진 Worktree의 PLAN 기록은 이어갈 수 있으며, 외부 생성 응답이 불확실한 checkpoint는 unknown으로 보존한다. M5는 확정 준비 실패의 재시도와 검증 가능한 found만 적용하는 명시적 대조 UI를 제공한다. 연결 소유·재접속·종료와 실제/모의 검증 경계는 [M3 결과](../decisions/m3-progress-reconciliation.md)를 따른다.
 
 관측 실패는 마지막 확정 상태와 분리해 저장한다. 연속 실패 시 5초, 10초, 20초, 최대 30초 간격으로 재조회한다. 15초 이상 성공한 관측이 없으면 연결 지연을 표시한다. 재조회는 새 Codex 실행이나 코드 수정 재시도를 발생시키지 않는다.
 
@@ -197,7 +197,7 @@ Node 검사당 10초, 검증 루프 예산 20초, 파일당 2 MiB, 최대 300개
 
 ## 데이터 모델
 
-M1에서 v2 저장과 이력을 구현했다. 현재 파일은 기존 평면 상태·최신 결과 필드를 호환 뷰로 유지하고 `results`, `decisions`, `attemptHistory`, `commands`를 보존한다. 아래 엔티티 표는 MVP 최종 목표이며 상세 파일 증거·조건별 판정·새 화면 계약까지 모두 구현됐다는 뜻은 아니다. 실제 필드 매핑과 마이그레이션 근거는 [M1 결과](decisions/m1-storage-state.md)를 따른다.
+M1에서 v2 저장과 이력을 구현했다. 현재 파일은 기존 평면 상태·최신 결과 필드를 호환 뷰로 유지하고 `results`, `decisions`, `attemptHistory`, `commands`를 보존한다. 아래 엔티티 표는 MVP 최종 목표이며 상세 파일 증거·조건별 판정·새 화면 계약까지 모두 구현됐다는 뜻은 아니다. 실제 필드 매핑과 마이그레이션 근거는 [M1 결과](../decisions/m1-storage-state.md)를 따른다.
 
 논리적으로 요청, 작업, 시도, 결과, 판정을 분리하되, 저장은 요청별 JSON 하나를 원자적으로 교체하는 방식을 유지한다. 요청과 작업은 항상 1:1이므로 별도 TASK 저장소를 만들지 않는다. 프로젝트 설정만 별도 파일로 관리한다. 상태와 증거를 다른 파일에 나눠 저장하면서 생기는 다중 파일 트랜잭션은 첫 버전에서 피한다.
 
@@ -303,7 +303,7 @@ SDK의 `PluginServerContext`에는 초기화 시 사용할 `paseo` 속성이 없
 
 M0 실제 연동에서 workspace·agent의 동일 `idempotencyKey` 재호출은 응답 유실·daemon 재시작 후 같은 ID로 수렴했다. 고정 SHA의 Worktree 생성과 생성 후 HEAD 대조도 확인했다. 반면 provider에서 복원된 메시지는 `clientMessageId`가 소실될 수 있다. 페이지 조회를 추가했으며 식별자가 없는 이력·관측 실패는 `unknown`으로 다룬다. 현재 PoC에서는 pending 복구를 `needs-input`에 보존하고 자동 재전송·새 키의 재개를 차단한다. M5는 `delivery-unknown` 설명과 명시적 대조를 제공하며 부재·식별자 소실을 강제 해소하지 않는다. 새 Agent에 요청 label을 기록하고 경로·PLAN·HEAD를 대조한다. 선택적 failure·deliveryChecks·recovery.previousSourceKey를 저장하며 대조 이력은 불변이다. failure의 retryAction은 별도 저장하지 않고 allowedActions로 계산한다.
 
-M0에서 초기 미승인 2건의 최신 결과가 목록 조회로 재수집됐다. M1은 현재 존재하는 4건을 원본 백업 후 변환하고 불변 결과·판정 이력을 도입했으며, 목록 조회의 외부 수집을 제거했다. M3는 조회·관측·명시적 재검증을 분리하고 기존6건의 바이트 보존을 확인했다. M0에서 이미 소실된 envelope는 복원하지 못했으며 보존 한계는 [M0 결과](decisions/m0-runtime-foundation.md)를 참조한다.
+M0에서 초기 미승인 2건의 최신 결과가 목록 조회로 재수집됐다. M1은 현재 존재하는 4건을 원본 백업 후 변환하고 불변 결과·판정 이력을 도입했으며, 목록 조회의 외부 수집을 제거했다. M3는 조회·관측·명시적 재검증을 분리하고 기존6건의 바이트 보존을 확인했다. M0에서 이미 소실된 envelope는 복원하지 못했으며 보존 한계는 [M0 결과](../decisions/m0-runtime-foundation.md)를 참조한다.
 
 ## 개발 순서
 
@@ -366,10 +366,10 @@ MVP 완료 조건은 M0의 연동 의존 사항을 해소하고 A01~A16을 통�
 
 JSON에서 DB로의 전환은 다중 프로세스, 검색 규모, 저장 지연이 문제가 될 때 재검토한다. 프로젝트 추가는 대상 등록과 허용 범위, 범용 검증은 실행 격리와 산출물 범위, 무인 복구는 중단 조건과 재시도 상한을 설계한 뒤 도입한다. MVP 개발에 필요한 제품 선택은 위 범위로 두고 M0에서 확인한 실행 기반과 제약을 후속 단계에 적용한다.
 
-- [PoC 결과 보고서](poc-results.md): 검증된 범위, 제약, MVP 설계 입력.
-- [상세 검증 기록](verification.md): 성공·실패·복구·재시작의 증거.
-- [현재 계약](../shared/contracts/feature-request.ts): 상태, 요청, 결과, RPC의 출발점.
-- [현재 실행 관리](../server/application/track-execution.ts): 관측, 결과 수집, 판정, 복구.
-- [현재 시작 처리](../server/application/start-feature-request.ts): Worktree와 세션 생성.
-- [Paseo 어댑터](../server/adapters/paseo/runtime.ts): 멱등 키, 이력 관측, 재개 메시지.
-- [현재 검증기](../server/adapters/storage/evidence.ts): 지문, 독립 검사, 수집 제한.
+- [PoC 결과 보고서](../decisions/poc-results.md): 검증된 범위, 제약, MVP 설계 입력.
+- [상세 검증 기록](../decisions/verification.md): 성공·실패·복구·재시작의 증거.
+- [현재 계약](../../shared/contracts/feature-request.ts): 상태, 요청, 결과, RPC의 출발점.
+- [현재 실행 관리](../../server/application/track-execution.ts): 관측, 결과 수집, 판정, 복구.
+- [현재 시작 처리](../../server/application/start-feature-request.ts): Worktree와 세션 생성.
+- [Paseo 어댑터](../../server/adapters/paseo/runtime.ts): 멱등 키, 이력 관측, 재개 메시지.
+- [현재 검증기](../../server/adapters/storage/evidence.ts): 지문, 독립 검사, 수집 제한.
