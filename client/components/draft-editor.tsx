@@ -1,6 +1,7 @@
 import { Pressable, Text, TextInput, View } from "react-native";
 import type { PluginScreenProps } from "@getpaseo/plugin/client";
 import type { RequestRecord } from "../../shared/contracts/feature-request";
+import { checkboxKeyboard } from "./checkbox-keyboard";
 export type DraftValues = Pick<RequestRecord, "feature" | "criteria" | "checks">;
 export const newKey = () => `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 12)}`;
 export const emptyDraft = (): DraftValues => ({ feature: { title: "", goal: "", scope: "", constraints: "", validation: "", completionCriteria: "" }, criteria: [], checks: [] });
@@ -9,13 +10,14 @@ export function DraftEditor({ value, onChange, theme, disabled, showErrors }: { 
   const input = (label: string, text: string, change: (text: string) => void, maxLength = 12000) => <View style={{ gap: 5 }}><Text style={{ color }}>{label}</Text><TextInput accessibilityLabel={label} value={text} onChangeText={change} editable={!disabled} multiline maxLength={maxLength} style={{ color, padding: 10, borderWidth: 1, borderColor: theme.colors.border, borderRadius: 6, minHeight: 48, textAlignVertical: "top" }} /></View>;
   const button = (label: string, action: () => void, blocked = false) => <Pressable accessibilityRole="button" accessibilityLabel={label} disabled={disabled || blocked} onPress={action} style={{ padding: 10, backgroundColor: theme.colors.surface2, borderRadius: 6, opacity: disabled || blocked ? 0.45 : 1 }}><Text style={{ color }}>{label}</Text></Pressable>;
   const updateCriterion = (index: number, patch: Partial<RequestRecord["criteria"][number]>) => onChange({ ...value, criteria: value.criteria.map((item, i) => i === index ? { ...item, ...patch } : item) });
+  const toggleCheck = (index: number, id: string) => { const ids = value.criteria[index].checkIds; updateCriterion(index, { checkIds: ids.includes(id) ? ids.filter(x => x !== id) : [...ids, id] }); };
   return <View style={{ gap: 18 }}>
     {([["title", "Title · 요청 이름"], ["goal", "Goal · 목표"], ["scope", "Scope · 범위"], ["constraints", "Constraints · 제약"], ["validation", "Validation · 검증 방법"]] as const).map(([key, label]) => <View key={key} style={{ gap: 4 }}>{input(label, value.feature[key], text => onChange({ ...value, feature: { ...value.feature, [key]: text } }), key === "title" ? 160 : 12000)}{showErrors && !value.feature[key].trim() && <Text style={{ color }}>계획을 만들려면 이 항목을 입력하세요.</Text>}</View>)}
     <Text style={{ color, fontSize: 20, fontWeight: "600" }}>완료 조건 · {value.criteria.length}/20</Text>
     {!value.criteria.length && <Text style={{ color }}>조건을 추가하고 자동 검사 또는 수동 확인 방법을 연결하세요.</Text>}
     {value.criteria.map((criterion, index) => <View key={criterion.id} style={{ gap: 8, padding: 12, borderWidth: 1, borderColor: theme.colors.border, borderRadius: 8 }}>
       {input(`완료 조건 ${index + 1}`, criterion.text, text => updateCriterion(index, { text }), 1000)}
-      {value.checks.map((check, c) => <Pressable key={check.id} accessibilityRole="checkbox" accessibilityLabel={`조건 ${index + 1}에 검사 ${c + 1} 연결`} accessibilityState={{ checked: criterion.checkIds.includes(check.id!) }} disabled={disabled} onPress={() => updateCriterion(index, { checkIds: criterion.checkIds.includes(check.id!) ? criterion.checkIds.filter(id => id !== check.id) : [...criterion.checkIds, check.id!] })} style={{ paddingVertical: 8 }}><Text style={{ color }}>{criterion.checkIds.includes(check.id!) ? "☑" : "☐"} 검사 {c + 1}: {check.label || check.path || "작성 중"}</Text></Pressable>)}
+      {value.checks.map((check, c) => <Pressable key={check.id} {...checkboxKeyboard(disabled, () => toggleCheck(index, check.id!))} accessibilityRole="checkbox" accessibilityLabel={`조건 ${index + 1}에 검사 ${c + 1} 연결`} aria-checked={criterion.checkIds.includes(check.id!)} aria-disabled={disabled} accessibilityState={{ checked: criterion.checkIds.includes(check.id!), disabled }} disabled={disabled} onPress={() => toggleCheck(index, check.id!)} style={{ paddingVertical: 8 }}><Text style={{ color }}>{criterion.checkIds.includes(check.id!) ? "☑" : "☐"} 검사 {c + 1}: {check.label || check.path || "작성 중"}</Text></Pressable>)}
       {input(`수동 확인 방법 ${index + 1}`, criterion.manualMethod, manualMethod => updateCriterion(index, { manualMethod }), 4000)}
       {showErrors && (!criterion.text.trim() || (!criterion.checkIds.length && !criterion.manualMethod.trim())) && <Text style={{ color }}>조건 문장과 연결 검사 또는 수동 확인 방법이 필요합니다.</Text>}
       {button(`조건 ${index + 1} 삭제`, () => onChange({ ...value, criteria: value.criteria.filter((_, i) => i !== index) }))}

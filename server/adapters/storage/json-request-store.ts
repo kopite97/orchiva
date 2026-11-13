@@ -1,12 +1,13 @@
 import { mkdir, readFile, readdir, rename, open } from "node:fs/promises";
 import { join } from "node:path";
+import { setTimeout as delay } from "node:timers/promises";
 import { createHash, randomUUID } from "node:crypto";
 import { recordSchema, tokenSchema, type RequestRecord } from "../../../shared/contracts/feature-request";
 import type { RequestStore } from "../../application/ports";
 import { RequestLocks } from "../../application/request-locks";
 import { assertAppendOnly, captureHistory, migrateV1, occupiesSlot, payloadHash, validateReferences } from "../../domain/record-v2";
 import { DirectoryOwner } from "./directory-owner";
-type Hooks = { afterBackup?: () => Promise<void>; beforeRename?: () => Promise<void> };
+type Hooks = { afterBackup?: () => Promise<void>; beforeRename?: () => Promise<void>; afterRename?: () => Promise<void>; rename?: (source: string, target: string) => Promise<void> };
 export class JsonRequestStore implements RequestStore {
   private owner: DirectoryOwner;
   private writes = new RequestLocks();
@@ -31,7 +32,20 @@ export class JsonRequestStore implements RequestStore {
     const file = await open(temp, "wx");
     try { await file.writeFile(JSON.stringify(value, null, 2), "utf8"); await file.sync(); } finally { await file.close(); }
     await this.hooks.beforeRename?.();
-    await rename(temp, target);
+    await this.renameWithRetry(temp, target);
+    await this.hooks.afterRename?.();
+  }
+  private async renameWithRetry(source: string, target: string) {
+    const delays = [10, 20, 40, 80];
+    for (let attempt = 0; ; attempt++) {
+      try { await (this.hooks.rename ?? rename)(source, target); return; }
+      catch (error) {
+        const code = (error as NodeJS.ErrnoException).code;
+        const waitMs = delays[attempt];
+        if (!['EPERM', 'EBUSY'].includes(code ?? '') || waitMs === undefined) throw error;
+        await delay(waitMs);
+      }
+    }
   }
   private async read(token: string): Promise<RequestRecord | null> {
     let bytes: Buffer;

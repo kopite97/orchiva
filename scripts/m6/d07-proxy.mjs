@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import net from 'node:net';
+import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { homedir } from 'node:os';
+import { join } from 'node:path';
+const [runId] = process.argv.slice(2); assert.match(runId ?? '', /^m6-[a-z0-9-]{8,60}$/);
+const root = join(homedir(), '.orchiva/m6', runId, 'd07'); await mkdir(root); const controlPath=join(root,'control.json'); await writeFile(controlPath,JSON.stringify({enabled:true,stop:false}));
+let enabled=true,stopping=false,serial=0; const sockets=new Set(),events=[];
+const server=net.createServer(incoming=>{const id=++serial;if(!enabled){events.push({at:Date.now(),kind:'refused',id});incoming.destroy();return;}const upstream=net.connect(6767,'127.0.0.1');sockets.add(incoming);sockets.add(upstream);events.push({at:Date.now(),kind:'connected',id});incoming.pipe(upstream);upstream.pipe(incoming);incoming.on('error',()=>{});upstream.on('error',()=>{});incoming.on('close',()=>{sockets.delete(incoming);upstream.destroy();});upstream.on('close',()=>{sockets.delete(upstream);incoming.destroy();});});
+await new Promise((yes,no)=>{server.once('error',no);server.listen(6768,'127.0.0.1',yes);});console.log(JSON.stringify({listening:'127.0.0.1:6768',pid:process.pid,controlPath}));
+const timer=setInterval(()=>{void(async()=>{const c=JSON.parse(await readFile(controlPath,'utf8'));if(c.enabled!==enabled){enabled=c.enabled;events.push({at:Date.now(),kind:enabled?'restored':'cut',sockets:sockets.size});if(!enabled)for(const s of sockets)s.destroy();}if(c.stop&&!stopping){stopping=true;clearInterval(timer);for(const s of sockets)s.destroy();await new Promise(y=>server.close(y));events.push({at:Date.now(),kind:'stopped'});await writeFile(join(root,'proxy.json'),JSON.stringify({runId,events,connections:serial,remainingSockets:sockets.size,stopped:true},null,2));}})().catch(error=>console.error(error.message));},100);

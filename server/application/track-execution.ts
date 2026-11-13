@@ -92,6 +92,10 @@ export class TrackExecution {
     // A persisted pending send is reconciled before any result can be accepted.
     if (record.recovery?.pending) {
       if (!observed.seenRecovery) {
+        const command = record.commands.find(item => item.key === record.recovery!.key);
+        // A process may stop after persisting the send intent but before saving
+        // its outcome. Once observation owns the lock, no sender is in flight.
+        if (command?.status === "pending") command.status = "unknown";
         this.transition(record, "needs-input", "Recovery delivery is unconfirmed; automatic resend is disabled.");
         throw new Error("Recovery delivery is unconfirmed. Preserve this checkpoint and reconcile the original message before continuing.");
       }

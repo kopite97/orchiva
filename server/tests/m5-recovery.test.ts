@@ -116,6 +116,25 @@ test("M5 uncertain resume found by original identity resolves without a second m
   await f.tracker.resume(resume, f.runtime); assert.equal(f.state.sends, 1);
 });
 
+test("a restored pending resume becomes reconcilable without assuming the message was sent", async t => {
+  const f = await fixture(t); await f.start.start(f.input, f.runtime);
+  const first = await f.tracker.refresh(f.input.token, f.runtime), originalResult = structuredClone(first.result), input = f.resumeInput(first);
+  const save = f.store.save.bind(f.store);
+  f.store.save = async record => { await save(record); if (record.recovery?.pending) throw Error("Owned process ended after durable intent"); };
+  await assert.rejects(f.tracker.resume(input, f.runtime), /durable intent/);
+  f.store.save = save;
+  assert.equal(f.state.sends, 0);
+  let restored = await new TrackExecution(f.store, f.start.locks).refresh(first.token, f.runtime);
+  assert.equal(restored.commands.find(x => x.key === input.key)!.status, "unknown");
+  assert.equal(restored.status, "needs-input"); assert.ok(allowedActions(restored).includes("reconcile")); assert.equal(occupiesSlot(restored), true);
+  f.state.lookup = { kind: "absent" };
+  restored = await f.recover.reconcile(f.recoveryInput(restored, "m6-pending-resume-check", input.key), f.runtime);
+  assert.equal(restored.deliveryChecks!.at(-1)!.outcome, "absent"); assert.equal(f.state.sends, 0); assert.equal(restored.attempt, 2);
+  assert.deepEqual(restored.results[0].finalResponse, originalResult!.finalResponse);
+  await f.tracker.resume(input, f.runtime); assert.equal(f.state.sends, 0);
+  await assert.rejects(f.tracker.resume({ ...input, key: "m6-replacement-resume", expectedRevision: restored.revision, resultId: null }, f.runtime), /pending|DELIVERY_UNKNOWN/);
+});
+
 test("M5 missing resources block sends before attempt allocation; network errors do not become execution failure", async t => {
   const f = await fixture(t); await f.start.start(f.input, f.runtime); let r = await f.tracker.refresh(f.input.token, f.runtime), input = f.resumeInput(r);
   const before = await readFile(join(f.dir, `${r.token}.json`));

@@ -4,6 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useRpc, type PluginScreenProps } from "@getpaseo/plugin/client";
 import { inspectRpc, revalidateRpc, reviewRpc, type RequestRecord, type ExecutionResult, criterionReviewSchema } from "../../shared/contracts/feature-request";
 import type { z } from "zod";
+import { checkboxKeyboard } from "./checkbox-keyboard";
 
 export const labels: Record<RequestRecord["status"], string> = {
   draft: "초안", ready: "계획 확인 대기", planned: "실행 접수됨", "creating-worktree": "Worktree 생성 중", "writing-plan": "계획 기록 중", "starting-session": "세션 생성 중",
@@ -44,7 +45,7 @@ function ResultPanel({ record, theme, onChanged, actions, result }: Props & { re
   }, onSettled: onChanged });
   const update = (id: string, patch: Partial<z.infer<typeof criterionReviewSchema>>) => setReviews(old => old.map(x => x.criterionId === id ? { ...x, ...patch } : x));
   const button = (label: string, press: () => void, disabled = false) => <Pressable accessibilityRole="button" accessibilityLabel={label} accessibilityState={{ disabled: disabled || action.isPending }} disabled={disabled || action.isPending} onPress={press} style={{ padding: 12, borderRadius: 8, backgroundColor: theme.colors.surface2, opacity: disabled || action.isPending ? .5 : 1 }}><Text style={text}>{label}</Text></Pressable>;
-  const checkbox = (label: string, checked: boolean, press: () => void) => <Pressable accessibilityRole="checkbox" accessibilityLabel={label} accessibilityState={{ checked, disabled: action.isPending }} disabled={action.isPending} onPress={press} style={{ paddingVertical: 8 }}><Text style={text}>{checked ? "☑" : "☐"} {label}</Text></Pressable>;
+  const checkbox = (label: string, checked: boolean, press: () => void) => <Pressable {...checkboxKeyboard(action.isPending, press)} accessibilityRole="checkbox" accessibilityLabel={label} aria-checked={checked} aria-disabled={action.isPending} accessibilityState={{ checked, disabled: action.isPending }} disabled={action.isPending} onPress={press} style={{ paddingVertical: 8 }}><Text style={text}>{checked ? "☑" : "☐"} {label}</Text></Pressable>;
   const input = (label: string, value: string, onChangeText: (s: string) => void) => <TextInput accessibilityLabel={label} placeholder={label} placeholderTextColor={theme.colors.foregroundMuted} value={value} onChangeText={onChangeText} editable={!action.isPending} multiline style={{ color, borderWidth: 1, borderColor: theme.colors.border, padding: 12, minHeight: 70 }} />;
   const grounded = reviews.length > 0 && reviews.every(x => (x.evidenceRefs.length > 0 || x.note.trim().length >= 10) && (result.checks.length > 0 || x.note.trim().length >= 10));
   const canApprove = grounded && reviews.every(x => x.satisfied) && !!note.trim() && !result.failure && !result.executionFailure && result.checks.every(x => x.passed && (!x.status || x.status === "passed")) && (!result.testChanges?.length || (ack && changeNote.trim().length >= 10));

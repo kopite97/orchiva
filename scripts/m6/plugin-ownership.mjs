@@ -1,0 +1,22 @@
+import assert from 'node:assert/strict';
+import { readFile, writeFile, readdir, mkdir } from 'node:fs/promises';
+import { homedir } from 'node:os';
+import { join } from 'node:path';
+import { execFileSync } from 'node:child_process';
+import { createHostClient } from '@getpaseo/client/node';
+const [runId]=process.argv.slice(2);assert.match(runId??'',/^m6-[a-z0-9-]{8,60}$/);
+const root=join(homedir(),'.orchiva/m6',runId),dest=join(root,'clean-install'),records=join(dest,'data/requests'),out=join(root,'plugin-ownership');await mkdir(out);
+const file=join(out,'ownership.json'),m={runId,startedAt:new Date().toISOString(),status:'running',procedure:'Two actual Plugin processes using the identical isolated configDirectory and JsonRequestStore. Graceful first-owner teardown, then reload the refused second writer.'};
+const persist=()=>writeFile(file,JSON.stringify(m,null,2));await persist();
+const quote=x=>`'${x.replaceAll("'","''")}'`,cli=(...args)=>{const output=execFileSync('powershell.exe',['-NoProfile','-NonInteractive','-Command',`& paseo.cmd ${[...args,'--home',join(homedir(),'.paseo-orchiva'),'--json'].map(quote).join(' ')}; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }`],{encoding:'utf8',windowsHide:true,timeout:60000});return JSON.parse(output.slice(output.indexOf('{')));};
+const before=new Map(await Promise.all((await readdir(records)).filter(x=>x.endsWith('.json')).map(async name=>[name,await readFile(join(records,name))])));assert.equal(before.size,1);
+const client=createHostClient('127.0.0.1:6767',{clientId:`${runId}-owner`,clientType:'cli',appVersion:'0.15.4',localCredential:async()=>(await readFile(join(homedir(),'.paseo-orchiva/local-credential'),'utf8')).trim(),reconnect:{enabled:false}});
+try{await client.connect();m.first=await client.invokePluginRpc('orchiva-m6-clean','storage.diagnostics',{});assert.equal(m.first.records,1);assert.equal(m.first.activeTokens.length,0);m.firstPid=JSON.parse(await readFile(join(dest,'data/runtime-status.json'),'utf8')).pid;
+ m.install=cli('plugin','install',dest,'--id','orchiva-m6-owner-check');await persist();
+ let denied;try{await client.invokePluginRpc('orchiva-m6-owner-check','storage.diagnostics',{});}catch(e){denied=String(e);}assert.match(denied??'',/STORAGE_LOCKED|STORE_LOCKED|writer|owner|owned/i);m.secondOwnerRejected=denied;await persist();
+ assert.deepEqual(await client.invokePluginRpc('orchiva-m6-clean','storage.diagnostics',{}),m.first);
+ m.firstRemoved=cli('plugin','remove','orchiva-m6-clean');m.secondReloaded=cli('plugin','reload','orchiva-m6-owner-check');await persist();
+ m.after=await client.invokePluginRpc('orchiva-m6-owner-check','storage.diagnostics',{});assert.deepEqual(m.after,m.first);m.secondPid=JSON.parse(await readFile(join(dest,'data/runtime-status.json'),'utf8')).pid;assert.notEqual(m.firstPid,m.secondPid);
+ for(const [name,bytes] of before)assert.deepEqual(await readFile(join(records,name)),bytes);
+ m.recordsUnchanged=true;m.pass=true;m.status='completed';m.endedAt=new Date().toISOString();await persist();console.log(JSON.stringify({file,pass:true,firstPid:m.firstPid,secondPid:m.secondPid}));
+}catch(e){m.status='failed';m.error=String(e);await persist();throw e;}finally{await client.close();}

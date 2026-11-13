@@ -20,6 +20,8 @@ export class Reconciler {
   private requested = false;
   private hints = new Map<string, Outcome | undefined>();
   private nextConnectionAttempt = 0;
+  private activeCycles = 0;
+  private maxConcurrentCycles = 0;
   private status: z.infer<typeof serviceStatusSchema>;
   constructor(private store: RequestStore, private starter: Pick<StartFeatureRequest, "advance">, private tracker: Pick<TrackExecution, "refresh">,
     private factory: () => RuntimeLease, private options: { intervalMs?: number; now?: () => number; report?: (status: z.infer<typeof serviceStatusSchema>) => Promise<void> } = {}) {
@@ -27,7 +29,7 @@ export class Reconciler {
   }
   private now() { return this.options.now?.() ?? Date.now(); }
   private iso() { return new Date(this.now()).toISOString(); }
-  snapshot() { return { ...this.status }; }
+  snapshot() { return { ...this.status, activeCycles: this.activeCycles, maxConcurrentCycles: this.maxConcurrentCycles }; }
   assertReady() { if (this.stopped || this.status.restoring || this.status.state !== "connected") throw new Error("ENVIRONMENT_NOT_READY: 실행 상태를 복원하고 있습니다."); }
   start() { this.wake(); }
   hint(agentId: string, outcome?: Outcome) { if (this.stopped) return; if (outcome || !this.hints.has(agentId)) this.hints.set(agentId, outcome); this.wake(); }
@@ -46,6 +48,8 @@ export class Reconciler {
   async settle() { await this.running; }
   private async cycle() {
     if (this.now() < this.nextConnectionAttempt) return;
+    this.activeCycles++;
+    this.maxConcurrentCycles = Math.max(this.maxConcurrentCycles, this.activeCycles);
     try {
       this.lease ??= this.factory();
       const runtime = await this.lease.runtime();
@@ -78,6 +82,7 @@ export class Reconciler {
       this.status = { ...this.status, state: "reconnecting", failures, lastError: error instanceof Error ? error.message : String(error), nextAttemptAt: new Date(this.nextConnectionAttempt).toISOString() };
       const lease = this.lease; this.lease = undefined; await lease?.close().catch(() => undefined);
     } finally {
+      this.activeCycles--;
       if (!this.stopped) await this.options.report?.(this.snapshot()).catch(() => undefined);
     }
   }

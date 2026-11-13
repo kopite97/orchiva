@@ -12,12 +12,16 @@
 | 4 | [M3 진행·관측·복원](m3-progress-reconciliation.md) | `completed` | 독립 관측 루프, 재시작 대조, 요약 목록과 진행 상세 |
 | 5 | [M4 조건별 판정·과거 결과](m4-evidence-review.md) | `completed` | 조건별 근거, 검사 변경, 결과 상세와 지문 확인 |
 | 6 | [M5 실패·재개·중복 명령](m5-recovery.md) | `completed` | 실패별 복구, 초기 재시도, 미확정 대조, 동일 세션 재개 |
-| 7 | [M6 통합 수용·장애·성능·사용 안내](m6-acceptance.md) | `proposed` | A01~A16 수용, 저장/전송/프로세스 장애, 100건·30회 성능 및 30분 운영, 사용 안내 |
+| 7 | [M6 통합 수용·장애·성능·사용 안내](m6-acceptance.md) | `completed` | A01~A16 수용, 저장/전송/프로세스 장애, 100건·30회 성능 및 30분 운영, 안내·사람 첫 사용 확인 |
 
 2026년 11월 12일 사용자의 지시에 따라 M0~M5를 완료했다. 소스 초기 커밋은 `7a675a9`, M0는 `4397aaf`, M1은 `bd08ace`, M2는 `ca31b4c`, M3는 `efcb9ad`다. [M1 결과](../decisions/m1-storage-state.md)에 실제4건 변환, [M2 결과](../decisions/m2-draft-plan-start.md)에 계획 확인 실행, [M3 결과](../decisions/m3-progress-reconciliation.md)에61개 테스트와 브라우저 없는 실행·진행 중 Plugin 복원·정상 daemon 재시작·기존6건 보존을 기록했다. [M4 결과](../decisions/m4-evidence-review.md)에70개 테스트·조건별 판정·과거 결과 상세·실제 재검증·기존7건 보존을 기록했다. [M5 결과](../decisions/m5-recovery.md)에 83개 테스트, 실제 준비 실패·응답 유실 대조, 동일 세션의 실패→재개→수정 요청→재개→완료, 격리 미확정 UI와 기존 8건 보존을 기록했다.
 
 
-2026-11-12 M6 상세 계획을 작성했다. 사용자는 구현 시작을 명시적으로 제외했으므로 상태는 `proposed`다. 기존 작업과 계획의 main push는 별도로 요청되었으며 M6 구현 권한을 뜻하지 않는다. M6 스크립트·테스트·계측·사용 안내 구현 및 실제 시험은 미실행이다.
+2026-11-12 M6 상세 계획을 작성했다. 2026-11-13 사용자의 구현·통합 수용·장애 시험·성능 측정·사용 안내 요청에 따라 `active`로 전환했다. 실행 ID `m6-20261113-001`, 기준 커밋 `a74f8bd`, 개발 브랜치 `codex/m6-integrated-acceptance`; 전체 요청·설정 기준선은 `%USERPROFILE%/.orchiva/m6/m6-20261113-001`에 보존했다. 세부 결과는 [M6 계획의 실행 기록](m6-acceptance.md#실행-및-검증-기록)과 최종 [M6 결정 기록](../decisions/m6-acceptance.md)에 추가한다.
+
+2026-11-13 M6 구현과 시험 도구를 추가했다. `npm test` 88/88, typecheck, verify/lifecycle, M2/M3/M5 verify가 통과했다. P01/P04/P05, D03/D05/D06, A11도 통과했으나 P02 표본 수, P03, 여러 실제 GUI·장애 경계가 미완료다. [M6 결과 기록](../decisions/m6-acceptance.md)과 [요약 JSON](../evidence/m6-acceptance-20261113.json)에 부분·미실행 항목을 표시했으며 M6는 `active`로 남긴다. 작업은 `codex/m6-integrated-acceptance`에만 있고 원격 push/merge는 하지 않았다.
+
+2026-11-13 사용자의 남은 사항 전체 실행 지시에 따라 `m6-20261113-002`로 보완을 완료했다. 89개 테스트와 기존 verify, 실제 S/F/M/C·브라우저 없는 실행·UI 중단/재개·TCP 장애·checkpoint/migration/owner 경계, 실제 RPC 성능과 30분 single-flight를 확인했다. 기존 42건·GUI 2건을 보존하고 신규 Agent/Workspace 각 8개로 M6 총 예산 40개를 지켰다. 사용자가 초안 복원과 검사 로그·완료 판정 찾기를 확인했다. 빈 데이터 안내·53건 사본 복원도 통과했다. [최종 결과](../decisions/m6-acceptance.md)와 [요약 JSON](../evidence/m6-acceptance-20261113.json)에 실제/모의 범위·측정 오차·정리 결과를 남겼다. 이전 부분 기록은 당시의 이력이며 현재 상태는 `completed`다. 검증 완료 당시 구현·보완은 로컬 브랜치에 있었으며, 이후 사용자가 전체 변경의 커밋·main 반영·push를 요청했다. 최종 반영은 Git 이력과 origin/main을 따른다.
 
 ## 후속 단계
 

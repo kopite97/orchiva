@@ -1,0 +1,1167 @@
+{
+  "runId": "m6-20261113-002",
+  "status": "completed",
+  "date": "2026-11-13",
+  "createdAt": "2026-11-13T05:47:07.939Z",
+  "source": {
+    "branch": "codex/m6-integrated-acceptance",
+    "baseCommit": "a74f8bd565af18c32276443b94fadc682708ea15",
+    "sandbox": "C:/Users/USER/lib/orchiva-PoC",
+    "sandboxOrigin": "https://github.com/kopite97/PoC-sandbox.git",
+    "sandboxClean": true
+  },
+  "environment": {
+    "platform": "win32",
+    "node": "v24.19.0",
+    "paseo": "0.15.4",
+    "pluginSdk": "0.15.4",
+    "provider": "codex/gpt-6.1-sol",
+    "listen": "127.0.0.1:6767",
+    "relayEnabled": false,
+    "os": "10.0.26200",
+    "cpu": "Intel(R) Core(TM) 7 240H",
+    "logicalCpuCount": 16,
+    "activePaseoAgents": 0,
+    "powerScheme": "���� ����ǥ GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (���� ����)",
+    "condition": "Only original Plugin and measurement Plugin; no other acceptance driver/model task. Existing desktop background applications not suspended."
+  },
+  "previousRunSummary": {
+    "runId": "m6-20261113-001",
+    "status": "active",
+    "date": "2026-11-13",
+    "source": {
+      "branch": "codex/m6-integrated-acceptance",
+      "baseCommit": "a74f8bd565af18c32276443b94fadc682708ea15",
+      "sandbox": "C:/Users/USER/lib/orchiva-PoC",
+      "sandboxOrigin": "https://github.com/kopite97/PoC-sandbox.git",
+      "sandboxClean": true
+    },
+    "environment": {
+      "platform": "win32",
+      "node": "24.19.0",
+      "paseo": "0.15.4",
+      "pluginSdk": "0.15.4",
+      "provider": "codex/gpt-6.1-sol",
+      "listen": "127.0.0.1:6767",
+      "relayEnabled": false
+    },
+    "baseline": {
+      "rawRoot": "%USERPROFILE%/.orchiva/m6/m6-20261113-001",
+      "originalRequestFiles": 9,
+      "guiOwnedRequestFiles": 1,
+      "originalRequestsUnchanged": true,
+      "guiOwnedRequestUnchanged": true,
+      "newRequestFiles": 32,
+      "newRequestFilesHaveRunIdPrefix": true,
+      "projectConfigUnchanged": true,
+      "daemonConfigUnchanged": true,
+      "daemonInitiallyStopped": true,
+      "daemonRestoredToStopped": true,
+      "authenticationFilesBackedUp": false
+    },
+    "regression": {
+      "typecheck": "pass",
+      "unitTests": {
+        "passed": 88,
+        "failed": 0
+      },
+      "verify": "pass",
+      "verifyLifecycle": "pass",
+      "m2Verify": "pass",
+      "m2OriginalRequestFilesUnchanged": 4,
+      "m3Verify": "pass",
+      "m3OriginalRequestFilesUnchanged": 6,
+      "m5Verify": "pass",
+      "m5OriginalRequestFilesUnchanged": 8,
+      "m6Preflight": "pass",
+      "m6BaselineVerify": "pass",
+      "m6HelpAndScriptSyntax": "pass"
+    },
+    "acceptance": {
+      "A01": "partial",
+      "A02": "partial",
+      "A03": "partial",
+      "A04": "not_run",
+      "A05": "partial",
+      "A06": "partial",
+      "A07": "partial",
+      "A08": "partial",
+      "A09": "partial",
+      "A10": "not_run",
+      "A11": "pass",
+      "A12": "partial",
+      "A13": "partial",
+      "A14": "partial",
+      "A15": "partial",
+      "A16": "partial"
+    },
+    "faults": {
+      "D01": "partial",
+      "D02": "partial",
+      "D03": "pass",
+      "D04": "partial",
+      "D05": "pass",
+      "D06": "pass",
+      "D07": "not_run",
+      "D08": "partial"
+    },
+    "performance": {
+      "P01": {
+        "status": "pass",
+        "records": 100,
+        "totalJsonBytes": 7337535,
+        "samples": 30,
+        "failures": 0,
+        "p95Ms": {
+          "draftSave": 4.465,
+          "listAll": 43.525,
+          "firstPage": 32.482,
+          "nextPage": 28.518,
+          "detail": 0.592
+        },
+        "targetMs": 1000,
+        "synthetic": true
+      },
+      "P02": {
+        "status": "partial",
+        "sequentialSamples": 30,
+        "startAcceptanceRpc": {
+          "n": 29,
+          "p95Ms": 969.192,
+          "maxMs": 1033.21,
+          "targetMs": 2000,
+          "pass": false
+        },
+        "startIntentObservation": {
+          "n": 28,
+          "p95Ms": 969.505,
+          "targetMs": 2000,
+          "pass": false
+        },
+        "resumeIntentObservation": {
+          "n": 30,
+          "p95Ms": 557.564,
+          "targetMs": 2000,
+          "pass": true
+        },
+        "resumeSdkResponseProjection": {
+          "n": 30,
+          "p95Ms": 1070,
+          "targetMs": 2000,
+          "pass": true
+        },
+        "resumeRpc": {
+          "n": 30,
+          "p95Ms": 1118.798,
+          "maxMs": 1125.925,
+          "targetMs": 2000,
+          "pass": true
+        },
+        "notes": [
+          "One 30-sample start series has missing timing, so it does not meet the required sample count.",
+          "Three pre-effect Windows EPERM rename failures were preserved and safely continued; retry implementation was added afterward."
+        ]
+      },
+      "P03": "not_run",
+      "P04": {
+        "status": "pass",
+        "normalWorkerRestartCount": 3,
+        "normalRestoreMs": [
+          12128.9,
+          20898.9,
+          17554.9
+        ],
+        "targetMs": 30000,
+        "gracefulDaemonStopStartMs": 17868.8,
+        "workerKillRestoreMs": 18402
+      },
+      "P05": {
+        "status": "pass",
+        "durationMs": 1800273.9,
+        "samples": 181,
+        "sampleIntervalMs": [
+          9980.5,
+          10016.4
+        ],
+        "requestContentChanges": 0,
+        "requestMtimeChanges": 0,
+        "violations": 0,
+        "pluginRssFirstWindowMeanBytes": 246185301.3,
+        "pluginRssLastWindowMeanBytes": 227393536,
+        "noLeakedTransientResources": true,
+        "maxConcurrentCycleDirectlyMeasured": false
+      }
+    },
+    "gui": {
+      "A01DraftSaveAndReconnect": "partial_pass",
+      "viewports": [
+        "1280x900",
+        "390x844"
+      ],
+      "horizontalOverflowObserved": false,
+      "screenshotsSaved": false,
+      "humanFirstUseTest": "not_run",
+      "additionalAutomation": "blocked_by_browser_url_confidence; no UI action performed after the refusal"
+    },
+    "rawEvidence": [
+      {
+        "file": "baseline-manifest.json",
+        "sha256": "8fb14a6c7f18659767cb58970518d1a9504221721ed06d2f28019dc0e8276468"
+      },
+      {
+        "file": "p01/p01-measurement.json",
+        "sha256": "abd2c86dc99461928c1a753867d6c89dd8f0ed2579088cbb5e9bd39a3fd87295"
+      },
+      {
+        "file": "p02/p02-measurement.json",
+        "sha256": "d851a5b97582137e16ab2acb00ce04934f5158651ac15f28f42b1b48e838b72f"
+      },
+      {
+        "file": "d03/d03-response-drop.json",
+        "sha256": "fac82f51c4b384f6ebc057d2f58210ee2bddcffd2bf21a7d0fccac443c21444e"
+      },
+      {
+        "file": "p04/p04-restarts.json",
+        "sha256": "ff89fd05535fcf55dfaac6eaa5102db755b60b4ed06bf9d467a4053aaf8c5619"
+      },
+      {
+        "file": "p05-004/p05-soak.json",
+        "sha256": "79885c8ad7f52621b498b2be99386f7c3e02382481e6088686adc49c35733766"
+      },
+      {
+        "file": "a11-002/a11-stop-start.json",
+        "sha256": "8eb858285cb029b1cb6d22175d35e543a1e201989e8b2f2c43d022eb623ef91e"
+      },
+      {
+        "file": "d06-003/d06-worker-kill.json",
+        "sha256": "f366d357478168ae399383e9e7c24433b3eb2d4298c31baf31e5e1cbf8d84173"
+      },
+      {
+        "file": "d06-003/d06-recovery.json",
+        "sha256": "55f9e594a8bc086b4a85263d4934153d7e894eb643c58c28899bb2393017868a"
+      }
+    ],
+    "remaining": [
+      "A04 and A10 end-to-end live acceptance",
+      "M6 GUI manual review/recovery and current-file review",
+      "D01/D02/D04/D07/D08 missing fault boundaries and actual connection interruption",
+      "P02 complete 30 start timing samples and P03 20 timing samples",
+      "Guide walkthrough on a clean environment and human first-use review"
+    ]
+  },
+  "baseline": {
+    "rawRoot": "%USERPROFILE%/.orchiva/m6/m6-20261113-002",
+    "originalRequestFiles": 42,
+    "guiOwnedRequestFiles": 2,
+    "newRunRequestFiles": 9,
+    "totalRequestFiles": 53,
+    "allOriginalAndGuiBytesUnchanged": true,
+    "backupRestoreRecords": 53,
+    "projectConfigUnchanged": true,
+    "daemonConfigUnchanged": true,
+    "authenticationFilesBackedUp": false
+  },
+  "regression": {
+    "checks": [
+      {
+        "name": "typecheck",
+        "args": [
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0,
+        "elapsedMs": 5245
+      },
+      {
+        "name": "unit-tests",
+        "args": [
+          "test"
+        ],
+        "exitCode": 0,
+        "elapsedMs": 12230
+      },
+      {
+        "name": "verify",
+        "args": [
+          "run",
+          "verify"
+        ],
+        "exitCode": 0,
+        "elapsedMs": 1418
+      },
+      {
+        "name": "verify-lifecycle",
+        "args": [
+          "run",
+          "verify:lifecycle"
+        ],
+        "exitCode": 0,
+        "elapsedMs": 1453
+      },
+      {
+        "name": "m2-verify",
+        "args": [
+          "run",
+          "m2",
+          "--",
+          "verify",
+          "m2-20261112-workflow-001"
+        ],
+        "exitCode": 0,
+        "elapsedMs": 1713
+      },
+      {
+        "name": "m3-verify",
+        "args": [
+          "run",
+          "m3",
+          "--",
+          "verify",
+          "m3-20261112-reconcile-001"
+        ],
+        "exitCode": 0,
+        "elapsedMs": 1330
+      },
+      {
+        "name": "m5-verify",
+        "args": [
+          "run",
+          "m5",
+          "--",
+          "verify",
+          "m5-20261112-recovery-002"
+        ],
+        "exitCode": 0,
+        "elapsedMs": 2088
+      },
+      {
+        "name": "m6-baseline",
+        "args": [
+          "run",
+          "m6",
+          "--",
+          "verify-baseline",
+          "m6-20261113-002"
+        ],
+        "exitCode": 0,
+        "elapsedMs": 622
+      }
+    ],
+    "unitTests": {
+      "passed": 89,
+      "failed": 0
+    },
+    "afterKeyboardOnlyFix": {
+      "typecheck": "pass",
+      "guiSpaceEnterTab": "pass",
+      "draftAndReviewCheckbox": "pass",
+      "serverLogicChanged": false
+    },
+    "scriptSyntax": "See final-verification/document-checks-004.json"
+  },
+  "acceptance": {
+    "A01": "pass",
+    "A02": "pass",
+    "A03": "pass",
+    "A04": "pass",
+    "A05": "pass",
+    "A06": "pass",
+    "A07": "pass",
+    "A08": "pass",
+    "A09": "pass",
+    "A10": "pass",
+    "A11": "pass",
+    "A12": "pass",
+    "A13": "pass",
+    "A14": "pass",
+    "A15": "pass",
+    "A16": "pass"
+  },
+  "faults": {
+    "D01": "pass",
+    "D02": "pass",
+    "D03": "pass",
+    "D04": "pass",
+    "D05": "pass",
+    "D06": "pass",
+    "D07": "pass",
+    "D08": "pass"
+  },
+  "performance": {
+    "P01": {
+      "status": "pass",
+      "condition": "idle, actual daemon/Plugin RPC, separate from earlier overlapped run",
+      "dataset": {
+        "records": 100,
+        "totalJsonBytes": 7337535,
+        "distribution": {
+          "draft": 60,
+          "failed": 20,
+          "completed": 20
+        },
+        "synthetic": true
+      },
+      "cold": {
+        "ms": 6.605500000000006,
+        "bytes": 169596
+      },
+      "stats": {
+        "draftSave": {
+          "n": 30,
+          "failures": 0,
+          "minMs": 5.455799999999726,
+          "p50Ms": 9.254799999999705,
+          "p95Ms": 16.346900000000005,
+          "maxMs": 30.29340000000002,
+          "targetMs": 1000
+        },
+        "listAll": {
+          "n": 30,
+          "failures": 0,
+          "minMs": 64.01800000000003,
+          "p50Ms": 86.6844000000001,
+          "p95Ms": 161.03729999999996,
+          "maxMs": 213.21180000000004,
+          "targetMs": 1000
+        },
+        "firstPage": {
+          "n": 30,
+          "failures": 0,
+          "minMs": 25.94470000000001,
+          "p50Ms": 32.88180000000011,
+          "p95Ms": 53.800100000000384,
+          "maxMs": 72.58249999999998,
+          "targetMs": 1000
+        },
+        "nextPage": {
+          "n": 30,
+          "failures": 0,
+          "minMs": 22.279100000000653,
+          "p50Ms": 25.142599999999902,
+          "p95Ms": 32.89859999999953,
+          "maxMs": 53.31989999999951,
+          "targetMs": 1000
+        },
+        "detail": {
+          "n": 30,
+          "failures": 0,
+          "minMs": 2.302299999999832,
+          "p50Ms": 2.7163000000000466,
+          "p95Ms": 6.518500000000131,
+          "maxMs": 7.639799999999923,
+          "targetMs": 1000
+        },
+        "draftUnderWriterLock": {
+          "n": 30,
+          "failures": 0,
+          "minMs": 158.4999000000007,
+          "p50Ms": 173.60409999999865,
+          "p95Ms": 185.88620000000083,
+          "maxMs": 312.72270000000026,
+          "targetMs": 1000
+        }
+      },
+      "diagnostics": {
+        "records": 100,
+        "bytes": 7362714,
+        "results": 120,
+        "decisions": 20,
+        "issues": [],
+        "activeTokens": []
+      },
+      "warmupPerMetric": 5
+    },
+    "P02": {
+      "status": "pass",
+      "definition": "Fresh start acceptance RPCs with same fixed model, one file-contains check, idle admission; B/I add a model-side wait only after admission. Preserve all available original samples and failures. No replay/BUSY samples included.",
+      "startRpc": {
+        "n": 32,
+        "minMs": 535.0522000000055,
+        "p50Ms": 786.2446,
+        "p95Ms": 1034.6633000000002,
+        "maxMs": 1298.1787999999997
+      },
+      "startIntent": {
+        "n": 30,
+        "minMs": 534.7295000000158,
+        "p50Ms": 781.1065999999992,
+        "p95Ms": 1033.1269999999786,
+        "maxMs": 1035.1607
+      },
+      "intentBoundSamples": [
+        {
+          "token": "m6-20261113-002-b",
+          "ms": 1035.1607,
+          "observedAt": "2026-11-13T05:10:06.435Z",
+          "method": "post-RPC durable read; upper bound after asynchronous polling missed the short accepted phase"
+        },
+        {
+          "token": "m6-20261113-002-i",
+          "ms": 872.1658,
+          "observedAt": "2026-11-13T05:07:50.766Z",
+          "method": "post-RPC durable read; upper bound after asynchronous polling missed the short accepted phase"
+        }
+      ],
+      "resumeRpc": {
+        "n": 32,
+        "minMs": 599.5815000000002,
+        "p50Ms": 812.9323999999906,
+        "p95Ms": 1125.925099999993,
+        "maxMs": 1143.1986
+      },
+      "resumeIntent": {
+        "n": 30,
+        "minMs": 234.66790000000037,
+        "p50Ms": 354.54159999999683,
+        "p95Ms": 557.563599999994,
+        "maxMs": 627.9180000000051
+      },
+      "sdkResponseProjection": {
+        "n": 30,
+        "minMs": 573,
+        "p50Ms": 748,
+        "p95Ms": 1070,
+        "maxMs": 1077
+      },
+      "omittedUnavailableMetrics": "Original 001 missing start RPC 1 and start-intent 2; supplement p01 start RPC/intent unavailable after collector assertion, supplement p02 intent unavailable. They remain unavailable, with raw failed collector manifests retained.",
+      "originalContinuations": [
+        {
+          "at": "2026-11-13T00:39:24.834Z",
+          "sample": 5,
+          "requestStatus": "awaiting-review",
+          "agentStatus": "verified separately by preflight",
+          "previousStopReason": "M6 P02 stopped at sample 5; preserve this token and inspect its status before any new start."
+        },
+        {
+          "at": "2026-11-13T00:45:06.884Z",
+          "type": "pre-effect-start-rename",
+          "sample": 6,
+          "previousStopReason": "Request failed: EPERM: operation not permitted, rename 'C:\\Users\\USER\\.orchiva\\requests\\m6-20261113-001-p02-06.json.a3bbcd13-dbf9-46d8-b008-6f3a581fe826.tmp' -> 'C:\\Users\\USER\\.orchiva\\requests\\m6-20261113-001-p02-06.json' requestType=plugin.rpc.invoke.request code=handler_error",
+          "durableRequestSha256": "4202492b2ca03b867e9dc977af3040c12e2a75e264d812d1529fe7bae0befa89",
+          "preservedTempFile": "m6-20261113-001-p02-06.json.a3bbcd13-dbf9-46d8-b008-6f3a581fe826.tmp",
+          "preservedTempSha256": "4ce5ec5a4ff2262e89b1316cf043a8b5d19723fc509ee5cfce3313e4c5403908",
+          "safeRetryEvidence": "The durable record is still ready with only save/plan applied; the sole pending accepted-start state is confined to the leftover temp file and contains no Agent or Workspace IDs."
+        },
+        {
+          "at": "2026-11-13T00:56:16.444Z",
+          "type": "pre-send-resume-rename",
+          "sample": 12,
+          "previousStopReason": "Request failed: EPERM: operation not permitted, rename 'C:\\Users\\USER\\.orchiva\\requests\\m6-20261113-001-p02-12.json.dbfe135b-51e4-48a5-b54e-a2ed5d0a50f0.tmp' -> 'C:\\Users\\USER\\.orchiva\\requests\\m6-20261113-001-p02-12.json' requestType=plugin.rpc.invoke.request code=handler_error",
+          "durableRequestSha256": "b551d1011224ab46e0d02a8efa11dbeba137483f263010d901c0e190f8a32237",
+          "preservedTempFile": "m6-20261113-001-p02-12.json.dbfe135b-51e4-48a5-b54e-a2ed5d0a50f0.tmp",
+          "preservedTempSha256": "e605b3888bd12a3243d53d5c7504690af8d21184343fb03ec8677df4de31fcc1",
+          "safeRetryEvidence": "The durable record is still awaiting review at attempt 1 with no resume command; the pending attempt-2 message checkpoint is confined to the leftover temp file. TrackExecution calls runtime.resume only after this first save succeeds."
+        },
+        {
+          "at": "2026-11-13T01:05:27.338Z",
+          "type": "pre-send-resume-rename",
+          "sample": 20,
+          "previousStopReason": "Request failed: EPERM: operation not permitted, rename 'C:\\Users\\USER\\.orchiva\\requests\\m6-20261113-001-p02-20.json.ca87ea8a-e778-4da0-926d-76223a5c2347.tmp' -> 'C:\\Users\\USER\\.orchiva\\requests\\m6-20261113-001-p02-20.json' requestType=plugin.rpc.invoke.request code=handler_error",
+          "durableRequestSha256": "4e93a22e9ecc3aff7875b67170a8566663c305a84c0e094657375c1e8dbbaaa6",
+          "preservedTempFile": "m6-20261113-001-p02-20.json.ca87ea8a-e778-4da0-926d-76223a5c2347.tmp",
+          "preservedTempSha256": "efd5a588490f0ad5a6583753f041efcdddb060629989ddad60a57f47e8c4c5dc",
+          "safeRetryEvidence": "The durable record is still awaiting review at attempt 1 with no resume command; the pending attempt-2 message checkpoint is confined to the leftover temp file. TrackExecution calls runtime.resume only after this first save succeeds.",
+          "startMeasurementAvailable": true
+        }
+      ],
+      "pass": true
+    },
+    "P03": {
+      "status": "pass",
+      "modes": {
+        "hook": {
+          "storage": {
+            "n": 23,
+            "minMs": 1216,
+            "p50Ms": 1631,
+            "p95Ms": 2154,
+            "maxMs": 2156
+          },
+          "storeToGui": {
+            "n": 11,
+            "minMs": 464,
+            "p50Ms": 1611,
+            "p95Ms": 5979,
+            "maxMs": 5979
+          },
+          "externalToGui": {
+            "n": 11,
+            "minMs": 1982,
+            "p50Ms": 3053,
+            "p95Ms": 7316,
+            "maxMs": 7316
+          }
+        },
+        "poll": {
+          "storage": {
+            "n": 23,
+            "minMs": 2696,
+            "p50Ms": 4809,
+            "p95Ms": 5485,
+            "maxMs": 5677
+          },
+          "storeToGui": {
+            "n": 12,
+            "minMs": 478,
+            "p50Ms": 1248,
+            "p95Ms": 7802,
+            "maxMs": 7802
+          },
+          "externalToGui": {
+            "n": 12,
+            "minMs": 3604,
+            "p50Ms": 6450,
+            "p95Ms": 12734,
+            "maxMs": 12734
+          }
+        }
+      },
+      "definition": "Actual daemon turn.after timestamps, production Reconciler/store and same client rendering in isolated Plugin; 400ms DOM sampling. GUI delays are upper bounds including observer scheduling gaps; missed result IDs are not assigned timings.",
+      "storageSamples": 46,
+      "guiSamples": 23
+    },
+    "P04": {
+      "status": "pass",
+      "normalWorkerRestartCount": 3,
+      "normalRestoreMs": [
+        12128.9,
+        20898.9,
+        17554.9
+      ],
+      "targetMs": 30000,
+      "gracefulDaemonStopStartMs": 17868.8,
+      "workerKillRestoreMs": 18402
+    },
+    "P05": {
+      "status": "pass",
+      "elapsedMs": 1800262.4,
+      "stats": {
+        "sampleCount": 181,
+        "minIntervalMs": 9984.3,
+        "maxIntervalMs": 10015.2,
+        "pluginRssBytes": {
+          "firstWindowMean": 306042060.8,
+          "lastWindowMean": 307843204.1,
+          "min": 294539264,
+          "max": 314847232,
+          "deltaMeanBytes": 1801143.3
+        },
+        "maxRuntimeCycleDeltaPerSample": 5,
+        "requestContentChanges": 0,
+        "requestMtimeChanges": 0,
+        "runtimeStatusContentChanges": 181,
+        "violations": 0,
+        "finalRequestSha256": "7f87cb25d64ebe698706e334e1da1316949d83da0af4dc20508fc8546858da69",
+        "originalRequestSha256": "7f87cb25d64ebe698706e334e1da1316949d83da0af4dc20508fc8546858da69",
+        "finalAttempt": 1,
+        "finalResults": 1,
+        "finalDecisions": 1,
+        "connectedResourcesAfterClose": [
+          "PipeWrap",
+          "PipeWrap"
+        ],
+        "concurrentCyclesMeasured": true,
+        "maxConcurrentCycles": 1
+      },
+      "noLeakedResources": true
+    }
+  },
+  "guide": {
+    "cleanDataWalkthrough": "pass",
+    "freshPCInstallation": "not_run",
+    "humanFirstUse": {
+      "capturedAt": "2026-11-13T04:52:27.437Z",
+      "kind": "human-reported GUI acceptance",
+      "draft": {
+        "token": "mwehvka7-bheuiy9vmi",
+        "title": "M6 사용자 확인",
+        "answer": "초안이 다시 열리고 입력이 유지 됐어."
+      },
+      "result": {
+        "token": "m6-20261113-002-s",
+        "question": "검사 로그의 테스트 2개 통과 표시와 저장된 완료 판정을 찾을 수 있었나요?",
+        "answer": "둘 다 찾았어"
+      },
+      "pass": true,
+      "scope": "Existing PC and existing authenticated installation; not a fresh-PC usability trial."
+    },
+    "backupRestore": "pass"
+  },
+  "cleanup": {
+    "temporaryPluginsRemoved": true,
+    "ownedBrowserTabsClosed": true,
+    "viewportOverrideReset": true,
+    "proxyStopped": true,
+    "remainingProxySockets": 0,
+    "daemonRestoredToStopped": true,
+    "forced": false,
+    "inventory": {
+      "agentCount": 51,
+      "workspaceCount": 54,
+      "newAgents": [
+        "922fb200-5773-4415-bd63-8ba61b995550",
+        "0425b9f7-c149-44ea-8a5c-3d20863d64eb",
+        "f6e8ba39-cd13-45ad-a5cb-241ef202328f",
+        "9fad6f09-844d-4129-b9fa-cd6de820638f",
+        "a4480943-1e6e-4261-bb52-85aba8373f5e",
+        "f7e819e0-1c7e-4d1d-8656-b806f4c5566f",
+        "c646d6d0-0c1c-4772-9a8f-7fdac8ebaed2",
+        "32ae8bfb-3798-496f-8a4e-e2d94bd15ab5"
+      ],
+      "newWorkspaces": [
+        "wks_18f61e72a46e6041",
+        "wks_3ed7a353b2a1cb9f",
+        "wks_5a70b41bd574a40f",
+        "wks_77c22bd429c83822",
+        "wks_9b301c9447cb8c9a",
+        "wks_9d8fb471aff409d2",
+        "wks_b722392595fd7df3",
+        "wks_c757abedc65dd420"
+      ],
+      "activeAgents": 0
+    },
+    "lastIdleOnlyStage": {
+      "agents": 51,
+      "workspaces": 54,
+      "active": 0
+    },
+    "raw": "cleanup-p01-idle/cleanup.json",
+    "finalEnvironment": {
+      "capturedAt": "2026-11-13T05:46:04.6183301Z",
+      "listeningPorts": [],
+      "ownedTestProcesses": [],
+      "pass": true
+    }
+  },
+  "rawEvidence": [
+    {
+      "runId": "m6-20261113-002",
+      "file": "baseline-manifest.json",
+      "bytes": 12450,
+      "sha256": "6d9abbe5ca078768c7ff99f1a30ba6bccda97daaaad79cef2a6b6a5760c97b0e"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "performance-summary.json",
+      "bytes": 34035,
+      "sha256": "e7e0a051c5e387f8fe81e7340ff6c89930cb6de3ba9fa414efeddabd46e7a168"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "p01-rpc/rpc-measurement.json",
+      "bytes": 30478,
+      "sha256": "59efe8521d078e7032ef23b280ca63d4c9ef68b089b857d1a771b114f4c9929d"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "p01-rpc-idle/rpc-measurement.json",
+      "bytes": 30946,
+      "sha256": "899bc4cde610fdeb847a2e72a8cb00d9714b1da7a4413183d9cdb13edb006988"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "p03/p03.json",
+      "bytes": 6510,
+      "sha256": "303f15f15b6ccbad61e40277a1d49d57ccb022f7c945e0d722d3f6f34ccc9617"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "p03-ui/p03.json",
+      "bytes": 471,
+      "sha256": "e687cb17f5a66af0ff5e966662059d86dcc542a43d31b11f0ec7aebbdc5e1eb1"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "p03-ui-002/p03.json",
+      "bytes": 6544,
+      "sha256": "fce02222a9d6076c7d33d44cbb89c8bf6b3b46b6fdcb3878aaee617f6a4d293a"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "p03-ui-002/ui-observations.json",
+      "bytes": 2205,
+      "sha256": "f32c9e2ea908f31f7ee542782a47231bce8ac0ed2cb1b9075d0093122896d465"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "p03-ui-topup/p03.json",
+      "bytes": 2309,
+      "sha256": "5a10bb0ec7ca59e30ad54d9343779a2a2ed8c6c9882426a6e156a435c2aa19de"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "p03-ui-topup/ui-observations.json",
+      "bytes": 808,
+      "sha256": "51b162e2ed139165ae14fa5c010b663da70b1063d8a0205e57a725b4661c4fa8"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "p05/p05-soak.json",
+      "bytes": 252854,
+      "sha256": "66c8f087acf9f9bfc737974cac3801c8ac095e5845e0efb0d91bef40c899e591"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "isolated/isolated.json",
+      "bytes": 30742,
+      "sha256": "7bf071a2f5ad38d85e7e6a803fcea4059f8deaa7589b59f3d64c6e435351de77"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "isolated-002/isolated.json",
+      "bytes": 44587,
+      "sha256": "edd4137a90fa4a2dc4eada346d7a8eda55fda1dc5b846fe634b1a42258bd2a0c"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "isolated-003/isolated.json",
+      "bytes": 46067,
+      "sha256": "fecb10174de05da4b25b8d5462de22f33b1b398a595f1682fe8c41cbd8873ca3"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "d04-live/d04-live.json",
+      "bytes": 1931,
+      "sha256": "3ec3e5e55686f7c8b02c9cc5a26ed8b8e6916956c12ddff357db38aed0afbaea"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "d07/lifecycle.json",
+      "bytes": 2646,
+      "sha256": "58b3988b0b92325b90f951fef5b683a96d6a9d791704be37d4c728b53a48ff94"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "d07/proxy.json",
+      "bytes": 4521,
+      "sha256": "2332899ee6eefc68f0f3ce923d0692aee79bf7dc001fdb259f8ab65af197c638"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "resource-missing/resources.json",
+      "bytes": 342,
+      "sha256": "a3eff32b5b90cd3aab071c3385ae7ab56604b77baaf646eea95af90fca35253b"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "resource-missing-002/resources.json",
+      "bytes": 696,
+      "sha256": "c2c50d6255bc973281ad568d65a2881852e9e14a80ca698b5de05c97a7011089"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "plugin-ownership/ownership.json",
+      "bytes": 1994,
+      "sha256": "894af0b1cbeac56ff27043df17211845ce6016c845d476062efbcc8289d77794"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "output-buffer-limit/summary.json",
+      "bytes": 378,
+      "sha256": "9632a1f9b6cee3817266e12c1f77fed580a9c3e63fbf220b9648b085dd29d316"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "backup-restore/manifest.json",
+      "bytes": 7971,
+      "sha256": "ab30d148ef1d048314baccc56d97ef540fcc792d280c39e5576ff313956c53c2"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "human-first-use.json",
+      "bytes": 569,
+      "sha256": "1fb6ff8d0f7e26d2bcf85c9aaf3d059c690b41e1a19382ca581f6701c003cd50"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "background-comparison.json",
+      "bytes": 257,
+      "sha256": "4e9170932876a7dc56ab65c1012139898e877f5f36eb0927645cdd129945ce43"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "background-ui-closed.json",
+      "bytes": 347,
+      "sha256": "21eb2ab315c451e831bfcd9b4f2276940c663777048f214026a8662000a647b1"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "session-stop-comparison.json",
+      "bytes": 245,
+      "sha256": "5e8a35f09f16502f2b0180dbdf840b682f58cbee8e32283e3c37821530162b6d"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "session-stop-gui.json",
+      "bytes": 179,
+      "sha256": "cdec2cc5b1bbdb4b53e41099031cb383f9c6f199b3cff8f93b21aaff687bf2a9"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "ui-observations.json",
+      "bytes": 10791,
+      "sha256": "8203ecd43867781e0f309cbc7705748f84cf69321b8b017ed3177e5dea475371"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "ui-fixtures/gui-observations.json",
+      "bytes": 9385,
+      "sha256": "deafb60401c1af3f38371783e69ebe39c36cbd56cf297b2c71e3420236a16d10"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "clean-install/gui-walkthrough.json",
+      "bytes": 338,
+      "sha256": "a574d2bf6be7966c41aa58324c9f14e9910b1c9e09430dca08a01c47e0554ea5"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "preview/slow-validation.json",
+      "bytes": 241,
+      "sha256": "66d9366a8d99313a1fd104407305db0f6ac21d6396eb9d56b1aaa9c1d3b969c0"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "preview/controlled-validation-gui.json",
+      "bytes": 1581,
+      "sha256": "fa018b372c84e5b43f36bce6bd121174987f2c21c6809deac9dad4b3528e5b3b"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "preview/controlled-validation-completed-gui.json",
+      "bytes": 205,
+      "sha256": "478a0ad664af5be755d6b104f4bb2a252c68582e5661e265c873db38d65f02d9"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "final-verification/checks.json",
+      "bytes": 1573,
+      "sha256": "d23c5afa232f06070f77b136df0b08abb8339a7bff33005019dcd6f41cd4db4e"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "cleanup/cleanup.json",
+      "bytes": 3451,
+      "sha256": "7d250f6bc15ba407e9a37ca74da3d16759781a50c6aff45f4ebb004dd011e6ac"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "cleanup-002/cleanup.json",
+      "bytes": 3903,
+      "sha256": "e7b83e7f8f2f14945b218c80a2aac43e5f037c115e58d2a52b49abbeb1789af1"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "cleanup-p01-idle/cleanup.json",
+      "bytes": 1285,
+      "sha256": "c2c9677570e496819d97816a904c4c1045e907e158f752beb04b052917717deb"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "supplement/change-check-f.json",
+      "bytes": 1389,
+      "sha256": "d19b9917b1746858e2dd06e4eefdf28ed95dbd9577b838c8a2082820e75d5dea"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "supplement/compare-completed-s.json",
+      "bytes": 492,
+      "sha256": "ae944ed2aff10d17d9da2fb1d13d7eae24a27f71df4ad9d5a6ad8154bda596c5"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "supplement/concurrent.json",
+      "bytes": 8597,
+      "sha256": "816d23dbb31ccb026f31307e0cac546e20ac795e59f145e533019328d6a64ff2"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "supplement/manual-denied.json",
+      "bytes": 813,
+      "sha256": "6d8d10316ca310d2711110d6136e2317351226999369657c037fa73a7106c2cf"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "supplement/p02-continued-002.json",
+      "bytes": 1001,
+      "sha256": "007fab42923dbae08921ae9f95d2f0814f13c3eb184b96c13d7699a2d314678b"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "supplement/p02-continued.json",
+      "bytes": 924,
+      "sha256": "9b30f27de6be979dbdcde95c5ceb73f7a1fbc8f1b65d123f250020ef27cad45d"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "supplement/p02.json",
+      "bytes": 370,
+      "sha256": "85c98ab154407127f74db5c5522c58ab9d3a635e6fabb6519e6ffdb958691cbb"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "supplement/rejection-pause-f.json",
+      "bytes": 704,
+      "sha256": "15e238432c9f870b5db5e5211fc881f3f041784d13637181503f72c3c0ec4a87"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "supplement/seed.json",
+      "bytes": 4661,
+      "sha256": "9e4f8cdf709720afef8363ea4e1ef2bbff7bb813d05bde19a6c6b788592f34a0"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "supplement/snapshot-b-reopened.json",
+      "bytes": 8189,
+      "sha256": "c2f072f109f59ff35488b74d657f3aeaf09ac2503e8ffe671251d564142be013"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "supplement/snapshot-f-before-reject.json",
+      "bytes": 18189,
+      "sha256": "0bc25ebf5634b1581537f1ea798b6728707941e9a510ffd94619aa70f44997c5"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "supplement/snapshot-f-final.json",
+      "bytes": 28670,
+      "sha256": "74ab3e50dafa4229a81354ea0ff02d8396acd1d758d4643adfe71248d2e009e0"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "supplement/snapshot-m-final.json",
+      "bytes": 8857,
+      "sha256": "e8ae94a98d77c1d1f960fbc66dbfec97cd7fd44cc68f736186ed5c9938d209d5"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "supplement/snapshot-s.json",
+      "bytes": 4830,
+      "sha256": "93dd87ce2f4ef689fdd54ac4decdb546d85ea688a371aefb282a25b52c0849f6"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "supplement/stale-file-f.json",
+      "bytes": 485,
+      "sha256": "122004cfc2b79b69bb680343bf242df4d9ba050af23c8f4806b23de3be8cd603"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "supplement/stale-plan.json",
+      "bytes": 3574,
+      "sha256": "4acd56b4a9e0741132f0bd33fff88c765f215f83a3ab08862b08ee08691b2e6b"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "supplement/stale-session-f.json",
+      "bytes": 3800,
+      "sha256": "f794872dabe094aa0cf34e15954be415bbb42015fdf0d9329e15d7f39aa8b736"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "supplement/start-b.json",
+      "bytes": 5048,
+      "sha256": "9ebdbb7bdf2ccfbbd112c139b1cb071888fef3c75c125621c5dd410d8f7caaf8"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "supplement/start-f.json",
+      "bytes": 4331,
+      "sha256": "68b8ce7e99c08cd4b16d43e031acb33de81de80045a1b6c2e8ce65738f660b56"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "supplement/start-i.json",
+      "bytes": 4957,
+      "sha256": "28684cd175b0a8b7b9aab933aa7bbf3376ae33a46bce2a1d0e7343a67890424f"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "supplement/start-m.json",
+      "bytes": 4411,
+      "sha256": "5f2698e85a46a124e0808fef928e3a579f264cf25dad88f13ab0c7c55dd32394"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "supplement/wait-b-1.json",
+      "bytes": 8185,
+      "sha256": "36cbba898e32551ca406a1507578c0f26a27cfd4f33feab4c46936d5ead57df3"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "supplement/wait-f-1.json",
+      "bytes": 11348,
+      "sha256": "e02f301751f04bfab6307f2ff18e0b779c6cb0282cd59678040a01f0a1c1fb03"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "supplement/wait-f-2.json",
+      "bytes": 15165,
+      "sha256": "b3349b90a2d7eec2607e5c1d0c649a6282d6b67ec9ee0d571acc56b48e2528fa"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "supplement/wait-f-3.json",
+      "bytes": 23249,
+      "sha256": "baa153ddea2deef6797073fbf3af366c733bebb809eac4448e86381e9fcc5bae"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "supplement/wait-i-1.json",
+      "bytes": 8076,
+      "sha256": "c7f72bcbb178a3fa1698533eeeddfb4c82d1ac65bd45f23b38a475d8b854f2c7"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "supplement/wait-i-2.json",
+      "bytes": 11527,
+      "sha256": "6c9af193e8c41c222303f9d17c50eddf5a1cd464637cdf6b7493eb6731e10654"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "supplement/wait-m-1.json",
+      "bytes": 7403,
+      "sha256": "5705a2f450fed2b8249a7ab812ddb4dc2fbc0d683567c0a9c02da24051536000"
+    },
+    {
+      "runId": "m6-20261113-002",
+      "file": "final-verification/environment-restored.json",
+      "bytes": 125,
+      "sha256": "948468e238403dc04ab0e63d6c5feb576a443f0a2f1328d7d71ec2e66b595474"
+    }
+  ],
+  "staticValidation": "final-verification/document-checks-004.json",
+  "remainingRequiredWork": [],
+  "limitations": [
+    "Actual pending-question/permission sessions were not reproduced; same client was tested using read-only simulated state fixtures.",
+    "Clean-data walkthrough ran on this PC with existing pinned dependencies and authentication; not a fresh-PC install.",
+    "GUI timing is a first-seen upper bound including observer gaps, not exact rendering latency.",
+    "Writer-lock contention uses a controlled 150ms critical section; it does not bound every model execution length.",
+    "30-minute observations do not prove absence of memory leaks or long-term stability.",
+    "Exe packaging, multiple users/projects, remote operation, parallel tasks, generic builds and automatic push/merge are outside MVP."
+  ],
+  "preservedFailedAttempts": [
+    "isolated: pending resume intent exposed a product recovery defect; fixed and isolated-003 passed.",
+    "isolated-002: owned fixture process exited while waiting; keepalive corrected before isolated-003.",
+    "resource-missing: Windows held the worktree cwd; .git-pointer move/restore used in resource-missing-002.",
+    "supplement p02 and continued: polling collector missed intent metrics; already accepted starts were not replayed.",
+    "p03-ui: reused command key rejected before effects; fresh evidence-dir keys used afterward.",
+    "cleanup: CLI list array parsing failed after temporary cleanup; remaining graceful stop safely continued in cleanup-002.",
+    "p01-rpc: some samples overlapped I interruption; retained separately, baseline retaken idle in p01-rpc-idle."
+  ],
+  "git": {
+    "branch": "codex/m6-integrated-acceptance",
+    "committed": false,
+    "pushed": false,
+    "merged": false,
+    "snapshotAt": "2026-11-13T05:47:07.939Z",
+    "scope": "Git state when M6 acceptance was recorded; later publication is tracked by repository history and origin/main."
+  },
+  "publication": {
+    "requestedOn": "2026-11-13",
+    "targetBranch": "main",
+    "repository": "kopite97/orchiva",
+    "sourceOfTruth": "Repository commit history and origin/main"
+  }
+}

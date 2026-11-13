@@ -1,6 +1,6 @@
-# Orchiva Plugin PoC
+# Orchiva 프로토타입 MVP
 
-Paseo 안에서 Feature Request를 입력하고 REQ → Request PLAN → TASK → Worktree → Task PLAN → Codex 실행 → 검증 → 완료 판정/실패 복구를 연결하는 Windows PoC입니다.
+Paseo 안에서 Feature Request를 입력하고 REQ → Request PLAN → TASK → Worktree → Task PLAN → Codex 실행 → 검증 → 완료 판정/실패 복구를 연결하는 Windows 로컬 프로토타입 MVP입니다.
 
 Orchiva의 기본 소스 폴더는 이 `orchiva-plugin` 폴더이며 소스 원격은 [kopite97/orchiva](https://github.com/kopite97/orchiva)입니다. 실제 연동 작업 대상은 별도 `orchiva-PoC` sandbox입니다.
 
@@ -9,6 +9,8 @@ Orchiva의 기본 소스 폴더는 이 `orchiva-plugin` 폴더이며 소스 원�
 작업은 [AGENTS.md](AGENTS.md)에서 시작하세요. [작업 흐름](docs/agents/workflow.md), [프로젝트 규칙](docs/agents/repository-guidelines.md), [소스 규칙](docs/agents/source-conventions.md), [검증 기준](docs/agents/validation.md)을 경로와 변경 범위에 맞게 적용합니다.
 
 MVP의 단계별 상태는 [계획 목록](docs/plans/README.md)에서 관리합니다. M0 실행 기반, M1 저장·상태, M2 초안·계획 확인·고정 커밋 실행, M3 진행 화면·백그라운드 관측·복원, M4 조건별 판정·과거 결과 상세, M5 실패별 복구·전달 대조·중복 명령 처리를 구현했습니다. [M0 결과](docs/decisions/m0-runtime-foundation.md), [M1 결과](docs/decisions/m1-storage-state.md), [M2 결과](docs/decisions/m2-draft-plan-start.md), [M3 결과](docs/decisions/m3-progress-reconciliation.md), [M4 결과](docs/decisions/m4-evidence-review.md), [M5 결과](docs/decisions/m5-recovery.md)에 검증과 제약을 기록했습니다.
+
+M6 통합 수용·장애 시험·성능 측정을 완료했습니다. 89개 자동 테스트, A01~A16, D01~D08의 명시한 실제/모의 범위, 실제 RPC 성능과 30분 운영, 사용자 첫 사용 확인을 기록했습니다. 저장 잠금 재시도, 중단된 재개 의도의 명시적 대조, checkbox 접근성·키보드 동작을 보완했습니다. [M6 결과와 검증 한계](docs/decisions/m6-acceptance.md)를 확인하세요.
 
 ## 실행
 
@@ -60,6 +62,8 @@ npm run verify:lifecycle
 
 `npm run m5 -- verify m5-20261112-recovery-002`는 같은 세션의 3개 시도·4개 결과·2개 판정, 원래 검사 파일, 중복 명령 무쓰기 및 기존 8건을 대조합니다. 새 시험은 `npm run m5 -- help`와 [M5 결과](docs/decisions/m5-recovery.md)를 따릅니다. 응답 유실 시험과 주 GUI 시험은 별도 요청을 사용합니다.
 
+첫 설치·초안부터 완료까지의 화면 흐름·백업/종료 절차는 [사용자 안내](docs/user-guide.md), 오류별 복구 방법은 [문제 해결 안내](docs/troubleshooting.md)를 참고하세요. M6 수용 결과·한계는 [결과 기록](docs/decisions/m6-acceptance.md)에서 확인할 수 있습니다. M6 시험 명령은 `npm run m6 -- help`로 확인하며, `performance`와 `d06`은 실제 Agent/Workspace를 만들고 `a11`은 daemon을 재시작합니다.
+
 ## 구성
 
 | 위치 | 용도 |
@@ -84,4 +88,4 @@ npm run verify:lifecycle
 
 MVP 설계 전 검토할 구현 범위, 실제 성공·실패·복구 결과, 한계와 후속 결정 사항은 [PoC 결과 보고서](docs/poc-results.md)에 정리했습니다.
 
-단일 작업 흐름의 기능 범위, 화면 흐름, 데이터 모델, 개발 순서와 수용 기준은 [프로토타입 MVP 설계](docs/mvp-design.md)를 참고하세요. 설계의 전체 MVP 목표와 M0~M5 현재 구현을 구분합니다.
+단일 작업 흐름의 기능 범위, 화면 흐름, 데이터 모델, 개발 순서와 수용 기준은 [프로토타입 MVP 설계](docs/mvp-design.md)를 참고하세요. M0~M6 구현과 검증 범위는 각 결과 문서에 기록했습니다.
