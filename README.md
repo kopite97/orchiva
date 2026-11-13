@@ -4,6 +4,8 @@ Paseo 안에서 Feature Request를 입력하고 REQ → Request PLAN → TASK �
 
 Orchiva의 기본 소스 폴더는 이 `orchiva-plugin` 폴더이며 소스 원격은 [kopite97/orchiva](https://github.com/kopite97/orchiva)입니다. 실제 연동 작업 대상은 별도 `orchiva-PoC` sandbox입니다.
 
+다른 PC에서 개발을 이어가려면 [데스크톱 전환 방향과 개발 인계](docs/desktop-handoff.md)를 확인하세요. 프로젝트별 게임 제작 흐름, 지침 파일 편집, .NET 앱과 기존 Paseo 실행부 연결에 대한 사용자 합의와 미정 사항을 정리했습니다. 현재 실행 가능한 제품은 아래의 브라우저 MVP이며, 데스크톱 앱은 아직 구현하지 않았습니다.
+
 ## 개발 지침과 계획
 
 작업은 [AGENTS.md](AGENTS.md)에서 시작하세요. [작업 흐름](docs/agents/workflow.md), [프로젝트 규칙](docs/agents/repository-guidelines.md), [소스 규칙](docs/agents/source-conventions.md), [검증 기준](docs/agents/validation.md)을 경로와 변경 범위에 맞게 적용합니다.
