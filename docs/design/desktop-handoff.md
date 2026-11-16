@@ -2,7 +2,7 @@
 
 작성일: 2026-11-13 · Asia/Seoul
 
-상태: 사용자 합의 방향 정리 완료. 2026-11-16 [전환 계획](../plans/desktop-transition.md) 승인 후 D1부터 구현했으며 전체 PLAN은 `active`다. [D1 결과](../decisions/desktop-d1-foundation.md)에 초기 실행 차단을, 후속 [화면 검증](../decisions/desktop-d1-gui-verification.md)에 사용자 환경 변경 후 C# 7/7·핵심 GUI 통과와 남은 보완을 기록했다. 이후 [실행부 보완](../decisions/desktop-d1-runtime-completion.md)으로 D1 구현·비GUI 검증을 완료했다. 컴퓨터 유스는 사용자 지시로 대기하며 D1~D3 구현·비GUI 검증은 완료했다. [D2·D3 최신 기록](../decisions/desktop-d2-d3-completion.md)을 따르며 GUI G01~G11과 D4~D6는 미완료다.
+상태: 2026-11-16 [전환 계획](../plans/desktop-transition.md) 승인 후 D1~D3 구현·비GUI 검증과 GUI G01~G11 수용을 완료했다. 최신 [GUI 결과](../decisions/desktop-d1-d3-gui-20261116.md)는 실제·합성 시험과 사용자 조작/시각 확인을 구분한다. D4~D6는 미착수이며 전체 PLAN은 `active`다. 초기 [D1 결과](../decisions/desktop-d1-foundation.md), [이전 화면 검증](../decisions/desktop-d1-gui-verification.md), [실행부 보완](../decisions/desktop-d1-runtime-completion.md), [D2·D3 비GUI 기록](../decisions/desktop-d2-d3-completion.md)은 당시의 이력으로 보존한다.
 
 후속 점검은 [현재 PC 준비 기록](../decisions/desktop-readiness-20261116.md)을 따른다. 2026-11-16 초기 보류 이후 사용자는 WinUI 3 + .NET 10, 첫 구현부터 디자인, B안의 앱 내 선택 적용을 확정했다. 프로젝트마다 docs/ 폴더를 필수로 두고 agents/·plans/·decisions/에서 실제 지침과 PLAN·결정/작업 이력을 관리한다. 아래 합의 방향과 기존 인계 이력은 유지하며, 새 설계의 추천안을 확정 사항으로 취급하지 않는다.
 
@@ -179,3 +179,11 @@ npm run verify 및 verify:lifecycle은 기존 PC의 PoC 요청·Worktree·daemon
 ## 2026-11-16 D2·D3 진행 기록
 
 사용자가 컴퓨터 유스 없이 D3까지 진행하도록 지시했다. 프로젝트 추가·초기화와 실제 docs/지침, v3 이력·전역 슬롯, 정형 입력 기반 AI PLAN, 기획/코딩 제작·동일 세션 복구·중단·결과 검토·B안 선택 반영을 구현했다. [구현 계약과 검증](../decisions/desktop-d2-d3-completion.md)에 자동/모의/실제 연동 결과와 GUI G01~G11 대기를 구분했다. D4~D6는 시작하지 않았으며 이 기록을 전체 제품 완성이나 배포 완료로 해석하지 않는다.
+
+## 2026-11-16 D1~D3 GUI 검증 후 인계
+
+사용자의 후속 GUI 검증 지시로 실제 WinUI에서 프로젝트 초기화·지침 충돌·AI PLAN·제작·실패 복구·중단·수정 요청·승인·내보내기·선택 반영·이어 처리·undo를 확인하고 화면/입력 갱신 문제를 수정했다. Node 108/108, C# 13/13, typecheck와 WinUI build가 통과했다. 실제 연동과 합성 권한/복원 상태의 범위는 [GUI 결정 기록](../decisions/desktop-d1-d3-gui-20261116.md)에서 구분한다.
+
+D1~D3 GUI 수용 G01~G11을 완료했다. 마지막 트레이 복원/명시 종료는 사용자 조작과 앱/bridge 종료 관측으로, 125%·150% 선명도는 사용자의 실제 모니터 확인으로 마무리했다. 배율은 100%로 복원하고 설정 및 최종 시험 앱을 닫았다. 두 시험 daemon을 포함한 소유 프로세스/포트 정리와 보존 데이터 상태는 기록에 연결된 cleanup/followup JSON을 따른다.
+
+최종 수정본은 `.desktop-local/d1-20261116-gui-001/gui-build/Orchiva.Desktop.exe`에서 검증한 뒤 기본 `desktop/Orchiva.Desktop/bin/x64/Debug/net10.0-windows10.0.26100.0/win-x64/` 출력에도 재빌드해 후속 배율 시험을 수행했다. 이 PC에서는 프로젝트 로컬 SDK의 WindowsDesktop runtime을 사용하므로 실행 자식 환경에 `DOTNET_ROOT`/`DOTNET_ROOT_X64`를 `.desktop-local/tools/dotnet`의 절대 경로로 지정했다. 경로 누락으로 발생한 설치 안내와 재실행 경위도 기록했다. 최종 배포 검증은 D6 범위다. 이번 GUI 변경은 `main`의 `3aad026` 이후 로컬 변경이며 commit/push하지 않았다. 계획은 `active`, D4~D6는 미착수다.

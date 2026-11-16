@@ -1,0 +1,240 @@
+{
+  "date": "2026-11-16",
+  "timezone": "Asia/Seoul",
+  "baselineCommit": "3aad026",
+  "runId": "d1-20261116-gui-001",
+  "environment": {
+    "sourceRoot": "C:/Dev/Orchiva",
+    "dotnet": "10.0.401",
+    "node": "26.13.0",
+    "paseo": "0.15.4",
+    "displayScaleRestored": "100%",
+    "windowSizes": [
+      "1280x900",
+      "800x600 (before layout fix)",
+      "790x600 (after layout fix)"
+    ]
+  },
+  "authorization": "사용자: D3까지 필요한 GUI 검증 진행",
+  "requests": [
+    {
+      "token": "e8ff3f54204d4b0a9547aebcc1b2c23e",
+      "parentToken": null,
+      "parentResultId": null,
+      "revision": 35,
+      "status": "completed",
+      "attempt": 2,
+      "agentId": "9ec21c20-701f-4180-aa55-eb0e6e27388d",
+      "workspaceId": "wks_400ed5f39cec269e",
+      "provider": "codex/gpt-6.1-sol",
+      "level": "low",
+      "validationProfile": "node-test",
+      "results": [
+        {
+          "id": "f13b0bcb-0781-4006-ae26-73e100cb4e08",
+          "checks": [
+            {
+              "label": "프로젝트 테스트: checks/value.test.mjs",
+              "status": "passed",
+              "exitCode": 0
+            }
+          ],
+          "failure": null,
+          "executionFailure": null
+        },
+        {
+          "id": "d8bb8621-0a5b-439b-bc0c-70d281929a81",
+          "checks": [
+            {
+              "label": "프로젝트 테스트: checks/value.test.mjs",
+              "status": "failed",
+              "exitCode": 1
+            }
+          ],
+          "failure": "One or more validation checks failed or could not run.",
+          "executionFailure": null
+        },
+        {
+          "id": "fcbe502d-918c-4b06-8b95-105a79c433dd",
+          "checks": [
+            {
+              "label": "프로젝트 테스트: checks/value.test.mjs",
+              "status": "passed",
+              "exitCode": 0
+            }
+          ],
+          "failure": null,
+          "executionFailure": null
+        }
+      ],
+      "reviews": [
+        {
+          "approved": true,
+          "resultId": "fcbe502d-918c-4b06-8b95-105a79c433dd"
+        }
+      ],
+      "planVersions": 2
+    },
+    {
+      "token": "3d990bacaf5b4471a5fb1a4de1ea4263",
+      "parentToken": "e8ff3f54204d4b0a9547aebcc1b2c23e",
+      "parentResultId": "fcbe502d-918c-4b06-8b95-105a79c433dd",
+      "revision": 31,
+      "status": "completed",
+      "attempt": 2,
+      "agentId": "0f902842-e3da-4a37-9b48-d5e025932db8",
+      "workspaceId": "wks_3cb290294ad9d1de",
+      "provider": "codex/gpt-6.1-sol",
+      "level": "medium",
+      "validationProfile": "files",
+      "results": [
+        {
+          "id": "129cc54a-49b9-4aad-a6a7-b09f18a47e76",
+          "checks": [],
+          "failure": "사용자 중단 요청 후 실행 종료를 확인했습니다.",
+          "executionFailure": "사용자 중단 요청 후 실행 종료를 확인했습니다."
+        },
+        {
+          "id": "d89316a1-1b2b-4549-8a2d-218cc3efb4b7",
+          "checks": [],
+          "failure": null,
+          "executionFailure": null
+        }
+      ],
+      "reviews": [
+        {
+          "approved": true,
+          "resultId": "d89316a1-1b2b-4549-8a2d-218cc3efb4b7"
+        }
+      ],
+      "planVersions": 1
+    }
+  ],
+  "transfers": [
+    {
+      "key": "b5c1052be5b44360a8c5b1be9883432c",
+      "state": "applied",
+      "paths": [
+        "answer.txt"
+      ],
+      "completed": [
+        "answer.txt"
+      ],
+      "restored": []
+    },
+    {
+      "key": "ed5ed40fa4c149f9b49287ed50416b1b",
+      "state": "undone",
+      "paths": [
+        "alpha.txt",
+        "beta.txt"
+      ],
+      "completed": [
+        "alpha.txt",
+        "beta.txt"
+      ],
+      "restored": [
+        "beta.txt",
+        "alpha.txt"
+      ]
+    },
+    {
+      "key": "gui-partial-20261116-001",
+      "state": "undone",
+      "paths": [
+        "alpha.txt",
+        "beta.txt"
+      ],
+      "completed": [
+        "alpha.txt",
+        "beta.txt"
+      ],
+      "restored": [
+        "beta.txt",
+        "alpha.txt"
+      ]
+    }
+  ],
+  "partialFailure": {
+    "kind": "real local files with injected exception, then GUI continuation and undo",
+    "key": "gui-partial-20261116-001",
+    "stateBefore": "applying",
+    "completedBefore": []
+  },
+  "syntheticGui": {
+    "fixture": "gui-fixture/bridge/index.ts (local isolated run)",
+    "restoringReadOnly": true,
+    "reconnectEnablesWorkspace": true,
+    "connectionFailureBanner": true,
+    "permissionResponses": 1,
+    "permissionResponse": {
+      "projectId": "b4eb6369-c697-4111-aeaa-823754f809d9",
+      "token": "3d990bacaf5b4471a5fb1a4de1ea4263",
+      "expectedRevision": 31,
+      "requestId": "gui-permission-001",
+      "requestHash": "gui-content-hash-001",
+      "actionId": "deny-once",
+      "behavior": "deny",
+      "commandKey": "ff62235f00754cc48d1c4b950327513d"
+    },
+    "comparisonFollowsNewSelection": true,
+    "transferStatusRefresh": true
+  },
+  "actualEmpty": {
+    "runId": "d1-20261116-gui-empty",
+    "total": 0,
+    "agents": 0,
+    "workspaces": 0,
+    "fixtureUnchanged": true
+  },
+  "preservation": {
+    "syntheticV2": 3,
+    "hashesUnchanged": true,
+    "oldPc54RecordsAvailable": false,
+    "protectedBaselineCount": 0,
+    "sourceSandboxBaseline": "67bba863c6c2a8b417580ffae5e0ce1a939ac06e"
+  },
+  "checks": {
+    "typecheck": "passed",
+    "nodeTests": {
+      "passed": 108,
+      "total": 108
+    },
+    "bridgeTests": {
+      "passed": 13,
+      "total": 13
+    },
+    "winuiBuild": {
+      "errors": 0,
+      "warnings": 0,
+      "testedOutput": "desktop/Orchiva.Desktop/bin/x64/Debug/net10.0-windows10.0.26100.0/win-x64/Orchiva.Desktop.exe",
+      "assemblySha256": "5e88de2117456dd27bdc66206be703cc2f12e5d7ad5b2e6f24ecc82741b376de"
+    }
+  },
+  "gui": {
+    "G01": "pass",
+    "G02": "pass: layout/control checks plus user-confirmed fine text at 125/150%",
+    "G03": "pass: actual empty store + synthetic restoring",
+    "G04": "pass: five-page keyboard and focus checks; legacy detail/reconnect final sweep synthetic",
+    "G05": "pass: 3 close/reopen cycles; user-assisted tray restore/menu exit; app and bridge exit verified",
+    "G06": "pass",
+    "G07": "pass",
+    "G08": "pass",
+    "G09": "pass: actual reconnect + synthetic permission response",
+    "G10": "pass: real transfer, partial exception, GUI continuation/undo; display regression synthetic",
+    "G11": "pass: compact layout, keyboard, themes; 125/150% fine text confirmed by user"
+  },
+  "remaining": [],
+  "scope": {
+    "D4toD6": "not started",
+    "plan": "active",
+    "commit": false,
+    "push": false,
+    "D1toD3": "implementation, non-GUI and GUI acceptance complete; actual/synthetic/user-assisted coverage specified"
+  },
+  "evidence": {
+    "screenshots": "screenshots.json",
+    "cleanup": "cleanup.json",
+    "followup": "followup.json"
+  }
+}

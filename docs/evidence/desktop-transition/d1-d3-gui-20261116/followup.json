@@ -1,0 +1,43 @@
+{
+  "checkedAt": "2026-11-16T13:04:46.976Z",
+  "syntheticV2Unchanged": 3,
+  "completedRequestsUnchanged": [
+    {
+      "token": "e8ff3f54204d4b0a9547aebcc1b2c23e",
+      "sha256": "4b13e57af5438594f484b7973d80082bc42ef3c3f4dc95bb3d55b25405038bf9",
+      "revision": 35,
+      "resultCount": 3
+    },
+    {
+      "token": "3d990bacaf5b4471a5fb1a4de1ea4263",
+      "sha256": "3e7c2e81bf6aa7900c66b78493cfe8cce0e775385ec2cd8e6743be6593041624",
+      "revision": 31,
+      "resultCount": 2
+    }
+  ],
+  "trayExit": {
+    "method": "User selected tray menu Exit; agent verified absence of application PID 32380 and child bridge PID 16268",
+    "applicationExited": true,
+    "bridgeExited": true
+  },
+  "launchCorrection": "Final default build initially launched without local DOTNET_ROOT; host displayed missing runtime dialog. User closed it. Relaunched with child-scoped DOTNET_ROOT and DOTNET_ROOT_X64 pointing to existing SDK 10.0.401 / WindowsDesktop runtime 10.0.12. No global runtime install or environment change performed by agent.",
+  "finalCheckedAt": "2026-11-16T22:10:20.7604047+09:00",
+  "dpi": {
+    "method": "Agent set each scale and foregrounded final WinUI build; user inspected actual monitor because tool captures had missing glyph strokes",
+    "scale125": {
+      "passed": true,
+      "response": "정상적으로 읽혀요",
+      "image": "262-dpi125-final-build.png"
+    },
+    "scale150": {
+      "passed": true,
+      "response": "정상적으로 읽혀요",
+      "image": "263-dpi150-final-build.png"
+    },
+    "restoredScale": "100%",
+    "settingsWindowClosed": true,
+    "finalFixtureAppPid": 36280,
+    "finalFixtureBridgePid": 10488,
+    "finalFixtureAppAndBridgeExited": true
+  }
+}

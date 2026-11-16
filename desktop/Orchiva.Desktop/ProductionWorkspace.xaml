@@ -1,19 +1,20 @@
-<UserControl x:Class="Orchiva.Desktop.ProductionWorkspace" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
- <StackPanel Spacing="20" MaxWidth="1100" HorizontalAlignment="Stretch">
+<UserControl x:Class="Orchiva.Desktop.ProductionWorkspace" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:Orchiva.Desktop">
+ <UserControl.Resources><Style TargetType="CheckBox"><Setter Property="HorizontalAlignment" Value="Stretch"/><Setter Property="ContentTemplate"><Setter.Value><DataTemplate><TextBlock Text="{Binding}" TextWrapping="Wrap"/></DataTemplate></Setter.Value></Setter></Style></UserControl.Resources>
+ <Grid RowSpacing="12"><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+ <StackPanel Spacing="4"><InfoBar x:Name="Notice" IsOpen="True" IsClosable="False" Title="프로젝트 선택" Message="연결 후 프로젝트를 불러오세요."/><ProgressBar x:Name="Busy" IsIndeterminate="True" Visibility="Collapsed"/></StackPanel>
+ <ScrollViewer Grid.Row="1"><StackPanel Spacing="16" MaxWidth="1100" HorizontalAlignment="Stretch">
   <TextBlock Text="프로젝트 작업실" Style="{StaticResource PageHeading}"/>
   <TextBlock Text="프로젝트의 파일에서 시작해, PLAN을 확인하고 결과를 검토하세요." Style="{StaticResource BodyText}"/>
-  <InfoBar x:Name="Notice" IsOpen="True" IsClosable="False" Title="프로젝트 선택" Message="연결 후 프로젝트를 불러오세요."/>
-  <ProgressBar x:Name="Busy" IsIndeterminate="True" Visibility="Collapsed"/>
-  <StackPanel Orientation="Horizontal" Spacing="12"><ComboBox x:Name="ProjectChoice" Header="프로젝트" DisplayMemberPath="Label" MinWidth="240" SelectionChanged="ProjectSelected"/><Button Content="목록 새로 고침" Tag="projects" Click="Action" VerticalAlignment="Bottom"/></StackPanel>
+  <local:WrapPanel><ComboBox x:Name="ProjectChoice" Header="프로젝트" DisplayMemberPath="Label" Width="300" SelectionChanged="ProjectSelected"/><Button Content="목록 새로 고침" Tag="projects" Click="Action" VerticalAlignment="Bottom"/></local:WrapPanel>
   <TextBlock x:Name="ProjectLocation" TextWrapping="Wrap" IsTextSelectionEnabled="True"/>
-  <Pivot>
+  <Pivot><Pivot.HeaderTemplate><DataTemplate><TextBlock Text="{Binding}" FontSize="16"/></DataTemplate></Pivot.HeaderTemplate>
    <PivotItem Header="프로젝트·지침">
     <StackPanel Spacing="16" Padding="0,16,0,0">
      <TextBlock Text="프로젝트 추가" Style="{StaticResource SectionHeading}"/>
      <TextBox x:Name="ProjectNameInput" Header="프로젝트 이름"/><TextBox x:Name="SourceInput" Header="소스 폴더의 절대 경로" PlaceholderText="C:\Projects\MyProject"/>
      <Button Content="프로젝트 등록" Tag="register" Click="Action"/>
      <TextBlock Text="등록은 소스 파일을 변경하지 않습니다. 초기화 미리보기에서 생성·이관할 지침을 확인하세요." Style="{StaticResource BodyText}"/>
-     <StackPanel Orientation="Horizontal" Spacing="8"><Button Content="초기화 미리보기" Tag="preview" Click="Action"/><Button x:Name="InitializeButton" Content="확인한 변경으로 초기화" Tag="initialize" Click="Action" IsEnabled="False"/></StackPanel>
+     <local:WrapPanel><Button Content="초기화 미리보기" Tag="preview" Click="Action"/><Button x:Name="InitializeButton" Content="확인한 변경으로 초기화" Tag="initialize" Click="Action" IsEnabled="False"/></local:WrapPanel>
      <TextBox x:Name="InitPreview" Header="초기화 변경 내용" IsReadOnly="True" AcceptsReturn="True" MaxHeight="360" TextWrapping="Wrap"/>
      <TextBlock Text="프로젝트 설정" Style="{StaticResource SectionHeading}"/><TextBox x:Name="BaseRefInput" Header="Git 기준 브랜치" Text="main"/><TextBox x:Name="OutputInput" Header="결과물 폴더의 절대 경로" PlaceholderText="소스와 분리된 기존 폴더"/><Button Content="프로젝트 설정 저장" Tag="configure" Click="Action"/>
      <TextBlock Text="실제 지침 파일" Style="{StaticResource SectionHeading}"/><Button Content="지침·누락 다시 확인" Tag="instructions" Click="Action"/>
@@ -26,7 +27,7 @@
    </PivotItem>
    <PivotItem Header="요청·PLAN">
     <StackPanel Spacing="16" Padding="0,16,0,0">
-     <StackPanel Orientation="Horizontal" Spacing="8"><Button Content="작업 이력 불러오기" Tag="requests" Click="Action"/><Button Content="새 요청 작성" Tag="new" Click="Action"/></StackPanel>
+     <local:WrapPanel><Button Content="작업 이력 불러오기" Tag="requests" Click="Action"/><Button Content="새 요청 작성" Tag="new" Click="Action"/></local:WrapPanel>
      <ComboBox x:Name="RequestChoice" Header="프로젝트 PLAN 이력" DisplayMemberPath="Label" SelectionChanged="RequestSelected" MinWidth="280"/>
      <Expander Header="이전 v2 이력 가져오기"><StackPanel Spacing="8"><TextBox x:Name="LegacyToken" Header="연결된 실행부의 기존 요청 식별자"/><Button Content="원본을 보존하고 보관용 이력 가져오기" Tag="import-legacy" Click="Action"/></StackPanel></Expander>
      <TextBlock x:Name="RequestStatus" TextWrapping="Wrap"/>
@@ -35,9 +36,9 @@
      <ComboBox x:Name="ParentChoice" Header="수정할 이전 작업" DisplayMemberPath="Label" MinWidth="280"/>
      <TextBox x:Name="TitleInput" Header="요청 제목"/><TextBox x:Name="GoalInput" Header="원하는 결과" AcceptsReturn="True" MinHeight="100" TextWrapping="Wrap"/><TextBox x:Name="ScopeInput" Header="작업 범위" AcceptsReturn="True" TextWrapping="Wrap"/><TextBox x:Name="ConstraintsInput" Header="제약·참고 사항" AcceptsReturn="True" TextWrapping="Wrap"/>
      <TextBox x:Name="OutputPathInput" Header="결과물 하위 폴더 (선택)" PlaceholderText="예: features"/>
-     <StackPanel Orientation="Horizontal" Spacing="12"><ComboBox x:Name="ModelChoice" Header="모델" DisplayMemberPath="Label" SelectionChanged="ModelSelected" MinWidth="240"/><ComboBox x:Name="LevelChoice" Header="수준" DisplayMemberPath="Label" MinWidth="140"/></StackPanel>
+     <local:WrapPanel><ComboBox x:Name="ModelChoice" Header="모델" DisplayMemberPath="Label" SelectionChanged="ModelSelected" MinWidth="240"/><ComboBox x:Name="LevelChoice" Header="수준" DisplayMemberPath="Label" MinWidth="140"/></local:WrapPanel>
      <ComboBox x:Name="ValidationChoice" Header="자동 확인" SelectedIndex="0"><ComboBoxItem Content="파일 변경·결과 근거 확인"/><ComboBoxItem Content="기존 Node 테스트 자동 탐색·실행"/></ComboBox>
-     <StackPanel Orientation="Horizontal" Spacing="8"><Button Content="요청 저장" Tag="save" Click="Action"/><Button Content="AI로 PLAN 작성" Tag="plan" Click="Action"/><Button Content="상태 다시 읽기" Tag="observe" Click="Action"/></StackPanel>
+     <local:WrapPanel><Button Content="요청 저장" Tag="save" Click="Action"/><Button Content="AI로 PLAN 작성" Tag="plan" Click="Action"/><Button Content="상태 다시 읽기" Tag="observe" Click="Action"/></local:WrapPanel>
      <TextBox x:Name="PlanText" Header="PLAN 원문" IsReadOnly="True" AcceptsReturn="True" MinHeight="240" MaxHeight="700" TextWrapping="Wrap"/>
      <TextBlock x:Name="PlanLocation" TextWrapping="Wrap" IsTextSelectionEnabled="True"/>
      <Button Content="외부에서 수정한 PLAN 다시 읽기" Tag="sync-plan" Click="Action"/>
@@ -53,16 +54,16 @@
      <TextBox x:Name="ResultText" Header="검증 근거와 결과 이력" IsReadOnly="True" AcceptsReturn="True" MinHeight="240" MaxHeight="700" TextWrapping="Wrap"/>
      <CheckBox x:Name="QualityConfirmed" Content="결과물을 검토했고 요청에 맞는 품질임을 확인했습니다."/><CheckBox x:Name="ChecksConfirmed" Content="자동 검사 결과와 검사 파일 변경 내용을 확인했습니다."/>
      <TextBox x:Name="ReviewNote" Header="검토 메모 · 수정 요청 시 사유 필수" AcceptsReturn="True" TextWrapping="Wrap"/>
-     <StackPanel Orientation="Horizontal" Spacing="8"><Button Content="완료 승인" Tag="approve" Click="Action"/><Button Content="수정 필요" Tag="reject" Click="Action"/><Button Content="자동 검사 다시 실행" Tag="revalidate" Click="Action"/></StackPanel>
+     <local:WrapPanel><Button Content="완료 승인" Tag="approve" Click="Action"/><Button Content="수정 필요" Tag="reject" Click="Action"/><Button Content="자동 검사 다시 실행" Tag="revalidate" Click="Action"/></local:WrapPanel>
      <TextBox x:Name="ResumeInput" Header="같은 실행에 전달할 보완 내용" AcceptsReturn="True" TextWrapping="Wrap"/><Button Content="같은 세션에서 재개" Tag="resume" Click="Action"/>
-     <StackPanel Orientation="Horizontal" Spacing="8"><Button Content="불확실한 전송 대조" Tag="reconcile" Click="Action"/><Button Content="확인된 준비 실패 재시도" Tag="retry" Click="Action"/></StackPanel>
+     <local:WrapPanel><Button Content="불확실한 전송 대조" Tag="reconcile" Click="Action"/><Button Content="확인된 준비 실패 재시도" Tag="retry" Click="Action"/></local:WrapPanel>
     </StackPanel>
    </PivotItem>
    <PivotItem Header="결과물·소스 반영">
     <StackPanel Spacing="16" Padding="0,16,0,0">
      <TextBlock Text="승인한 결과물에서 반영할 파일을 선택하세요." Style="{StaticResource SectionHeading}" TextWrapping="Wrap"/>
      <TextBlock Text="원본 변경과 충돌하면 반영하지 않습니다. 반영 전 원본은 프로젝트에 백업하며 Git 커밋은 만들지 않습니다." Style="{StaticResource BodyText}"/>
-     <StackPanel Orientation="Horizontal" Spacing="8"><Button Content="승인한 결과물 내보내기" Tag="export" Click="Action"/><Button Content="소스 차이 확인" Tag="diff" Click="Action"/></StackPanel>
+     <local:WrapPanel><Button Content="승인한 결과물 내보내기" Tag="export" Click="Action"/><Button Content="소스 차이 확인" Tag="diff" Click="Action"/></local:WrapPanel>
      <TextBlock x:Name="ExportLocation" TextWrapping="Wrap" IsTextSelectionEnabled="True"/>
      <ListView x:Name="DiffFiles" SelectionMode="Multiple" DisplayMemberPath="Label" SelectionChanged="DiffSelected" MaxHeight="300" AutomationProperties.Name="소스에 반영할 파일 선택"/>
      <TextBox x:Name="DiffText" Header="선택 파일 · 현재 소스 / 결과물" IsReadOnly="True" AcceptsReturn="True" MinHeight="200" MaxHeight="500" TextWrapping="Wrap"/>
@@ -73,5 +74,5 @@
     </StackPanel>
    </PivotItem>
   </Pivot>
- </StackPanel>
+ </StackPanel></ScrollViewer></Grid>
 </UserControl>

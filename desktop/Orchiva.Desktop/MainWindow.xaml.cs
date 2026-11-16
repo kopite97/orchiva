@@ -26,6 +26,7 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent(); Root.DataContext = model;
+        WorkspacePanel.ConnectionFailed += ReportFailure;
         AppWindow.Resize(new Windows.Graphics.SizeInt32(1280, 900));
         model.ProjectName = "연결을 준비하세요";
         model.ProjectPath = "프로젝트를 아직 읽지 않았습니다.";
@@ -95,6 +96,7 @@ public partial class MainWindow : Window
             model.Connection = client.ConnectionState;
             model.Diagnostics = $"프로젝트 작업 연결\n데이터: {info.GetProperty("dataHome")}\n실행부: {info.GetProperty("paseoHome")}\n주소: {info.GetProperty("endpoint")}\n서버: {info.GetProperty("serverVersion")}";
             WorkspacePanel.Connect((method, input) => client.CallAsync(method, input, closing.Token));
+            WorkspacePanel.IsEnabled = !info.GetProperty("restoring").GetBoolean();
             await RefreshAsync();
         }
         catch (Exception) when (!exiting) { ReportFailure("연결하지 못했습니다. 격리 실행부가 시작됐는지 확인한 뒤 다시 연결하세요."); }
@@ -121,9 +123,15 @@ public partial class MainWindow : Window
         model.ProjectInfo = $"기준 {DesktopViewModel.Text(project, "baseRef")} · {DesktopViewModel.Text(project, "provider")}";
         model.Items.Clear(); AddPage(page);
         model.DetailTitle = "작업을 선택하세요"; model.Detail = "목록에서 작업을 선택하면 PLAN과 보존된 결과를 확인할 수 있습니다.";
-        model.Updated = $"마지막 조회 {DateTime.Now:HH:mm:ss} · 읽기 전용";
-        model.Connection = runtime.GetProperty("restoring").GetBoolean() ? "복원 중" : "연결됨";
-        StatusBar.Severity = InfoBarSeverity.Informational; StatusBar.Title = "실행부 연결됨"; StatusBar.Message = "작업실에서 프로젝트·지침·제작 PLAN을 관리합니다. 화면 수용 검증은 대기 중입니다.";
+        model.Updated = $"마지막 조회 {DateTime.Now:HH:mm:ss} · 기존 MVP 조회";
+        var restoring = runtime.GetProperty("restoring").GetBoolean();
+        model.Connection = restoring ? "복원 중" : "연결됨";
+        // A restoring handshake grants no desktop capabilities. Reconnect after
+        // restoration to acquire them; a legacy refresh alone must not enable writes.
+        WorkspacePanel.IsEnabled = !restoring && client.ConnectionState == "연결됨";
+        StatusBar.Severity = InfoBarSeverity.Informational;
+        StatusBar.Title = WorkspacePanel.IsEnabled ? "실행부 연결됨" : "복원 중 · 읽기 전용";
+        StatusBar.Message = WorkspacePanel.IsEnabled ? "작업실에서 프로젝트·지침·제작 PLAN을 관리합니다." : "기존 이력은 조회할 수 있습니다. 복원이 끝나면 연결 상태에서 다시 연결하세요.";
     }
 
     private void AddPage(JsonElement page)
@@ -174,6 +182,7 @@ public partial class MainWindow : Window
         if (ProjectPanel == null) return;
         var tag = args.IsSettingsSelected ? "settings" : (args.SelectedItem as NavigationViewItem)?.Tag?.ToString();
         WorkspacePanel.Visibility = tag == "workspace" ? Visibility.Visible : Visibility.Collapsed;
+        OtherPages.Visibility = tag == "workspace" ? Visibility.Collapsed : Visibility.Visible;
         ProjectPanel.Visibility = tag == "project" ? Visibility.Visible : Visibility.Collapsed;
         HistoryPanel.Visibility = tag == "history" ? Visibility.Visible : Visibility.Collapsed;
         ConnectionPanel.Visibility = tag == "connection" ? Visibility.Visible : Visibility.Collapsed;

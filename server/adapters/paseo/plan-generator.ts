@@ -20,7 +20,7 @@ export class CodexPlanGenerator implements PlanGenerator {
     const paths = (await execute("where.exe", ["codex"], { windowsHide: true, timeout: 10000 })).stdout.split(/\r?\n/);
     const executable = paths.find(path => isAbsolute(path) && path.toLowerCase().endsWith(".exe"));
     if (!executable) throw new Error("CODEX_EXECUTABLE_REQUIRED");
-    const output = join(directory, "answer.md"), prompt = `계획 작성만 수행하세요. 구현·파일 쓰기·네트워크·외부 도구 호출·하위 에이전트 생성은 금지합니다. 현재 폴더는 승인된 입력 snapshot 사본입니다. 프로젝트 지침을 읽고 요청을 분석하여 구체적인 한국어 PLAN 원문만 답변하세요. 파일 이름은 프로젝트 지침에 따라 제안하고 요청하지 않은 README·지침서를 산출물에 추가하지 마세요. 다음 절을 모두 사용하세요: ${planSections.map(x => "## " + x).join(", ")}. 검증 명령은 제안만 하며 임의 명령을 실행하지 마세요.\n입력: ${JSON.stringify(input)}\n기준 SHA: ${snapshot.baseCommit}\n이전 결과 맥락: ${snapshot.parentContext ?? "새 요청"}\n`;
+    const output = join(directory, "answer.md"), prompt = `현재는 계획 작성 단계입니다. 구현·파일 쓰기·네트워크·하위 에이전트 생성은 금지합니다. 현재 snapshot 내부 파일을 읽는 로컬 도구만 허용합니다. 현재 폴더는 승인된 입력 snapshot 사본입니다. 프로젝트 지침을 읽고 요청을 분석하여 구체적인 한국어 PLAN 원문만 답변하세요. 파일 이름은 프로젝트 지침에 따라 제안하고 요청하지 않은 README·지침서를 산출물에 추가하지 마세요. 다음 절을 모두 사용하세요: ${planSections.map(x => "## " + x).join(", ")}. 검증 명령은 제안만 하며 지금 실행하지 마세요. PLAN 본문은 사용자가 확인한 뒤 제작 에이전트가 수행할 지침입니다. 현재 계획 작성 단계에만 해당하는 구현 금지·도구 금지·이번 응답은 계획만 작성 같은 메타 지시를 PLAN 본문에 넣지 마세요. 제작 단계의 로컬 편집·검증을 금지하지 마세요.\n입력: ${JSON.stringify(input)}\n기준 SHA: ${snapshot.baseCommit}\n이전 결과 맥락: ${snapshot.parentContext ?? "새 요청"}\n`;
     const args = ["exec", "--ephemeral", "--skip-git-repo-check", "--sandbox", "read-only", "--cd", source, "--model", input.provider.slice("codex/".length), "--output-last-message", output];
     if (input.thinkingOptionId) args.push("-c", `model_reasoning_effort=${JSON.stringify(input.thinkingOptionId)}`);
     args.push("-");

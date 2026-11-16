@@ -1,0 +1,17 @@
+{
+  "checkedAt": "2026-11-16T22:10:03.7329161+09:00",
+  "runIds": [
+    "d1-20261116-gui-001",
+    "d1-20261116-gui-empty"
+  ],
+  "daemonStopMethod": "Public Paseo CLI daemon stop with each isolated --home",
+  "listeners": [],
+  "retainedProcesses": [],
+  "reason": "Tray lifecycle and final DPI checks completed; all test applications, bridges and daemons stopped",
+  "activeWork": "No executing work; both actual requests completed and preserved",
+  "displayScale": "Restored to original 100%",
+  "otherTestApps": "Closed",
+  "dataPolicy": "Requests, results, worktrees, fixture inputs and original captures preserved under ignored .desktop-local run directories",
+  "sourceEffect": "Owned test source answer.txt remains applied; alpha.txt and beta.txt undone; no operational repository modified",
+  "cleanupComplete": true
+}

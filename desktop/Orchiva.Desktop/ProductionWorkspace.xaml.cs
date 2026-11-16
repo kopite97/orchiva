@@ -20,10 +20,12 @@ public sealed partial class ProductionWorkspace : UserControl
     public ProductionWorkspace()
     {
         InitializeComponent();
-        timer.Tick += async (_, _) => { if (!busy && document != null && IsLoaded) await Run(async () => await LoadDocument(false), false); };
+        timer.Tick += async (_, _) => { if (!busy && document != null && IsLoaded && !Choices.Any(x => x.IsDropDownOpen)) await Run(async () => await LoadDocument(false), false); };
         Loaded += (_, _) => timer.Start(); Unloaded += (_, _) => timer.Stop();
     }
-    public void Connect(Func<string, object, Task<JsonElement>> invoke) { call = invoke; Notice.Message = "프로젝트 목록을 불러와 작업을 시작하세요."; }
+    private IEnumerable<ComboBox> Choices => [ProjectChoice, RequestChoice, InstructionChoice, Discipline, RequestMode, ParentChoice, ModelChoice, LevelChoice, ValidationChoice, PermissionChoice, PermissionAction, TransferChoice];
+    public event Action<string>? ConnectionFailed;
+    public void Connect(Func<string, object, Task<JsonElement>> invoke) { call = invoke; Notice.Severity = InfoBarSeverity.Informational; Notice.Title = "연결됨"; Notice.Message = project == null ? "프로젝트 목록을 불러와 작업을 시작하세요." : "연결을 복구했습니다. 입력한 내용은 유지됩니다."; }
     private static string NewKey() => Guid.NewGuid().ToString("N");
     private static string Text(JsonNode? value, string key) => value?[key]?.ToString() ?? "";
     private static JsonObject Copy(JsonObject value) => (JsonObject)value.DeepClone();
@@ -47,9 +49,14 @@ public sealed partial class ProductionWorkspace : UserControl
     }
     private async Task Run(Func<Task> action, bool announce = true)
     {
-        if (busy) return; busy = true; Busy.Visibility = Visibility.Visible; ProjectChoice.IsEnabled = RequestChoice.IsEnabled = InstructionChoice.IsEnabled = false;
+        if (busy) return; busy = true;
+        if (announce) { Busy.Visibility = Visibility.Visible; ProjectChoice.IsEnabled = RequestChoice.IsEnabled = InstructionChoice.IsEnabled = false; }
         try { await action(); if (announce) { Notice.Severity = InfoBarSeverity.Success; Notice.Title = "반영됨"; Notice.Message = "최신 파일과 실행 상태를 확인했습니다."; } }
-        catch (Exception e) { Notice.Severity = InfoBarSeverity.Warning; Notice.Title = "확인 필요 · 입력 유지"; Notice.Message = e.Message; }
+        catch (Exception e)
+        {
+            Notice.Severity = InfoBarSeverity.Warning; Notice.Title = "확인 필요 · 입력 유지"; Notice.Message = DesktopViewModel.Error(e.Message);
+            if (e is OperationCanceledException || e.Message is "CONNECTION_FAILED" or "HANDSHAKE_REQUIRED" or "BRIDGE_CLOSED" or "TIMEOUT" || e.Message.StartsWith("연결이 종료")) ConnectionFailed?.Invoke(Notice.Message);
+        }
         finally { busy = false; Busy.Visibility = Visibility.Collapsed; ProjectChoice.IsEnabled = RequestChoice.IsEnabled = InstructionChoice.IsEnabled = true; }
     }
     private async void Action(object sender, RoutedEventArgs e) => await Run(async () =>
@@ -66,9 +73,9 @@ public sealed partial class ProductionWorkspace : UserControl
             case "initialize":
                 if (preview == null || Text(preview, "projectId") != ProjectId) throw new IOException("초기화 변경 내용을 먼저 확인하세요.");
                 project = (JsonObject)await Mutate("desktop.projects.initialize", new() { ["projectId"] = ProjectId, ["fingerprint"] = preview["fingerprint"]!.DeepClone() });
-                InitializeButton.IsEnabled = false; preview = null; await LoadProject(); break;
+                InitializeButton.IsEnabled = false; preview = null; await LoadProject(); await RefreshProjectLabel(); break;
             case "configure":
-                project = (JsonObject)await Invoke("desktop.projects.configure", new { projectId = ProjectId, expectedRevision = project?["config"]?["revision"]?.GetValue<int>() ?? 0, name = ProjectNameInput.Text, baseRef = BaseRefInput.Text, outputRoot = string.IsNullOrWhiteSpace(OutputInput.Text) ? null : OutputInput.Text }); break;
+                project = (JsonObject)await Invoke("desktop.projects.configure", new { projectId = ProjectId, expectedRevision = project?["config"]?["revision"]?.GetValue<int>() ?? 0, name = ProjectNameInput.Text, baseRef = BaseRefInput.Text, outputRoot = string.IsNullOrWhiteSpace(OutputInput.Text) ? null : OutputInput.Text }); await RefreshProjectLabel(); break;
             case "instructions": await LoadInstructions(); break;
             case "save-instruction":
                 var selected = (InstructionChoice.SelectedItem as WorkspaceChoice)?.Value;
@@ -108,14 +115,23 @@ public sealed partial class ProductionWorkspace : UserControl
             case "apply":
                 if (diffIdentity != ProjectId + ":" + ResultId) throw new IOException("현재 결과의 소스 차이를 다시 확인하세요.");
                 var apply = Command(); apply["resultId"] = ResultId; apply["paths"] = new JsonArray(DiffFiles.SelectedItems.Cast<WorkspaceChoice>().Select(x => JsonValue.Create(Text(x.Value, "path"))).ToArray());
-                var applied = await Mutate("desktop.requests.apply", apply); TransferKey.Text = Text(applied, "key"); break;
-            case "undo": var undo = Identity(); undo["resultId"] = ResultId; undo["transferKey"] = TransferKey.Text; await Invoke("desktop.requests.undo", undo); break;
+                var applied = await Mutate("desktop.requests.apply", apply); TransferKey.Text = Text(applied, "key"); await LoadTransfers(); break;
+            case "undo": var undo = Identity(); undo["resultId"] = ResultId; undo["transferKey"] = TransferKey.Text; await Invoke("desktop.requests.undo", undo); await LoadTransfers(); break;
             case "continue-apply":
                 if (TransferChoice.SelectedItem is not WorkspaceChoice transfer || Text(transfer.Value, "state") != "applying") throw new IOException("이력에서 미완료 반영 작업을 선택하세요.");
-                var retryApply = Command(); retryApply["resultId"] = ResultId; retryApply["commandKey"] = transfer.Value["key"]!.DeepClone(); retryApply["paths"] = transfer.Value["paths"]!.DeepClone(); await Invoke("desktop.requests.apply", retryApply); break;
-            case "transfers": var history = Identity(); history["resultId"] = ResultId; var transfers = (await Invoke("desktop.requests.transfers", history)).AsArray(); TransferChoice.ItemsSource = transfers.Select(x => new WorkspaceChoice($"{Text(x, "key")} · {Text(x, "state")}", Copy(x!.AsObject()))).ToList(); break;
+                var retryApply = Command(); retryApply["resultId"] = ResultId; retryApply["commandKey"] = transfer.Value["key"]!.DeepClone(); retryApply["paths"] = transfer.Value["paths"]!.DeepClone(); await Invoke("desktop.requests.apply", retryApply); await LoadTransfers(); break;
+            case "transfers": await LoadTransfers(); break;
         }
     });
+    private async Task LoadTransfers()
+    {
+        var selected = TransferKey.Text;
+        var history = Identity(); history["resultId"] = ResultId;
+        var transfers = (await Invoke("desktop.requests.transfers", history)).AsArray();
+        var values = transfers.Select(x => new WorkspaceChoice($"{Text(x, "key")} · {DesktopViewModel.Status(Text(x, "state"))}", Copy(x!.AsObject()))).ToList();
+        TransferChoice.ItemsSource = values;
+        TransferChoice.SelectedItem = values.FirstOrDefault(x => Text(x.Value, "key") == selected);
+    }
     private async Task DocumentMutation(string name) { document = (JsonObject)await Mutate("desktop.requests." + name, Command()); RenderDocument(false); }
     private void RequireSavedInput() { if (document == null || !JsonNode.DeepEquals(Input(), document["input"])) throw new IOException("현재 입력을 먼저 저장하세요. 저장 후 PLAN을 작성하고 확인합니다."); }
     private JsonObject Input()
@@ -127,6 +143,14 @@ public sealed partial class ProductionWorkspace : UserControl
     {
         var values = (await Invoke("desktop.projects.list", new { })).AsArray(); loading = true;
         ProjectChoice.ItemsSource = values.Select(x => new WorkspaceChoice($"{Text(x, "name")} · {(x!["initialized"]!.GetValue<bool>() ? "준비됨" : "초기화 필요")}", Copy(x.AsObject()))).ToList(); loading = false;
+    }
+    private async Task RefreshProjectLabel()
+    {
+        var id = ProjectId;
+        await LoadProjects();
+        loading = true;
+        try { ProjectChoice.SelectedItem = (ProjectChoice.ItemsSource as IEnumerable<WorkspaceChoice>)?.FirstOrDefault(x => Text(x.Value, "projectId") == id); }
+        finally { loading = false; }
     }
     private async void ProjectSelected(object sender, SelectionChangedEventArgs e)
     {
@@ -183,17 +207,23 @@ public sealed partial class ProductionWorkspace : UserControl
         var planHash = Text(versions.LastOrDefault(), "hash");
         if (renderedResult != ResultId) { QualityConfirmed.IsChecked = ChecksConfirmed.IsChecked = false; renderedResult = ResultId; }
         if (renderedPlan != planHash) { PlanConfirmed.IsChecked = false; renderedPlan = planHash; }
-        RequestStatus.Text = $"{DesktopViewModel.Status(Text(engine, "status"))} · 저장 버전 {document["revision"]} · {token}\nPLAN 작성: {Text(document["planning"], "state")} {Text(document["planning"], "error")}";
+        RequestStatus.Text = $"{DesktopViewModel.Status(Text(engine, "status"))} · 저장 버전 {document["revision"]} · {token}\nPLAN 작성: {DesktopViewModel.Status(Text(document["planning"], "state"))} {Text(document["planning"], "error")}";
         ExecutionStatus.Text = RequestStatus.Text + "\n" + Text(engine, "error") + "\n" + Text(engine, "observationError");
         ExecutionStatus.Text += "\n" + string.Join("\n", document["journals"]!.AsArray().Where(x => Text(x, "state") is "pending" or "unknown").Select(x => $"{Text(x, "kind")} · {Text(x, "state")} · 확인 대기"));
         PlanText.Text = Text(versions.LastOrDefault(), "content"); PlanLocation.Text = Text(versions.LastOrDefault(), "path");
-        ResultText.Text = string.Join("\n\n", engine["results"]!.AsArray().Select(x => $"결과 {Text(x, "id")}\n{Text(x, "finalResponse")}\n파일: {x?["changedFiles"]}\n자동 검사: {x?["checks"]}\n실행 실패: {Text(x, "executionFailure")}\n검증 오류: {Text(x, "failure")}")) + "\n\n검토 이력\n" + document["reviews"]!.ToJsonString();
+        ResultText.Text = string.Join("\n\n────────\n\n", engine["results"]!.AsArray().Reverse().Select(FormatResult)) + "\n\n검토 이력\n" + string.Join("\n", document["reviews"]!.AsArray().Select(x => $"{Text(x, "at")} · {(x?["approved"]?.GetValue<bool>() == true ? "완료 승인" : "수정 필요")}\n{Text(x, "note")}"));
         ExportLocation.Text = string.Join("\n", document["exports"]!.AsArray().Select(x => Text(x, "root")));
         if (!fields) return;
         var input = document["input"]!; TitleInput.Text = Text(input, "title"); GoalInput.Text = Text(input, "goal"); ScopeInput.Text = Text(input, "scope"); ConstraintsInput.Text = Text(input, "constraints"); OutputPathInput.Text = Text(input, "outputPath"); Discipline.SelectedIndex = Text(input, "discipline") == "planning" ? 0 : 1; RequestMode.SelectedIndex = Text(input, "mode") == "new" ? 0 : 1; ValidationChoice.SelectedIndex = Text(input, "validationProfile") == "files" ? 0 : 1;
         ModelChoice.SelectedItem = (ModelChoice.ItemsSource as IEnumerable<WorkspaceChoice>)?.FirstOrDefault(x => Text(x.Value, "provider") == Text(input, "provider"));
         LevelChoice.SelectedItem = (LevelChoice.ItemsSource as IEnumerable<WorkspaceChoice>)?.FirstOrDefault(x => Text(x.Value, "id") == Text(input, "thinkingOptionId"));
         ParentChoice.SelectedItem = (ParentChoice.ItemsSource as IEnumerable<WorkspaceChoice>)?.FirstOrDefault(x => Text(x.Value, "token") == Text(input, "parentToken"));
+    }
+    private static string FormatResult(JsonNode? result)
+    {
+        var checks = result?["checks"]?.AsArray().Select(x => $"{Text(x, "label")} · {DesktopViewModel.Status(Text(x, "status"))}\n명령: {Text(x, "command")}\n종료 코드: {Text(x, "exitCode")}\n{Text(x, "output")}") ?? [];
+        var files = result?["changedFiles"]?.AsArray().Select(x => x?.ToString()) ?? [];
+        return $"결과 {Text(result, "id")}\n{Text(result, "finalResponse")}\n\n변경 파일\n{string.Join("\n", files)}\n\n자동 검사\n{string.Join("\n", checks)}\n실행 실패: {Text(result, "executionFailure")}\n검증 오류: {Text(result, "failure")}";
     }
     private void ModelSelected(object sender, SelectionChangedEventArgs e)
     {
@@ -202,7 +232,8 @@ public sealed partial class ProductionWorkspace : UserControl
     }
     private void DiffSelected(object sender, SelectionChangedEventArgs e)
     {
-        if (DiffFiles.SelectedItem is WorkspaceChoice file) DiffText.Text = $"현재 소스\n{Text(file.Value, "beforeText")}\n\n결과물\n{Text(file.Value, "afterText")}";
+        var file = e.AddedItems.OfType<WorkspaceChoice>().LastOrDefault() ?? DiffFiles.SelectedItem as WorkspaceChoice;
+        DiffText.Text = file == null ? "" : $"파일: {Text(file.Value, "path")}\n\n현재 소스\n{Text(file.Value, "beforeText")}\n\n결과물\n{Text(file.Value, "afterText")}";
     }
     private void TransferSelected(object sender, SelectionChangedEventArgs e) { if (TransferChoice.SelectedItem is WorkspaceChoice item) TransferKey.Text = Text(item.Value, "key"); }
     private void PermissionSelected(object sender, SelectionChangedEventArgs e) { if (PermissionChoice.SelectedItem is not WorkspaceChoice item) return; PermissionDetails.Text = Text(item.Value, "details"); PermissionAction.ItemsSource = item.Value["actions"]!.AsArray().Select(x => new WorkspaceChoice(Text(x, "label"), Copy(x!.AsObject()))).ToList(); PermissionConfirmed.IsChecked = false; }
