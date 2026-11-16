@@ -27,6 +27,7 @@ public partial class MainWindow : Window
     {
         InitializeComponent(); Root.DataContext = model;
         WorkspacePanel.ConnectionFailed += ReportFailure;
+        ConversationPanel.ConnectionFailed += ReportFailure;
         AppWindow.Resize(new Windows.Graphics.SizeInt32(1280, 900));
         model.ProjectName = "연결을 준비하세요";
         model.ProjectPath = "프로젝트를 아직 읽지 않았습니다.";
@@ -96,6 +97,7 @@ public partial class MainWindow : Window
             model.Connection = client.ConnectionState;
             model.Diagnostics = $"프로젝트 작업 연결\n데이터: {info.GetProperty("dataHome")}\n실행부: {info.GetProperty("paseoHome")}\n주소: {info.GetProperty("endpoint")}\n서버: {info.GetProperty("serverVersion")}";
             WorkspacePanel.Connect((method, input) => client.CallAsync(method, input, closing.Token));
+            ConversationPanel.Connect((method, input) => client.CallAsync(method, input, closing.Token));
             WorkspacePanel.IsEnabled = !info.GetProperty("restoring").GetBoolean();
             await RefreshAsync();
         }
@@ -182,7 +184,8 @@ public partial class MainWindow : Window
         if (ProjectPanel == null) return;
         var tag = args.IsSettingsSelected ? "settings" : (args.SelectedItem as NavigationViewItem)?.Tag?.ToString();
         WorkspacePanel.Visibility = tag == "workspace" ? Visibility.Visible : Visibility.Collapsed;
-        OtherPages.Visibility = tag == "workspace" ? Visibility.Collapsed : Visibility.Visible;
+        ConversationPanel.Visibility = tag == "conversation" ? Visibility.Visible : Visibility.Collapsed;
+        OtherPages.Visibility = tag is "workspace" or "conversation" ? Visibility.Collapsed : Visibility.Visible;
         ProjectPanel.Visibility = tag == "project" ? Visibility.Visible : Visibility.Collapsed;
         HistoryPanel.Visibility = tag == "history" ? Visibility.Visible : Visibility.Collapsed;
         ConnectionPanel.Visibility = tag == "connection" ? Visibility.Visible : Visibility.Collapsed;

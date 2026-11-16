@@ -1,10 +1,11 @@
 <Window x:Class="Orchiva.Desktop.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:Orchiva.Desktop" Title="Orchiva">
  <Grid x:Name="Root" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
   <NavigationView x:Name="Navigation" PaneDisplayMode="Auto" OpenPaneLength="200" IsBackButtonVisible="Collapsed" IsSettingsVisible="True" SelectionChanged="Navigate" AlwaysShowHeader="False">
-   <NavigationView.MenuItems><NavigationViewItem Content="작업실" Tag="workspace" Icon="Edit" IsSelected="True"/><NavigationViewItem Content="기존 MVP 프로젝트" Tag="project" Icon="Folder"/><NavigationViewItem Content="기존 v2 이력" Tag="history" Icon="Clock"/><NavigationViewItem Content="연결 상태" Tag="connection" Icon="Link"/></NavigationView.MenuItems>
+   <NavigationView.MenuItems><NavigationViewItem Content="작업실" Tag="workspace" Icon="Edit" IsSelected="True"/><NavigationViewItem Content="질문 · 상담" Tag="conversation" Icon="Message"/><NavigationViewItem Content="기존 MVP 프로젝트" Tag="project" Icon="Folder"/><NavigationViewItem Content="기존 v2 이력" Tag="history" Icon="Clock"/><NavigationViewItem Content="연결 상태" Tag="connection" Icon="Link"/></NavigationView.MenuItems>
    <Grid RowSpacing="12" Padding="16"><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
     <InfoBar x:Name="StatusBar" IsOpen="True" IsClosable="False" Severity="Informational" Title="연결 대기" Message="지정한 실행부에 연결한 뒤 작업실에서 프로젝트를 선택하세요."/>
     <local:ProductionWorkspace x:Name="WorkspacePanel" Grid.Row="1"/>
+    <local:ConversationWorkspace x:Name="ConversationPanel" Grid.Row="1" Visibility="Collapsed"/>
     <ScrollViewer x:Name="OtherPages" Grid.Row="1" Visibility="Collapsed"><StackPanel Spacing="20">
     <StackPanel x:Name="ProjectPanel" Spacing="16" Visibility="Collapsed"><TextBlock Text="프로젝트" Style="{StaticResource PageHeading}"/><TextBlock Text="연결한 실행부의 실제 프로젝트 정보를 읽습니다." Style="{StaticResource BodyText}"/>
      <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1" CornerRadius="8" Padding="20"><StackPanel Spacing="10"><TextBlock Text="{Binding ProjectName}" Style="{StaticResource SectionHeading}"/><TextBlock Text="{Binding ProjectPath}" Style="{StaticResource BodyText}"/><TextBlock Text="{Binding ProjectInfo}" Style="{StaticResource BodyText}"/></StackPanel></Border>

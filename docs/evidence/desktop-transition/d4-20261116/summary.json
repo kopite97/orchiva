@@ -1,0 +1,659 @@
+{
+  "date": "2026-11-16",
+  "baseline": "f080480",
+  "stage": "D4",
+  "status": "completed",
+  "planStatus": "active",
+  "notStarted": [
+    "D5",
+    "D6"
+  ],
+  "committed": false,
+  "pushed": false,
+  "policy": {
+    "access": [
+      "read-only",
+      "workspace-write",
+      "danger-full-access"
+    ],
+    "approval": [
+      "on-request",
+      "never"
+    ],
+    "default": {
+      "access": "read-only",
+      "approval": "on-request"
+    },
+    "unsupported": {
+      "approval": "untrusted",
+      "reason": "Codex 0.166.0 rejects this approval policy despite Paseo 0.15.4 accepting the option enum",
+      "createAndSendRejectedBeforeEffect": true
+    }
+  },
+  "environment": {
+    "paseo": "0.15.4",
+    "codex": "0.166.0",
+    "dotnetSdk": "10.0.401",
+    "windowsAppSdk": "2.6.5",
+    "model": "codex/gpt-6.1-sol"
+  },
+  "automated": {
+    "typecheck": "passed",
+    "node": {
+      "passed": 116,
+      "failed": 0
+    },
+    "dotnet": {
+      "passed": 9,
+      "failed": 0,
+      "skipped": 5,
+      "skipReason": "D1 fixture not configured; actual D4 bridge test passed"
+    },
+    "winuiBuild": {
+      "passed": true,
+      "warnings": 0,
+      "errors": 0
+    }
+  },
+  "actual": {
+    "verifiedAt": "2026-11-16T14:17:17.292Z",
+    "agentCount": 6,
+    "localTurns": 11,
+    "publicUserMessages": 10,
+    "records": [
+      {
+        "id": "f3cca90b-d831-4eb4-a819-9b612f6a11a7",
+        "messages": 4,
+        "restoredWithoutId": [
+          "85953c68-6ec5-471c-9ecf-b0ea82b7ac85",
+          "fbf6a300-d9c6-4c23-b953-44cfe6b4fb5c",
+          "f1473a7b-364b-4f25-bb1b-e2b79a4408b3",
+          "51986bcc-1f55-47ee-9a73-c89bdc35216d"
+        ],
+        "providerConfigurationRejected": false,
+        "restoredTranscriptUnavailable": false
+      },
+      {
+        "id": "e0b826db-36b4-4351-b28e-b18c69cdc3f0",
+        "messages": 1,
+        "restoredWithoutId": [
+          "b888de0f-2c8c-4170-ade5-b09c5158bddb"
+        ],
+        "providerConfigurationRejected": false,
+        "restoredTranscriptUnavailable": false
+      },
+      {
+        "id": "02880756-3977-420d-90ee-104fea3f8db9",
+        "messages": 0,
+        "restoredWithoutId": [],
+        "providerConfigurationRejected": true,
+        "restoredTranscriptUnavailable": true
+      },
+      {
+        "id": "63fd317e-3892-44de-bc22-d18836bd0028",
+        "messages": 1,
+        "restoredWithoutId": [
+          "c5e1ee06-e027-4262-9515-89ff501f58ca"
+        ],
+        "providerConfigurationRejected": false,
+        "restoredTranscriptUnavailable": false
+      },
+      {
+        "id": "ab613d76-6efb-4d76-8dfb-4b48b629f75e",
+        "messages": 1,
+        "restoredWithoutId": [
+          "4ba5a13f-885c-4c90-b077-02e7b49bfd53"
+        ],
+        "providerConfigurationRejected": false,
+        "restoredTranscriptUnavailable": false
+      },
+      {
+        "id": "a31a4ed6-e844-4ebe-871e-4404dbafc928",
+        "messages": 3,
+        "restoredWithoutId": [
+          "e22f673c-7efd-46fb-bf33-870b0249cb6d",
+          "54849478-bb0c-43e7-b411-7e465913fbdb",
+          "1a97f731-3a55-41d7-9a2d-27106394c868"
+        ],
+        "providerConfigurationRejected": false,
+        "restoredTranscriptUnavailable": false
+      }
+    ],
+    "permissionSubmission": "public RPC; request detail also viewed in GUI",
+    "stopSubmission": "GUI button; TURN_CANCELLED and partial response preserved",
+    "sameAgentAfterDaemonRestart": true,
+    "unsupportedPolicyPreflight": true
+  },
+  "gui": {
+    "passed": [
+      "empty state",
+      "first message",
+      "same-conversation followup context",
+      "stop and partial response",
+      "actual permission detail",
+      "policy fixed per conversation",
+      "connection error preserves response",
+      "daemon restart and manual reconnect",
+      "wrapped layout and scroll access"
+    ],
+    "sizes": [
+      {
+        "width": 1266,
+        "height": 893
+      },
+      {
+        "width": 880,
+        "height": 700
+      }
+    ],
+    "dpi": "100%; D4-specific 125/150 not rerun"
+  },
+  "preservedFailure": {
+    "run": "d4-20261116-001",
+    "meaning": "pre-fix restart send has no receipt and remains unknown; never resent or relabeled successful"
+  },
+  "cleanup": {
+    "appWindowsRemaining": 0,
+    "ownedAppBridgeDaemonProcessesRemaining": 0,
+    "ownedListeningPortsRemaining": 0,
+    "verifiedBy": "sky window inventory and Win32_Process/Get-NetTCPConnection after app and owned daemon exit",
+    "rawEvidencePreserved": true
+  },
+  "runs": [
+    {
+      "id": "d4-20261116-001",
+      "records": [
+        {
+          "id": "a22aa6e3-4c64-404b-88db-778745c60e0b",
+          "agentId": "3fa8ac14-2fa0-4b24-8d93-9f1fdf8c3fa7",
+          "revision": 8,
+          "sha256": "30efae87849b1f2e026aa51c38660fc6216415f9ba1e65677394af0e84f70e69",
+          "policy": {
+            "access": "read-only",
+            "approval": "never"
+          },
+          "sessionState": "ready",
+          "observationError": null,
+          "turns": [
+            {
+              "id": "b8a86b16-aa06-4da7-be47-2a61ad49e0c6",
+              "messageId": "f72cb599-f251-400b-8d6b-99b159fa4356",
+              "state": "answered",
+              "failure": null,
+              "inputHash": "05b31c4c40a93c1d426debd677b67074583d195fdcc1834c94c7b68af11eacda",
+              "responseSha256": "e7acad41497dd798a55aabb8370640c1b3f157d7ff5ccf76e87e2b6fd308846d",
+              "receipt": {
+                "seq": 1,
+                "epoch": "5484eac6-8eee-4e75-8622-e96aecb8a044"
+              }
+            }
+          ],
+          "journals": []
+        },
+        {
+          "id": "a4b07dd7-9b54-468a-a7a2-802ea7c5b133",
+          "agentId": "dd60e9ba-4a69-4c01-be68-f9b801cc4f82",
+          "revision": 8,
+          "sha256": "beee506dbaac2042efe77bdae0aa9f1d2a1e3f5d830fac41468f667ed3b69a90",
+          "policy": {
+            "access": "workspace-write",
+            "approval": "never"
+          },
+          "sessionState": "ready",
+          "observationError": null,
+          "turns": [
+            {
+              "id": "d98c9e25-08f0-4934-8063-d0aef0c504a4",
+              "messageId": "e9b5d021-359d-421b-a818-d0a664916966",
+              "state": "answered",
+              "failure": null,
+              "inputHash": "63b88245fa9b27a1898429ab3e75468b33e1b56f3f9be7877714bfcd1cb7680e",
+              "responseSha256": "9b9208293e37e62d29a16af8268a30e4c556379372b62adc72d001e2a705f952",
+              "receipt": {
+                "seq": 1,
+                "epoch": "0542ebb9-765e-49b9-8bea-feb52125a539"
+              }
+            }
+          ],
+          "journals": []
+        },
+        {
+          "id": "a6b5e2ee-16e6-4d15-9632-d5e830d4a9bb",
+          "agentId": "b7476289-746f-4baf-bd8f-d54936dc6f8f",
+          "revision": 13,
+          "sha256": "0d29dffe211380acbe95adfef8d290c5e20327d3fc59dffaaa41b103911e32a5",
+          "policy": {
+            "access": "read-only",
+            "approval": "on-request"
+          },
+          "sessionState": "ready",
+          "observationError": null,
+          "turns": [
+            {
+              "id": "182a3c2e-6b9c-4f87-ac3a-f658587af7eb",
+              "messageId": "503b71a6-f659-4585-b21b-fdc145389b4a",
+              "state": "answered",
+              "failure": null,
+              "inputHash": "ae71bf7026467e341979d4baf412f11187f62e77bba4e19d203c923773d65b14",
+              "responseSha256": "083b2a902b093a135d261457e53632fe1cec90c33284dade373f25f6e7ed1cff",
+              "receipt": {
+                "seq": 1,
+                "epoch": "8ea58810-de43-404d-9010-11d51409acfa"
+              }
+            },
+            {
+              "id": "27f4523a-7d3b-4282-b2bf-bd6450832635",
+              "messageId": "e8aac7d2-b682-44e8-8c27-f70723ed96f9",
+              "state": "answered",
+              "failure": null,
+              "inputHash": "4a32a97a441b23be6dcb4e93f4ce5bcc0a45acd5c8f87747f6178e746cbd6cc9",
+              "responseSha256": "e4bb21b38f275b127b5230e8ea4a66ea32fe0f63f2a9baacc81e1b71da981c53",
+              "receipt": {
+                "seq": 4,
+                "epoch": "8ea58810-de43-404d-9010-11d51409acfa"
+              }
+            }
+          ],
+          "journals": []
+        },
+        {
+          "id": "ebad7097-d240-44f2-abf1-ad78c304878b",
+          "agentId": "05b07df5-3583-4e4a-bd65-85b2340c0b95",
+          "revision": 15,
+          "sha256": "cd509f8184c919ceb851071ecb79e7d4ac13fc00cef9c9656f494ba3000187b3",
+          "policy": {
+            "access": "read-only",
+            "approval": "on-request"
+          },
+          "sessionState": "ready",
+          "observationError": null,
+          "turns": [
+            {
+              "id": "5b1b0803-9026-4b7f-8232-00a62109fe71",
+              "messageId": "07a914bb-62ce-42ea-b76f-3b4638a366ac",
+              "state": "answered",
+              "failure": null,
+              "inputHash": "b9b01c7f16edd9103834bed8dd0326a8ed17ed741f8ad1644b3d85cb2d42c771",
+              "responseSha256": "35a7ae2bc4581eec16fd77f2c7abbc40f663d10f2d63fa2299167897ebe058d6",
+              "receipt": {
+                "seq": 1,
+                "epoch": "ab8ce270-a9e7-46ec-9afe-870b77c06dba"
+              }
+            },
+            {
+              "id": "ab439faa-0156-4cc0-9b1c-d4538895cd30",
+              "messageId": "9eb8c324-6bea-48ae-a2a8-19a928b2d438",
+              "state": "unknown",
+              "failure": null,
+              "inputHash": "f2f551b6dc5f1ed75a626d8db9c256e45ec1c1a62bf58a72519f80a4230077bf",
+              "responseSha256": null,
+              "receipt": null
+            }
+          ],
+          "journals": [
+            {
+              "kind": "permission",
+              "behavior": "deny",
+              "state": "observed"
+            }
+          ]
+        }
+      ],
+      "files": [
+        {
+          "path": "상담 시험/sample.txt",
+          "exists": true,
+          "bytes": 20,
+          "sha256": "c5f640deb46bf958b27bc52faada3e612a9505915303758dda20970ca0133554"
+        },
+        {
+          "path": "상담 시험/workspace-probe.txt",
+          "exists": true,
+          "bytes": 19,
+          "sha256": "3aa185c71996bf3e7d274db8d941461a466881fbbfde4ddd5c930792f9b03f2a"
+        },
+        {
+          "path": "상담 시험/permission-probe.txt",
+          "exists": false
+        },
+        {
+          "path": "상담 시험/readonly-probe.txt",
+          "exists": false
+        },
+        {
+          "path": "workspace-outside-probe.txt",
+          "exists": false
+        },
+        {
+          "path": "full-access-probe.txt",
+          "exists": false
+        }
+      ]
+    },
+    {
+      "id": "d4-20261116-002",
+      "records": [
+        {
+          "id": "02880756-3977-420d-90ee-104fea3f8db9",
+          "agentId": "6253ccbe-314e-421c-b7b2-d9c908edeb3c",
+          "revision": 7,
+          "sha256": "3a228b467e6f5c980caa43c38b00e1c892fd2b352cc4f1ba0d1689e8495ea93a",
+          "policy": {
+            "access": "workspace-write",
+            "approval": "untrusted"
+          },
+          "sessionState": "ready",
+          "observationError": null,
+          "turns": [
+            {
+              "id": "8c42e28e-66f4-4dd9-b701-974d72a6c521",
+              "messageId": "b0c4a5b9-10d5-43c6-a65a-432e2795ca61",
+              "state": "failed",
+              "failure": "AGENT_EXECUTION_FAILED",
+              "inputHash": "a97042daae173e885c000ca1075b23026f88e15fc45778d3569a330235675daf",
+              "responseSha256": "d04f96b0c507b69146c0a8d55135a99119b08beff615ee068f8024f180909938",
+              "receipt": {
+                "seq": 1,
+                "epoch": "bdf066ef-627c-49fd-9571-24e4c2bdeb93"
+              }
+            }
+          ],
+          "journals": []
+        },
+        {
+          "id": "63fd317e-3892-44de-bc22-d18836bd0028",
+          "agentId": "7c2e23af-5742-4f5f-8d15-6e57ccc29d10",
+          "revision": 8,
+          "sha256": "2c4907250b5bdc55fc0d4b5b47fa8bb8c563dbb4593680f56368929ec1cda92d",
+          "policy": {
+            "access": "workspace-write",
+            "approval": "never"
+          },
+          "sessionState": "ready",
+          "observationError": null,
+          "turns": [
+            {
+              "id": "c5e1ee06-e027-4262-9515-89ff501f58ca",
+              "messageId": "16816663-9a2a-41e8-a61b-c6abe88d979f",
+              "state": "answered",
+              "failure": null,
+              "inputHash": "edafa23ea77e18c1979558815f7da80388cf96a3df6219c0fa299b5245ce7ca2",
+              "responseSha256": "92f63ce382f7e8ebded11ddb363a83df073437c81bb3f1493df0352b9a5d2ab5",
+              "receipt": {
+                "seq": 1,
+                "epoch": "12c19ab2-95ea-4b66-96be-b2f19f76dc03"
+              }
+            }
+          ],
+          "journals": []
+        },
+        {
+          "id": "a31a4ed6-e844-4ebe-871e-4404dbafc928",
+          "agentId": "ff3277ec-4cff-4989-a04f-1948bf6a9823",
+          "revision": 20,
+          "sha256": "2a73a414cee59ef567ea1b3b9853460014f04644ee96733d25d866ef5ad4886c",
+          "policy": {
+            "access": "read-only",
+            "approval": "on-request"
+          },
+          "sessionState": "ready",
+          "observationError": null,
+          "turns": [
+            {
+              "id": "e22f673c-7efd-46fb-bf33-870b0249cb6d",
+              "messageId": "c31298c5-232f-4fe6-979c-365dfc38eeac",
+              "state": "answered",
+              "failure": null,
+              "inputHash": "f83de30af5c967ea75d9c874a4d24e34c7e7472b8b64f3013e5190f2f869504f",
+              "responseSha256": "7890d0d9eca3940747301c44b1319f8dca9af13e1a79f264f614f2a70f8ed69b",
+              "receipt": {
+                "seq": 1,
+                "epoch": "16dee3e5-2f53-4983-a276-1764791a9658"
+              }
+            },
+            {
+              "id": "54849478-bb0c-43e7-b411-7e465913fbdb",
+              "messageId": "6fc791e8-f71a-46a7-9c64-bbb8b0b35b30",
+              "state": "answered",
+              "failure": null,
+              "inputHash": "b8c916e765e7b19a2c76d440ca249a82709b036ec21af784d377a7fb777b5e87",
+              "responseSha256": "861119b337623d810d4056c8227345af35b78c6f4c5bc66428761523836f5658",
+              "receipt": {
+                "seq": 4,
+                "epoch": "16dee3e5-2f53-4983-a276-1764791a9658"
+              }
+            },
+            {
+              "id": "1a97f731-3a55-41d7-9a2d-27106394c868",
+              "messageId": "e7040cbc-2940-4705-95af-b0f6575c0992",
+              "state": "failed",
+              "failure": "TURN_CANCELLED",
+              "inputHash": "49594c3e574bed7e330811e8ae6cffb5832d62d78c8cd5a965e2e4b194f91ffd",
+              "responseSha256": "4f3c2130a88ad7150cb706779ef913e4e3c2307869e50a01cf022cad0a59a88b",
+              "receipt": {
+                "seq": 8,
+                "epoch": "16dee3e5-2f53-4983-a276-1764791a9658"
+              }
+            }
+          ],
+          "journals": [
+            {
+              "kind": "stop",
+              "behavior": null,
+              "state": "observed"
+            }
+          ]
+        },
+        {
+          "id": "ab613d76-6efb-4d76-8dfb-4b48b629f75e",
+          "agentId": "34259e0d-8033-4a04-8c43-eca045a69019",
+          "revision": 8,
+          "sha256": "ed43682fa702bd8983e9e5c33ef014ceb7b05b4ab4aaff7e6641d1c6a7859c38",
+          "policy": {
+            "access": "read-only",
+            "approval": "never"
+          },
+          "sessionState": "ready",
+          "observationError": null,
+          "turns": [
+            {
+              "id": "4ba5a13f-885c-4c90-b077-02e7b49bfd53",
+              "messageId": "41857903-175f-4b29-8f02-4db00b1e9230",
+              "state": "answered",
+              "failure": null,
+              "inputHash": "aafeccea0ab5527fa241c8e679147d4d397d0b405f8d2a773f45deca5635df7d",
+              "responseSha256": "193c46677c70295d2366c368ea43755f2d54e3ab1a50207c893666860ff0c694",
+              "receipt": {
+                "seq": 1,
+                "epoch": "7d3e7549-377a-4eb6-bc29-d13662b79bd5"
+              }
+            }
+          ],
+          "journals": []
+        },
+        {
+          "id": "e0b826db-36b4-4351-b28e-b18c69cdc3f0",
+          "agentId": "c5ac5ec5-0e56-4c2c-84ae-d004dc202724",
+          "revision": 8,
+          "sha256": "f22cd2a19e8e2fc04784a0bedaea6ada21a61bf9c33159a806231ebc6bedd985",
+          "policy": {
+            "access": "danger-full-access",
+            "approval": "never"
+          },
+          "sessionState": "ready",
+          "observationError": null,
+          "turns": [
+            {
+              "id": "b888de0f-2c8c-4170-ade5-b09c5158bddb",
+              "messageId": "8fd53fe5-bbb6-4245-8abb-29e8ba5e02a9",
+              "state": "answered",
+              "failure": null,
+              "inputHash": "45d9dadeb01691ec458c30d3372da680927869aba273e19b5fdb95739e3d2ae8",
+              "responseSha256": "f7286a1223df7cbe2ae5f9bb3a1cc7b70d1a3d84506f31653c9be69f2f59c3f4",
+              "receipt": {
+                "seq": 1,
+                "epoch": "76c0cdde-3999-4645-8985-10b7d3d477d8"
+              }
+            }
+          ],
+          "journals": []
+        },
+        {
+          "id": "f3cca90b-d831-4eb4-a819-9b612f6a11a7",
+          "agentId": "09196969-c2cb-47a8-8f3b-d6ee09e72bc0",
+          "revision": 29,
+          "sha256": "fed142cab21b41bb2ac4038ed4b7f04fd926856bf5064f1d93a12b2b692ec07a",
+          "policy": {
+            "access": "read-only",
+            "approval": "on-request"
+          },
+          "sessionState": "ready",
+          "observationError": null,
+          "turns": [
+            {
+              "id": "85953c68-6ec5-471c-9ecf-b0ea82b7ac85",
+              "messageId": "541c0793-6000-475c-a7b9-b19c0ec7b0a9",
+              "state": "answered",
+              "failure": null,
+              "inputHash": "fbecc9c5080d9a6eede13c6e7d4206a279c53d6b908ef2a83375681711157c9d",
+              "responseSha256": "083b2a902b093a135d261457e53632fe1cec90c33284dade373f25f6e7ed1cff",
+              "receipt": {
+                "seq": 1,
+                "epoch": "fcc168a8-2e95-4f78-9887-b0231c3acd63"
+              }
+            },
+            {
+              "id": "fbf6a300-d9c6-4c23-b953-44cfe6b4fb5c",
+              "messageId": "7cc15db4-48ad-483e-856e-2128d7e337ae",
+              "state": "answered",
+              "failure": null,
+              "inputHash": "50ed7c50db2155bd1d0e9c86c69fa8be341124bf9729dd4e9c5ceaea87b73474",
+              "responseSha256": "f899a603a7208a507a4cab2beb4e3d29a9b853dc5d2008bbc609b4e87de317b2",
+              "receipt": {
+                "seq": 3,
+                "epoch": "0a9fdb8b-eb9c-44c0-a969-7e9a09f8ab03"
+              }
+            },
+            {
+              "id": "f1473a7b-364b-4f25-bb1b-e2b79a4408b3",
+              "messageId": "6babd658-2587-4726-8a34-e430a00f5fd8",
+              "state": "answered",
+              "failure": null,
+              "inputHash": "49c60db96c6a2c00a61e66efd92bcf89e26a68fd6009de1884523d70d6b25d5d",
+              "responseSha256": "6fbc244cad796ea285b6f576fbad326defe22eb09117cdd7303c0de30fc3e956",
+              "receipt": {
+                "seq": 17,
+                "epoch": "0a9fdb8b-eb9c-44c0-a969-7e9a09f8ab03"
+              }
+            },
+            {
+              "id": "51986bcc-1f55-47ee-9a73-c89bdc35216d",
+              "messageId": "0fdbe097-b009-4065-9766-d44ebcb96a2a",
+              "state": "answered",
+              "failure": null,
+              "inputHash": "4e10285f3e3b1e70fec6dca1f27ce14fe1373840db0202ac0fa56114d36eadc5",
+              "responseSha256": "821d1df5ca60e84e280f6240cd41f5b31d683171f0f8118bf240daec71eb2515",
+              "receipt": {
+                "seq": 40,
+                "epoch": "0a9fdb8b-eb9c-44c0-a969-7e9a09f8ab03"
+              }
+            }
+          ],
+          "journals": [
+            {
+              "kind": "permission",
+              "behavior": "deny",
+              "state": "observed"
+            },
+            {
+              "kind": "permission",
+              "behavior": "allow",
+              "state": "observed"
+            }
+          ]
+        }
+      ],
+      "files": [
+        {
+          "path": "상담 시험/sample.txt",
+          "exists": true,
+          "bytes": 20,
+          "sha256": "c5f640deb46bf958b27bc52faada3e612a9505915303758dda20970ca0133554"
+        },
+        {
+          "path": "상담 시험/workspace-probe.txt",
+          "exists": true,
+          "bytes": 19,
+          "sha256": "3aa185c71996bf3e7d274db8d941461a466881fbbfde4ddd5c930792f9b03f2a"
+        },
+        {
+          "path": "상담 시험/permission-probe.txt",
+          "exists": true,
+          "bytes": 12,
+          "sha256": "5191700e9b869f23d8668146d691a178a69ac487083cd258acada112edead9ba"
+        },
+        {
+          "path": "상담 시험/readonly-probe.txt",
+          "exists": false
+        },
+        {
+          "path": "workspace-outside-probe.txt",
+          "exists": false
+        },
+        {
+          "path": "full-access-probe.txt",
+          "exists": true,
+          "bytes": 14,
+          "sha256": "9ca0eda46c0a3855414a736ec2a58f13693ef68e601572221b62b699cf1fcc19"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "01-disconnected.png",
+      "bytes": 143224,
+      "sha256": "d24ec74f3b557654ae57c77e250a8bde06fd2894fa08b6ef5bb4aff94ceb7dcf"
+    },
+    {
+      "path": "02-permission.png",
+      "bytes": 116594,
+      "sha256": "61d344bbb5116fcbc3f6302563c502d7995343c91a1cd6ea66d52c0df1b8a6e8"
+    },
+    {
+      "path": "02-permission.txt",
+      "bytes": 7050,
+      "sha256": "6562221c8c09ee212038c5d4fc200ba135c91ea87d76595551f7914f405bc28b"
+    },
+    {
+      "path": "03-first-answer.jpg",
+      "bytes": 94314,
+      "sha256": "c45d8fcbf2445de487dde85e5f86549138b6be1d202db934d978336a8e9d2bae"
+    },
+    {
+      "path": "04-followup.jpg",
+      "bytes": 87107,
+      "sha256": "bf57ed209b963404c7f97e864035e43f14677c8146bfbd8e213507ccef61a3cb"
+    },
+    {
+      "path": "05-stopped.jpg",
+      "bytes": 116381,
+      "sha256": "c743f6b947284b2f4c04425925e8839fa09b28674207025c98811f38a3e991fa"
+    },
+    {
+      "path": "06-compact-disconnected.jpg",
+      "bytes": 76973,
+      "sha256": "c845ef9fff29124d74cb8b5f3f747e27d1cb24d144d7b8740521f5899189cb0a"
+    },
+    {
+      "path": "07-compact-reconnected.jpg",
+      "bytes": 64843,
+      "sha256": "3ca56856ffb400cbffc5db1cd70d281404bead50415188d8149505e73827121d"
+    },
+    {
+      "path": "07-compact-reconnected.txt",
+      "bytes": 6898,
+      "sha256": "2659fb3f88c595d1281b1676714a3b108961bb0558f08ab94b0dcc99e9ac18db"
+    }
+  ]
+}

@@ -28,6 +28,7 @@ export class ProductionService {
   private running?: Promise<void>;
   private stopped = false;
   restoring = true;
+  externalSlotCheck: () => Promise<void> = async () => {};
   constructor(readonly projects: Projects, private legacy: RequestStore, private api: () => Promise<PaseoApi>, private generator: PlanGenerator = new CodexPlanGenerator(), private cancel?: (id: string) => Promise<void>) {}
   async store(id: string) {
     const p = await this.projects.project(id);
@@ -38,6 +39,7 @@ export class ProductionService {
   async required(id: string, token: string) { const doc = await (await this.store(id)).envelope(token); if (!doc) throw new Error("NOT_FOUND"); return doc; }
   async list(id: string) { const all = await (await this.store(id)).all(); return { issues: all.issues, records: all.records.map(x => ({ token: x.token, input: { title: x.input.title }, engine: { status: x.engine.status, result: x.engine.result ? { id: x.engine.result.id } : null }, legacy: !!x.legacy })) }; }
   async assertSlot(except?: { projectId: string; token: string }, allowLegacyToken?: string) {
+    await this.externalSlotCheck();
     const legacy = await this.legacy.diagnostics();
     if (legacy.issues.length || legacy.activeTokens.some(x => x !== allowLegacyToken)) throw new Error("LEGACY_EXECUTION_BUSY_OR_INVALID");
     for (const view of await this.projects.list()) {

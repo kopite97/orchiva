@@ -2,13 +2,13 @@
 
 작성일: 2026-11-13 · Asia/Seoul
 
-상태: 2026-11-16 [전환 계획](../plans/desktop-transition.md) 승인 후 D1~D3 구현·비GUI 검증과 GUI G01~G11 수용을 완료했다. 최신 [GUI 결과](../decisions/desktop-d1-d3-gui-20261116.md)는 실제·합성 시험과 사용자 조작/시각 확인을 구분한다. D4~D6는 미착수이며 전체 PLAN은 `active`다. 초기 [D1 결과](../decisions/desktop-d1-foundation.md), [이전 화면 검증](../decisions/desktop-d1-gui-verification.md), [실행부 보완](../decisions/desktop-d1-runtime-completion.md), [D2·D3 비GUI 기록](../decisions/desktop-d2-d3-completion.md)은 당시의 이력으로 보존한다.
+상태: 2026-11-16 [전환 계획](../plans/desktop-transition.md) 승인 후 D1~D3 구현·비GUI·GUI G01~G11과 [D4 질문·상담 구현·검증](../decisions/desktop-d4-conversation.md)을 완료했다. [D1~D3 GUI 결과](../decisions/desktop-d1-d3-gui-20261116.md)는 실제·합성 시험과 사용자 조작/시각 확인을 구분한다. D5~D6는 미착수이며 전체 PLAN은 `active`다. 초기 [D1 결과](../decisions/desktop-d1-foundation.md), [이전 화면 검증](../decisions/desktop-d1-gui-verification.md), [실행부 보완](../decisions/desktop-d1-runtime-completion.md), [D2·D3 비GUI 기록](../decisions/desktop-d2-d3-completion.md)은 당시의 이력으로 보존한다.
 
 후속 점검은 [현재 PC 준비 기록](../decisions/desktop-readiness-20261116.md)을 따른다. 2026-11-16 초기 보류 이후 사용자는 WinUI 3 + .NET 10, 첫 구현부터 디자인, B안의 앱 내 선택 적용을 확정했다. 프로젝트마다 docs/ 폴더를 필수로 두고 agents/·plans/·decisions/에서 실제 지침과 PLAN·결정/작업 이력을 관리한다. 아래 합의 방향과 기존 인계 이력은 유지하며, 새 설계의 추천안을 확정 사항으로 취급하지 않는다.
 
 Orchiva의 다음 방향은 Windows .NET 앱에서 사용자의 게임 프로젝트를 선택하고, 분야와 요청 방식에 맞게 PLAN 기반 작업을 수행하는 것이다. 1차 전환에서는 기존 Orchiva 실행 로직과 Paseo를 연결한다. 이 문서는 다른 PC의 개발자나 에이전트가 대화 전체를 다시 읽지 않고 현재 소스와 합의한 방향을 이어받기 위한 기준이다. 문서 작성·GitHub 저장 요청은 데스크톱 구현 착수 지시와 구분한다.
 
-## 현재 구현 기준
+## 초기 인계 당시 구현 기준
 
 - 소스 원격: [kopite97/orchiva](https://github.com/kopite97/orchiva). 기준 브랜치는 main이다.
 - 이번 문서 작업 전의 구현 기준: [7950654 — M6 구현·검증 완료](https://github.com/kopite97/orchiva/commit/7950654dc2e70909d86b8edc4d10403bce9c05d4).
@@ -175,6 +175,14 @@ npm run verify 및 verify:lifecycle은 기존 PC의 PoC 요청·Worktree·daemon
 - [현재 개발 절차](../agents/workflow.md)와 [프로젝트 규칙](../agents/repository-guidelines.md)
 - [PoC 결과](../decisions/poc-results.md), [현재 MVP 설계](mvp-design.md), [M6 수용 결과](../decisions/m6-acceptance.md)
 - 기술 후보 검토 자료: [WinUI 3](https://learn.microsoft.com/en-us/windows/apps/winui/winui3/), [.NET 지원 정책](https://dotnet.microsoft.com/en-us/platform/support/policy), [Codex App Server](https://learn.chatgpt.com/docs/app-server)
+
+## 2026-11-16 D4 인계
+
+`f080480` 이후 로컬 변경으로 질문·상담을 구현하고 검증했다. 사용자가 도구 전체 차단을 접근 권한·승인 정책 선택으로 바꾸는 방향을 승인했다. 자유 입력과 동일 Agent 후속 메시지, 고정 모델/지침/정책, 원자적 대화 저장, 전역 실행 슬롯, 승인/중단 이력, 실제 stdio·GUI 흐름을 제공한다. 상세 계약·실패 보존·명령·증거는 [D4 결과](../decisions/desktop-d4-conversation.md)를 따른다.
+
+기본은 읽기 전용/필요 시 승인이다. 작업 경로는 원본 프로젝트이며 명시적 수정 요청이 선택한 권한에 따라 직접 반영될 수 있다. D3 선택 적용·undo와 구분한다. Codex 0.166.0에서 거부한 `untrusted`는 비활성화했고 `on-request`·`never`를 제공한다. 모든 도구 차단이나 모든 도구별 승인을 보장하지 않는다. 정책 변경은 새 대화에서만 적용한다.
+
+시험 소유 `.desktop-local/d4-20261116-001`의 unknown과 `002`의 미지원 정책 실패를 삭제하지 않는다. 제품은 불확실한 전송을 자동 재송신하지 않는다. 지원 정책의 재시작 후속 대화와 GUI 첫/후속 전송·중단을 검증했고 공유용 증거는 docs/evidence에 있다. Node 116/116, C# 9 통과·5 D1 fixture 미지정 건너뜀, WinUI build 경고/오류 0이다. D4 변경은 아직 commit/push하지 않았으며 D5/D6는 미착수다.
 
 ## 2026-11-16 D2·D3 진행 기록
 
