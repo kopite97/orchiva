@@ -2,9 +2,13 @@
 
 기존 제품 범위는 [MVP 설계](../design/mvp-design.md), 후속 방향은 [데스크톱 인계](../design/desktop-handoff.md)와 [전환 설계안](../design/desktop-transition.md), 작업 절차는 [공통 흐름](../agents/workflow.md), 계획 작성·상태 규칙은 [계획 규칙](AGENTS.md)을 따른다.
 
-2026-11-16 사용자가 데스크톱 전환 PLAN 승인과 D3까지의 GUI 검증을 지시했고, 이후 상담 정책 변경·D4 구현·검증을 승인했다. 현재 D1~D3 구현·비GUI·GUI G01~G11과 [D4 자유 대화](../decisions/desktop-d4-conversation.md)의 구현·자동·실제 연동·GUI 검증을 완료했다. D1~D3의 마지막 트레이 조작과 125%·150% 실제 화면 확인에는 사용자가 참여했다. D5~D6는 미착수이며 전체 계획은 `active`다. 이전 proposed·구현 제외·GUI 대기 문장은 당시 요청 범위 기록이다.
+2026-11-16 사용자가 데스크톱 전환 PLAN 승인과 D3까지의 GUI 검증을 지시했고, 이후 상담 정책 변경·D4 구현·검증을 승인했다. 현재 D1~D3 구현·비GUI·GUI G01~G11과 [D4 자유 대화](../decisions/desktop-d4-conversation.md)의 구현·자동·실제 연동·GUI 검증을 완료했다. D1~D3의 마지막 트레이 조작과 125%·150% 실제 화면 확인에는 사용자가 참여했다. 2026-11-17 [D5 임시 미디어 제작](../decisions/desktop-d5-media.md)의 구현·자동·실제 연동·GUI 검증도 완료했다. 후속 사용자 지시로 D6 배포·통합 수용을 시작했다. 전체 계획은 `active`다. 이전 proposed·구현 제외·GUI 대기 문장은 당시 요청 범위 기록이다.
 
 ## 등록된 계획
+
+2026-11-17 사용자 지시로 새 PC 실측은 [별도 PLAN](desktop-fresh-pc-validation.md)만 작성하고 실행을 보류한다. 현재 PC에서 가능한 나머지 D6 작업은 계속하며 새 PC 결과를 통과로 처리하지 않는다.
+
+2026-11-17 후속 지시로 D5~D6 코드·설계·검증 문서와 공유용 증거를 커밋하고 main에 반영·push한다. 아래의 미커밋·로컬 저장 문장은 검증 당시 이력이며 최종 반영은 Git 이력을 따른다. 배포 바이너리·로컬 실행 데이터·인증 파일은 제외한다. 새 PC PLAN은 `proposed`·실행 보류를 유지한다.
 
 | 순서 | 계획 | 상태 | 실행 범위 |
 | --- | --- | --- | --- |
@@ -15,7 +19,8 @@
 | 5 | [M4 조건별 판정·과거 결과](m4-evidence-review.md) | `completed` | 조건별 근거, 검사 변경, 결과 상세와 지문 확인 |
 | 6 | [M5 실패·재개·중복 명령](m5-recovery.md) | `completed` | 실패별 복구, 초기 재시도, 미확정 대조, 동일 세션 재개 |
 | 7 | [M6 통합 수용·장애·성능·사용 안내](m6-acceptance.md) | `completed` | A01~A16 수용, 저장/전송/프로세스 장애, 100건·30회 성능 및 30분 운영, 안내·사람 첫 사용 확인 |
-| 8 | [데스크톱 전환 D1~D6](desktop-transition.md) | `active` | D1~D4 완료. D4 동일 Agent 대화·접근/승인 선택·중단·복원·GUI 검증. untrusted는 실행기 미지원으로 사전 거부. D5~D6 미착수 |
+| 8 | [데스크톱 전환 D1~D6](desktop-transition.md) | `active` | D1~D5 완료. D6a 배포·첫 실행 및 [D6b 현재 PC 통합](../decisions/desktop-d6-integration.md) 구현·검증 완료. 새 PC 실측은 별도 PLAN 보류, 정식 공개 배포 조건 남음. main 반영은 Git 이력 참조 |
+| 9 | [D6 새 PC 설치·로그인 검증](desktop-fresh-pc-validation.md) | `proposed` | 사용자 지시로 PLAN만 작성·실행 보류. 새 환경 준비·로그인·실제 모델 시험은 후속 실행 지시 이후 |
 
 2026-11-16 사용자의 환경 점검·설계·계획 요청에 따라 [현재 PC 준비 점검](../decisions/desktop-readiness-20261116.md)과 데스크톱 전환 설계·계획을 작성했다. main의 `b08dc13`에서 ff-only 갱신 후 원격 차이가 없었고, lockfile 기반 설치·typecheck·89개 테스트가 통과했다. 초기 보류 후 사용자는 WinUI 3 + .NET 10과 첫 단계부터 디자인, B안 선택 적용, 프로젝트별 docs/의 지침·PLAN·결정/작업 이력 관리를 확정했다. 후속 선택으로 제작 PLAN은 정형 입력 → AI의 템플릿 내 내용 작성, 닫기 버튼은 앱 종료/트레이 최소화 설정으로 확정했다. Git 없는 폴더 제작은 보류하고 상담 PLAN 자동 완성은 구현 범위에서 제외한다. 최초 문서 작성 요청에서는 앱 구현이 제외되어 당시 `proposed`로 등록했다. 이후 PLAN 승인으로 D1을 진행하며 현재는 `active`다. 앱에서 관리할 대상 프로젝트는 프로젝트 추가 → 소스 경로 지정 → 초기화로 루트 AGENTS와 docs/ 지침·계획·결정·근거 구조를 생성한다. 루트 단일 AGENTS와 역할별 지침 규칙은 대상 프로젝트의 제품 정책이며 Orchiva 개발 저장소의 지침 변경 지시가 아니다.
 

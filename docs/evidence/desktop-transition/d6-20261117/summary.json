@@ -1,0 +1,137 @@
+{
+  "date": "2026-11-17",
+  "scope": "D6a package and first-launch foundation; D6 remains active",
+  "baseline": "e0248d9 with preserved uncommitted D5 changes",
+  "package": {
+    "run": "d6-20261117 배포 005",
+    "version": "0.1.0-d6-preview",
+    "files": 32567,
+    "bytes": 1154149958,
+    "manifestSha256": "4b5e83f4093f61d9b6a695acbda19b3bc6fd786a4abe662d17826f91746ee0a6",
+    "versions": {
+      "node": "v26.13.0",
+      "paseo": "0.15.4",
+      "windowsAppSdk": "2.6.5",
+      "frameworks": [
+        {
+          "name": "Microsoft.NETCore.App",
+          "version": "10.0.12"
+        },
+        {
+          "name": "Microsoft.WindowsDesktop.App",
+          "version": "10.0.12"
+        }
+      ]
+    },
+    "channel": "local-validation-unsigned"
+  },
+  "automated": {
+    "node": {
+      "typecheck": "pass",
+      "tests": 121,
+      "passed": 121
+    },
+    "packageBoundary": {
+      "tests": 1,
+      "passed": 1,
+      "scenarios": [
+        "corruption",
+        "extra file",
+        "private file",
+        "missing PRI",
+        "path traversal",
+        "duplicate paths"
+      ]
+    },
+    "csharp": {
+      "full": {
+        "passed": 10,
+        "skipped": 8,
+        "failed": 0
+      },
+      "d6Final": {
+        "passed": 3,
+        "skipped": 0,
+        "failed": 0
+      },
+      "skipReason": "D1/D4/D5/D6 isolated live fixture variables absent in full run; D6 fixture executed separately"
+    },
+    "publish": {
+      "configuration": "Release",
+      "selfContained": true,
+      "warnings": 0,
+      "errors": 0
+    }
+  },
+  "live": {
+    "emptyProfile": true,
+    "legacyProjectFileAbsent": true,
+    "bridgeReconnect": true,
+    "agents": 0,
+    "workspaces": 0,
+    "packageUnchangedAfterRun": true,
+    "developerEnvironmentRemoved": [
+      "ORCHIVA_DESKTOP_CONFIG",
+      "DOTNET_ROOT",
+      "DOTNET_ROOT_X64",
+      "DOTNET_ROOT_X86"
+    ],
+    "guiWide": true,
+    "guiCompact": true,
+    "compactResize": "user",
+    "sameProfileAndServerOnAppReopen": true,
+    "activeModel": false
+  },
+  "screens": [
+    {
+      "sha256": "fab64a1194984602ee166a8e098ab43601eb350ec09f983ec9f105075ec0163c",
+      "file": "empty-legacy-compact.jpg",
+      "height": 893,
+      "width": 540
+    },
+    {
+      "sha256": "d2c43f6bcbe724e8a4a61d06aa7a874901d30bf15e0fcaba239b2e19c732c918",
+      "file": "empty-legacy.jpg",
+      "height": 893,
+      "width": 1266
+    },
+    {
+      "sha256": "f044d0398f0fe5dd1b76ec910b35bc12002c3a61083bf7debb63fa04eb0fa0db",
+      "file": "first-launch.jpg",
+      "height": 893,
+      "width": 1266
+    },
+    {
+      "sha256": "d8a007d7ea9ca25ec5f6ef92da497c20cf642d9dd8bed29c8f64d112f8b8c586",
+      "file": "reopened.jpg",
+      "height": 893,
+      "width": 1266
+    }
+  ],
+  "failuresPreserved": [
+    {
+      "run": "001",
+      "failure": "global RID changed Bridge lockfile contract; package-specific app property fixed"
+    },
+    {
+      "run": "002",
+      "failure": "C# IDictionary extension compile error; TryGetValue fixed"
+    },
+    {
+      "run": "003",
+      "failure": "public Paseo .env.example template rejected; exact vendor exception after inspection"
+    },
+    {
+      "run": "004",
+      "failure": "WinUI PRI/XBF absent from publish; actual GUI crashed before profile initialization; publish target and required-file checks fixed"
+    }
+  ],
+  "remaining": [
+    "fresh Windows PC install and normal Codex login",
+    "Git/Codex missing or unauthenticated onboarding",
+    "version replacement, compatible data recovery and update workflow",
+    "packaged active-job close/reconnect and worker failure end-to-end",
+    "all production/conversation/media success-failure-recovery acceptance",
+    "code signing, third-party license notices and redistribution review, package size optimization"
+  ]
+}

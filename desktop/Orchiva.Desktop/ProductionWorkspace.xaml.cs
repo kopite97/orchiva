@@ -2,6 +2,10 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using System.Security.Cryptography;
+using Windows.Storage.Streams;
+using Microsoft.UI.Xaml.Media.Imaging;
+using Windows.Media.Core;
 using Button = Microsoft.UI.Xaml.Controls.Button;
 using SelectionChangedEventArgs = Microsoft.UI.Xaml.Controls.SelectionChangedEventArgs;
 
@@ -17,11 +21,13 @@ public sealed partial class ProductionWorkspace : UserControl
     private string? renderedResult, renderedPlan, diffIdentity;
     private readonly Dictionary<string, JsonObject> pendingCommands = new();
     private readonly DispatcherTimer timer = new() { Interval = TimeSpan.FromSeconds(4) };
+    private InMemoryRandomAccessStream? mediaStream;
+    private void ClearMedia() { MediaPlayer.MediaPlayer?.Pause(); MediaPlayer.Source = null; MediaImage.Source = null; mediaStream?.Dispose(); mediaStream = null; MediaPreviewInfo.Text = ""; MediaPlayer.Visibility = Visibility.Collapsed; }
     public ProductionWorkspace()
     {
         InitializeComponent();
         timer.Tick += async (_, _) => { if (!busy && document != null && IsLoaded && !Choices.Any(x => x.IsDropDownOpen)) await Run(async () => await LoadDocument(false), false); };
-        Loaded += (_, _) => timer.Start(); Unloaded += (_, _) => timer.Stop();
+        Loaded += (_, _) => timer.Start(); Unloaded += (_, _) => { timer.Stop(); ClearMedia(); };
     }
     private IEnumerable<ComboBox> Choices => [ProjectChoice, RequestChoice, InstructionChoice, Discipline, RequestMode, ParentChoice, ModelChoice, LevelChoice, ValidationChoice, PermissionChoice, PermissionAction, TransferChoice];
     public event Action<string>? ConnectionFailed;
@@ -64,6 +70,7 @@ public sealed partial class ProductionWorkspace : UserControl
         var action = (sender as Button)?.Tag?.ToString();
         switch (action)
         {
+            case "media-preview": await PreviewMedia(); break;
             case "projects": await LoadProjects(); break;
             case "register": await Invoke("desktop.projects.register", new { name = ProjectNameInput.Text, sourceRoot = SourceInput.Text }); await LoadProjects(); break;
             case "preview":
@@ -83,7 +90,7 @@ public sealed partial class ProductionWorkspace : UserControl
                 var report = await Invoke("desktop.instructions.save", new JsonObject { ["projectId"] = ProjectId, ["path"] = InstructionPath.Text, ["expectedHash"] = expected, ["content"] = InstructionContent.Text, ["scope"] = InstructionScope.Text }); SetInstructions(report); break;
             case "requests": await LoadRequests(); break;
             case "import-legacy": await Mutate("desktop.requests.import-legacy", new() { ["projectId"] = ProjectId, ["token"] = LegacyToken.Text }); await LoadRequests(); break;
-            case "new": document = null; token = NewKey(); RequestChoice.SelectedIndex = -1; TitleInput.Text = GoalInput.Text = ScopeInput.Text = ConstraintsInput.Text = ""; PlanText.Text = ResultText.Text = ""; RequestStatus.Text = "새 초안 · 아직 저장하지 않았습니다."; PlanConfirmed.IsChecked = QualityConfirmed.IsChecked = ChecksConfirmed.IsChecked = false; break;
+            case "new": ClearMedia(); MediaPreviewPanel.Visibility = Visibility.Collapsed; document = null; token = NewKey(); RequestChoice.SelectedIndex = -1; TitleInput.Text = GoalInput.Text = ScopeInput.Text = ConstraintsInput.Text = ""; PlanText.Text = ResultText.Text = PlanLocation.Text = ExportLocation.Text = ExecutionStatus.Text = ""; renderedPlan = renderedResult = diffIdentity = null; DiffFiles.ItemsSource = TransferChoice.ItemsSource = null; DiffText.Text = TransferKey.Text = ""; RequestStatus.Text = "새 초안 · 아직 저장하지 않았습니다."; PlanConfirmed.IsChecked = QualityConfirmed.IsChecked = ChecksConfirmed.IsChecked = false; break;
             case "save":
                 var draft = Command(); draft["input"] = Input(); document = (JsonObject)await Mutate("desktop.requests.save", draft); RenderDocument(false); break;
             case "plan": RequireSavedInput(); await DocumentMutation("plan"); break;
@@ -123,6 +130,34 @@ public sealed partial class ProductionWorkspace : UserControl
             case "transfers": await LoadTransfers(); break;
         }
     });
+    private async Task PreviewMedia()
+    {
+        ClearMedia();
+        var spec = document?["input"]?["media"] ?? throw new IOException("미디어 결과를 먼저 선택하세요.");
+        var sound = Text(spec, "kind") == "sound";
+        var name = sound ? "tone.wav" : Text(spec, "kind") == "art" ? "shape.png" : "effect.png";
+        var request = Identity(); request["resultId"] = ResultId; request["path"] = $"media/{token}/{name}";
+        using var content = new MemoryStream(); string? expected = null; int size = 0;
+        do
+        {
+            request["offset"] = content.Length;
+            var chunk = await Invoke("desktop.requests.media-preview", request);
+            var hash = Text(chunk, "sha256"); var length = chunk["size"]!.GetValue<int>();
+            if (length > 32 * 1024 * 1024 || length <= 0 || (expected != null && (expected != hash || size != length))) throw new IOException("RESULT_CHANGED");
+            expected = hash; size = length;
+            var data = Convert.FromBase64String(Text(chunk, "content"));
+            if (data.Length == 0 || content.Length + data.Length > size) throw new IOException("RESULT_CHANGED");
+            content.Write(data);
+        } while (content.Length < size);
+        var bytes = content.ToArray();
+        if (Convert.ToHexString(SHA256.HashData(bytes)).ToLowerInvariant() != expected) throw new IOException("RESULT_CHANGED");
+        mediaStream = new InMemoryRandomAccessStream();
+        using (var writer = new DataWriter(mediaStream.GetOutputStreamAt(0))) { writer.WriteBytes(bytes); await writer.StoreAsync(); await writer.FlushAsync(); writer.DetachStream(); }
+        mediaStream.Seek(0);
+        if (sound) { MediaPlayer.Source = MediaSource.CreateFromStream(mediaStream, "audio/wav"); MediaPlayer.Visibility = Visibility.Visible; }
+        else { var bitmap = new BitmapImage(); await bitmap.SetSourceAsync(mediaStream); MediaImage.Source = bitmap; }
+        MediaPreviewInfo.Text = $"{name} · {size:N0} 바이트 · " + (sound ? $"{Text(spec, "sampleRate")} Hz · {Text(spec, "channels")} 채널 · {Text(spec, "seconds")}초 · 재생 버튼으로 청취" : $"{Text(spec, "width")} × {Text(spec, "height")}" + (Text(spec, "kind") == "effect" ? $" / 프레임 · {Text(spec, "frames")}개 가로 시트 · {Text(spec, "seconds")}초 (애니메이션 재생 아님)" : " · 투명 배경은 어두운 바탕으로 표시"));
+    }
     private async Task LoadTransfers()
     {
         var selected = TransferKey.Text;
@@ -136,8 +171,42 @@ public sealed partial class ProductionWorkspace : UserControl
     private void RequireSavedInput() { if (document == null || !JsonNode.DeepEquals(Input(), document["input"])) throw new IOException("현재 입력을 먼저 저장하세요. 저장 후 PLAN을 작성하고 확인합니다."); }
     private JsonObject Input()
     {
+        if (Discipline.SelectedIndex >= 2)
+        {
+            if (Discipline.SelectedIndex != 3 && (!double.IsFinite(MediaWidth.Value) || !double.IsFinite(MediaHeight.Value) || MediaWidth.Value % 1 != 0 || MediaHeight.Value % 1 != 0 || !System.Text.RegularExpressions.Regex.IsMatch(MediaColor.Text, "^#[0-9a-fA-F]{6}$"))) throw new IOException("이미지 크기는 정수, 색상은 #RRGGBB 형식으로 입력하세요.");
+            if (Discipline.SelectedIndex >= 3 && !double.IsFinite(MediaSeconds.Value)) throw new IOException("길이를 숫자로 입력하세요.");
+            if (Discipline.SelectedIndex == 3 && !double.IsFinite(MediaFrequency.Value)) throw new IOException("주파수를 숫자로 입력하세요.");
+            if (Discipline.SelectedIndex == 4 && (!double.IsFinite(MediaFrames.Value) || MediaFrames.Value % 1 != 0)) throw new IOException("프레임 수는 정수로 입력하세요.");
+        }
         var parent = (ParentChoice.SelectedItem as WorkspaceChoice)?.Value;
-        return new() { ["title"] = TitleInput.Text, ["goal"] = GoalInput.Text, ["scope"] = ScopeInput.Text, ["constraints"] = ConstraintsInput.Text, ["discipline"] = Discipline.SelectedIndex == 0 ? "planning" : "coding", ["mode"] = RequestMode.SelectedIndex == 0 ? "new" : "modify", ["parentToken"] = RequestMode.SelectedIndex == 0 ? null : parent?["token"]?.DeepClone(), ["parentResultId"] = RequestMode.SelectedIndex == 0 ? null : parent?["engine"]?["result"]?["id"]?.DeepClone(), ["provider"] = (ModelChoice.SelectedItem as WorkspaceChoice)?.Value["provider"]?.DeepClone() ?? JsonValue.Create("codex/unavailable"), ["thinkingOptionId"] = (LevelChoice.SelectedItem as WorkspaceChoice)?.Value["id"]?.DeepClone(), ["outputPath"] = OutputPathInput.Text, ["validationProfile"] = ValidationChoice.SelectedIndex == 0 ? "files" : "node-test" };
+        var value = new JsonObject { ["title"] = TitleInput.Text, ["goal"] = GoalInput.Text, ["scope"] = ScopeInput.Text, ["constraints"] = ConstraintsInput.Text, ["discipline"] = Discipline.SelectedIndex switch { 0 => "planning", 1 => "coding", 2 => "art", 3 => "sound", _ => "effect" }, ["mode"] = RequestMode.SelectedIndex == 0 ? "new" : "modify", ["parentToken"] = RequestMode.SelectedIndex == 0 ? null : parent?["token"]?.DeepClone(), ["parentResultId"] = RequestMode.SelectedIndex == 0 ? null : parent?["engine"]?["result"]?["id"]?.DeepClone(), ["provider"] = (ModelChoice.SelectedItem as WorkspaceChoice)?.Value["provider"]?.DeepClone() ?? JsonValue.Create("codex/unavailable"), ["thinkingOptionId"] = (LevelChoice.SelectedItem as WorkspaceChoice)?.Value["id"]?.DeepClone(), ["outputPath"] = OutputPathInput.Text, ["validationProfile"] = ValidationChoice.SelectedIndex == 0 ? "files" : "node-test" };
+        if (Discipline.SelectedIndex >= 2)
+        {
+            value["validationProfile"] = "files";
+            value["media"] = Discipline.SelectedIndex switch
+            {
+                2 => new JsonObject { ["kind"]="art", ["format"]="png", ["width"]=MediaWidth.Value, ["height"]=MediaHeight.Value, ["color"]=MediaColor.Text, ["shape"]="circle", ["transparent"]=true },
+                3 => new JsonObject { ["kind"]="sound", ["format"]="wav", ["seconds"]=MediaSeconds.Value, ["frequency"]=MediaFrequency.Value, ["sampleRate"]="44100", ["channels"]=1, ["waveform"]="sine", ["fade"]=true },
+                _ => new JsonObject { ["kind"]="effect", ["format"]="png-sheet", ["width"]=MediaWidth.Value, ["height"]=MediaHeight.Value, ["color"]=MediaColor.Text, ["frames"]=MediaFrames.Value, ["seconds"]=MediaSeconds.Value }
+            };
+        }
+        return value;
+    }
+    private void MediaDisciplineChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (MediaSettings == null) return;
+        MediaSettings.Visibility = Discipline.SelectedIndex >= 2 ? Visibility.Visible : Visibility.Collapsed;
+        if (ValidationChoice != null) { ValidationChoice.IsEnabled = Discipline.SelectedIndex < 2; if (Discipline.SelectedIndex >= 2) ValidationChoice.SelectedIndex = 0; }
+    }
+    private void RestoreMedia(JsonNode? media)
+    {
+        if (media == null) return;
+        if (media["width"] != null) MediaWidth.Value = media["width"]!.GetValue<double>();
+        if (media["height"] != null) MediaHeight.Value = media["height"]!.GetValue<double>();
+        if (media["color"] != null) MediaColor.Text = media["color"]!.ToString();
+        if (media["seconds"] != null) MediaSeconds.Value = media["seconds"]!.GetValue<double>();
+        if (media["frequency"] != null) MediaFrequency.Value = media["frequency"]!.GetValue<double>();
+        if (media["frames"] != null) MediaFrames.Value = media["frames"]!.GetValue<double>();
     }
     private async Task LoadProjects()
     {
@@ -155,7 +224,7 @@ public sealed partial class ProductionWorkspace : UserControl
     private async void ProjectSelected(object sender, SelectionChangedEventArgs e)
     {
         if (loading || ProjectChoice.SelectedItem is not WorkspaceChoice value) return;
-        await Run(async () => { project = Copy(value.Value); document = null; token = NewKey(); preview = null; InitializeButton.IsEnabled = false; await LoadProject(); });
+        await Run(async () => { project = Copy(value.Value); ClearMedia(); MediaPreviewPanel.Visibility = Visibility.Collapsed; document = null; token = NewKey(); preview = null; InitializeButton.IsEnabled = false; await LoadProject(); });
     }
     private async Task LoadProject()
     {
@@ -205,7 +274,8 @@ public sealed partial class ProductionWorkspace : UserControl
         if (document == null) return;
         var engine = document["engine"]!; var versions = document["planVersions"]!.AsArray();
         var planHash = Text(versions.LastOrDefault(), "hash");
-        if (renderedResult != ResultId) { QualityConfirmed.IsChecked = ChecksConfirmed.IsChecked = false; renderedResult = ResultId; }
+        if (renderedResult != ResultId) { QualityConfirmed.IsChecked = ChecksConfirmed.IsChecked = false; renderedResult = ResultId; ClearMedia(); }
+        MediaPreviewPanel.Visibility = document["input"]?["media"] != null && ResultId != null ? Visibility.Visible : Visibility.Collapsed;
         if (renderedPlan != planHash) { PlanConfirmed.IsChecked = false; renderedPlan = planHash; }
         RequestStatus.Text = $"{DesktopViewModel.Status(Text(engine, "status"))} · 저장 버전 {document["revision"]} · {token}\nPLAN 작성: {DesktopViewModel.Status(Text(document["planning"], "state"))} {Text(document["planning"], "error")}";
         ExecutionStatus.Text = RequestStatus.Text + "\n" + Text(engine, "error") + "\n" + Text(engine, "observationError");
@@ -214,7 +284,7 @@ public sealed partial class ProductionWorkspace : UserControl
         ResultText.Text = string.Join("\n\n────────\n\n", engine["results"]!.AsArray().Reverse().Select(FormatResult)) + "\n\n검토 이력\n" + string.Join("\n", document["reviews"]!.AsArray().Select(x => $"{Text(x, "at")} · {(x?["approved"]?.GetValue<bool>() == true ? "완료 승인" : "수정 필요")}\n{Text(x, "note")}"));
         ExportLocation.Text = string.Join("\n", document["exports"]!.AsArray().Select(x => Text(x, "root")));
         if (!fields) return;
-        var input = document["input"]!; TitleInput.Text = Text(input, "title"); GoalInput.Text = Text(input, "goal"); ScopeInput.Text = Text(input, "scope"); ConstraintsInput.Text = Text(input, "constraints"); OutputPathInput.Text = Text(input, "outputPath"); Discipline.SelectedIndex = Text(input, "discipline") == "planning" ? 0 : 1; RequestMode.SelectedIndex = Text(input, "mode") == "new" ? 0 : 1; ValidationChoice.SelectedIndex = Text(input, "validationProfile") == "files" ? 0 : 1;
+        var input = document["input"]!; TitleInput.Text = Text(input, "title"); GoalInput.Text = Text(input, "goal"); ScopeInput.Text = Text(input, "scope"); ConstraintsInput.Text = Text(input, "constraints"); OutputPathInput.Text = Text(input, "outputPath"); Discipline.SelectedIndex = Text(input, "discipline") switch { "planning" => 0, "art" => 2, "sound" => 3, "effect" => 4, _ => 1 }; RestoreMedia(input["media"]); RequestMode.SelectedIndex = Text(input, "mode") == "new" ? 0 : 1; ValidationChoice.SelectedIndex = Text(input, "validationProfile") == "files" ? 0 : 1;
         ModelChoice.SelectedItem = (ModelChoice.ItemsSource as IEnumerable<WorkspaceChoice>)?.FirstOrDefault(x => Text(x.Value, "provider") == Text(input, "provider"));
         LevelChoice.SelectedItem = (LevelChoice.ItemsSource as IEnumerable<WorkspaceChoice>)?.FirstOrDefault(x => Text(x.Value, "id") == Text(input, "thinkingOptionId"));
         ParentChoice.SelectedItem = (ParentChoice.ItemsSource as IEnumerable<WorkspaceChoice>)?.FirstOrDefault(x => Text(x.Value, "token") == Text(input, "parentToken"));

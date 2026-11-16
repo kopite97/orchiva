@@ -22,6 +22,11 @@ public sealed class DesktopViewModel : INotifyPropertyChanged
     public ObservableCollection<RequestItem> Items { get; } = new();
     public static string Error(string value) => value switch
     {
+        "MEDIA_SPEC_REQUIRED" or "MEDIA_SPEC_UNEXPECTED" => "선택한 분야의 임시 생성 규격을 확인하세요. 미디어는 파일 검사 방식만 지원합니다.",
+        "MEDIA_PIXEL_LIMIT" => "효과 시트 전체는 16메가픽셀 이하여야 합니다. 크기나 프레임 수를 줄이세요.",
+        "EXPORT_SIZE_LIMIT" => "내보내기 기록은 24MiB 한도입니다. 더 작은 규격의 새 요청을 작성하세요. 기존 결과는 보존됩니다.",
+        "MEDIA_PREVIEW_NOT_READY" => "실행 종료 후 최신 결과에서 미디어 미리보기를 사용할 수 있습니다.",
+        "RESULT_CHANGED" => "검증 후 결과 파일이 변경되었습니다. 자동 검사를 다시 실행하고 새 결과를 검토하세요.",
         "SOURCE_FILE_CONFLICT" => "소스 파일이 외부에서 변경되었습니다. 소스 차이를 다시 확인하세요. 기존 파일은 보존했습니다.",
         "FILE_CHANGED" => "파일이 외부에서 변경되었습니다. 입력을 보존했으니 최신 파일과 비교한 뒤 다시 저장하세요.",
         "REVISION_CONFLICT" => "다른 변경이 먼저 저장되었습니다. 최신 상태를 다시 읽고 입력을 확인하세요.",

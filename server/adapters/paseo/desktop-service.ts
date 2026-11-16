@@ -73,6 +73,7 @@ export function contributeDesktop(server: PluginServerContext, legacy: RequestSt
   server.handle(r["desktop.requests.review"], async i => { await opened; return service.review(i); });
   server.handle(r["desktop.requests.export"], async i => { await opened; return artifacts.export(i); });
   server.handle(r["desktop.requests.diff"], async i => { await opened; return artifacts.preview(i.projectId, i.token, i.resultId); });
+  server.handle(r["desktop.requests.media-preview"], async i => { await opened; return artifacts.mediaPreview(i.projectId, i.token, i.resultId, i.path, i.offset); });
   server.handle(r["desktop.requests.apply"], async i => { await opened; return artifacts.apply(i); });
   server.handle(r["desktop.requests.undo"], async i => { await opened; return artifacts.undo(i.projectId, i.token, i.resultId, i.transferKey); });
   server.handle(r["desktop.requests.transfers"], async i => { await opened; return artifacts.transfers(i.projectId, i.token, i.resultId); });

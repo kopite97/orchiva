@@ -5,7 +5,11 @@ import type { RequestRecord } from "../../../shared/contracts/feature-request";
 import type { Production } from "../../../shared/contracts/desktop-production";
 import type { InputSnapshot } from "../../application/desktop/snapshots";
 import { Projects } from "../../application/desktop/projects";
-import { safePath, bytes, atomic, digest } from "../storage/project-files";
+import { safePath, bytes, atomic, digest, immutable } from "../storage/project-files";
+import { generateProceduralMedia } from "../media/procedural-media";
+import { inspectPng, inspectWav } from "../media/inspect-media";
+import { collectFiles, snapshotFiles } from "../storage/evidence";
+import { mediaBudget } from "../../../shared/contracts/desktop-media";
 import { PaseoRuntime } from "./runtime";
 import { assertWorktree, type ProjectConfig } from "../../config/project-config";
 import type { Runtime, LifecycleRuntime, RecoveryRuntime, Observation } from "../../application/ports";
@@ -20,8 +24,28 @@ export class DesktopRuntime implements Runtime, LifecycleRuntime, RecoveryRuntim
   verifyResources(record: RequestRecord) { return this.base.verifyResources(record); }
   lookupDelivery(record: RequestRecord, command: RequestRecord["commands"][number]) { return this.base.lookupDelivery(record, command); }
   observe(record: RequestRecord) { return this.base.observe(record); }
-  collect(record: RequestRecord, observation: Observation) { return this.base.collect(record, observation); }
-  fingerprint(record: RequestRecord) { return this.base.fingerprint(record); }
+  private media(record: RequestRecord) { return this.document.input.media ? generateProceduralMedia(this.document.input.media).map(f => ({ ...f, path: `media/${record.token}/${f.name}` })) : []; }
+  async collect(record: RequestRecord, observation: Observation) {
+    const media = this.media(record); if (!media.length) return this.base.collect(record, observation);
+    await this.base.verifyResources(record);
+    const result = await collectFiles(record, observation, { mediaPaths: media.map(f => f.path) });
+    for (const file of media) {
+      let detail = "", passed = false;
+      try {
+        const content = await bytes(record.worktreePath!, file.path, mediaBudget.perFile);
+        if (!content || digest(content) !== digest(file.data)) throw new Error("MEDIA_OUTPUT_CHANGED");
+        detail = JSON.stringify(file.mime === "image/png" ? inspectPng(content) : file.mime === "audio/wav" ? inspectWav(content) : JSON.parse(content.toString("utf8"))); passed = true;
+      } catch (error) { detail = error instanceof Error ? error.message : "MEDIA_VALIDATION_FAILED"; }
+      result.checks.push({ checkId: "media-" + file.name, label: "임시 생성 규격: " + file.name, command: "media-inspect-v1", status: passed ? "passed" : "failed", passed, exitCode: passed ? 0 : 1, output: detail, durationMs: 0 });
+      if (!passed) result.failure ??= "MEDIA_VALIDATION_FAILED";
+    }
+    if ((await snapshotFiles(record.worktreePath!, record.checks, media.map(f => f.path))).fingerprint !== result.fingerprint) result.failure ??= "MEDIA_FILE_CHANGED";
+    return result;
+  }
+  async fingerprint(record: RequestRecord) {
+    const media = this.media(record); if (!media.length) return this.base.fingerprint(record);
+    await this.base.verifyResources(record); return (await snapshotFiles(record.worktreePath!, record.checks, media.map(f => f.path))).fingerprint;
+  }
   resume(record: RequestRecord) { return this.base.resume(record); }
   async writePlans(record: RequestRecord) {
     await this.base.verifyResources(record);
@@ -37,6 +61,7 @@ export class DesktopRuntime implements Runtime, LifecycleRuntime, RecoveryRuntim
       await atomic(await safePath(record.worktreePath!, marker), JSON.stringify({ fingerprint: this.snapshot.fingerprint }));
     } else if (JSON.parse(markerBytes.toString("utf8")).fingerprint !== this.snapshot.fingerprint) throw new Error("INPUT_SNAPSHOT_MISMATCH");
     await this.base.writePlans(record);
+    for (const file of this.media(record)) await immutable(record.worktreePath!, file.path, file.data);
   }
   async startAgent(record: RequestRecord) {
     if (!record.workspaceId || !record.worktreePath) throw new Error("WORKSPACE_REQUIRED");
@@ -44,7 +69,7 @@ export class DesktopRuntime implements Runtime, LifecycleRuntime, RecoveryRuntim
     const agent = await this.api.workspaces.ref(record.workspaceId).agents.create({
       idempotencyKey: `orchiva-agent-${record.token}`, title: `${record.taskId}: ${record.feature.title}`, labels: { orchivaRequest: record.token },
       config: { provider: this.document.input.provider, modeId: "auto", ...(this.document.input.thinkingOptionId ? { thinkingOptionId: this.document.input.thinkingOptionId } : {}) },
-      prompt: `Read AGENTS.md and the instructions applicable to your paths, then .orchiva/plans/${record.requestPlan.id}.md and .orchiva/plans/${record.taskPlan.id}.md. Execute only this approved PLAN inside this worktree. Do not commit, push, merge, create subagents or access the original repository or other projects. Do not create unrequested README or instruction documents. Preserve docs/.orchiva/input-snapshot.json and the supplied instructions. Report changed output files and verification results. Independent verification profile: ${JSON.stringify(record.checks)}.`,
+      prompt: `Read AGENTS.md and the instructions applicable to your paths, then .orchiva/plans/${record.requestPlan.id}.md and .orchiva/plans/${record.taskPlan.id}.md. Execute only this approved PLAN inside this worktree. Do not commit, push, merge, create subagents or access the original repository or other projects. Do not create unrequested README or instruction documents. Preserve docs/.orchiva/input-snapshot.json and the supplied instructions. Report changed output files and verification results. Independent verification profile: ${JSON.stringify(record.checks)}.${this.document.input.media ? ` Temporary procedural assets were already generated from the exact approved numeric spec at media/${record.token}/. Inspect and report them, do not change or replace them, and do not claim an AI image/music model or engine-native particle asset was generated. Report any mismatch between the free-text goal and the limited preset honestly. Spec: ${JSON.stringify(this.document.input.media)}` : ""}`,
     });
     return agent.id;
   }

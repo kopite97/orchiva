@@ -20,6 +20,7 @@ import type { Runtime } from "../application/ports";
 import type { DesktopRuntime } from "../adapters/paseo/desktop-runtime";
 import { ProductionArtifacts } from "../application/desktop/artifacts";
 const run = promisify(execFile);
+import { generateProceduralMedia } from "../adapters/media/procedural-media";
 const input = productionInput.parse({ title: "작은 변경", goal: "정확한 결과를 만든다", scope: "작은 범위", constraints: "지침 준수", discipline: "coding", mode: "new", parentToken: null, parentResultId: null, provider: "codex/test", thinkingOptionId: "low", outputPath: "" });
 const content = "# 계획\n" + planSections.map(s => `\n## ${s}\n요청을 분석한 구체적인 ${s} 내용을 기록합니다.\n`).join("");
 async function fixture() {
@@ -34,6 +35,32 @@ async function fixture() {
   return { root, source, output, projects, legacy, service, api, id: p.projectId, calls: () => calls,
     async close() { await service.close(); await projects.close(); await legacy.close(); const rel = relative(tmpdir(), root); assert.ok(rel && !rel.startsWith("..") && !isAbsolute(rel)); await rm(root, { recursive: true, force: true }); } };
 }
+test("D5 media drafts bind discipline and confirmed preset; preview is bounded and rejects stale, foreign and edited bytes", async () => {
+  const f=await fixture();
+  try {
+    const media={kind:"sound" as const,format:"wav" as const,seconds:2,frequency:440,sampleRate:"44100" as const,channels:1 as const,waveform:"sine" as const,fade:true};
+    const command={projectId:f.id,token:"media-request-01",commandKey:"media-save-001",expectedRevision:0};
+    await assert.rejects(f.service.save({...command,input:{...input,discipline:"art"}}),/MEDIA_SPEC_REQUIRED/);
+    await assert.rejects(f.service.save({...command,input:{...input,media}}),/MEDIA_SPEC_UNEXPECTED/);
+    const draft=await f.service.save({...command,input:{...input,discipline:"sound",media}});
+    await f.service.plan({...command,commandKey:"media-plan-001",expectedRevision:draft.revision});await f.service.settle();await f.service.close();
+    const doc=await f.service.required(f.id,draft.token), store=await f.service.store(f.id), working=join(f.root,"worktree");
+    assert.ok(doc.planVersions[0].content.includes('orchiva-procedural-v1'));
+    const path=`media/${draft.token}/tone.wav`, data=generateProceduralMedia(media)[0].data;
+    await mkdir(join(working,"media",draft.token),{recursive:true});await writeFile(join(working,path),data);
+    doc.engine.worktreePath=working;doc.engine.status="awaiting-review";
+    doc.engine.result={id:"media-result",sourceKey:"media-source",collectedAt:new Date().toISOString(),finalResponse:"media",agentStatus:"idle",changedFiles:[path],files:[{path,sha256:digest(data),size:data.length,changeType:"untracked",deleted:false,isCheckInput:false}],checks:[],diffStat:"",fingerprint:"media-fingerprint",failure:null,executionFailure:null};await store.save(doc.engine);
+    let fingerprint="media-fingerprint";f.service.runtime=async()=>({fingerprint:async()=>fingerprint}) as unknown as DesktopRuntime;
+    const artifacts=new ProductionArtifacts(f.service), first=await artifacts.mediaPreview(f.id,draft.token,"media-result",path,0);
+    assert.equal(Buffer.from(first.content,"base64").length,128*1024);assert.equal(first.sha256,digest(data));
+    const last=await artifacts.mediaPreview(f.id,draft.token,"media-result",path,128*1024);assert.deepEqual(Buffer.concat([Buffer.from(first.content,"base64"),Buffer.from(last.content,"base64")]),data);
+    await assert.rejects(artifacts.mediaPreview(f.id,draft.token,"old-result",path,0),/NOT_READY/);
+    await assert.rejects(artifacts.mediaPreview(f.id,draft.token,"media-result","../secret",0),/PATH_INVALID/);
+    await assert.rejects(artifacts.mediaPreview(f.id,draft.token,"media-result",path,data.length),/OFFSET_INVALID/);
+    fingerprint="changed";await assert.rejects(artifacts.mediaPreview(f.id,draft.token,"media-result",path,0),/RESULT_CHANGED/);
+    fingerprint="media-fingerprint";await writeFile(join(working,path),"changed after fingerprint");await assert.rejects(artifacts.mediaPreview(f.id,draft.token,"media-result",path,0),/RESULT_CHANGED/);
+  } finally {await f.close();}
+});
 test("v3 drafts, AI PLAN, replay and external edits preserve authoritative source history", async () => {
   const f = await fixture();
   try {

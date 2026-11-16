@@ -52,18 +52,20 @@ export class Reconciler {
     this.maxConcurrentCycles = Math.max(this.maxConcurrentCycles, this.activeCycles);
     try {
       this.lease ??= this.factory();
-      const runtime = await this.lease.runtime();
-      if (this.stopped) return;
       await this.lease.ping();
       if (this.stopped) return;
       const records = await this.store.list();
+      // An empty desktop profile has no legacy project.json. Resolve the legacy
+      // runtime only for records that actually need it; malformed active data still blocks.
+      const runtime = records.some(record => needsReconciliation(record) || (!!record.agentId && this.hints.has(record.agentId)))
+        ? await this.lease.runtime() : undefined;
       if (!records.some(x => x.commands.some(c => isPreparation(c) && c.status === "pending"))) {
         for (const id of this.hints.keys()) if (!records.some(x => x.agentId === id)) this.hints.delete(id);
       }
       for (const record of records) {
         if (this.stopped) return;
         const hinted = !!record.agentId && this.hints.has(record.agentId);
-        if (!needsReconciliation(record) && !hinted) continue;
+        if ((!needsReconciliation(record) && !hinted) || !runtime) continue;
         if (!hinted && record.observation?.nextAttemptAt && Date.parse(record.observation.nextAttemptAt) > this.now()) continue;
         const outcome = record.agentId ? this.hints.get(record.agentId) : undefined;
         if (record.agentId) this.hints.delete(record.agentId);

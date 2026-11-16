@@ -6,6 +6,7 @@ import { isAbsolute, relative, resolve } from "node:path";
 import type { ExecutionResult, RequestRecord } from "../../../shared/contracts/feature-request";
 import type { Observation } from "../../application/ports";
 import { assertWorktree, git, type ProjectConfig } from "../../config/project-config";
+import { collectMedia } from "./media-artifacts";
 
 const execute = promisify(execFile);
 async function isIgnored(root: string, path: string) {
@@ -36,16 +37,19 @@ export async function snapshot(record: RequestRecord, config: ProjectConfig) {
   return snapshotFiles(root, record.checks);
 }
 /** Pure Git/file collector; the runtime entry point verifies sandbox ownership first. */
-export async function snapshotFiles(root: string, definitions: RequestRecord["checks"]) {
+export async function snapshotFiles(root: string, definitions: RequestRecord["checks"], mediaPaths: string[] = []) {
   // NUL-delimited names must not be trimmed (a valid filename can start with spaces).
   const names = async (...args: string[]) => (await execute("git", ["-C", root, ...args], { windowsHide: true, timeout: 15000 })).stdout.split("\0");
   const tracked = await names("diff", "--name-only", "-z", "HEAD");
   const untracked = await names("ls-files", "--others", "--exclude-standard", "-z");
-  const changedFiles = [...new Set([...tracked, ...untracked].filter(Boolean))].sort();
+  const changedFiles = [...new Set([...tracked, ...untracked, ...mediaPaths].filter(Boolean))].sort();
   const paths = [...new Set([...changedFiles, ...definitions.map(x => x.path)])].sort();
   if (paths.length > 300) throw new Error("Evidence collection limit exceeded (300 files).");
   const files: NonNullable<ExecutionResult["files"]> = [];
+  const media = mediaPaths.length ? await collectMedia(root, mediaPaths) : [];
   for (const path of paths) {
+    const asset = media.find(f => f.path === path);
+    if (asset) { files.push({ path, changeType: "untracked", sha256: asset.sha256, size: asset.bytes, deleted: false, isCheckInput: false }); continue; }
     let bytes: Buffer | null = null;
     try { bytes = await readFile(await safeFile(root, path)); }
     catch (error) { if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error; }
@@ -66,9 +70,9 @@ export async function collectEvidence(record: RequestRecord, config: ProjectConf
   await assertWorktree(config, record.worktreePath);
   return collectFiles(record, observation, options);
 }
-export async function collectFiles(record: RequestRecord, observation: Observation, options: { budgetMs?: number; checkTimeoutMs?: number } = {}): Promise<ExecutionResult> {
+export async function collectFiles(record: RequestRecord, observation: Observation, options: { budgetMs?: number; checkTimeoutMs?: number; mediaPaths?: string[] } = {}): Promise<ExecutionResult> {
   const root = record.worktreePath!;
-  const before = await snapshotFiles(root, record.checks);
+  const before = await snapshotFiles(root, record.checks, options.mediaPaths);
   const checks: ExecutionResult["checks"] = [];
   const deadline = Date.now() + (options.budgetMs ?? 20000);
   for (const [index, check] of record.checks.entries()) {
@@ -107,7 +111,7 @@ export async function collectFiles(record: RequestRecord, observation: Observati
     checks.push({ checkId, label: check.label, command, status, failureKind, inputFingerprint, passed: status === "passed", exitCode,
       output: output.slice(-16000), truncated: output.length > 16000, durationMs: Date.now() - began });
   }
-  const after = await snapshotFiles(root, record.checks);
+  const after = await snapshotFiles(root, record.checks, options.mediaPaths);
   const testChanges: NonNullable<ExecutionResult["testChanges"]> = [];
   for (const [index, check] of checks.entries()) {
     const baseline = record.results.find(r => r.checks.some(c => c.checkId === check.checkId && c.inputFingerprint !== undefined));

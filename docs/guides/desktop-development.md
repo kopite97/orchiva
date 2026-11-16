@@ -1,4 +1,12 @@
-# 데스크톱 D1~D3 개발 실행
+# 데스크톱 D1~D6 개발 실행
+
+2026-11-17 현재 D1~D5 구현·검증을 완료했다. D4는 [자유 대화](../decisions/desktop-d4-conversation.md), D5는 [임시 미디어 제작](../decisions/desktop-d5-media.md) 계약을 따른다. D6a [폴더형 배포 안내](desktop-package.md)와 [첫 실행 검증](../decisions/desktop-d6-package.md)을 추가했다. 새 PC 로그인·업데이트/복구·전체 통합 수용은 진행 중이다. 아래 초기 D1~D3 수치와 GUI 대기는 당시 이력이며 최신 상태는 [계획 목록](../plans/README.md)을 따른다.
+
+## 임시 미디어 사용
+
+작업실에서 프로젝트를 선택하고 요청·PLAN 탭의 분야를 아트·사운드·특수효과로 고른다. 표시된 숫자 규격을 입력하고 요청 저장 → AI로 PLAN 작성 → PLAN 확인 → 실행한다. 실행·결과 검토에서 검사를 읽고 **검증된 미디어 미리보기**로 PNG/효과 시트를 열거나 WAV를 재생한다. 완료 승인 뒤 기존 결과물 내보내기·선택 반영·되돌리기를 사용할 수 있다.
+
+현재 생성기는 시험용 도형·합성 단음·확산 링이다. 자유 문장의 화풍이나 음악을 생성하지 않으며 효과 시트는 애니메이션 플레이어나 Unity 파티클이 아니다. 규격 변경은 별도 새/수정 요청을 사용한다. 파일·픽셀·내보내기 한도와 큰 소스 입력 제약은 D5 결과 문서를 확인한다. 실제 생성 모델로 바꾸는 설정은 아직 없다.
 
 2026-11-16 기준. **프로젝트·기획/코딩 제작을 제공하는 개발 빌드이며 사용자용 배포본이 아니다.** [D2·D3 최신 구현/검증](../decisions/desktop-d2-d3-completion.md)을 먼저 확인한다. 아래 D1 검증 기록은 이력이다. D1 구현·비GUI 검증은 완료했으며 Node 97/97·C# 12/12 통과다. [실행부 보완과 GUI 대기](../decisions/desktop-d1-runtime-completion.md)를 따른다. [이전 실제 화면 검증](../decisions/desktop-d1-gui-verification.md)도 보존한다. [결과·제약](../decisions/desktop-d1-foundation.md)과 [전환 PLAN](../plans/desktop-transition.md)을 먼저 확인한다.
 

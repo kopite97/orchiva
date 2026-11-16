@@ -31,7 +31,13 @@
      <ComboBox x:Name="RequestChoice" Header="프로젝트 PLAN 이력" DisplayMemberPath="Label" SelectionChanged="RequestSelected" MinWidth="280"/>
      <Expander Header="이전 v2 이력 가져오기"><StackPanel Spacing="8"><TextBox x:Name="LegacyToken" Header="연결된 실행부의 기존 요청 식별자"/><Button Content="원본을 보존하고 보관용 이력 가져오기" Tag="import-legacy" Click="Action"/></StackPanel></Expander>
      <TextBlock x:Name="RequestStatus" TextWrapping="Wrap"/>
-     <ComboBox x:Name="Discipline" Header="작업 분야" SelectedIndex="1"><ComboBoxItem Content="기획"/><ComboBoxItem Content="코딩"/><ComboBoxItem Content="아트 · 후속 단계" IsEnabled="False"/><ComboBoxItem Content="사운드 · 후속 단계" IsEnabled="False"/><ComboBoxItem Content="특수효과 · 후속 단계" IsEnabled="False"/><ComboBoxItem Content="질문/상담 · 후속 단계" IsEnabled="False"/></ComboBox>
+     <ComboBox x:Name="Discipline" Header="작업 분야" SelectedIndex="1" SelectionChanged="MediaDisciplineChanged"><ComboBoxItem Content="기획"/><ComboBoxItem Content="코딩"/><ComboBoxItem Content="아트 · 임시 도형 PNG"/><ComboBoxItem Content="사운드 · 임시 합성음 WAV"/><ComboBoxItem Content="특수효과 · 임시 확산 링 시트"/></ComboBox>
+     <StackPanel x:Name="MediaSettings" Visibility="Collapsed" Spacing="8">
+      <TextBlock Text="임시 절차적 생성: 아래 규격으로 시험용 자산을 만듭니다. 자유 문장의 화풍·음악·Unity 파티클을 생성하는 모델이 아닙니다. 수정 요청은 새 규격의 별도 결과를 만듭니다." TextWrapping="Wrap"/>
+      <local:WrapPanel><NumberBox x:Name="MediaWidth" Header="이미지/프레임 너비" Value="128" Minimum="8" Maximum="1024" Width="190"/><NumberBox x:Name="MediaHeight" Header="이미지/프레임 높이" Value="128" Minimum="8" Maximum="1024" Width="190"/><TextBox x:Name="MediaColor" Header="색상 (#RRGGBB)" Text="#55AAFF" Width="190"/></local:WrapPanel>
+      <local:WrapPanel><NumberBox x:Name="MediaSeconds" Header="음원/효과 길이(초)" Value="1" Minimum="0.1" Maximum="10" Width="190"/><NumberBox x:Name="MediaFrequency" Header="음원 주파수(Hz)" Value="440" Minimum="40" Maximum="12000" Width="190"/><NumberBox x:Name="MediaFrames" Header="효과 프레임 수" Value="8" Minimum="2" Maximum="16" Width="190"/></local:WrapPanel>
+      <TextBlock Text="아트: 투명 배경 원형 · 사운드: 44.1kHz 모노 사인파/페이드 · 효과: 가로 시트와 재생 정보 JSON. 선택한 분야에 해당하는 규격만 사용합니다." TextWrapping="Wrap"/>
+     </StackPanel>
      <ComboBox x:Name="RequestMode" Header="요청 유형" SelectedIndex="0"><ComboBoxItem Content="새 요청"/><ComboBoxItem Content="선택한 이전 작업의 수정 요청"/></ComboBox>
      <ComboBox x:Name="ParentChoice" Header="수정할 이전 작업" DisplayMemberPath="Label" MinWidth="280"/>
      <TextBox x:Name="TitleInput" Header="요청 제목"/><TextBox x:Name="GoalInput" Header="원하는 결과" AcceptsReturn="True" MinHeight="100" TextWrapping="Wrap"/><TextBox x:Name="ScopeInput" Header="작업 범위" AcceptsReturn="True" TextWrapping="Wrap"/><TextBox x:Name="ConstraintsInput" Header="제약·참고 사항" AcceptsReturn="True" TextWrapping="Wrap"/>
@@ -52,6 +58,12 @@
      <Button Content="현재 실행 중단 요청" Tag="stop" Click="Action"/><TextBlock Text="중단 요청 후 실제 종료를 확인합니다. 앱 종료·트레이 전환은 실행을 중단하지 않습니다." Style="{StaticResource BodyText}"/>
      <Expander Header="에이전트 권한·확인 요청"><StackPanel Spacing="10"><Button Content="대기 요청 읽기" Tag="attention" Click="Action"/><ComboBox x:Name="PermissionChoice" Header="확인할 요청" DisplayMemberPath="Label" SelectionChanged="PermissionSelected" MinWidth="240"/><TextBox x:Name="PermissionDetails" Header="요청 세부 내용" IsReadOnly="True" AcceptsReturn="True" TextWrapping="Wrap" MaxHeight="320"/><ComboBox x:Name="PermissionAction" Header="처리 방법" DisplayMemberPath="Label" MinWidth="240"/><CheckBox x:Name="PermissionConfirmed" Content="요청의 명령·경로와 처리 방법을 확인했습니다."/><Button Content="선택한 응답 전송" Tag="permission" Click="Action"/><TextBlock Text="질문형 요청은 이 화면에서 거부한 뒤 보완 내용을 전달하세요. 임의의 질문 답변을 자동으로 만들지 않습니다." TextWrapping="Wrap"/></StackPanel></Expander>
      <TextBox x:Name="ResultText" Header="검증 근거와 결과 이력" IsReadOnly="True" AcceptsReturn="True" MinHeight="240" MaxHeight="700" TextWrapping="Wrap"/>
+     <StackPanel x:Name="MediaPreviewPanel" Visibility="Collapsed" Spacing="8">
+      <Button Content="검증된 미디어 미리보기" Tag="media-preview" Click="Action"/>
+      <TextBlock x:Name="MediaPreviewInfo" TextWrapping="Wrap"/>
+      <Border Background="#FF303642" Padding="8"><Image x:Name="MediaImage" MaxHeight="320" Stretch="Uniform" AutomationProperties.Name="생성 이미지 또는 효과 프레임 시트"/></Border>
+      <MediaPlayerElement x:Name="MediaPlayer" AreTransportControlsEnabled="True" AutoPlay="False" Visibility="Collapsed" Height="120" AutomationProperties.Name="생성 음원 재생"/>
+     </StackPanel>
      <CheckBox x:Name="QualityConfirmed" Content="결과물을 검토했고 요청에 맞는 품질임을 확인했습니다."/><CheckBox x:Name="ChecksConfirmed" Content="자동 검사 결과와 검사 파일 변경 내용을 확인했습니다."/>
      <TextBox x:Name="ReviewNote" Header="검토 메모 · 수정 요청 시 사유 필수" AcceptsReturn="True" TextWrapping="Wrap"/>
      <local:WrapPanel><Button Content="완료 승인" Tag="approve" Click="Action"/><Button Content="수정 필요" Tag="reject" Click="Action"/><Button Content="자동 검사 다시 실행" Tag="revalidate" Click="Action"/></local:WrapPanel>

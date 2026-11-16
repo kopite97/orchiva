@@ -22,6 +22,9 @@ public partial class MainWindow : Window
     private string settingsPath = "";
     private int refreshVersion;
     private bool loadingPage;
+    private bool packaged;
+    private string? startupError;
+    private IDisposable? profileLease;
 
     public MainWindow()
     {
@@ -43,6 +46,14 @@ public partial class MainWindow : Window
                 BridgeClient.ValidateOptions(options);
                 settingsPath = Path.Combine(options.IsolationRoot, "desktop-settings.json");
             }
+            else if (File.Exists(Path.Combine(AppContext.BaseDirectory, "orchiva-package.json")))
+            {
+                var profileRoot = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Orchiva.Desktop", "runtime-v1");
+                profileLease = ProfileUseLease.Acquire(profileRoot);
+                options = PackagedProfile.Open(AppContext.BaseDirectory, profileRoot);
+                settingsPath = Path.Combine(options.IsolationRoot, "desktop-settings.json");
+                packaged = true;
+            }
             if (File.Exists(settingsPath))
             {
                 using var settings = JsonDocument.Parse(File.ReadAllText(settingsPath));
@@ -50,7 +61,7 @@ public partial class MainWindow : Window
                 CloseChoice.SelectedIndex = Math.Clamp(settings.RootElement.GetProperty("close").GetInt32(), 0, 1);
             }
         }
-        catch { options = null; model.Diagnostics = "설정 파일을 읽지 못했습니다. 경로와 형식을 확인하세요."; }
+        catch (Exception error) { options = null; startupError = error is IOException ? error.Message : "설정 파일을 읽지 못했습니다. 경로와 형식을 확인하세요."; model.Diagnostics = startupError; }
         initialized = true;
         ApplyTheme();
         AppWindow.Closing += (sender, args) =>
@@ -60,8 +71,16 @@ public partial class MainWindow : Window
             if (CloseChoice.SelectedIndex == 1) { EnsureTray(); AppWindow.Hide(); }
             else _ = ExitAsync();
         };
-        Closed += (_, _) => { tray?.Dispose(); };
-        Root.Loaded += async (_, _) => await ConnectAsync();
+        Closed += (_, _) => { tray?.Dispose(); profileLease?.Dispose(); };
+        Root.Loaded += async (_, _) =>
+        {
+            if (packaged && options != null)
+            {
+                try { model.Connection = "실행부 시작 중"; await RuntimeLauncher.StartAsync(options, closing.Token); }
+                catch { if (!exiting) ReportFailure("실행부를 시작하지 못했습니다. 연결 상태에서 설정과 포트를 확인하세요."); return; }
+            }
+            await ConnectAsync();
+        };
     }
 
     private void EnsureTray()
@@ -89,7 +108,7 @@ public partial class MainWindow : Window
         try
         {
             if (exiting) return;
-            if (options == null) { model.Diagnostics = "ORCHIVA_DESKTOP_CONFIG에 격리 실행 설정 JSON 경로를 지정하세요. 기본 데이터 폴더로 자동 연결하지 않습니다."; return; }
+            if (options == null) { model.Diagnostics = startupError ?? "배포본의 전체 폴더에서 실행하세요. 개발 실행은 ORCHIVA_DESKTOP_CONFIG 설정이 필요합니다."; ReportFailure(model.Diagnostics); return; }
             model.Connection = "연결 중";
             if (client != null) await client.DisposeAsync();
             client = new BridgeClient(options);
@@ -116,13 +135,14 @@ public partial class MainWindow : Window
     {
         if (client == null) return;
         var version = ++refreshVersion;
-        var project = await client.CallAsync("project.read", new { }, closing.Token);
+        JsonElement? project = options != null && File.Exists(Path.Combine(options.DataHome, "project.json"))
+            ? await client.CallAsync("project.read", new { }, closing.Token) : null;
         var page = await client.CallAsync("request.page", new { filter = "all", limit = 20 }, closing.Token);
         var runtime = await client.CallAsync("runtime.status", new { }, closing.Token);
         if (version != refreshVersion || exiting) return;
-        model.ProjectName = DesktopViewModel.Text(project, "name");
-        model.ProjectPath = DesktopViewModel.Text(project, "repositoryPath");
-        model.ProjectInfo = $"기준 {DesktopViewModel.Text(project, "baseRef")} · {DesktopViewModel.Text(project, "provider")}";
+        model.ProjectName = project is { } p ? DesktopViewModel.Text(p, "name") : "기존 MVP 프로젝트 없음";
+        model.ProjectPath = project is { } p2 ? DesktopViewModel.Text(p2, "repositoryPath") : "작업실에서 프로젝트를 추가하세요.";
+        model.ProjectInfo = project is { } p3 ? $"기준 {DesktopViewModel.Text(p3, "baseRef")} · {DesktopViewModel.Text(p3, "provider")}" : "이전 환경의 프로젝트를 자동으로 가져오지 않습니다.";
         model.Items.Clear(); AddPage(page);
         model.DetailTitle = "작업을 선택하세요"; model.Detail = "목록에서 작업을 선택하면 PLAN과 보존된 결과를 확인할 수 있습니다.";
         model.Updated = $"마지막 조회 {DateTime.Now:HH:mm:ss} · 기존 MVP 조회";
@@ -152,6 +172,18 @@ public partial class MainWindow : Window
         finally { button.IsEnabled = true; }
     }
     private async void Reconnect(object sender, RoutedEventArgs e) => await ConnectAsync();
+    private async void CheckTools(object sender, RoutedEventArgs e)
+    {
+        var button = (Microsoft.UI.Xaml.Controls.Button)sender; button.IsEnabled = false;
+        try
+        {
+            ToolStatus.Text = "설치·인증 상태 확인 중…";
+            var checks = await ToolReadiness.CheckAsync(closing.Token);
+            if (!exiting) ToolStatus.Text = string.Join("\n\n", checks.Select(item => item.Message));
+        }
+        catch (OperationCanceledException) { }
+        finally { if (!exiting) button.IsEnabled = true; }
+    }
     private async void More(object sender, RoutedEventArgs e)
     {
         if (client == null || cursor == null || loadingPage) return; NextPage.IsEnabled = false; loadingPage = true;

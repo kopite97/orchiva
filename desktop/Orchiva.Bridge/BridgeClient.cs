@@ -46,6 +46,10 @@ public sealed class BridgeClient : IAsyncDisposable
         start.Environment["ORCHIVA_PASEO_HOME"] = options.PaseoHome;
         start.Environment["ORCHIVA_PASEO_ENDPOINT"] = options.Endpoint;
         start.Environment["ORCHIVA_ISOLATION_ROOT"] = options.IsolationRoot;
+        // Spawned workers must find the same bundled Node on a machine without
+        // a global Node installation. This changes only this child environment.
+        start.Environment.TryGetValue("PATH", out var inheritedPath);
+        start.Environment["PATH"] = Path.GetDirectoryName(options.NodePath) + Path.PathSeparator + inheritedPath;
         if (options.PaseoCliPath != null) start.Environment["ORCHIVA_PASEO_CLI"] = options.PaseoCliPath;
         return start;
     }

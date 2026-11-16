@@ -5,7 +5,21 @@
     <RuntimeIdentifier>win-x64</RuntimeIdentifier><Platforms>x64</Platforms><PlatformTarget>x64</PlatformTarget>
     <ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable><RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+    <SelfContained Condition="'$(OrchivaPackage)' == 'true'">true</SelfContained>
   </PropertyGroup>
   <ItemGroup><PackageReference Include="Microsoft.WindowsAppSDK" Version="2.6.5" /><PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.6584" /><ProjectReference Include="../Orchiva.Bridge/Orchiva.Bridge.csproj" /></ItemGroup>
   <ItemGroup><FrameworkReference Include="Microsoft.WindowsDesktop.App.WindowsForms"/><Using Remove="System.Windows.Forms"/><Using Remove="System.Drawing"/></ItemGroup>
+  <!-- Folder publish does not collect generated WinUI resources in this SDK.
+       Keep their output-relative paths; the PRI resolves these compiled XAML files. -->
+  <Target Name="PublishWinUIResources" AfterTargets="ComputeFilesToPublish">
+    <ItemGroup>
+      <ResolvedFileToPublish Include="$(TargetDir)$(AssemblyName).pri">
+        <RelativePath>$(AssemblyName).pri</RelativePath><CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </ResolvedFileToPublish>
+      <_OrchivaXaml Include="$(TargetDir)**\*.xbf" />
+      <ResolvedFileToPublish Include="@(_OrchivaXaml)">
+        <RelativePath>%(_OrchivaXaml.RecursiveDir)%(_OrchivaXaml.Filename)%(_OrchivaXaml.Extension)</RelativePath><CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </ResolvedFileToPublish>
+    </ItemGroup>
+  </Target>
 </Project>

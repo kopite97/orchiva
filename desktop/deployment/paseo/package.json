@@ -1,0 +1,6 @@
+{
+  "name": "orchiva-desktop-paseo-runtime",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": { "@getpaseo/cli": "0.15.4" }
+}
