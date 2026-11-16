@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="Orchiva.Bridge.Tests/Orchiva.Bridge.Tests.csproj" />
+  <Project Path="Orchiva.Bridge/Orchiva.Bridge.csproj" />
+  <Project Path="Orchiva.Desktop/Orchiva.Desktop.csproj" />
+</Solution>

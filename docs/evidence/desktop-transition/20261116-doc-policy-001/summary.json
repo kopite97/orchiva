@@ -1,0 +1,38 @@
+{
+  "plan": "../../../plans/desktop-transition.md",
+  "runId": "20261116-doc-policy-001",
+  "date": "2026-11-16",
+  "timezone": "Asia/Seoul",
+  "kind": "documentation-static-validation",
+  "scope": "Root AGENTS entry point, named document rules, plan-specific evidence, desktop design updates; no app implementation",
+  "baseCommit": "b08dc1384698d988c76bdd5d24f91307fae857f4",
+  "checks": {
+    "markdownFiles": 35,
+    "relativeLinks": 288,
+    "anchors": 9,
+    "utf8AndFences": true,
+    "agentPaths": [
+      "AGENTS.md"
+    ],
+    "templateSections": 9,
+    "planStatus": "proposed",
+    "diffPass": true,
+    "sourceUnchanged": true,
+    "trackedLegacyEvidenceUnchanged": true
+  },
+  "procedure": [
+    "Decode Markdown as strict UTF-8 and check code fences",
+    "Resolve relative Markdown links and heading anchors",
+    "Use rg --files -g AGENTS.md to verify root-only entry",
+    "Compare plan sections and proposed index status",
+    "Run git diff --check and scoped git diff --exit-code"
+  ],
+  "excluded": {
+    "historicalAbsoluteLocalLinks": 7,
+    "externalUrls": "Not rechecked; this change is local document structure",
+    "runtimeTests": "Not rerun for documentation-only changes",
+    "desktopImplementation": "Not started"
+  },
+  "errors": [],
+  "result": "passed"
+}

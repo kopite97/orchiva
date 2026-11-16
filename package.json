@@ -25,7 +25,12 @@
     "m3": "node scripts/m3-reconcile.mjs",
     "m4": "node scripts/m4-review.mjs",
     "m5": "node --import tsx scripts/m5-recovery.mjs",
-    "m6": "node scripts/m6-acceptance.mjs"
+    "m6": "node scripts/m6-acceptance.mjs",
+    "desktop:build": "dotnet build desktop/Orchiva.Desktop/Orchiva.Desktop.csproj -p:Platform=x64 -p:RestoreLockedMode=true",
+    "desktop:test": "dotnet test desktop/Orchiva.Bridge.Tests/Orchiva.Bridge.Tests.csproj -p:RestoreLockedMode=true",
+    "desktop:verify": "node --import tsx scripts/desktop-foundation.mjs",
+    "desktop:production": "node --import tsx scripts/desktop-production.mjs",
+    "project:instructions": "node --import tsx scripts/project-instructions.mjs"
   },
   "devDependencies": {
     "@getpaseo/client": "0.15.4",

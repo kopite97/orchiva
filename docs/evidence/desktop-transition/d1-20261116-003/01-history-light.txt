@@ -1,0 +1,102 @@
+Window: "Orchiva", App: Orchiva.Desktop.exe.
+	0 window (창) Orchiva Secondary Actions: Raise
+		1 pane (창)
+			2 pane (창)
+				3 custom (사용자 지정) ID: Navigation
+					4 button (단추) 탐색 닫기 ID: TogglePaneButton
+						5 text (텍스트) ID: PaneTitleTextBlock
+					6 window (창) Secondary Actions: Raise ID: PaneRoot
+						7 pane (창) ID: MenuItemsScrollViewer
+							8 group (그룹) ID: MenuItemsHost
+								9 list item (목록 항목) (selectable) 프로젝트
+								10 list item (목록 항목) (selectable) PLAN 이력
+								11 list item (목록 항목) (selectable) 연결 상태
+						12 pane (창) ID: FooterItemsScrollViewer
+							13 group (그룹) ID: FooterMenuItemsHost
+								14 list item (목록 항목) (selectable) 설정 ID: SettingsItem
+					15 text (텍스트) Orchiva · 데스크톱 연결 기반
+					16 pane (창)
+						17 status bar (상태 표시줄) ID: StatusBar
+							18 text (텍스트) 정보 아이콘 ID: StandardIcon
+							19 text (텍스트) 조회 전용 · D1 ID: Title
+							20 text (텍스트) 프로젝트와 작업 이력을 조회했습니다. 제작 실행·지침 편집은 후속 단계입니다. ID: Message
+						21 text (텍스트) PLAN 이력
+						22 text (텍스트) 전체 3건 · 3건 표시
+						23 list (목록) ID: Requests
+							24 list item (목록 항목) (selectable) RequestItem { Token = d1-fixture-003, Title = 한글 · 공백 경로 확인, Description = 완료 · 시도 1 }
+								25 text (텍스트) 한글 · 공백 경로 확인
+								26 text (텍스트) 완료 · 시도 1
+							27 list item (목록 항목) (selectable) RequestItem { Token = d1-fixture-002, Title = 튜토리얼 흐름 정리, Description = 초안 · 시도 1 }
+								28 text (텍스트) 튜토리얼 흐름 정리
+								29 text (텍스트) 초안 · 시도 1
+							30 list item (목록 항목) (selectable) RequestItem { Token = d1-fixture-001, Title = 인벤토리 정렬 개선, Description = 초안 · 시도 1 }
+								31 text (텍스트) 인벤토리 정렬 개선
+								32 text (텍스트) 초안 · 시도 1
+						33 button (단추) (disabled) 다음 20개 보기 ID: NextPage
+						34 text (텍스트) 한글 · 공백 경로 확인
+						35 text (텍스트) 상태: 완료 # 한글 · 공백 경로 확인 ## Goal 합성 조회 fixture ## Scope 조회만 ## Constraints 실행 금지 ## Validation 생성 수 0 ## Completion Criteria 보존된 결과 1개 결과 synthetic-result-001 · 2026-11-16T02:04:55.992Z 합성 결과입니다. 모델 실행이나 파일 변경은 없었습니다. 변경 파일: 판정: 완료 · 2026-11-16T02:04:55.992Z 합성 검토 이력 · 실제 완료 판정 아님
+						36 text (텍스트) 마지막 조회 11:06:16 · 읽기 전용
+						37 scroll bar (스크롤 막대) (settable, float) 세로 Value: 78.02071380615234 ID: VerticalScrollBar
+							38 button (단추) 세로 작은 감소 ID: VerticalSmallDecrease
+							39 button (단추) 세로 큰 감소 ID: VerticalLargeDecrease
+							40 button (단추) 세로 큰 증가 ID: VerticalLargeIncrease
+							41 button (단추) 세로 작은 증가 ID: VerticalSmallIncrease
+		42 title bar (제목 표시줄) (settable, string) Value: Orchiva
+			43 menu bar (메뉴 모음) 시스템 ID: MenuBar
+				44 menu item (메뉴 항목) 시스템
+			45 button (단추) 최소화
+			46 button (단추) 최대화
+			47 button (단추) 닫기
+
+Document text: ```
+
+프로젝트
+
+PLAN 이력
+
+연결 상태
+설정
+Orchiva · 데스크톱 연결 기반
+
+
+조회 전용 · D1
+프로젝트와 작업 이력을 조회했습니다. 제작 실행·지침 편집은 후속 단계입니다.
+전체 3건 · 3건 표시
+한글 · 공백 경로 확인
+완료 · 시도 1
+튜토리얼 흐름 정리
+초안 · 시도 1
+인벤토리 정렬 개선
+다음 20개 보기
+상태: 완료
+
+# 한글 · 공백 경로 확인
+
+## Goal
+합성 조회 fixture
+
+## Scope
+조회만
+
+## Constraints
+실행 금지
+
+## Validation
+생성 수 0
+
+## Completion Criteria
+
+
+
+보존된 결과 1개
+
+결과 synthetic-result-001 · 2026-11-16T02:04:55.992Z
+합성 결과입니다. 모델 실행이나 파일 변경은 없었습니다.
+변경 파일: 
+
+판정: 완료 · 2026-11-16T02:04:55.992Z
+합성 검토 이력 · 실제 완료 판정 아님
+마지막 조회 11:06:16 · 읽기 전용
+
+
+```

@@ -1,0 +1,32 @@
+{
+  "runId": "d1-20261116-004-한글 경로",
+  "checkedAt": "2026-11-16T02:29:45.694Z",
+  "info": {
+    "protocolVersion": 1,
+    "serverVersion": "desktop-d1",
+    "dataHome": "C:\\Users\\USER\\lib\\orchiva-plugin\\.desktop-local\\d1-20261116-004-한글 경로\\data",
+    "paseoHome": "C:\\Users\\USER\\lib\\orchiva-plugin\\.desktop-local\\d1-20261116-004-한글 경로\\paseo",
+    "endpoint": "127.0.0.1:58983",
+    "isolated": true,
+    "pid": 32572,
+    "startedAt": "2026-11-16T02:29:16.486Z",
+    "capabilities": [
+      "runtime.info",
+      "project.read",
+      "request.page",
+      "request.detail",
+      "runtime.status",
+      "storage.diagnostics"
+    ],
+    "restoring": false
+  },
+  "total": 3,
+  "agentsBefore": 0,
+  "agentsAfter": 0,
+  "workspacesBefore": 0,
+  "workspacesAfter": 0,
+  "secondOwnerRejected": true,
+  "fixtureUnchanged": true,
+  "originalRequestsUnchanged": true,
+  "mutationDenied": true
+}

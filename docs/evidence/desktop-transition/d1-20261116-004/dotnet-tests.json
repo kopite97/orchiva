@@ -1,0 +1,66 @@
+{
+  "total": 12,
+  "passed": 12,
+  "tests": [
+    {
+      "name": "OversizedResponseAndRepeatedDisposeAreSafe",
+      "outcome": "Passed",
+      "duration": "00:00:00.1169749"
+    },
+    {
+      "name": "SharedHandshakeFixtureMatchesCSharpClient",
+      "outcome": "Passed",
+      "duration": "00:00:00.1419961"
+    },
+    {
+      "name": "StdoutContaminationRejectsPendingReads",
+      "outcome": "Passed",
+      "duration": "00:00:00.1250191"
+    },
+    {
+      "name": "MissingNodeAndInvalidExecutableHaveSpecificFailures",
+      "outcome": "Passed",
+      "duration": "00:00:00.0888694"
+    },
+    {
+      "name": "CorrelatesOutOfOrderUnicodeRepliesAndDrainsErrors",
+      "outcome": "Passed",
+      "duration": "00:00:00.2110147"
+    },
+    {
+      "name": "RealBridgeReadOnlyWhenIsolatedFixtureProvided",
+      "outcome": "Passed",
+      "duration": "00:00:00.9168189"
+    },
+    {
+      "name": "CancellationDoesNotReuseCorrelationId",
+      "outcome": "Passed",
+      "duration": "00:00:00.2051079"
+    },
+    {
+      "name": "MissingResultFailsWithoutLosingPendingRequest",
+      "outcome": "Passed",
+      "duration": "00:00:00.1271979"
+    },
+    {
+      "name": "RealLauncherIsIdempotentAndThreeBridgeLifetimesPreserveResults",
+      "outcome": "Passed",
+      "duration": "00:00:03.7972257"
+    },
+    {
+      "name": "WrongCredentialHomeIsRejectedWithoutChangingHealthyConnection",
+      "outcome": "Passed",
+      "duration": "00:00:01.5535269"
+    },
+    {
+      "name": "TimeoutDoesNotPoisonNextRequest",
+      "outcome": "Passed",
+      "duration": "00:00:20.0516655"
+    },
+    {
+      "name": "FailedAndCancelledLaunchCleanOnlyOwnedChildren",
+      "outcome": "Passed",
+      "duration": "00:00:02.4291967"
+    }
+  ]
+}

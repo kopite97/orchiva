@@ -1,0 +1,328 @@
+{
+  "checkedAt": "2026-11-16T03:55:18.559Z",
+  "root": "C:\\Users\\USER\\lib\\orchiva-plugin",
+  "branch": "codex/desktop-d1-foundation",
+  "baseCommit": "b08dc1384698d988c76bdd5d24f91307fae857f4",
+  "scope": "D2-D3 implementation and non-GUI verification",
+  "computerUse": false,
+  "tests": {
+    "node": {
+      "passed": 108,
+      "failed": 0,
+      "skipped": 0,
+      "lastFocusedRegression": {
+        "passed": 7,
+        "failed": 0,
+        "reason": "legacy revalidation/reconciliation global-slot guard"
+      }
+    },
+    "dotnet": {
+      "passed": 13,
+      "failed": 0,
+      "skipped": 0,
+      "liveFixture": "d1-20261116-009-bridge"
+    },
+    "typecheck": "passed",
+    "winuiBuild": {
+      "passed": true,
+      "warnings": 0,
+      "errors": 0
+    }
+  },
+  "runs": [
+    {
+      "runId": "d1-20261116-007-production",
+      "verifiedAt": "2026-11-16T03:25:54.450Z",
+      "projectId": "aacba7fa-e339-4d02-a312-859a730d88f2",
+      "request": "d1-20261116-007-production-request",
+      "status": "completed",
+      "agentId": "4ee0130e-8d34-458d-94fd-fd8d10039c76",
+      "workspaceId": "wks_92570e8628d97599",
+      "attempts": 2,
+      "plans": 1,
+      "results": [
+        {
+          "id": "680a3550-c35a-4232-9876-6d94bf409251",
+          "attempt": 1,
+          "checks": [
+            {
+              "id": "auto-1",
+              "status": "failed",
+              "passed": false
+            }
+          ],
+          "executionFailed": false
+        },
+        {
+          "id": "5c881ba5-f3ba-4051-86f2-6077e2e3dd71",
+          "attempt": 2,
+          "checks": [
+            {
+              "id": "auto-1",
+              "status": "passed",
+              "passed": true
+            }
+          ],
+          "executionFailed": false
+        }
+      ],
+      "reviewCount": 1,
+      "exportedFiles": [
+        "answer.txt"
+      ],
+      "sourceApplyUndone": true,
+      "newAgents": 1,
+      "newWorkspaces": 1,
+      "modification": null,
+      "privateEvidenceDirectory": ".desktop-local/d1-20261116-007-production"
+    },
+    {
+      "runId": "d1-20261116-008-production",
+      "verifiedAt": "2026-11-16T03:40:27.164Z",
+      "projectId": "6f12a9ed-b53b-44f5-be6c-a5631d387150",
+      "request": "d1-20261116-008-production-request",
+      "status": "completed",
+      "agentId": "3655da35-5f79-4746-a1ca-c359f242880e",
+      "workspaceId": "wks_6994ce1a1fc7b040",
+      "attempts": 2,
+      "plans": 1,
+      "results": [
+        {
+          "id": "bdaebfe2-7add-4588-b4c8-744554ac4d11",
+          "attempt": 1,
+          "checks": [
+            {
+              "id": "auto-1",
+              "status": "passed",
+              "passed": true
+            }
+          ],
+          "executionFailed": false
+        },
+        {
+          "id": "f9078d0c-5ffb-4534-a5c4-3b8073cb9a2f",
+          "attempt": 1,
+          "checks": [
+            {
+              "id": "auto-1",
+              "status": "failed",
+              "passed": false
+            }
+          ],
+          "executionFailed": false
+        },
+        {
+          "id": "9dc792b0-904b-489d-b87b-52a8fdba5476",
+          "attempt": 2,
+          "checks": [
+            {
+              "id": "auto-1",
+              "status": "passed",
+              "passed": true
+            }
+          ],
+          "executionFailed": false
+        }
+      ],
+      "reviewCount": 1,
+      "exportedFiles": [
+        "answer.txt"
+      ],
+      "sourceApplyUndone": true,
+      "newAgents": 2,
+      "newWorkspaces": 2,
+      "modification": {
+        "token": "d1-20261116-008-production-modify",
+        "agentId": "9cabad05-7644-49aa-b0a8-2e6e83870ae9",
+        "workspaceId": "wks_5823ae24c9d86204",
+        "resultId": "0ae6f89a-fb69-4658-87ce-f8d9c2ae9775",
+        "stopped": true
+      },
+      "privateEvidenceDirectory": ".desktop-local/d1-20261116-008-production"
+    }
+  ],
+  "protectedRequests": {
+    "count": 54,
+    "unchanged": true
+  },
+  "originalSandboxWorkingTree": "",
+  "stoppedHomes": [
+    "d1-20261116-006-d23",
+    "d1-20261116-007-production",
+    "d1-20261116-008-production",
+    "d1-20261116-009-bridge"
+  ],
+  "gui": {
+    "status": "pending-by-user-instruction",
+    "items": [
+      "G01",
+      "G02",
+      "G03",
+      "G04",
+      "G05",
+      "G06",
+      "G07",
+      "G08",
+      "G09",
+      "G10",
+      "G11"
+    ]
+  },
+  "mockOnly": [
+    "AI completion checkpoint restore",
+    "permission response loss",
+    "partial file apply/undo and export conflict"
+  ],
+  "notStarted": [
+    "D4",
+    "D5",
+    "D6"
+  ],
+  "committed": false,
+  "pushed": false,
+  "sourceHashes": {
+    "bridge/index.ts": "7c6477b6fdea4d0753892db26d5612ba4522546c99b844fd0c09b580e8a4eeb6",
+    "bridge/launcher.ts": "6910473b3cb0af74f6e7ad0067e7edb98f6dcf80c3e7450952bc0bfccdc2a2f2",
+    "bridge/protocol.ts": "aca2edbedfc1cff8dd60e53bbff9531a3e15f610dda77f8e42cb5ad04cbdbaba",
+    "desktop/Orchiva.Bridge.Tests/MSTestSettings.cs": "68322dad2588cbdf4ac1c615b3f13ba90795f843c10cbd4476fec1ca64d8fccc",
+    "desktop/Orchiva.Bridge.Tests/Orchiva.Bridge.Tests.csproj": "d46267640dcdfd5e9eb8a91d42d4e55f75f8317de44776904239ba2884df7c9e",
+    "desktop/Orchiva.Bridge.Tests/ProtocolTests.cs": "bd46436ac6245f5f583eb26c140822ea2c12f2802dfeed621e8d4bb8b486fe7d",
+    "desktop/Orchiva.Bridge.Tests/packages.lock.json": "fa8cdb7b4a06b7f3c5d7a3ea392e0ebdd333595e580d4f96b29621277475bcd5",
+    "desktop/Orchiva.Bridge/AssemblyInfo.cs": "f22b643831f017477de2f91711ce91faa5810d23dbb96cca8e344687f5e544ad",
+    "desktop/Orchiva.Bridge/BridgeClient.cs": "6e27e3b4c8251cdc50bd749d1d1f75b60b9ee3e97c094a2c152abb284f39bb60",
+    "desktop/Orchiva.Bridge/Orchiva.Bridge.csproj": "f6d9543ca9878c02ccad0e2fd12993a432b6dcd8ba261903880d4ad09e29a611",
+    "desktop/Orchiva.Bridge/RuntimeLauncher.cs": "e03d13b89493d826736dd8f4603f8ab38795ea85251515d7d79bd8bdd499d8b3",
+    "desktop/Orchiva.Bridge/WireRequest.cs": "5be08585acc17683e4a2d4bf3648f009dce512bd3fb784981a0bc2948ec6e4d6",
+    "desktop/Orchiva.Bridge/packages.lock.json": "a4364d81a6de2707d66fbced18fbbc926c882ab96e1d1aebbb17e871285b9d75",
+    "desktop/Orchiva.Desktop/App.xaml": "950c4076cbc11605c6a8985e54337e7c2323e1ac969577c7b0892fd3af275ac4",
+    "desktop/Orchiva.Desktop/App.xaml.cs": "9dc66224a65d863c834956de53e4ae7c1b0b9ba118b5c8be3633c758abe8eb06",
+    "desktop/Orchiva.Desktop/DesktopViewModel.cs": "86266fc75fd611e92c267d97d2b56b53da386ea2ca86345948faf8855b15918b",
+    "desktop/Orchiva.Desktop/MainWindow.xaml": "4d67732cfbafaa77d06dce07b68a4b1b3ef7d5185d2c00751ab4767b6e4bcf9f",
+    "desktop/Orchiva.Desktop/MainWindow.xaml.cs": "8b8d2e20794e03c71fa81c9f8efc283a89b53ba867a0ac09904c2706800b2b3c",
+    "desktop/Orchiva.Desktop/Orchiva.Desktop.csproj": "e9b8516ba2bbd89fdd86f522ff60b6217c076cc5ec49d83983eb3ba4814a730f",
+    "desktop/Orchiva.Desktop/ProductionWorkspace.xaml": "c2f6fff9ccd722fe07b8d6dd1bb81a4b673742704be4b0a37ace52d2cb19e187",
+    "desktop/Orchiva.Desktop/ProductionWorkspace.xaml.cs": "b89ca5bf4d6631f0726be562a5d0a31be9b28df04bec4b842df3b7021b848980",
+    "desktop/Orchiva.Desktop/Themes/Orchiva.xaml": "f848309be689ce0e1171be6b3068366a8b4278df252e102ca747cd8707a583c8",
+    "desktop/Orchiva.Desktop/packages.lock.json": "d7a1b57b7ca160a46766494832dd8a4e1f964abf577fa142db5e713163c1053e",
+    "global.json": "69554709212a18360c02a61d973cf9c1713f3725286ff237546b9909fc85d7da",
+    "scripts/desktop-foundation.mjs": "4e5d8074c5b29dd810de89aee6d31393c9d47d74a29f4c64aa4e34f66b0ff953",
+    "scripts/desktop-production.mjs": "668333dcbd6b209b70ef2659503f1673ee8f9766b80072e138c3e58e3f11ad6d",
+    "scripts/project-instructions.mjs": "66ba2805921a031e4a2d42ea242f9cd9eb772e8609ad4244743c67199f8786c9",
+    "scripts/start-desktop-runtime.ps1": "7c1d2cd15e4fbce6d04c010f50e6fe8ad10270be2774b67f0b2b68ca2bc2b445",
+    "server/adapters/paseo/desktop-runtime.ts": "d98ea8d3d2b893b78ef1ec200699b70883427e3bc5a3d87a6f532c887341d177",
+    "server/adapters/paseo/desktop-service.ts": "1f09ced889c8eb8f3cc9740cfa35dd9021890123938735be50f786407735c1f0",
+    "server/adapters/paseo/plan-generator.ts": "1f8d5c42bab6ab875c87d089e41a06c4dba0ad402d7e7d38803c9a939d287876",
+    "server/adapters/storage/production-store.ts": "b3d4ae3a34e27ef5f09b0e5ee583285d2b5711fddf44293911a3dac09ad0ce49",
+    "server/adapters/storage/project-files.ts": "4e03bcdd117d707947475d53940849bca17e870977c0c7a6c2cb3a297c15a819",
+    "server/application/desktop/artifacts.ts": "a86876814b1dbd5e0e66c42fe3ef632f4b13e57c6455b5cc2d6cf88f28a7a021",
+    "server/application/desktop/production.ts": "d509b29ec625033f7d7ca8ce63f1366ccd7b47a5fd236750f3cb45ab3908db77",
+    "server/application/desktop/project-templates.ts": "8749297a4f94d150420e4c0796e68f227dd8479eae13d90375702a2fabe81d2c",
+    "server/application/desktop/projects.ts": "06fe9c43f34fef329ad45998d95d1cd7792f41a80f5579459815d8022c742508",
+    "server/application/desktop/snapshots.ts": "daad7d5eae08f75304720a71e409ff2dbde0b4a267da95c3e056251f06d6f4f3",
+    "server/application/desktop/transfers.ts": "57a0ef04bfda2b752d0434747d0999a35baa3c643d7a9d884fb176dbabc6111d",
+    "server/config/runtime-settings.ts": "d2adac5b72a6eea888c996a83d1478f8dfbc4f79311e20e071bd449a0236e60b",
+    "server/tests/desktop-bridge.test.ts": "b3136d381681cedc71067954e5cb18c19188795e5d285e8c90b4a1968b99d3fd",
+    "server/tests/desktop-production.test.ts": "37c86732c4d12cee008de723483b55e822ed7ee906decd554811782aaa87eba6",
+    "server/tests/desktop-projects.test.ts": "00aeeaabe96d9f4f6c0055b80d595ff76739c1e4f35811ec643510d5903c3835",
+    "shared/contracts/desktop-errors.ts": "1348a6347723431ae9c0c90ae51cc92a6d2da04bc66098298e0e6ac7df0dac7e",
+    "shared/contracts/desktop-production.ts": "d90078bec6d8288f81fdf9c3eac63e9b904f9217aed9145b15471ebe67f8bec1",
+    "shared/contracts/desktop-project.ts": "f762fa9121307a5fa371a5770cf55e3b530c5c5c836dca62fd7e94c126e45fd7",
+    "shared/contracts/desktop-protocol.ts": "720b4594a33f282a2acabe941c4e8f62139be22fc7db22eccd6992e6b70210b9",
+    "shared/contracts/fixtures/desktop-wire-v1.json": "dff71089d13d1d09ed690a12a48eff8ee1b94c2225cd2ef75395df5a136d4ac6",
+    "index.client.tsx": "30274f0b0b5ad0732aa02382b4002755483c260bdc3ca75b89896527aae96d22",
+    "index.server.ts": "2f8edb9b28d71f2d145320d88a5934cdd4cfdb895ea5249d26909e29f0a84217",
+    "package.json": "fb09d75be97bdc7180ff42fe32c9e0e4e52766f55370074b6d99bd66ce4c27fb",
+    "scripts/lifecycle-smoke.mjs": "b88105d49a50b7cee6a6d68cd6c22b84fbb5f170152447d3f730f5cee9187943",
+    "scripts/m0-foundation.mjs": "93afba5b49d11c1ae9e692f6a9d127fb03f74c66ba1686a7a3f46c4e028be3ec",
+    "scripts/m0-response-proxy.mjs": "1d3169a769ac7fde21469d087cbb119cb89340ed3376ed5b590573f9db20fe35",
+    "scripts/m1-storage.mjs": "857165ff534885b589ab9100bef0ea9e7e884449bcbbcd28bc1da4f517becafe",
+    "scripts/m2-workflow.mjs": "83c080898bd319f4e920da154763169c242035c3ffe9c5e1392383c14ea71b14",
+    "scripts/m3-reconcile.mjs": "f3ca71599aca5c884709e369be5d3d9cf95c659196dc5fe7753cec397388062e",
+    "scripts/m4-review.mjs": "f2d7ed9a721ed5372146372e47f925bd8ae8c3a63ab5859564a052860b9d9a45",
+    "scripts/m5-recovery.mjs": "b5129748c12c86f0ac0b236cccc9e9ed67d7924057bc4ca6060956f01d128ac8",
+    "scripts/m5-ui-preview.mjs": "a4ddd62171d5505792d4cdd3103acb58d9c3f0c41fc25bb2ff4199a062426140",
+    "scripts/m6-acceptance.mjs": "0f60f41e9787f139492256d4a2f49315ae7f3de5493318f21146f61b1274e430",
+    "scripts/m6/a11-daemon-stop-start.mjs": "29c57e4ab78ecf495f369d5e392348a8252314eb8c537fc0f1f161c62cb8601e",
+    "scripts/m6/backup-restore.mjs": "661bc45bc01819bc0c462c89640b1707dd071cd8890166734651bafd388b0691",
+    "scripts/m6/clean-install.mjs": "5cf8fc14bcb983be9b77ae6896a45dbd4d113e0d9d6e12e68e48fb7bef9ed7a6",
+    "scripts/m6/cleanup.mjs": "2b42a2923a462a6e0e691fb3d8fced27dd81674866d6f12eb0682fd69784ffec",
+    "scripts/m6/d03-response-drop.mjs": "bb613e807f6570502e576e0f3c17550eb0a91d4676ac40e4be75e7705cd71c64",
+    "scripts/m6/d04-live.mjs": "6b9571099579aefc25049e79efec82e67e18f05ad914059dda793319f8330dc7",
+    "scripts/m6/d06-recovery.mjs": "175385506e64620c68a9584f3d69fb268dd9edc525388224715faa3d666ae829",
+    "scripts/m6/d06-worker-kill.mjs": "b9bb409d22e0e320937ed5272d13b48b0e4f987f67f9545fbffe2fde3f720514",
+    "scripts/m6/d07-lifecycle.mjs": "c3f7e2a255804289a5a5e502d5c2e8ce8bb588322a6d415f531c9d1ccb4dfe55",
+    "scripts/m6/d07-proxy.mjs": "c87e4a73ca8017bd20b02b8df8bf2393c01ae435d2d9ec9e3f3dca4a74e90f7f",
+    "scripts/m6/document-check.mjs": "29395c29ce3e455fa891a82f0e3eb0d6e04cb6751e7e3287d24deb4da42adc64",
+    "scripts/m6/fault-worker.mjs": "177388575ef1225eb564279ce15086333f2de694a77d60f55d952d36e2629b86",
+    "scripts/m6/finish-idle.mjs": "fc01be7ea1c1b463d47260c152487af8da4e441b80999c1ad2eda3d26d169069",
+    "scripts/m6/isolated.mjs": "5664268e8d82ebfc10929d82fe2eb877922bde8af74722118ba0409235479933",
+    "scripts/m6/measure.mjs": "1bbae79f7a0854ecb651d63c6ca2f51e4b2f6f9d66044b4c47125e54d9251a31",
+    "scripts/m6/output-limit.mjs": "20a87673a61a0ddfadecc5969c953d6b126447a0fa241f5b9e777a9d48abd8d1",
+    "scripts/m6/p01-rpc.mjs": "92199bd5a0178f4fbb392f783c31c58476a6aab9e7f67e2916b9b7b69a46b9d3",
+    "scripts/m6/p02-live.mjs": "da1fa8c95600a0aa7f70656cede0f70ceae7afae5854a68da28b867cd0d9847a",
+    "scripts/m6/p03.mjs": "de76dac216bfbf0a7a60c63c7fae28033991b833d5589dc77f23ed7ff0864816",
+    "scripts/m6/p04-restarts.mjs": "2e5eabab05763f43517dd870ab1766acafd0d8fea4ac64a2b1360bdb6a8d7574",
+    "scripts/m6/p05-soak.mjs": "42359c57f60d48e0673f79865a9278e0b5d5159a5c4a455ba028815708229d81",
+    "scripts/m6/plugin-ownership.mjs": "0523e8de6468bdbf86c19694dc39adb10eae68b8589d8c56a8920a5eefa641f8",
+    "scripts/m6/preview.mjs": "7771553e11db0818138e301ca62507d1852d2ef2322d7d3219d0bc90234a413e",
+    "scripts/m6/record-completion.mjs": "786094793ed41ced5cdc272f1db24942e7991c1986937b3d3d1f36c5d0efdc8b",
+    "scripts/m6/resources.mjs": "f22032f032eeae65ddeb91fbfd7a5c68c78a11c6918bcf5697f88c570d1be50f",
+    "scripts/m6/slow-validation.mjs": "7c2ac936d397fe51befffacd762d257eaee8c0d2ee1752ac3f899c055b15d034",
+    "scripts/m6/summarize.mjs": "e5623edf7271a0f12538b4fb2766b6839cb9f4b8a6ad9d768a9a57b43c72bfe5",
+    "scripts/m6/supplement.mjs": "d9f9ac486dc18d70ed632435ac7badfb10ca64a7a9c799b94d0dd53691ae7c94",
+    "scripts/m6/ui-fixtures.mjs": "34c0baf50d3a09b9feaa7878d4426c6fe71266739d722da79479ab007249ed1b",
+    "scripts/m6/verify-final.mjs": "0bdbdb7f5f034eab304461d14851e9a2bf7af6c3281b702ee2f77b808d1f60f2",
+    "scripts/smoke.mjs": "da3fc64f406a6df726b2f4c25e223d55e4f4b9ef58056439238cab8fa7890764",
+    "scripts/start-paseo.ps1": "4252774fe902bd923823149a2e886a58b9cabf42b42b2e403989fed1b788609a",
+    "scripts/verify.mjs": "eafa34a20d531c9059666b83823510889821499a8dac257512653b21ab9aa5c1",
+    "server/adapters/paseo/connection.ts": "a651409bc7b696651d41292411f77f99f6d3662a7fdb7eedb0c9de16137477a3",
+    "server/adapters/paseo/m0-probe.ts": "ca223f67bb87e4656814d20c39130680e5af0f26ee5844db1954542df4cb1c30",
+    "server/adapters/paseo/pinned-workspace.ts": "02b672bf3e46f3825519b053ccbf39a7bbeb9704372a3bde1e62ff522f89d837",
+    "server/adapters/paseo/reconciliation.ts": "9acd85dc8051d1ca3d331717f45a4ac61efa1dc6294b9ce2552bcc8bbca2e0d8",
+    "server/adapters/paseo/runtime.ts": "ba5ab1c2bcfa5ab6c148d40ac2b719cb9853ce4a50f37d63a0d1f8166f174472",
+    "server/adapters/paseo/service.ts": "2eb95d20ad7677839350591b4e1e32dcea69e3f49a34ca42e35560adaae354ea",
+    "server/adapters/storage/directory-owner.ts": "ac5e5064afe518faa2b1cde9b7b3a0add4e4adff97be6e0c2ffca790fad81069",
+    "server/adapters/storage/evidence.ts": "ea4b597211ce09d5ec70293a945619da29b263b76bd780659d1af9729b36d78f",
+    "server/adapters/storage/json-request-store.ts": "d4613cad85432804b03e5dc5f6966bc7db1496af54725953dce8b9d2324e3ed2",
+    "server/application/draft-request.ts": "2d4a35b651a12e88b2e09aeb0672e338dc8fcff5ca171839f1127abb031450b7",
+    "server/application/effect-checkpoint.ts": "c493b884956143f92db6aefd3ff2d4c1a547bcdc2c6f04b70ccf604d9d7e535f",
+    "server/application/execution-slot.ts": "f139350f664fc951e3ee3ce6841740256142965684dda61fce6b3bdabf8119c2",
+    "server/application/ports.ts": "4c2df231486e7fa5d7bd82a04e45c6946f560e95c74f9f78b09f515e46296ccc",
+    "server/application/reconcile.ts": "1dc5cd482c2f31af5a1fc345438db5b38bc3604b57f356d2b95c07432dc27e83",
+    "server/application/recover-request.ts": "96310da831adaef23fc580d9c8af68a22c9990af67f98c3943460d9efffe65ac",
+    "server/application/request-locks.ts": "6ce02309a2d93407fa13da506a32516d883e600efbb86b41318bdc9ed2c9c010",
+    "server/application/start-feature-request.ts": "3ee3ac4b8d8356f2104739c50e64b6545dff23dd8c37aa1ce302553b2573712b",
+    "server/application/track-execution.ts": "135070432b5652e11596bbc73881b00c0ca6d58961ecb8a13776faf710febf8a",
+    "server/config/project-config.ts": "09145dfd74128bbdf2241cac7bd2f99ea16e811da9d81d9b1a1e83b607669ae7",
+    "server/domain/failure.ts": "7cc14b660055ef50561d7f50cfc6fcf19864952d0783755a045422a7c41f3fdc",
+    "server/domain/record-v2.ts": "ae41c61d2de1a2925dd2fdc5511de700b37855ce5463f5314d4f7a9db6067994",
+    "server/domain/request-plan.ts": "3f23bdeaeee8cd78d4bdd6d81b9503af5b3bf09a7d3b7d61fc7220f3b84d7ee9",
+    "server/domain/request-view.ts": "814ffae13bbf637420e10f0ce2d1134c666f722b06cb1ae58fc931f3568cb0d9",
+    "server/domain/request.ts": "3b5dd1a089e1d6224412c03db109c8b75300f0d13bb07d071afd9a1f9133053b",
+    "server/domain/review.ts": "25b7fc1dabb2b622d9442b561d65f80675e122087a49bf5c9ff18ef7b1cb24a4",
+    "server/tests/directory-owner.test.ts": "d489f6b0b007ace012fcce46493df8e035e2be796543e3d807a1f01e70792e13",
+    "server/tests/draft-plan.test.ts": "fa28b7d2621e32426b43f2f69dcebdbbb72922cecec6a7630a84fc3fea73ccb5",
+    "server/tests/evidence.test.ts": "ee53e2eae0400f909791d194c28a53fce7e35243f0cdeab28c8e73419b956aa7",
+    "server/tests/helpers/prepared.ts": "922fbbc5fa47baf03ba1b23cb3ca182c5d65e9c688441cbe81db7d75bd8d98b6",
+    "server/tests/m3-reconcile.test.ts": "6333771e15a9f289be5b812a4eec9f7501bbc95c47414a7d627994cd4a5a6d09",
+    "server/tests/m4-review.test.ts": "2d801b70e758140616bbf5c6a1e826c2c591cef4f191ddbc50ab7079a9f08082",
+    "server/tests/m5-recovery.test.ts": "0c519d991ab33105b83494218661e0e2e6f896c14cabf5a89f29cd194511d7e1",
+    "server/tests/m6-acceptance.test.ts": "c8bccc473a5d01f1ca8b6337707c680ae4d68ed96b3490d9f7cc26442e6f33d0",
+    "server/tests/m6-faults.test.ts": "2b8e8d688567005058053f645969447edb560cc73e82bc62c31ae3bfc7462974",
+    "server/tests/paseo-connection.test.ts": "f4c8de89795d7b717d38cb03f1e0333bf5ff4c46957226870ef08802adf0cc64",
+    "server/tests/runtime-reconciliation.test.ts": "4efd2515a64ae25be91c258dff4a6cb7ad1634a0df0c1d573df30a0aadcea5ee",
+    "server/tests/start-feature-request.test.ts": "e0420296c3a0a3a3dc97a19ef7f285ec727a404b270343ae5ed4672e22198883",
+    "server/tests/storage-v2.test.ts": "6f55fe92e3c5ca33098b229679c9809bb771946cf3472170a8b93ffe1685132f",
+    "server/tests/track-execution.test.ts": "db39c929dd34ccb402069e4aad5693d4ef89ccd525e3ad1a8005e7d1b8c3b41d",
+    "shared/contracts/feature-request.ts": "99fefb28a793a6753d284f9265cdf30201d7ba954b3c57b603ec7dc8b344d67a"
+  },
+  "finalCheckedAt": "2026-11-16T03:58:33.783Z",
+  "documentation": {
+    "markdownFiles": 38,
+    "localLinksChecked": 338,
+    "brokenLinks": 0
+  },
+  "developmentInstructionsUnchanged": true,
+  "packageLockUnchanged": true,
+  "noOwnedRunProcessesObserved": true
+}

@@ -1,0 +1,12 @@
+{
+  "runId": "d1-20261116-004-한글 경로",
+  "rounds": [
+    {
+      "round": 0,
+      "pid": 30020,
+      "code": 0,
+      "stderrBytes": 0
+    }
+  ],
+  "fixtureUnchanged": true
+}

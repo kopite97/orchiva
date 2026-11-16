@@ -1,0 +1,32 @@
+{
+  "runId": "d1-20261116-003",
+  "checkedAt": "2026-11-16T02:10:39.209Z",
+  "info": {
+    "protocolVersion": 1,
+    "serverVersion": "desktop-d1",
+    "dataHome": "C:\\Users\\USER\\lib\\orchiva-plugin\\.desktop-local\\d1-20261116-003\\data",
+    "paseoHome": "C:\\Users\\USER\\lib\\orchiva-plugin\\.desktop-local\\d1-20261116-003\\paseo",
+    "endpoint": "127.0.0.1:50223",
+    "isolated": true,
+    "pid": 44608,
+    "startedAt": "2026-11-16T02:05:39.821Z",
+    "capabilities": [
+      "runtime.info",
+      "project.read",
+      "request.page",
+      "request.detail",
+      "runtime.status",
+      "storage.diagnostics"
+    ],
+    "restoring": false
+  },
+  "total": 3,
+  "agentsBefore": 0,
+  "agentsAfter": 0,
+  "workspacesBefore": 0,
+  "workspacesAfter": 0,
+  "secondOwnerRejected": true,
+  "fixtureUnchanged": true,
+  "originalRequestsUnchanged": true,
+  "mutationDenied": true
+}

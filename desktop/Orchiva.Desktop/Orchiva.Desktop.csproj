@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType><TargetFramework>net10.0-windows10.0.26100.0</TargetFramework><TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
+    <UseWinUI>true</UseWinUI><WindowsPackageType>None</WindowsPackageType><WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier><Platforms>x64</Platforms><PlatformTarget>x64</PlatformTarget>
+    <ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable><RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup><PackageReference Include="Microsoft.WindowsAppSDK" Version="2.6.5" /><PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.6584" /><ProjectReference Include="../Orchiva.Bridge/Orchiva.Bridge.csproj" /></ItemGroup>
+  <ItemGroup><FrameworkReference Include="Microsoft.WindowsDesktop.App.WindowsForms"/><Using Remove="System.Windows.Forms"/><Using Remove="System.Drawing"/></ItemGroup>
+</Project>

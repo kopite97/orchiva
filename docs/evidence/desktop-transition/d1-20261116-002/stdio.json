@@ -1,0 +1,24 @@
+{
+  "runId": "d1-20261116-002",
+  "rounds": [
+    {
+      "round": 0,
+      "pid": 47324,
+      "code": 0,
+      "stderrBytes": 0
+    },
+    {
+      "round": 1,
+      "pid": 25104,
+      "code": 0,
+      "stderrBytes": 0
+    },
+    {
+      "round": 2,
+      "pid": 17732,
+      "code": 0,
+      "stderrBytes": 0
+    }
+  ],
+  "fixtureUnchanged": true
+}

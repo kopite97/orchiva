@@ -12,8 +12,13 @@ import { createReconciler } from "./server/adapters/paseo/service";
 import { RecoverRequest } from "./server/application/recover-request";
 import { failureView } from "./server/domain/failure";
 import { requestPage, allowedActions } from "./server/domain/request-view";
+import { readRuntimeSettings } from "./server/config/runtime-settings";
+import { runtimeInfoRpc, desktopContracts } from "./shared/contracts/desktop-protocol";
+
+import { contributeDesktop } from "./server/adapters/paseo/desktop-service";
 
 export default function contribute(server: PluginServerContext) {
+  const settings = readRuntimeSettings(), startedAt = new Date().toISOString();
   const stopProbe = startM0Probe();
   const store = new JsonRequestStore(join(configDirectory, "requests"));
   // SDK 0.15.4 requires synchronous contribution registration. All entry points
@@ -25,6 +30,7 @@ export default function contribute(server: PluginServerContext) {
   const tracker = new TrackExecution(store, start.locks);
   const recovery = new RecoverRequest(store, start.locks);
   const reconciler = createReconciler(store, start, tracker);
+  const desktop = contributeDesktop(server, store, settings.dataHome, ready);
   let stopped = false;
   void ready.then(() => { if (!stopped) reconciler.start(); }).catch(() => undefined);
   const runtime = async (paseo: Parameters<Parameters<PluginServerContext["handle"]>[1]>[1]["paseo"]) => { await ready; return new PaseoRuntime(paseo, await loadConfig()); };
@@ -39,18 +45,19 @@ export default function contribute(server: PluginServerContext) {
   server.handle(pageRpc, async input => { await ready; return requestPage(await store.list(), input); });
   server.handle(detailRpc, async ({ token }) => { await ready; const record = await store.get(token); return record ? { record, failure: failureView(record), allowedActions: allowedActions(record) } : null; });
   server.handle(serviceStatusRpc, async () => { await ready; return reconciler.snapshot(); });
+  server.handle(runtimeInfoRpc, async () => { await ready; return { protocolVersion: 1 as const, serverVersion: "desktop-d3" as const, dataHome: settings.dataHome, paseoHome: settings.paseoHome, endpoint: settings.endpoint, isolated: settings.isolationRoot !== null, pid: process.pid, startedAt, capabilities: Object.keys(desktopContracts), restoring: reconciler.snapshot().restoring || desktop.service.restoring }; });
   server.handle(saveDraftRpc, async input => { await ready; return drafts.save(input); });
   server.handle(preparePlanRpc, async (input, { paseo }) => drafts.prepare(input, await runtime(paseo)));
   server.handle(preflightRpc, async (_, { paseo }) => {
     try { const result = await (await runtime(paseo)).preflight([]); return { ready: true, baseCommit: result.baseCommit, checks: [{ label: "실행 환경", passed: true, detail: "저장소·기준 브랜치·daemon·Codex 경로 확인 완료" }] }; }
     catch (error) { return { ready: false, baseCommit: null, checks: [{ label: "실행 환경", passed: false, detail: error instanceof Error ? error.message : String(error) }] }; }
   });
-  server.handle(retryStartRpc, async input => { await ready; const record = await recovery.retry(input, () => reconciler.assertReady()); reconciler.wake(); return record; });
-  server.handle(reconcileRpc, async (input, { paseo }) => { const record = await recovery.reconcile(input, await runtime(paseo)); reconciler.wake(); return record; });
-  server.handle(revalidateRpc, async (input, { paseo }) => tracker.refresh(input.token, await runtime(paseo), undefined, true, input));
-  server.handle(startRpc, async (input, { paseo }) => { stopProbe.rpc(); const record = await start.accept(input, await runtime(paseo), () => reconciler.assertReady()); reconciler.wake(); return record; });
+  server.handle(retryStartRpc, async input => { await ready; const record = await desktop.service.legacyCommand(input.token, () => recovery.retry(input, () => reconciler.assertReady())); reconciler.wake(); return record; });
+  server.handle(reconcileRpc, async (input, { paseo }) => { const rt = await runtime(paseo); const record = await desktop.service.legacyCommand(input.token, () => recovery.reconcile(input, rt)); reconciler.wake(); return record; });
+  server.handle(revalidateRpc, async (input, { paseo }) => { const rt = await runtime(paseo); return desktop.service.legacyCommand(input.token, () => tracker.refresh(input.token, rt, undefined, true, input)); });
+  server.handle(startRpc, async (input, { paseo }) => { stopProbe.rpc(); const rt = await runtime(paseo); const record = await desktop.service.legacyCommand(input.token, () => start.accept(input, rt, () => reconciler.assertReady())); reconciler.wake(); return record; });
   server.handle(refreshRpc, async ({ token, revalidate }, { paseo }) => { stopProbe.rpc(); return tracker.refresh(token, await runtime(paseo), undefined, revalidate); });
-  server.handle(resumeRpc, async (input, { paseo }) => { stopProbe.rpc(); return tracker.resume(input, await runtime(paseo)); });
+  server.handle(resumeRpc, async (input, { paseo }) => { stopProbe.rpc(); const rt = await runtime(paseo); return desktop.service.legacyCommand(input.token, () => tracker.resume(input, rt)); });
   server.handle(inspectRpc, async (input, { paseo }) => tracker.inspect(input.token, input.resultId, await runtime(paseo)));
   server.handle(reviewRpc, async (input, { paseo }) => { stopProbe.rpc(); return tracker.review(input, await runtime(paseo)); });
   const remove = [
@@ -59,5 +66,5 @@ export default function contribute(server: PluginServerContext) {
     server.addHook("agent.permission.before", async ({ agent }) => { reconciler.hint(agent.id); }),
     server.addHook("agent.permission.after", async ({ agent }) => { reconciler.hint(agent.id); }),
   ];
-  return async () => { stopped = true; remove.forEach(dispose => dispose()); await ready.catch(() => undefined); try { await reconciler.stop(); } finally { try { await store.close(); } finally { await stopProbe(); } } };
+  return async () => { stopped = true; remove.forEach(dispose => dispose()); await ready.catch(() => undefined); try { await desktop.close(); await reconciler.stop(); } finally { try { await store.close(); } finally { await stopProbe(); } } };
 }

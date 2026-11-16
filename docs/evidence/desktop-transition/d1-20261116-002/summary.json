@@ -1,0 +1,115 @@
+{
+  "date": "2026-11-16",
+  "stage": "D1",
+  "status": "partial-environment-blocked",
+  "branch": "codex/desktop-d1-foundation",
+  "baseline": "b08dc13",
+  "runId": "d1-20261116-002",
+  "sdk": "10.0.401",
+  "windowsAppSdk": "2.6.5",
+  "windowsSdkBuildTools": "10.0.26100.6584",
+  "typecheck": "passed",
+  "nodeTests": {
+    "failed": 0,
+    "passed": 94,
+    "skipped": 0
+  },
+  "winUiBuild": {
+    "lockedRestore": true,
+    "errors": 0,
+    "status": "passed",
+    "warnings": 0
+  },
+  "csharpTestBuild": {
+    "errors": 0,
+    "status": "passed",
+    "warnings": 0
+  },
+  "csharpTestRun": {
+    "hresult": "0x800711C7",
+    "writtenCases": 7,
+    "status": "blocked",
+    "reason": "Windows CodeIntegrity prevented test assembly load"
+  },
+  "gui": {
+    "status": "blocked",
+    "reason": "Windows CodeIntegrity prevented exe launch"
+  },
+  "live": {
+    "workspaces": 0,
+    "agents": 0,
+    "originalRequestCount": 54,
+    "fixture": "2 drafts + 1 synthetic completed result/decision",
+    "offlineError": "CONNECTION_FAILED",
+    "fixtureBytesUnchanged": true,
+    "bridgeExitRounds": 3,
+    "secondStoreOwnerRejected": true,
+    "modelExecutions": 0,
+    "beforeAfterRestarts": 2,
+    "originalRequestsUnchanged": true
+  },
+  "cleanup": {
+    "portsChecked": [
+      6767,
+      17767,
+      61426
+    ],
+    "checkedAt": "2026-11-16T10:55:30.1594581+09:00",
+    "ownedDaemonsStopped": true,
+    "sandboxGitStatus": [],
+    "remainingOwnedNodeProcesses": [],
+    "fixtureAndLogsRetained": ".desktop-local/d1-20261116-001 and d1-20261116-002",
+    "listeners": []
+  },
+  "policyEvents": [
+    {
+      "at": "2026-11-16T10:42:00.8875736+09:00",
+      "Id": 3077,
+      "target": "Orchiva.Desktop.exe"
+    },
+    {
+      "at": "2026-11-16T10:42:00.8847364+09:00",
+      "Id": 3033,
+      "target": "Orchiva.Desktop.exe"
+    },
+    {
+      "at": "2026-11-16T10:41:36.6424165+09:00",
+      "Id": 3077,
+      "target": "Orchiva.Bridge.Tests.dll"
+    },
+    {
+      "at": "2026-11-16T10:41:36.6422089+09:00",
+      "Id": 3033,
+      "target": "Orchiva.Bridge.Tests.dll"
+    },
+    {
+      "at": "2026-11-16T10:41:36.2301826+09:00",
+      "Id": 3077,
+      "target": "Orchiva.Bridge.Tests.dll"
+    },
+    {
+      "at": "2026-11-16T10:41:36.2298962+09:00",
+      "Id": 3033,
+      "target": "Orchiva.Bridge.Tests.dll"
+    }
+  ],
+  "remaining": [
+    "C# tests execution",
+    "Actual WinUI connection and close/tray lifecycle",
+    "DPI/theme/keyboard/contrast and stale/empty/error GUI",
+    "Wrong credential and timeout scenarios",
+    "Real Unicode/space install path and invalid executable",
+    "D2-D6 not started"
+  ],
+  "security": {
+    "credentialCopied": false,
+    "globalEnvironmentChanged": false,
+    "policyChanged": false
+  },
+  "git": {
+    "committed": false,
+    "pushed": false
+  },
+  "wireFixture": "shared/contracts/fixtures/desktop-wire-v1.json",
+  "documentValidation": "document-validation.json"
+}

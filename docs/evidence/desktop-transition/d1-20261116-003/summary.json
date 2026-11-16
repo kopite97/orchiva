@@ -1,0 +1,210 @@
+{
+  "runId": "d1-20261116-003",
+  "recordedAt": "2026-11-16T02:21:48.468Z",
+  "timezone": "Asia/Seoul",
+  "sourceRoot": "C:\\Users\\USER\\lib\\orchiva-plugin",
+  "branch": "codex/desktop-d1-foundation",
+  "baseCommit": "b08dc13",
+  "uncommittedChanges": true,
+  "status": "core-gui-verified-d1-acceptance-incomplete",
+  "environment": {
+    "ui": "WinUI 3",
+    "sdk": "10.0.401",
+    "windowsAppSdk": "2.6.5",
+    "architecture": "x64",
+    "securityPolicyChangedBy": "user",
+    "securityPolicyChangedByAgent": false
+  },
+  "validation": {
+    "dotnetInitial": {
+      "passed": 4,
+      "failed": 3
+    },
+    "dotnetAfterFix": {
+      "passed": 7,
+      "failed": 0,
+      "liveIsolatedPluginIncluded": true
+    },
+    "fix": "desktop/Orchiva.Bridge/BridgeClient.cs: distinguish caller cancellation from connection lifetime cancellation",
+    "build": {
+      "warnings": 0,
+      "errors": 0
+    },
+    "nodeRegression": {
+      "passed": 94,
+      "rerunDuringGuiVerification": false
+    },
+    "typecheck": {
+      "previouslyPassed": true,
+      "rerunDuringGuiVerification": false
+    }
+  },
+  "gui": {
+    "projectAndConnection": true,
+    "syntheticRequestHistory": 3,
+    "planResultAndDecision": true,
+    "lightAndDarkThemes": true,
+    "tabFocusAndAltDown": true,
+    "trayHideProcessSurvived": true,
+    "trayRestore": {
+      "performedBy": "user",
+      "confirmedByUser": true,
+      "postRestoreObservedByAgent": true
+    },
+    "offlineLastDataRetained": true,
+    "reconnectUsingAppButton": true,
+    "appReopenCount": 1,
+    "themeAndCloseSettingPersisted": true,
+    "reopenedSameResultAndDecision": true,
+    "interruption": "User Escape stopped computer use; explicit resume instruction preceded remaining checks."
+  },
+  "isolation": {
+    "port": 50223,
+    "originalPort": 6767,
+    "originalRequestCount": 54,
+    "originalRequestsUnchanged": true,
+    "fixtureCount": 3,
+    "fixtureUnchanged": true,
+    "agentsCreated": 0,
+    "workspacesCreated": 0,
+    "secondStoreOwnerRejected": true,
+    "mutationDenied": true,
+    "sandboxGitStatusClean": true,
+    "liveBefore": "live-before.json",
+    "liveAfter": "live-after.json"
+  },
+  "cleanup": {
+    "firstAppPid": 43620,
+    "reopenedAppPid": 15576,
+    "reopenedBridgePid": 29824,
+    "pluginPids": [
+      44608,
+      33380
+    ],
+    "appClosedNormally": true,
+    "ownedBridgeExited": true,
+    "daemonRemainedQueryableAfterAppExit": true,
+    "isolatedDaemonStoppedUsingHarness": true,
+    "finalCheckedPidsAbsent": [
+      43620,
+      15576,
+      29824,
+      44608,
+      33380
+    ],
+    "finalListeningPortsAbsent": [
+      50223,
+      6767
+    ],
+    "originalAndFixtureHashesPassedAtStop": true,
+    "evidenceAndLocalRunRetained": true
+  },
+  "pending": [
+    "Paseo Daemon console window appears when starting runtime from app",
+    "Exact 800x600 and 1280x900 plus 100% and 150% DPI validation",
+    "Complete contrast and keyboard accessibility coverage",
+    "Empty-store and restoring-state GUI",
+    "Wrong credential and timeout scenarios",
+    "Korean/space installation paths and invalid child executable",
+    "Three complete app lifecycle repetitions and explicit tray-menu exit"
+  ],
+  "screenshots": [
+    {
+      "file": "01-history-light.png",
+      "accessibilitySnapshot": "01-history-light.txt",
+      "width": 7864320,
+      "height": 4292542531,
+      "sha256": "a6e6b843a22e9a863b8a385c7b270b3b2974d7f559d14c57ad63ce3436abb6fd"
+    },
+    {
+      "file": "02-connection-light.png",
+      "accessibilitySnapshot": "02-connection-light.txt",
+      "width": 7864320,
+      "height": 4292542531,
+      "sha256": "2cbe20a3a6128f8b57be25625e91b14537a57578071820f0134a629e91e600e8"
+    },
+    {
+      "file": "03-project-light.png",
+      "accessibilitySnapshot": "03-project-light.txt",
+      "width": 7864320,
+      "height": 4292542531,
+      "sha256": "18781188691e140a915694d03bf7723b1d28b32ce5fc543a2203bb237fd114df"
+    },
+    {
+      "file": "04-settings-dark.png",
+      "accessibilitySnapshot": "04-settings-dark.txt",
+      "width": 7864320,
+      "height": 4292542531,
+      "sha256": "e253cf08b4990c01517c40f61ea4c6f593e4767e81132cb2b5a3c07f6f0f9ef8"
+    },
+    {
+      "file": "05-settings-tray.png",
+      "accessibilitySnapshot": "05-settings-tray.txt",
+      "width": 7864320,
+      "height": 4292542531,
+      "sha256": "2aabbd4a70d8f633ae29f2fc188869fe376ff1709f8677abe920c532069fa13c"
+    },
+    {
+      "file": "06-keyboard-settings.png",
+      "accessibilitySnapshot": "06-keyboard-settings.txt",
+      "width": 7864320,
+      "height": 4292542531,
+      "sha256": "4aeabc2858ce31313a5afb43451529186decdb9acab546b27f2f67520cda31f3"
+    },
+    {
+      "file": "07-tray-restored.png",
+      "accessibilitySnapshot": "07-tray-restored.txt",
+      "width": 7864320,
+      "height": 4292542531,
+      "sha256": "87330558792900266a361843021abcb3c6469c517ad984ce02a3f8466afc33c7"
+    },
+    {
+      "file": "08-offline-stale-project.png",
+      "accessibilitySnapshot": "08-offline-stale-project.txt",
+      "width": 7864320,
+      "height": 4292542531,
+      "sha256": "b831e3678590f061b91d2964ff850e166a1804b8c7d54fa76d22eb4d5b77d8cd"
+    },
+    {
+      "file": "09-offline-history.png",
+      "accessibilitySnapshot": "09-offline-history.txt",
+      "width": 7864320,
+      "height": 4292542531,
+      "sha256": "9609b8d63eff53bbe218afd40308b124a47f1536e99eafb4565a5b12b7dd5964"
+    },
+    {
+      "file": "10-reconnected.png",
+      "accessibilitySnapshot": "10-reconnected.txt",
+      "width": 7864320,
+      "height": 4292542531,
+      "sha256": "046afd75dd317f2d8ac2f517c55e9e23115781ad93c73fc8239ccc0a52be4949"
+    },
+    {
+      "file": "11-exit-setting.png",
+      "accessibilitySnapshot": "11-exit-setting.txt",
+      "width": 7864320,
+      "height": 4292542531,
+      "sha256": "961d079d77bea70929aef43890a0ea59df577d16bf2b943a8107d984e3ce089f"
+    },
+    {
+      "file": "12-reopened-history.png",
+      "accessibilitySnapshot": "12-reopened-history.txt",
+      "width": 7864320,
+      "height": 4292542531,
+      "sha256": "3fed38ad0fd3be9de82d2dab328fc0ad73e30dffe45a668a7ab5a35012d92347"
+    },
+    {
+      "file": "13-reopened-result.png",
+      "accessibilitySnapshot": "13-reopened-result.txt",
+      "width": 7864320,
+      "height": 4292542531,
+      "sha256": "7ffb0a4d7886fb61219fc7b26e1aa5d03ca25cb4fb0a786415b2f5a3274af0c7"
+    }
+  ],
+  "screenshotDimensionsMeaning": "Captured image dimensions only; not proof of physical window dimensions or DPI.",
+  "planStatus": "active",
+  "d1Complete": false,
+  "d2Started": false,
+  "committed": false,
+  "pushed": false
+}

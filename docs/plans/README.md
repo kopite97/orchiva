@@ -1,6 +1,8 @@
 # Orchiva 구현 계획 목록
 
-제품 범위는 [MVP 설계](../design/mvp-design.md), 작업 절차는 [공통 흐름](../agents/workflow.md), 계획 작성·상태 규칙은 [계획 규칙](AGENTS.md)을 따른다.
+기존 제품 범위는 [MVP 설계](../design/mvp-design.md), 후속 방향은 [데스크톱 인계](../design/desktop-handoff.md)와 [전환 설계안](../design/desktop-transition.md), 작업 절차는 [공통 흐름](../agents/workflow.md), 계획 작성·상태 규칙은 [계획 규칙](AGENTS.md)을 따른다.
+
+2026-11-16 사용자가 데스크톱 전환 PLAN을 승인하고 작업 시작을 지시했다. 현재 D1~D3 구현·비GUI 검증을 완료했고 GUI 수용은 사용자 지시로 대기한다. 이전 proposed·구현 제외 문장은 당시 요청 범위 기록이다.
 
 ## 등록된 계획
 
@@ -13,6 +15,9 @@
 | 5 | [M4 조건별 판정·과거 결과](m4-evidence-review.md) | `completed` | 조건별 근거, 검사 변경, 결과 상세와 지문 확인 |
 | 6 | [M5 실패·재개·중복 명령](m5-recovery.md) | `completed` | 실패별 복구, 초기 재시도, 미확정 대조, 동일 세션 재개 |
 | 7 | [M6 통합 수용·장애·성능·사용 안내](m6-acceptance.md) | `completed` | A01~A16 수용, 저장/전송/프로세스 장애, 100건·30회 성능 및 30분 운영, 안내·사람 첫 사용 확인 |
+| 8 | [데스크톱 전환 D1~D6](desktop-transition.md) | `active` | D1~D3 구현·비GUI 검증 완료. [D2·D3 결과](../decisions/desktop-d2-d3-completion.md). GUI G01~G11 대기, D4~D6 미착수 |
+
+2026-11-16 사용자의 환경 점검·설계·계획 요청에 따라 [현재 PC 준비 점검](../decisions/desktop-readiness-20261116.md)과 데스크톱 전환 설계·계획을 작성했다. main의 `b08dc13`에서 ff-only 갱신 후 원격 차이가 없었고, lockfile 기반 설치·typecheck·89개 테스트가 통과했다. 초기 보류 후 사용자는 WinUI 3 + .NET 10과 첫 단계부터 디자인, B안 선택 적용, 프로젝트별 docs/의 지침·PLAN·결정/작업 이력 관리를 확정했다. 후속 선택으로 제작 PLAN은 정형 입력 → AI의 템플릿 내 내용 작성, 닫기 버튼은 앱 종료/트레이 최소화 설정으로 확정했다. Git 없는 폴더 제작은 보류하고 상담 PLAN 자동 완성은 구현 범위에서 제외한다. 최초 문서 작성 요청에서는 앱 구현이 제외되어 당시 `proposed`로 등록했다. 이후 PLAN 승인으로 D1을 진행하며 현재는 `active`다. 앱에서 관리할 대상 프로젝트는 프로젝트 추가 → 소스 경로 지정 → 초기화로 루트 AGENTS와 docs/ 지침·계획·결정·근거 구조를 생성한다. 루트 단일 AGENTS와 역할별 지침 규칙은 대상 프로젝트의 제품 정책이며 Orchiva 개발 저장소의 지침 변경 지시가 아니다.
 
 2026년 11월 12일 사용자의 지시에 따라 M0~M5를 완료했다. 소스 초기 커밋은 `7a675a9`, M0는 `4397aaf`, M1은 `bd08ace`, M2는 `ca31b4c`, M3는 `efcb9ad`다. [M1 결과](../decisions/m1-storage-state.md)에 실제4건 변환, [M2 결과](../decisions/m2-draft-plan-start.md)에 계획 확인 실행, [M3 결과](../decisions/m3-progress-reconciliation.md)에61개 테스트와 브라우저 없는 실행·진행 중 Plugin 복원·정상 daemon 재시작·기존6건 보존을 기록했다. [M4 결과](../decisions/m4-evidence-review.md)에70개 테스트·조건별 판정·과거 결과 상세·실제 재검증·기존7건 보존을 기록했다. [M5 결과](../decisions/m5-recovery.md)에 83개 테스트, 실제 준비 실패·응답 유실 대조, 동일 세션의 실패→재개→수정 요청→재개→완료, 격리 미확정 UI와 기존 8건 보존을 기록했다.
 
@@ -24,6 +29,8 @@
 2026-11-13 사용자의 남은 사항 전체 실행 지시에 따라 `m6-20261113-002`로 보완을 완료했다. 89개 테스트와 기존 verify, 실제 S/F/M/C·브라우저 없는 실행·UI 중단/재개·TCP 장애·checkpoint/migration/owner 경계, 실제 RPC 성능과 30분 single-flight를 확인했다. 기존 42건·GUI 2건을 보존하고 신규 Agent/Workspace 각 8개로 M6 총 예산 40개를 지켰다. 사용자가 초안 복원과 검사 로그·완료 판정 찾기를 확인했다. 빈 데이터 안내·53건 사본 복원도 통과했다. [최종 결과](../decisions/m6-acceptance.md)와 [요약 JSON](../evidence/m6-acceptance-20261113.json)에 실제/모의 범위·측정 오차·정리 결과를 남겼다. 이전 부분 기록은 당시의 이력이며 현재 상태는 `completed`다. 검증 완료 당시 구현·보완은 로컬 브랜치에 있었으며, 이후 사용자가 전체 변경의 커밋·main 반영·push를 요청했다. 최종 반영은 Git 이력과 origin/main을 따른다.
 
 ## 후속 단계
+
+2026-11-16 사용자가 지금까지의 데스크톱 전환 작업을 커밋하고 main에 반영·push하도록 지시했다. D1~D3 소스·설계·계획·공유용 검증 근거를 포함하며 로컬 실행 데이터와 빌드 산출물은 제외한다. 검증 시점의 미커밋 기록은 당시 이력으로 보존한다. GUI G01~G11 대기와 D4~D6 미착수 상태는 유지하며, 원격 반영 결과는 Git 이력과 origin/main을 따른다.
 
 다음은 설계상의 순서다. 상세 계획을 작성할 때 위 목록에 등록하며, 이 표만으로 구현 상태나 승인을 나타내지 않는다.
 

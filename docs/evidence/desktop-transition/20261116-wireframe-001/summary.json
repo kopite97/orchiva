@@ -1,0 +1,50 @@
+{
+  "plan": "../../../plans/desktop-transition.md",
+  "runId": "20261116-wireframe-001",
+  "date": "2026-11-16",
+  "kind": "documentation-and-browser-mockup-validation",
+  "artifact": {
+    "filename": "orchiva-wireframes.html",
+    "storage": "Thread-scoped visualization directory; not a runtime repository file",
+    "sha256": "39d502c842b0a1b635e8c7995619082821936f8b7081f018759cb4f0a0bb66b2"
+  },
+  "checks": {
+    "screens": 14,
+    "layoutCases": 42,
+    "approximateContentWidths": [
+      1028,
+      736,
+      320
+    ],
+    "horizontalOverflowCases": 0,
+    "scriptErrors": 0,
+    "interactionChecks": [
+      "initialization preview to home",
+      "discipline-specific specification fields",
+      "failed state and same-job recovery",
+      "quality confirmation gate",
+      "selective source apply and undo preview",
+      "external instruction edit conflict blocks save",
+      "free chat input adds message without sending"
+    ],
+    "visualInspection": [
+      "project home light",
+      "PLAN dark and theme control contrast",
+      "instruction narrow layout overflow"
+    ],
+    "markdownFiles": 34,
+    "relativeLinks": 279,
+    "anchors": 10,
+    "diffPass": true,
+    "sourceAndDevelopmentGuidelinesUnchanged": true,
+    "planStatus": "proposed"
+  },
+  "limitations": [
+    "Browser wireframe only; no WinUI build or Windows tray behavior tested",
+    "No real files, model calls, process lifecycle, or source apply",
+    "Brand design and detailed dialogs/media previews remain pending",
+    "Runtime tests not rerun for design-only changes"
+  ],
+  "errors": [],
+  "result": "passed"
+}

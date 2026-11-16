@@ -1,0 +1,129 @@
+{
+  "recordedAt": "2026-11-16T02:36:21.537Z",
+  "sourceRoot": "C:\\Users\\USER\\lib\\orchiva-plugin",
+  "branch": "codex/desktop-d1-foundation",
+  "baseCommit": "b08dc13",
+  "runIds": [
+    "d1-20261116-004-한글 경로",
+    "d1-20261116-005-empty"
+  ],
+  "status": "d1-implementation-and-non-gui-verification-complete-gui-acceptance-deferred",
+  "authorization": "User requested console fix and remaining D1 verification; computer use explicitly deferred.",
+  "computerUsePerformed": false,
+  "guiLaunched": false,
+  "change": {
+    "entry": "RuntimeLauncher -> hidden Node runtime host -> public paseo daemon run",
+    "windowsDetachedSpawn": false,
+    "readiness": "bounded token after SDK handshake verifies isolated home and endpoint",
+    "lifetime": "runtime host remains until public daemon stop; app read bridge is separate",
+    "installedPackagesModified": false,
+    "securityPolicyChanged": false
+  },
+  "results": {
+    "typecheck": "passed",
+    "node": {
+      "passed": 97,
+      "failed": 0,
+      "skipped": 0
+    },
+    "dotnet": {
+      "passed": 12,
+      "failed": 0,
+      "skipped": 0,
+      "detail": "dotnet-tests.json"
+    },
+    "winuiBuild": {
+      "warnings": 0,
+      "errors": 0
+    },
+    "live": {
+      "coldStart": true,
+      "threeCSharpBridgeLifetimes": true,
+      "sameDaemonPidOnRepeatedStart": true,
+      "resultAndDecisionPreserved": true,
+      "daemonRestart": true,
+      "emptyStore": true,
+      "emptyStoreStdioCycles": 3,
+      "mainStdioCycles": 3,
+      "offlineFailure": true,
+      "wrongCredentialHomeRejected": true,
+      "upstreamLoopbackMayTrustLocalConnections": true,
+      "failedAndCancelledLaunchOwnedCleanup": true
+    },
+    "paths": {
+      "sourceAndNodePath": {
+        "nodePath": "C:\\Users\\USER\\AppData\\Local\\Temp\\orchiva-d1-path-3d4d841e51ec43f9b25bdc072e0596bd\\노드 실행 파일\\node.exe",
+        "sourceRoot": "C:\\Users\\USER\\AppData\\Local\\Temp\\orchiva-d1-path-3d4d841e51ec43f9b25bdc072e0596bd\\한글 설치 경로",
+        "paseoCliPath": "C:\\Users\\USER\\AppData\\Roaming\\npm\\node_modules\\@getpaseo\\cli\\bin\\paseo",
+        "isolationRoot": "C:\\Users\\USER\\lib\\orchiva-plugin\\.desktop-local\\d1-20261116-004-한글 경로",
+        "dataHome": "C:\\Users\\USER\\lib\\orchiva-plugin\\.desktop-local\\d1-20261116-004-한글 경로\\data",
+        "paseoHome": "C:\\Users\\USER\\lib\\orchiva-plugin\\.desktop-local\\d1-20261116-004-한글 경로\\paseo",
+        "endpoint": "127.0.0.1:58983"
+      },
+      "realCopyWithKoreanAndSpaces": true
+    },
+    "originalRequests": 54,
+    "originalRequestsUnchanged": true,
+    "fixturesUnchanged": true,
+    "agentsCreated": 0,
+    "workspacesCreated": 0,
+    "cleanup": "cleanup.json"
+  },
+  "correctedDuringVerification": [
+    "Initial non-detached child exited with Node parent; changed to persistent .NET-created runtime host and repeated live tests successfully.",
+    "Empty-page mock omitted required active array; corrected to current RPC contract (96/97 -> 97/97).",
+    "Wrong credential home produced ENVIRONMENT_MISMATCH under trusted loopback, rather than CONNECTION_FAILED; both reject handshake and reads without secrets (10/11 -> final 12/12 with extra lifecycle test).",
+    "Harness captured pipes outlived PowerShell starter; start now uses ignored stdio and bounded exit wait.",
+    "Empty-store harness expected total 3; corrected to manifest fixture kind and verified total 0."
+  ],
+  "guiPending": [
+    "G01 console absence and runtime-start button in actual WinUI",
+    "G02 exact 800x600/1280x900 and 100%/150% DPI",
+    "G03 empty and restoring GUI states",
+    "G04 complete keyboard/contrast/long Korean text accessibility",
+    "G05 three full app lifetimes and explicit tray-menu exit"
+  ],
+  "evidenceRetained": true,
+  "planStatus": "active",
+  "d2Started": false,
+  "committed": false,
+  "pushed": false,
+  "sourceHashes": [
+    {
+      "file": "bridge/launcher.ts",
+      "sha256": "6910473b3cb0af74f6e7ad0067e7edb98f6dcf80c3e7450952bc0bfccdc2a2f2"
+    },
+    {
+      "file": "bridge/index.ts",
+      "sha256": "7c6477b6fdea4d0753892db26d5612ba4522546c99b844fd0c09b580e8a4eeb6"
+    },
+    {
+      "file": "bridge/protocol.ts",
+      "sha256": "99ba86794456b3f83239198e4575dedb962fae07e05fe0350dc814c9d950f2f9"
+    },
+    {
+      "file": "desktop/Orchiva.Bridge/RuntimeLauncher.cs",
+      "sha256": "e03d13b89493d826736dd8f4603f8ab38795ea85251515d7d79bd8bdd499d8b3"
+    },
+    {
+      "file": "desktop/Orchiva.Bridge/BridgeClient.cs",
+      "sha256": "6e27e3b4c8251cdc50bd749d1d1f75b60b9ee3e97c094a2c152abb284f39bb60"
+    },
+    {
+      "file": "desktop/Orchiva.Bridge.Tests/ProtocolTests.cs",
+      "sha256": "9eb0323306054deced14179fa34e69b47791abc44bd7e76cf86b6e906f5d1518"
+    },
+    {
+      "file": "server/tests/desktop-bridge.test.ts",
+      "sha256": "98015c9bbf8c490fa3dbab9ae5601f97d6c5285f12bae3b9bdbcd4a13e5a71cc"
+    },
+    {
+      "file": "scripts/start-desktop-runtime.ps1",
+      "sha256": "7c1d2cd15e4fbce6d04c010f50e6fe8ad10270be2774b67f0b2b68ca2bc2b445"
+    },
+    {
+      "file": "scripts/desktop-foundation.mjs",
+      "sha256": "4e5d8074c5b29dd810de89aee6d31393c9d47d74a29f4c64aa4e34f66b0ff953"
+    }
+  ]
+}

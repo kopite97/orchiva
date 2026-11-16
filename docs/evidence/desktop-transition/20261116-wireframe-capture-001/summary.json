@@ -1,0 +1,200 @@
+{
+  "plan": "../../../plans/desktop-transition.md",
+  "design": "../../../design/desktop-ui.md",
+  "runId": "20261116-wireframe-capture-001",
+  "date": "2026-11-16",
+  "kind": "wireframe-image-export",
+  "scope": "User requested durable images referenced by current PLAN",
+  "source": {
+    "filename": "orchiva-wireframes.html",
+    "sha256": "39d502c842b0a1b635e8c7995619082821936f8b7081f018759cb4f0a0bb66b2"
+  },
+  "capture": {
+    "browser": "Microsoft Edge / Playwright",
+    "theme": "light",
+    "viewport": {
+      "width": 1312,
+      "height": 1400
+    },
+    "appCssWidth": 1280,
+    "deviceScaleFactor": 2,
+    "target": ".ow-window",
+    "state": "Default state per page; example data; no product actions invoked"
+  },
+  "images": [
+    {
+      "id": "projects",
+      "label": "01 · 프로젝트 목록",
+      "filename": "01-projects.png",
+      "width": 2560,
+      "height": 1476,
+      "bytes": 176844,
+      "sha256": "5adfe6d045c16c7f2ec30a7e7b04a8a815782cabe4381b9abea01e67e0d25b39",
+      "cssWidth": 1280,
+      "cssHeight": 737.640625
+    },
+    {
+      "id": "setup",
+      "label": "02 · 프로젝트 추가 / 초기화",
+      "filename": "02-setup.png",
+      "width": 2560,
+      "height": 1630,
+      "bytes": 263780,
+      "sha256": "29ccaec517f2253c6d1010a89ee96532611853572dce285ccbba508c9367505c",
+      "cssWidth": 1280,
+      "cssHeight": 814.25
+    },
+    {
+      "id": "home",
+      "label": "03 · 프로젝트 / 작업 분야",
+      "filename": "03-home.png",
+      "width": 2560,
+      "height": 1698,
+      "bytes": 223726,
+      "sha256": "f70ea9067794c5bd72d34d6c1e3299ddf4c4450e20cb9d1bbd191c9d3fbb0581",
+      "cssWidth": 1280,
+      "cssHeight": 848.34375
+    },
+    {
+      "id": "new",
+      "label": "04 · 새 요청",
+      "filename": "04-new.png",
+      "width": 2560,
+      "height": 1736,
+      "bytes": 272317,
+      "sha256": "55ee22ff5ba9ce7a52a0ac7f54e345f95b26a20eef08580815529b467759ed69",
+      "cssWidth": 1280,
+      "cssHeight": 867.265625
+    },
+    {
+      "id": "modify",
+      "label": "05 · 수정 요청",
+      "filename": "05-modify.png",
+      "width": 2560,
+      "height": 1626,
+      "bytes": 265698,
+      "sha256": "30e2b11df322e78d0c64d71d3767fcb6b905c8bddbde7b02aa2ab967d28c83d3",
+      "cssWidth": 1280,
+      "cssHeight": 812.21875
+    },
+    {
+      "id": "plan",
+      "label": "06 · PLAN 확인",
+      "filename": "06-plan.png",
+      "width": 2560,
+      "height": 1718,
+      "bytes": 304445,
+      "sha256": "f1356b474b6a74659009fcaa9286ab1d35327bc83996347d656843ac4389048b",
+      "cssWidth": 1280,
+      "cssHeight": 858.890625
+    },
+    {
+      "id": "run",
+      "label": "07 · 실행 / 복구",
+      "filename": "07-run.png",
+      "width": 2560,
+      "height": 1710,
+      "bytes": 259729,
+      "sha256": "70e9f3ac983577e15a85fbbc243151109c54992b77ebe1867ba6794830945983",
+      "cssWidth": 1280,
+      "cssHeight": 854.09375
+    },
+    {
+      "id": "result",
+      "label": "08 · 결과 검토",
+      "filename": "08-result.png",
+      "width": 2560,
+      "height": 1674,
+      "bytes": 267534,
+      "sha256": "8af00b8937eaf686439b07bad9f8064a3e13b14cac594b1979ecdbd32ca71767",
+      "cssWidth": 1280,
+      "cssHeight": 836.265625
+    },
+    {
+      "id": "apply",
+      "label": "09 · 소스 반영",
+      "filename": "09-apply.png",
+      "width": 2560,
+      "height": 1640,
+      "bytes": 252219,
+      "sha256": "d86e430fe878b622156f4e8f52e390a21f85b418f12b8d0ad8ae87d4c205700d",
+      "cssWidth": 1280,
+      "cssHeight": 819.078125
+    },
+    {
+      "id": "history",
+      "label": "10 · PLAN 이력",
+      "filename": "10-history.png",
+      "width": 2560,
+      "height": 1604,
+      "bytes": 208085,
+      "sha256": "1dbd44e37feb5145986f7eb87b48da6ee938d83c5ce6d7c393f460d05ec4e3e6",
+      "cssWidth": 1280,
+      "cssHeight": 801.796875
+    },
+    {
+      "id": "instructions",
+      "label": "11 · 지침 관리",
+      "filename": "11-instructions.png",
+      "width": 2560,
+      "height": 1504,
+      "bytes": 259210,
+      "sha256": "035f143b317bfe52ea8bc40b73dc93ec8ecd2de9d8c68821f6683d60d4a0d458",
+      "cssWidth": 1280,
+      "cssHeight": 751.9375
+    },
+    {
+      "id": "chat",
+      "label": "12 · 질문 / 상담",
+      "filename": "12-chat.png",
+      "width": 2560,
+      "height": 1476,
+      "bytes": 192771,
+      "sha256": "23952844a9b823b3df3763f84bd84298183945cd633b36fccc340c34a2fdade9",
+      "cssWidth": 1280,
+      "cssHeight": 737.640625
+    },
+    {
+      "id": "settings",
+      "label": "13 · 설정",
+      "filename": "13-settings.png",
+      "width": 2560,
+      "height": 1830,
+      "bytes": 234086,
+      "sha256": "e63303614e9b7dd57f60e6a07f68b06fa63c46f39f3bebdb2ae11f7f4cef56d8",
+      "cssWidth": 1280,
+      "cssHeight": 914.015625
+    },
+    {
+      "id": "connection",
+      "label": "14 · 연결 / 환경",
+      "filename": "14-connection.png",
+      "width": 2560,
+      "height": 1634,
+      "bytes": 202723,
+      "sha256": "ea67bac7a70513319aaf8bfaa0cd13633575c335e0dd6b91a0ab60ec6feeef40",
+      "cssWidth": 1280,
+      "cssHeight": 816.984375
+    }
+  ],
+  "checks": {
+    "imageCount": 14,
+    "scriptErrors": [],
+    "visualSpotChecks": [
+      "02-setup.png",
+      "13-settings.png"
+    ],
+    "relativeLinks": 35,
+    "allImagesLinkedFromPlan": true,
+    "pngDimensionsAndHashesVerified": true,
+    "planStatus": "proposed",
+    "diffPass": true,
+    "sourceAndDeveloperRulesUnchanged": true
+  },
+  "limitations": [
+    "Wireframe only; not WinUI implementation or runtime test",
+    "Alternative interaction states not included in these static images"
+  ],
+  "result": "passed",
+  "errors": []
+}

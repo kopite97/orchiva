@@ -1,0 +1,38 @@
+{
+  "plan": "../../../plans/desktop-transition.md",
+  "runId": "20261116-doc-policy-002",
+  "date": "2026-11-16",
+  "timezone": "Asia/Seoul",
+  "kind": "documentation-static-validation",
+  "scope": "Remove docs/docs.md, retain root-only instruction map, consolidate writing rules and links; no app implementation",
+  "baseCommit": "b08dc1384698d988c76bdd5d24f91307fae857f4",
+  "checks": {
+    "markdownFiles": 34,
+    "relativeLinks": 283,
+    "anchors": 13,
+    "utf8AndFences": true,
+    "agentPaths": [
+      "AGENTS.md"
+    ],
+    "docsMapRemoved": true,
+    "templateSections": 9,
+    "planStatus": "proposed",
+    "diffPass": true,
+    "sourceUnchanged": true,
+    "trackedLegacyEvidenceUnchanged": true
+  },
+  "procedure": [
+    "Strict UTF-8 and code fence validation",
+    "Resolve relative Markdown links and heading anchors",
+    "Check root-only AGENTS, absence of docs/docs.md, template sections and proposed index status",
+    "git diff --check; scoped git diff --exit-code"
+  ],
+  "excluded": {
+    "historicalAbsoluteLocalLinks": 7,
+    "externalUrls": "Not rechecked for local documentation changes",
+    "runtimeTests": "Not rerun for documentation-only changes",
+    "desktopImplementation": "Not started"
+  },
+  "errors": [],
+  "result": "passed"
+}

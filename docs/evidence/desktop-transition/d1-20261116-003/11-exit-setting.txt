@@ -1,0 +1,59 @@
+Window: "Orchiva", App: Orchiva.Desktop.exe.
+	0 window (창) Orchiva Secondary Actions: Raise
+		195 pane (창) 팝업 호스트
+			196 pane (창)
+		112 pane (창)
+			113 pane (창)
+				114 custom (사용자 지정) ID: Navigation
+					115 button (단추) 탐색 닫기 ID: TogglePaneButton
+						116 text (텍스트) ID: PaneTitleTextBlock
+					117 window (창) Secondary Actions: Raise ID: PaneRoot
+						118 pane (창) ID: MenuItemsScrollViewer
+							119 group (그룹) ID: MenuItemsHost
+								120 list item (목록 항목) (selectable) 프로젝트
+								121 list item (목록 항목) (selectable) PLAN 이력
+								122 list item (목록 항목) (selectable) 연결 상태
+						123 pane (창) ID: FooterItemsScrollViewer
+							124 group (그룹) ID: FooterMenuItemsHost
+								125 list item (목록 항목) (selectable) 설정 ID: SettingsItem
+					126 text (텍스트) Orchiva · 데스크톱 연결 기반
+					127 pane (창)
+						128 status bar (상태 표시줄) ID: StatusBar
+							129 text (텍스트) 정보 아이콘 ID: StandardIcon
+							130 text (텍스트) 조회 전용 · D1 ID: Title
+							131 text (텍스트) 프로젝트와 작업 이력을 조회했습니다. 제작 실행·지침 편집은 후속 단계입니다. ID: Message
+						191 text (텍스트) 설정
+						192 combo box (콤보 상자) 테마 ID: ThemeChoice
+						193 combo box (콤보 상자) 닫기 버튼 동작 ID: CloseChoice
+						194 text (텍스트) 앱 종료는 화면과 연결 프로세스를 닫습니다. 실행부의 수명은 분리되어 있으며 진행 작업 처리 정책은 제작 기능 단계에서 확정합니다.
+						136 text (텍스트) 마지막 조회 11:12:00 · 읽기 전용
+						137 scroll bar (스크롤 막대) (settable, float) 세로 Value: 0 ID: VerticalScrollBar
+							138 button (단추) 세로 작은 감소 ID: VerticalSmallDecrease
+							139 button (단추) 세로 큰 감소 ID: VerticalLargeDecrease
+							140 button (단추) 세로 큰 증가 ID: VerticalLargeIncrease
+							141 button (단추) 세로 작은 증가 ID: VerticalSmallIncrease
+		42 title bar (제목 표시줄) (settable, string) Value: Orchiva
+			43 menu bar (메뉴 모음) 시스템 ID: MenuBar
+				142 menu item (메뉴 항목) 시스템
+			45 button (단추) 최소화
+			46 button (단추) 최대화
+			47 button (단추) 닫기
+
+Document text: ```
+
+프로젝트
+
+PLAN 이력
+
+연결 상태
+설정
+Orchiva · 데스크톱 연결 기반
+
+
+조회 전용 · D1
+프로젝트와 작업 이력을 조회했습니다. 제작 실행·지침 편집은 후속 단계입니다.
+앱 종료는 화면과 연결 프로세스를 닫습니다. 실행부의 수명은 분리되어 있으며 진행 작업 처리 정책은 제작 기능 단계에서 확정합니다.
+마지막 조회 11:12:00 · 읽기 전용
+
+
+```

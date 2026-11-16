@@ -1,0 +1,41 @@
+{
+  "plan": "../../../plans/desktop-transition.md",
+  "runId": "20261116-project-initialization-001",
+  "date": "2026-11-16",
+  "kind": "documentation-static-validation",
+  "scope": "Correct product/development instruction scope; specify target project add, source path, initialize flow. Earlier doc-policy-001 and 002 records describe superseded mistaken development-policy edits, not current policy.",
+  "baseCommit": "b08dc1384698d988c76bdd5d24f91307fae857f4",
+  "checks": {
+    "markdownFiles": 33,
+    "relativeLinks": 271,
+    "anchors": 9,
+    "developmentGuidelinesRestored": [
+      "AGENTS.md",
+      "README.md",
+      "docs/AGENTS.md",
+      "docs/agents/repository-guidelines.md",
+      "docs/agents/validation.md",
+      "docs/agents/workflow.md",
+      "docs/plans/AGENTS.md",
+      "docs/plans/plan-template.md"
+    ],
+    "templateSections": 9,
+    "planStatus": "proposed",
+    "sourceUnchanged": true,
+    "legacyEvidenceUnchanged": true,
+    "diffPass": true
+  },
+  "procedure": [
+    "Validate UTF-8, code fences, relative links and anchors",
+    "Byte-compare restored developer guidelines with HEAD",
+    "Check plan template and proposed index",
+    "git diff --check; scoped git diff --exit-code"
+  ],
+  "excluded": {
+    "historicalAbsoluteLocalLinks": 7,
+    "runtimeTests": "Documentation only; not rerun",
+    "desktopImplementation": "Not started; initialization flow is specified, not implemented"
+  },
+  "errors": [],
+  "result": "passed"
+}

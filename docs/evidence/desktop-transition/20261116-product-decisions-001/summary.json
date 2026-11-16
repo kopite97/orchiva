@@ -1,0 +1,29 @@
+{
+  "plan": "../../../plans/desktop-transition.md",
+  "runId": "20261116-product-decisions-001",
+  "date": "2026-11-16",
+  "kind": "documentation-static-validation",
+  "scope": "Record structured input + AI template content decision, configurable exit/tray close, defer non-Git production and exclude consultation PLAN autocomplete",
+  "checks": {
+    "markdownFiles": 33,
+    "relativeLinks": 274,
+    "anchors": 10,
+    "templateSections": 9,
+    "planStatus": "proposed",
+    "diffPass": true,
+    "sourceAndDevelopmentGuidelinesUnchanged": true
+  },
+  "procedure": [
+    "Review design, handoff, plan and index consistency",
+    "Validate UTF-8, fences, relative links and anchors",
+    "Check template headings and proposed registration",
+    "git diff --check and scoped git diff --exit-code"
+  ],
+  "limitations": [
+    "Documentation only; runtime tests not rerun",
+    "Desktop implementation not started",
+    "App-exit behavior for running jobs remains undecided"
+  ],
+  "errors": [],
+  "result": "passed"
+}

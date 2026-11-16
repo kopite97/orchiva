@@ -1,9 +1,9 @@
 import { readFile } from "node:fs/promises";
-import { homedir } from "node:os";
 import { join } from "node:path";
 import { setTimeout as delay } from "node:timers/promises";
 import { createPaseoApi, type PaseoApi } from "@getpaseo/client";
 import { createHostClient } from "@getpaseo/client/node";
+import { readRuntimeSettings } from "../../config/runtime-settings";
 
 export interface OwnedClient<T> {
   api: T;
@@ -84,14 +84,15 @@ export class OwnedConnection<T> {
   }
 }
 
-export function localConnection(clientId: string, endpoint = "127.0.0.1:6767") {
-  return new OwnedConnection<PaseoApi>(() => {
+export function localConnection(clientId: string, endpoint = readRuntimeSettings().endpoint) {
+  const settings = readRuntimeSettings();
+  return new OwnedConnection<PaseoApi & { cancelAgent(id: string): Promise<void> }>(() => {
     const client = createHostClient(endpoint, {
       clientId, clientType: "cli", appVersion: "0.15.4", connectTimeoutMs: 3000,
-      localCredential: async () => (await readFile(join(homedir(), ".paseo-orchiva", "local-credential"), "utf8")).trim(),
+      localCredential: async () => (await readFile(join(settings.paseoHome, "local-credential"), "utf8")).trim(),
       reconnect: { enabled: false },
     });
-    const api = createPaseoApi(client);
+    const api = Object.assign(createPaseoApi(client), { cancelAgent: (id: string) => client.cancelAgent(id) });
     return { api, connect: () => client.connect(), close: async () => { try { await api.dispose(); } finally { await client.close(); } } };
   });
 }
