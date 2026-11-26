@@ -1,0 +1,254 @@
+{
+  "runId": "d1-ma-parallel-20261126-001-parallel",
+  "projectId": "e8d4608a-2066-4e95-8466-f9587a80868f",
+  "target": "orchiva/integration/d1-ma-parallel-20261126-001-parallel",
+  "blockedManual": true,
+  "beforeRestart": {
+    "tokens": [
+      "ma-b0f6f82ca2d4054d9b575f3156c0ad7a43ec492d",
+      "ma-1fcded1f8f55861bd5470fd7bfb760eadeaef2cb"
+    ],
+    "generations": [
+      3,
+      3
+    ],
+    "resourceWait": "자원 대기 A · unity-editor"
+  },
+  "concurrent": [
+    {
+      "id": "A",
+      "session": "f5084b84-b1aa-4e6a-8224-82ee8f2c0e63",
+      "workspace": "wks_d228ceb363e8d5ab",
+      "status": "running",
+      "active": true,
+      "at": "2026-11-26T04:23:35.954Z"
+    },
+    {
+      "id": "B",
+      "session": "6b49244f-189f-40a1-866b-efd572592e4e",
+      "workspace": "wks_934e3afd2b8692a2",
+      "status": "running",
+      "active": true,
+      "at": "2026-11-26T04:23:35.954Z"
+    }
+  ],
+  "workers": [
+    {
+      "id": "A",
+      "token": "ma-b0f6f82ca2d4054d9b575f3156c0ad7a43ec492d",
+      "base": "e59dd9dcfa0d6afa51231d47426610af11bee5e7",
+      "generation": 3,
+      "session": "f5084b84-b1aa-4e6a-8224-82ee8f2c0e63",
+      "worktree": "wks_d228ceb363e8d5ab",
+      "start": "2026-11-26T04:23:34.653Z",
+      "end": "2026-11-26T04:24:44.877Z",
+      "result": "17594e77-934e-4750-8441-4247cb6800d1",
+      "checks": [
+        "passed"
+      ],
+      "messages": 1,
+      "results": [
+        {
+          "id": "17594e77-934e-4750-8441-4247cb6800d1",
+          "failure": null
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "token": "ma-1fcded1f8f55861bd5470fd7bfb760eadeaef2cb",
+      "base": "e59dd9dcfa0d6afa51231d47426610af11bee5e7",
+      "generation": 3,
+      "session": "6b49244f-189f-40a1-866b-efd572592e4e",
+      "worktree": "wks_934e3afd2b8692a2",
+      "start": "2026-11-26T04:23:31.218Z",
+      "end": "2026-11-26T04:24:20.716Z",
+      "result": "34533d23-1e1c-4098-9416-723e06e0b79b",
+      "checks": [
+        "passed"
+      ],
+      "messages": 1,
+      "results": [
+        {
+          "id": "34533d23-1e1c-4098-9416-723e06e0b79b",
+          "failure": null
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "token": "ma-91e0a9d7e91d2d361226e8024a7f6c136b40760c",
+      "base": "9984a9b7c40cd920a398ab8d8ceddb848656c821",
+      "generation": 20,
+      "session": "02ab9e99-3e0d-4704-88a0-0da7a877eebd",
+      "worktree": "wks_29d76bfea3bb76d4",
+      "start": "2026-11-26T04:25:48.119Z",
+      "end": "2026-11-26T04:28:15.641Z",
+      "result": "b4377744-def5-4c10-91ce-ce11e5373598",
+      "checks": [
+        "passed"
+      ],
+      "messages": 2,
+      "results": [
+        {
+          "id": "3b95a7b9-1f48-4be4-8abb-7cbfde4d5c3a",
+          "failure": "MILESTONE_CHECK_FAILED"
+        },
+        {
+          "id": "b4377744-def5-4c10-91ce-ce11e5373598",
+          "failure": null
+        }
+      ]
+    }
+  ],
+  "initial": "e59dd9dcfa0d6afa51231d47426610af11bee5e7",
+  "tip": "0b99c53d45e763a0809f589493a34a1b7094ee34",
+  "entries": [
+    {
+      "feature": "A",
+      "base": "e59dd9dcfa0d6afa51231d47426610af11bee5e7",
+      "head": "cc404b0f73a2c10acaae675c11b1f3b134811d7f",
+      "integrated": "cc404b0f73a2c10acaae675c11b1f3b134811d7f"
+    },
+    {
+      "feature": "B",
+      "base": "cc404b0f73a2c10acaae675c11b1f3b134811d7f",
+      "head": "9984a9b7c40cd920a398ab8d8ceddb848656c821",
+      "integrated": "9984a9b7c40cd920a398ab8d8ceddb848656c821"
+    },
+    {
+      "feature": "C",
+      "base": "9984a9b7c40cd920a398ab8d8ceddb848656c821",
+      "head": "0b99c53d45e763a0809f589493a34a1b7094ee34",
+      "integrated": "0b99c53d45e763a0809f589493a34a1b7094ee34"
+    }
+  ],
+  "history": [
+    {
+      "at": "2026-11-26T04:21:01.337Z",
+      "event": "범위 확정 및 요청 키 배정"
+    },
+    {
+      "at": "2026-11-26T04:21:50.486Z",
+      "event": "조율 accepted"
+    },
+    {
+      "at": "2026-11-26T04:21:52.755Z",
+      "event": "reserved A / A  / reserved B / B  / C 자원 대기 A · unity-editor"
+    },
+    {
+      "at": "2026-11-26T04:21:53.165Z",
+      "event": "pause"
+    },
+    {
+      "at": "2026-11-26T04:22:06.595Z",
+      "event": "resume"
+    },
+    {
+      "at": "2026-11-26T04:22:13.178Z",
+      "event": "A plan-running"
+    },
+    {
+      "at": "2026-11-26T04:22:17.620Z",
+      "event": "B plan-pending"
+    },
+    {
+      "at": "2026-11-26T04:22:47.769Z",
+      "event": "A ready"
+    },
+    {
+      "at": "2026-11-26T04:22:49.850Z",
+      "event": "B plan-running"
+    },
+    {
+      "at": "2026-11-26T04:23:25.400Z",
+      "event": "A planned"
+    },
+    {
+      "at": "2026-11-26T04:23:34.953Z",
+      "event": "A running"
+    },
+    {
+      "at": "2026-11-26T04:23:37.034Z",
+      "event": "B running"
+    },
+    {
+      "at": "2026-11-26T04:24:21.689Z",
+      "event": "B awaiting-review"
+    },
+    {
+      "at": "2026-11-26T04:24:23.776Z",
+      "event": "B awaiting-apply"
+    },
+    {
+      "at": "2026-11-26T04:24:25.872Z",
+      "event": "B awaiting-integration"
+    },
+    {
+      "at": "2026-11-26T04:24:45.568Z",
+      "event": "A awaiting-review"
+    },
+    {
+      "at": "2026-11-26T04:24:47.696Z",
+      "event": "A awaiting-apply"
+    },
+    {
+      "at": "2026-11-26T04:24:50.709Z",
+      "event": "accepted A"
+    },
+    {
+      "at": "2026-11-26T04:24:54.217Z",
+      "event": "accepted B"
+    },
+    {
+      "at": "2026-11-26T04:24:56.472Z",
+      "event": "reserved C / C "
+    },
+    {
+      "at": "2026-11-26T04:25:01.598Z",
+      "event": "C plan-running"
+    },
+    {
+      "at": "2026-11-26T04:25:42.263Z",
+      "event": "C ready"
+    },
+    {
+      "at": "2026-11-26T04:25:48.611Z",
+      "event": "C running"
+    },
+    {
+      "at": "2026-11-26T04:26:25.471Z",
+      "event": "C failed"
+    },
+    {
+      "at": "2026-11-26T04:27:53.740Z",
+      "event": "C running"
+    },
+    {
+      "at": "2026-11-26T04:28:16.648Z",
+      "event": "C awaiting-review"
+    },
+    {
+      "at": "2026-11-26T04:28:20.094Z",
+      "event": "accepted C"
+    },
+    {
+      "at": "2026-11-26T04:28:52.457Z",
+      "event": "handoff HUD accepted"
+    },
+    {
+      "event": "completed",
+      "at": "2026-11-26T04:28:54.707Z"
+    }
+  ],
+  "finalChecks": 3,
+  "manualAfter": {
+    "token": "d1-ma-parallel-20261126-001-manual",
+    "status": "ready",
+    "planHash": "afd51baa2aa33cebdcc826db517d359b47f10447e905affeb88ffef0e4b2c919"
+  },
+  "daemon": {
+    "before": 20348,
+    "after": 26636
+  }
+}

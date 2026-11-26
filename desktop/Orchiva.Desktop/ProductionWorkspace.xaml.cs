@@ -7,7 +7,11 @@ using SelectionChangedEventArgs = Microsoft.UI.Xaml.Controls.SelectionChangedEve
 
 namespace Orchiva.Desktop;
 
-public sealed record WorkspaceChoice(string Label, JsonObject Value);
+public sealed record WorkspaceChoice(string Label, JsonObject Value)
+{
+    public string SourcePath => Value["sourceRoot"]?.ToString() ?? "";
+    public override string ToString() => Label;
+}
 public sealed partial class ProductionWorkspace : UserControl
 {
     private Func<string, object, Task<JsonElement>>? call;
@@ -22,8 +26,74 @@ public sealed partial class ProductionWorkspace : UserControl
         InitializeComponent();
         timer.Tick += async (_, _) => { if (!busy && document != null && IsLoaded) await Run(async () => await LoadDocument(false), false); };
         Loaded += (_, _) => timer.Start(); Unloaded += (_, _) => timer.Stop();
+        ShowPage("projects");
     }
     public void Connect(Func<string, object, Task<JsonElement>> invoke) { call = invoke; Notice.Message = "프로젝트 목록을 불러와 작업을 시작하세요."; }
+
+    public event Action<string>? PageChanged;
+    private string currentPage = "projects";
+    public void ShowPage(string page)
+    {
+        var pages = new Dictionary<string, (FrameworkElement Panel, string Title, string Description)>
+        {
+            ["projects"] = (ProjectsPage, "프로젝트", "이어갈 프로젝트를 선택하세요."),
+            ["setup"] = (SetupPage, "프로젝트 연결과 초기화", "소스 경로를 등록하고 초기화할 실제 파일을 확인합니다."),
+            ["home"] = (HomePage, "작업 시작", "프로젝트의 작업 분야와 요청 유형을 선택하세요."),
+            ["roadmap"] = (RoadmapPage, "Milestone 자동화", "실행할 구간과 선행 작업을 확인하세요."),
+            ["instructions"] = (InstructionsPage, "프로젝트 지침", "실제 파일을 읽고 수정한 내용을 같은 파일에 저장합니다."),
+            ["configuration"] = (ConfigurationPage, "프로젝트 설정", "선택한 프로젝트의 기준 브랜치와 결과물 폴더를 관리합니다."),
+            ["request"] = (RequestPage, RequestMode.SelectedIndex == 1 ? "기존 작업을 어떻게 바꿀까요?" : "어떤 결과가 필요한가요?", "입력을 저장하면 AI가 PLAN 템플릿의 내용을 작성합니다."),
+            ["plan"] = (PlanPage, "실행할 계획을 확인하세요", "PLAN 원문과 실행 범위를 확인한 뒤 실행합니다."),
+            ["execution"] = (ExecutionPage, "실행과 복구", "현재 실행 상태와 필요한 응답을 확인합니다."),
+            ["result"] = (ResultPage, "결과를 검토하세요", "자동 확인 결과와 실제 품질을 함께 살펴봅니다."),
+            ["apply"] = (ApplyPage, "선택한 변경만 반영합니다", "현재 소스와 결과물을 비교하고 반영 이력을 보존합니다."),
+            ["history"] = (HistoryPage, "PLAN 이력", "요청부터 실행·검토·소스 반영까지 이어서 확인합니다.")
+        };
+        if (!pages.TryGetValue(page, out var target)) return;
+        currentPage = page;
+        foreach (var item in pages) item.Value.Panel.Visibility = item.Key == page ? Visibility.Visible : Visibility.Collapsed;
+        PageTitle.Text = target.Title; PageDescription.Text = target.Description;
+        RequestStatus.Visibility = page is "request" or "plan" or "execution" or "result" or "apply" or "history" ? Visibility.Visible : Visibility.Collapsed;
+        ProjectLocation.Visibility = page is "home" or "projects" ? Visibility.Collapsed : Visibility.Visible;
+        ArrangeColumns(this, ActualWidth >= 900);
+        PageChanged?.Invoke(page);
+    }
+    private void GoPage(object sender, RoutedEventArgs e) => ShowPage(((Button)sender).Tag.ToString()!);
+    private void ChooseDiscipline(object sender, RoutedEventArgs e)
+    {
+        if (busy) return;
+        Discipline.SelectedIndex = int.Parse(((Button)sender).Tag.ToString()!);
+        ShowPage("request");
+    }
+    private void BeginRequest(object sender, RoutedEventArgs e)
+    {
+        if (busy) return;
+        RequestMode.SelectedIndex = int.Parse(((Button)sender).Tag.ToString()!);
+        Action(new Button { Tag = "new" }, e);
+        ShowPage("request");
+    }
+    private void WorkspaceSizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        ArrangeColumns(this, e.NewSize.Width >= 900);
+        var columns = e.NewSize.Width >= 720 ? 3 : e.NewSize.Width >= 440 ? 2 : 1;
+        DisciplineCards.ItemWidth = Math.Max(1, Math.Floor(e.NewSize.Width / columns));
+    }
+    private void RequestModeChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (PageTitle != null && currentPage == "request") PageTitle.Text = RequestMode.SelectedIndex == 1 ? "기존 작업을 어떻게 바꿀까요?" : "어떤 결과가 필요한가요?";
+    }
+    private static void ArrangeColumns(DependencyObject element, bool wide)
+    {
+        if (element is Grid grid && grid.Tag?.ToString() is "split" or "split-reverse")
+        {
+            var reverse = grid.Tag.ToString() == "split-reverse";
+            grid.ColumnDefinitions[0].Width = new GridLength(wide && !reverse ? 2 : 1, GridUnitType.Star);
+            grid.ColumnDefinitions[1].Width = wide ? new GridLength(reverse ? 2 : 1, GridUnitType.Star) : new GridLength(0);
+            Grid.SetColumn((FrameworkElement)grid.Children[1], wide ? 1 : 0); Grid.SetRow((FrameworkElement)grid.Children[1], wide ? 0 : 1);
+        }
+        for (var i = 0; i < Microsoft.UI.Xaml.Media.VisualTreeHelper.GetChildrenCount(element); i++)
+            ArrangeColumns(Microsoft.UI.Xaml.Media.VisualTreeHelper.GetChild(element, i), wide);
+    }
     private static string NewKey() => Guid.NewGuid().ToString("N");
     private static string Text(JsonNode? value, string key) => value?[key]?.ToString() ?? "";
     private static JsonObject Copy(JsonObject value) => (JsonObject)value.DeepClone();
@@ -57,6 +127,26 @@ public sealed partial class ProductionWorkspace : UserControl
         var action = (sender as Button)?.Tag?.ToString();
         switch (action)
         {
+            case "run-list": await ReadRuns(); break;
+            case "run-rerun": await CreateMilestoneRun(true); break;
+            case "git-policy": ApplyGitPolicy(await Invoke("desktop.integration.policy",new {projectId=ProjectId})); break;
+            case "git-configure": case "git-advance": case "git-read": case "git-publish": case "git-observe": case "git-merge": case "git-adopt": case "git-overwrite": case "git-owner-merge": case "git-refresh-base":
+                await GitAction(action); break;
+            case "run-create": await CreateMilestoneRun(false); break;
+            case "run-read": await ReadMilestoneRun(); break;
+            case "phase-approve": await DecidePhase("approve"); break;
+            case "phase-reject": await DecidePhase("reject"); break;
+            case "unity-plan": await VerifyUnity("plan"); break;
+            case "unity-integration": await VerifyUnity("integration"); break;
+            case "run-cancel": await ControlMilestoneRun("cancel"); break;
+            case "run-pause": await ControlMilestoneRun("pause"); break;
+            case "run-resume": await ControlMilestoneRun("resume"); break;
+            case "run-node":
+                if (loadedProject != ProjectId || RunNode.SelectedItem is not WorkspaceChoice n) throw new IOException("현재 실행에서 Feature를 선택하세요.");
+                token = Text(n.Value,"token"); await LoadDocument(true); ShowPage(ResultId == null ? "plan" : "result"); break;
+            case "roadmap-open": await OpenRoadmap(); break;
+            case "roadmap-save": await SaveRoadmap(); break;
+            case "roadmap-preview": await PreviewRoadmap(); break;
             case "projects": await LoadProjects(); break;
             case "register": await Invoke("desktop.projects.register", new { name = ProjectNameInput.Text, sourceRoot = SourceInput.Text }); await LoadProjects(); break;
             case "preview":
@@ -76,7 +166,7 @@ public sealed partial class ProductionWorkspace : UserControl
                 var report = await Invoke("desktop.instructions.save", new JsonObject { ["projectId"] = ProjectId, ["path"] = InstructionPath.Text, ["expectedHash"] = expected, ["content"] = InstructionContent.Text, ["scope"] = InstructionScope.Text }); SetInstructions(report); break;
             case "requests": await LoadRequests(); break;
             case "import-legacy": await Mutate("desktop.requests.import-legacy", new() { ["projectId"] = ProjectId, ["token"] = LegacyToken.Text }); await LoadRequests(); break;
-            case "new": document = null; token = NewKey(); RequestChoice.SelectedIndex = -1; TitleInput.Text = GoalInput.Text = ScopeInput.Text = ConstraintsInput.Text = ""; PlanText.Text = ResultText.Text = ""; RequestStatus.Text = "새 초안 · 아직 저장하지 않았습니다."; PlanConfirmed.IsChecked = QualityConfirmed.IsChecked = ChecksConfirmed.IsChecked = false; break;
+            case "new": document = null; token = NewKey(); RequestChoice.SelectedIndex = -1; TitleInput.Text = GoalInput.Text = ScopeInput.Text = ConstraintsInput.Text = ""; PlanText.Text = ResultText.Text = ""; ClearPresentation(); RequestStatus.Text = "새 초안 · 아직 저장하지 않았습니다."; PlanConfirmed.IsChecked = QualityConfirmed.IsChecked = ChecksConfirmed.IsChecked = false; break;
             case "save":
                 var draft = Command(); draft["input"] = Input(); document = (JsonObject)await Mutate("desktop.requests.save", draft); RenderDocument(false); break;
             case "plan": RequireSavedInput(); await DocumentMutation("plan"); break;
@@ -102,6 +192,7 @@ public sealed partial class ProductionWorkspace : UserControl
                 document = (JsonObject)await Mutate("desktop.requests." + action, recovery); RenderDocument(false); break;
             case "export": var export = Command(); export["resultId"] = ResultId; document = (JsonObject)await Mutate("desktop.requests.export", export); RenderDocument(false); break;
             case "diff":
+                await LoadDocument(false);
                 var identity = Identity(); identity["resultId"] = ResultId; var diff = await Invoke("desktop.requests.diff", identity);
                 diffIdentity = ProjectId + ":" + ResultId;
                 DiffFiles.ItemsSource = diff["files"]!.AsArray().Select(x => new WorkspaceChoice($"{Text(x, "path")} · {(x!["conflict"]!.GetValue<bool>() ? "충돌" : "반영 가능")}", Copy(x.AsObject()))).ToList(); break;
@@ -115,6 +206,8 @@ public sealed partial class ProductionWorkspace : UserControl
                 var retryApply = Command(); retryApply["resultId"] = ResultId; retryApply["commandKey"] = transfer.Value["key"]!.DeepClone(); retryApply["paths"] = transfer.Value["paths"]!.DeepClone(); await Invoke("desktop.requests.apply", retryApply); break;
             case "transfers": var history = Identity(); history["resultId"] = ResultId; var transfers = (await Invoke("desktop.requests.transfers", history)).AsArray(); TransferChoice.ItemsSource = transfers.Select(x => new WorkspaceChoice($"{Text(x, "key")} · {Text(x, "state")}", Copy(x!.AsObject()))).ToList(); break;
         }
+        if (action is "new" or "register" or "plan" or "start")
+            ShowPage(action switch { "new" => "request", "register" => "projects", "plan" => "plan", _ => "execution" });
     });
     private async Task DocumentMutation(string name) { document = (JsonObject)await Mutate("desktop.requests." + name, Command()); RenderDocument(false); }
     private void RequireSavedInput() { if (document == null || !JsonNode.DeepEquals(Input(), document["input"])) throw new IOException("현재 입력을 먼저 저장하세요. 저장 후 PLAN을 작성하고 확인합니다."); }
@@ -127,16 +220,25 @@ public sealed partial class ProductionWorkspace : UserControl
     {
         var values = (await Invoke("desktop.projects.list", new { })).AsArray(); loading = true;
         ProjectChoice.ItemsSource = values.Select(x => new WorkspaceChoice($"{Text(x, "name")} · {(x!["initialized"]!.GetValue<bool>() ? "준비됨" : "초기화 필요")}", Copy(x.AsObject()))).ToList(); loading = false;
+        ProjectListHint.Text = values.Count == 0 ? "등록된 프로젝트가 없습니다. 프로젝트 추가에서 소스 경로를 연결하세요." : "";
+        ProjectListHint.Visibility = values.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
     }
     private async void ProjectSelected(object sender, SelectionChangedEventArgs e)
     {
         if (loading || ProjectChoice.SelectedItem is not WorkspaceChoice value) return;
-        await Run(async () => { project = Copy(value.Value); document = null; token = NewKey(); preview = null; InitializeButton.IsEnabled = false; await LoadProject(); });
+        await Run(async () => { project = Copy(value.Value); document = null; ClearPresentation(); token = NewKey(); preview = null; InitializeButton.IsEnabled = false; await LoadProject(); ShowPage(project?["initialized"]?.GetValue<bool>() == true ? "home" : "setup"); });
+    }
+    private void ClearPresentation()
+    {
+        PlanSummary.Text = "저장한 요청의 PLAN을 확인하세요.";
+        ResultCards.ItemsSource = new[] { new Presentation.DetailCard("아직 결과가 없습니다", "PLAN 이력에서 작업을 선택하거나 새 요청을 작성하세요.") };
+        HistorySummary.Text = "이력에서 작업을 선택하세요.";
     }
     private async Task LoadProject()
     {
         ProjectLocation.Text = Text(project, "sourceRoot"); ProjectNameInput.Text = Text(project, "name"); SourceInput.Text = Text(project, "sourceRoot"); BaseRefInput.Text = Text(project?["config"], "baseRef");
         var output = Text(project?["config"], "outputRoot"); OutputInput.Text = output.Length == 0 ? "" : Path.GetFullPath(Path.Combine(SourceInput.Text, output));
+        HomeProject.Text = Text(project, "name") + "\n소스: " + SourceInput.Text + "\n결과물: " + (OutputInput.Text.Length == 0 ? "아직 지정하지 않았습니다." : OutputInput.Text);
         if (project?["initialized"]?.GetValue<bool>() == true)
         {
             await LoadInstructions(); await LoadRequests();
@@ -161,6 +263,8 @@ public sealed partial class ProductionWorkspace : UserControl
         var result = await Invoke("desktop.requests.list", new { projectId = ProjectId }); loading = true;
         var values = result["records"]!.AsArray().Select(x => new WorkspaceChoice($"{Text(x?["input"], "title")} · {DesktopViewModel.Status(Text(x?["engine"], "status"))}", Copy(x!.AsObject()))).ToList();
         RequestChoice.ItemsSource = values; ParentChoice.ItemsSource = values; loading = false;
+        RequestListHint.Text = values.Count == 0 ? "저장된 요청이 없습니다. 새 요청을 작성해 PLAN을 시작하세요." : "";
+        RequestListHint.Visibility = values.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
         if (result["issues"]!.AsArray().Count > 0) throw new IOException("읽을 수 없는 요청 파일: " + result["issues"]!.ToJsonString());
     }
     private async void RequestSelected(object sender, SelectionChangedEventArgs e)
@@ -189,11 +293,15 @@ public sealed partial class ProductionWorkspace : UserControl
         PlanText.Text = Text(versions.LastOrDefault(), "content"); PlanLocation.Text = Text(versions.LastOrDefault(), "path");
         ResultText.Text = string.Join("\n\n", engine["results"]!.AsArray().Select(x => $"결과 {Text(x, "id")}\n{Text(x, "finalResponse")}\n파일: {x?["changedFiles"]}\n자동 검사: {x?["checks"]}\n실행 실패: {Text(x, "executionFailure")}\n검증 오류: {Text(x, "failure")}")) + "\n\n검토 이력\n" + document["reviews"]!.ToJsonString();
         ExportLocation.Text = string.Join("\n", document["exports"]!.AsArray().Select(x => Text(x, "root")));
+        PlanSummary.Text = Presentation.WorkspacePresentation.PlanSummary(document);
+        ResultCards.ItemsSource = Presentation.WorkspacePresentation.ResultCards(document);
+        HistorySummary.Text = Presentation.WorkspacePresentation.History(document);
         if (!fields) return;
         var input = document["input"]!; TitleInput.Text = Text(input, "title"); GoalInput.Text = Text(input, "goal"); ScopeInput.Text = Text(input, "scope"); ConstraintsInput.Text = Text(input, "constraints"); OutputPathInput.Text = Text(input, "outputPath"); Discipline.SelectedIndex = Text(input, "discipline") == "planning" ? 0 : 1; RequestMode.SelectedIndex = Text(input, "mode") == "new" ? 0 : 1; ValidationChoice.SelectedIndex = Text(input, "validationProfile") == "files" ? 0 : 1;
         ModelChoice.SelectedItem = (ModelChoice.ItemsSource as IEnumerable<WorkspaceChoice>)?.FirstOrDefault(x => Text(x.Value, "provider") == Text(input, "provider"));
         LevelChoice.SelectedItem = (LevelChoice.ItemsSource as IEnumerable<WorkspaceChoice>)?.FirstOrDefault(x => Text(x.Value, "id") == Text(input, "thinkingOptionId"));
         ParentChoice.SelectedItem = (ParentChoice.ItemsSource as IEnumerable<WorkspaceChoice>)?.FirstOrDefault(x => Text(x.Value, "token") == Text(input, "parentToken"));
+        if (currentPage == "request") ShowPage("request");
     }
     private void ModelSelected(object sender, SelectionChangedEventArgs e)
     {

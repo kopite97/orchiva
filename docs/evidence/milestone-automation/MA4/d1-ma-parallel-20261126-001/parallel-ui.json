@@ -1,0 +1,28 @@
+{
+  "source": "WinUI desktop.runs.get via isolated bridge",
+  "running": [
+    "active · ",
+    "A · running  · 예약 3 · e59dd9dcfa0d6afa51231d47426610af11bee5e7  ",
+    "  wks_d228ceb363e8d5ab · f5084b84-b1aa-4e6a-8224-82ee8f2c0e63 · 2026-11-26T04:23:34.653Z — ",
+    "B · running  · 예약 3 · e59dd9dcfa0d6afa51231d47426610af11bee5e7  ",
+    "  wks_934e3afd2b8692a2 · 6b49244f-189f-40a1-866b-efd572592e4e · 2026-11-26T04:23:31.218Z — ",
+    "C · waiting 자원 대기 A · unity-editor  "
+  ],
+  "reopened": [
+    "completed · 선택 구간 인계 완료",
+    "A · accepted  · 예약 3 · e59dd9dcfa0d6afa51231d47426610af11bee5e7 17594e77-934e-4750-8441-4247cb6800d1 cc404b0f73a2c10acaae675c11b1f3b134811d7f",
+    "  wks_d228ceb363e8d5ab · f5084b84-b1aa-4e6a-8224-82ee8f2c0e63 · 2026-11-26T04:23:34.653Z — 2026-11-26T04:24:44.877Z",
+    "B · accepted  · 예약 3 · e59dd9dcfa0d6afa51231d47426610af11bee5e7 34533d23-1e1c-4098-9416-723e06e0b79b 9984a9b7c40cd920a398ab8d8ceddb848656c821",
+    "  wks_934e3afd2b8692a2 · 6b49244f-189f-40a1-866b-efd572592e4e · 2026-11-26T04:23:31.218Z — 2026-11-26T04:24:20.716Z",
+    "C · accepted  · 예약 20 · 9984a9b7c40cd920a398ab8d8ceddb848656c821 b4377744-def5-4c10-91ce-ce11e5373598 0b99c53d45e763a0809f589493a34a1b7094ee34",
+    "  wks_29d76bfea3bb76d4 · 02ab9e99-3e0d-4704-88a0-0da7a877eebd · 2026-11-26T04:25:48.119Z — 2026-11-26T04:28:15.641Z"
+  ],
+  "windowWidths": [
+    800,
+    1280
+  ],
+  "screenshots": [
+    "parallel-800.png",
+    "parallel-1280.png"
+  ]
+}

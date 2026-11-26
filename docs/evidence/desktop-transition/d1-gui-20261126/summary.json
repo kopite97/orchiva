@@ -1,0 +1,315 @@
+{
+  "date": "2026-11-26",
+  "baseline": "3aad026 + local working tree",
+  "kind": "native WinUI linked product sources with isolated local Paseo",
+  "computerUseUsed": false,
+  "history": {
+    "trial": "d1-gui-history-20261126-001",
+    "starts": [
+      {
+        "round": 1,
+        "app": 19312,
+        "previousBridge": 31128,
+        "bridge": 19612,
+        "server": 28252,
+        "scale": 1.25,
+        "appAndBridgesExited": true,
+        "serverSurvived": true,
+        "checks": [
+          "G01 offline failure message",
+          "G01 starting indicator",
+          "G01/G05 same three saved requests",
+          "G01 reconnect retains history",
+          "G02 arranged 800x600",
+          "G02 arranged 1280x900",
+          "G04/G11 theme 1",
+          "G04/G11 theme 2",
+          "G04 named settings controls",
+          "G05 tray open and exit commands",
+          "G05 tray menu restores same window",
+          "G05 window closed"
+        ]
+      },
+      {
+        "round": 2,
+        "app": 6276,
+        "previousBridge": 20568,
+        "bridge": 10440,
+        "server": 28252,
+        "scale": 1.25,
+        "appAndBridgesExited": true,
+        "serverSurvived": true,
+        "checks": [
+          "G05 persisted theme and close option",
+          "G01/G05 same three saved requests",
+          "G01 reconnect retains history",
+          "G02 arranged 800x600",
+          "G02 arranged 1280x900",
+          "G04/G11 theme 1",
+          "G04/G11 theme 2",
+          "G04 named settings controls",
+          "G05 tray open and exit commands",
+          "G05 tray menu restores same window",
+          "G05 window closed"
+        ]
+      },
+      {
+        "round": 3,
+        "app": 20696,
+        "previousBridge": 28536,
+        "bridge": 8700,
+        "server": 28252,
+        "scale": 1.25,
+        "appAndBridgesExited": true,
+        "serverSurvived": true,
+        "checks": [
+          "G05 persisted theme and close option",
+          "G01/G05 same three saved requests",
+          "G01 reconnect retains history",
+          "G02 arranged 800x600",
+          "G02 arranged 1280x900",
+          "G04/G11 theme 1",
+          "G04/G11 theme 2",
+          "G04 named settings controls",
+          "G05 tray open and exit commands",
+          "G05 tray menu restores same window",
+          "G05 window closed"
+        ]
+      },
+      {
+        "round": 4,
+        "app": 29028,
+        "previousBridge": 4048,
+        "bridge": 24828,
+        "server": 28252,
+        "scale": 1.25,
+        "appAndBridgesExited": true,
+        "serverSurvived": true,
+        "checks": [
+          "G05 persisted theme and close option",
+          "G01/G05 same three saved requests",
+          "G01 reconnect retains history",
+          "G02 arranged 800x600",
+          "G02 arranged 1280x900",
+          "G04/G11 theme 1",
+          "G04/G11 theme 2",
+          "G04 named settings controls",
+          "G05 tray open and exit commands",
+          "G05 tray menu restores same window",
+          "G05 window closed"
+        ]
+      }
+    ],
+    "historyRecords": 3,
+    "mutationDenied": true,
+    "fixtureUnchanged": true,
+    "originalRequestsUnchanged": true
+  },
+  "restoration": {
+    "trial": "d1-gui-restore-20261126-001",
+    "test": {
+      "passed": true,
+      "checks": [
+        "G03 initially offline",
+        "G03 live restoring, empty history and read-only indicator",
+        "G03 automatic reconciler recovery visible on refresh"
+      ],
+      "observations": {},
+      "error": null
+    }
+  },
+  "firstRun": {
+    "trial": "d1-gui-20261126-001",
+    "initialFailure": "G10 second apply following external conflict: REVISION_CONFLICT",
+    "retryAfterFix": {
+      "passed": true,
+      "checks": [
+        "G03 real empty legacy store",
+        "G06 isolated project list",
+        "G10 exported actual file",
+        "G10 two output paths available for selection",
+        "G10 conflict preserves local change",
+        "G10 applied two files and read transfer history",
+        "G10 undo restored original source",
+        "G07 modification PLAN bound to parent result",
+        "G08 stopped modification recorded"
+      ],
+      "observations": {
+        "result": "fe100971-53d3-49e0-9d33-50b01e85734a",
+        "status": "실패 · 저장 버전 18 · e028250363d849ff97ff2c4cfa43e537\nPLAN 작성: complete \n사용자 중단 요청 후 실행 종료를 확인했습니다.\n\n"
+      },
+      "error": null
+    },
+    "providerQuestion": {
+      "passed": true,
+      "checks": [
+        "G03 real empty legacy store",
+        "G06 isolated project list",
+        "G09 real provider permission arrived",
+        "G09 provider request details visible",
+        "G09 unconfirmed real decision blocked",
+        "G09 confirmed decline cleared exact provider request"
+      ],
+      "observations": {
+        "kind": "question",
+        "requestHash": "ffddc442c312f44a392e7e17f45c3f1b8c468c63bf7ff366c7b180f28918b0de"
+      },
+      "error": null
+    },
+    "lostReplyAndFocus": {
+      "passed": true,
+      "checks": [
+        "G03 real empty legacy store",
+        "G03 restoring response presentation (injected flag)",
+        "G09 lost acknowledgement and double click retain draft",
+        "G09 reconnect and replay persisted exactly once",
+        "G04/G11 first and last focus targets on 11 workspace pages"
+      ],
+      "observations": {
+        "key": "69d69291b2084796a852e3615a459fdf",
+        "focusPages": [
+          "projects",
+          "setup",
+          "home",
+          "request",
+          "plan",
+          "execution",
+          "result",
+          "apply",
+          "history",
+          "instructions",
+          "configuration"
+        ]
+      },
+      "error": null
+    },
+    "interruptedTransfer": {
+      "passed": true,
+      "checks": [
+        "G03 real empty legacy store",
+        "G06 isolated project list",
+        "G10 partial write present before continue",
+        "G10 continued partial transfer",
+        "G10 partial transfer undo"
+      ],
+      "observations": {},
+      "error": null
+    }
+  },
+  "cleanEndToEnd": {
+    "trial": "d1-gui-repeat-20261126-001",
+    "checks": [
+      "G03 real empty legacy store",
+      "G06 isolated project list",
+      "G06 initialization preview before write",
+      "G06 initialized project path and files",
+      "G06 instruction edit persisted",
+      "G06 external conflict preserves user input and disk",
+      "G07 real model and level saved",
+      "G07 submitted real PLAN",
+      "G07 externally edited PLAN reloaded",
+      "G07 confirmed PLAN starts execution",
+      "G08 automatic checks passed",
+      "G08 failed validation resets result confirmation",
+      "G08 same session resumes and produces new result",
+      "G08 review complete",
+      "G10 exported actual file",
+      "G10 two output paths available for selection",
+      "G10 conflict preserves local change",
+      "G10 applied two files and read transfer history",
+      "G10 undo restored original source",
+      "G07 modification PLAN bound to parent result",
+      "G08 stopped modification recorded"
+    ],
+    "token": "5766ba5902dc4f65aeeb6408311e180e",
+    "agent": "56a6310d-eb70-49e3-85a7-c652cb1405aa",
+    "workspace": "wks_ca0d2c3f3565f8fb",
+    "results": [
+      {
+        "id": "6abda6f6-f3d0-4ca2-b3de-e70f31cad788",
+        "checks": [
+          {
+            "passed": true,
+            "status": "passed"
+          }
+        ]
+      },
+      {
+        "id": "5b16fe38-b9bc-465c-9d66-60ae5fd00d72",
+        "checks": [
+          {
+            "passed": false,
+            "status": "failed"
+          }
+        ]
+      },
+      {
+        "id": "2397f907-8d66-4d36-9c7c-cf6525790e72",
+        "checks": [
+          {
+            "passed": true,
+            "status": "passed"
+          }
+        ]
+      }
+    ],
+    "finalReview": "completed",
+    "childToken": "5eff4eaf94704881b3fc682fd6ee8f74",
+    "childAgent": "7d68b06d-25ff-49b0-8e09-b359e6373035",
+    "childParentResult": "2397f907-8d66-4d36-9c7c-cf6525790e72",
+    "stopPhase": "stopped",
+    "interruptedTransfer": {
+      "passed": true,
+      "checks": [
+        "G03 real empty legacy store",
+        "G06 isolated project list",
+        "G10 selected diff matches source and exported bytes",
+        "G10 partial write present before continue",
+        "G10 continued partial transfer",
+        "G10 partial transfer undo"
+      ],
+      "observations": {},
+      "error": null
+    }
+  },
+  "regression": {
+    "typescript": "pass",
+    "nodePassed": 129,
+    "bridgePassed": 13,
+    "bridgeSkipped": 0,
+    "desktopBuild": "pass",
+    "nativeHarnessBuild": "pass",
+    "mockCases": [
+      "01 saved input restores identical payload",
+      "02 navigation preserves input and timer with zero RPC",
+      "03 timeout retry preserves command key revision and payload",
+      "04 save payload equals existing input contract",
+      "05 unsaved PLAN creation blocked",
+      "06 unconfirmed start blocked",
+      "07 confirmed start retains PLAN hash",
+      "08 new PLAN and result reset confirmations",
+      "09 review retains current result and confirmation values",
+      "10 unconfirmed permission blocked",
+      "11 permission preserves hash and selected behavior",
+      "12 selected paths survive navigation",
+      "13 partial apply reuses transfer key",
+      "14 undo uses displayed transfer key",
+      "15 busy disables target selection",
+      "16 modification preserves parent token and result",
+      "17 current historical failed skipped evidence remains distinct",
+      "18 history maps plan revision",
+      "19 new draft clears presentation"
+    ]
+  },
+  "pending": [
+    "G01 console flash visual observation",
+    "G02 actual 100/150% DPI and clipping",
+    "G04 full keyboard traversal, visible focus and contrast",
+    "G11 actual 150/200% DPI, readability and full keyboard traversal"
+  ],
+  "cleanup": {
+    "trialDaemonsStopped": 4,
+    "remainingTrialListeners": 0,
+    "repeatSourceRestored": true
+  }
+}

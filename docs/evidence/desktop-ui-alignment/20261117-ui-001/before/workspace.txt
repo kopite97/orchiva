@@ -1,0 +1,77 @@
+Window: "Orchiva", App: Orchiva.Desktop.exe.
+	0 window (창) Orchiva Secondary Actions: Raise
+		1 pane (창)
+			2 pane (창)
+				3 custom (사용자 지정) ID: Navigation
+					4 button (단추) 탐색 닫기 ID: TogglePaneButton
+						5 text (텍스트) ID: PaneTitleTextBlock
+					6 window (창) Secondary Actions: Raise ID: PaneRoot
+						7 pane (창) ID: MenuItemsScrollViewer
+							8 group (그룹) ID: MenuItemsHost
+								9 list item (목록 항목) (selectable) 작업실
+								10 list item (목록 항목) (selectable) 기존 MVP 프로젝트
+								11 list item (목록 항목) (selectable) 기존 v2 이력
+								12 list item (목록 항목) (selectable) 연결 상태
+						13 pane (창) ID: FooterItemsScrollViewer
+							14 group (그룹) ID: FooterMenuItemsHost
+								15 list item (목록 항목) (selectable) 설정 ID: SettingsItem
+					16 text (텍스트) Orchiva · 프로젝트와 PLAN
+					17 pane (창)
+						18 status bar (상태 표시줄) ID: StatusBar
+							19 text (텍스트) 경고 아이콘 ID: StandardIcon
+							20 text (텍스트) 조회 실패 · 마지막 정보 유지 ID: Title
+							21 text (텍스트) 연결하지 못했습니다. 격리 실행부가 시작됐는지 확인한 뒤 다시 연결하세요. ID: Message
+						38 text (텍스트) 프로젝트 작업실
+						39 text (텍스트) 프로젝트의 파일에서 시작해, PLAN을 확인하고 결과를 검토하세요.
+						40 status bar (상태 표시줄) ID: Notice
+							41 text (텍스트) 정보 아이콘 ID: StandardIcon
+							42 text (텍스트) 프로젝트 선택 ID: Title
+							43 text (텍스트) 연결 후 프로젝트를 불러오세요. ID: Message
+						44 combo box (콤보 상자) 프로젝트 ID: ProjectChoice
+						45 button (단추) 목록 새로 고침
+						46 text (텍스트) ID: ProjectLocation
+						47 tab (탭)
+							48 tab item (탭 항목) (selectable) 프로젝트·지침
+								49 text (텍스트) 프로젝트 추가
+								50 text field (편집) (settable, string) 프로젝트 이름 ID: ProjectNameInput
+									51 text (텍스트) 프로젝트 이름
+								52 text field (편집) (settable, string) 소스 폴더의 절대 경로 ID: SourceInput
+									53 text (텍스트) 소스 폴더의 절대 경로
+								54 button (단추) 프로젝트 등록
+								55 text (텍스트) 등록은 소스 파일을 변경하지 않습니다. 초기화 미리보기에서 생성·이관할 지침을 확인하세요.
+								56 button (단추) 초기화 미리보기
+								57 button (단추) (disabled) 확인한 변경으로 초기화 ID: InitializeButton
+								58 text field (편집) 초기화 변경 내용 ID: InitPreview
+									59 text (텍스트) 초기화 변경 내용
+								60 text (텍스트) 프로젝트 설정
+								61 text field (편집) (settable, string) Git 기준 브랜치 Value: main ID: BaseRefInput
+									62 text (텍스트) Git 기준 브랜치
+								63 text field (편집) (settable, string) 결과물 폴더의 절대 경로 ID: OutputInput
+									64 text (텍스트) 결과물 폴더의 절대 경로
+								65 button (단추) 프로젝트 설정 저장
+								66 text (텍스트) 실제 지침 파일
+								67 button (단추) 지침·누락 다시 확인
+								68 combo box (콤보 상자) 등록된 지침 ID: InstructionChoice
+								69 text field (편집) (settable, string) 지침 경로 ID: InstructionPath
+									70 text (텍스트) 지침 경로
+								71 text field (편집) (settable, string) 적용 범위 Value: all ID: InstructionScope
+									72 text (텍스트) 적용 범위
+								73 text field (편집) (settable, string) 내용 ID: InstructionContent
+									74 text (텍스트) 내용
+								75 button (단추) 지침 파일 저장
+								76 text (텍스트) 새 지침은 docs/agents 아래에 만드세요. 루트 AGENTS.md의 지도 링크도 편집해 연결합니다. 외부 수정이 있으면 덮어쓰지 않습니다.
+							77 tab item (탭 항목) (selectable) 요청·PLAN
+							78 tab item (탭 항목) (selectable) 실행·결과 검토
+							79 tab item (탭 항목) (selectable) 결과물·소스 반영
+						26 text (텍스트)
+						27 scroll bar (스크롤 막대) (settable, float) 세로 Value: 0 ID: VerticalScrollBar
+		28 title bar (제목 표시줄) (settable, string) Value: Orchiva
+			29 menu bar (메뉴 모음) 시스템 ID: MenuBar
+				30 menu item (메뉴 항목) 시스템
+			31 button (단추) 최소화
+			32 button (단추) 최대화
+			33 button (단추) 닫기
+
+Document text: ```
+all
+```

@@ -1,0 +1,159 @@
+{
+  "trial": "ma3-hud-20261126",
+  "projectId": "be8046a5-782c-4939-ba41-8ef09a84be31",
+  "runId": "d1-ma-poc-20261126-001-hud",
+  "branch": "orchiva/integration/ma3-hud-20261126",
+  "base": "bcc9c2933f4cfa87d23492025d342c8f64b5f8d6",
+  "tip": "0bb1e234b636f5588098536c34d444e0f0b2afa1",
+  "unchangedSource": "a75b9166c50298cfccc08205c0e7e1097902a7a4df61cc0794036c75d70fa3fa",
+  "files": [
+    "handoff.txt",
+    "hud.cjs",
+    "label.txt",
+    "qa.txt",
+    "rules.txt",
+    "score.cjs"
+  ],
+  "entries": [
+    {
+      "feature": "A",
+      "token": "ma-da34e2f41aeb43ec9a939404c18c37edd4963441",
+      "result": "cfe2f77c-cdd1-4feb-a533-6add8ef9c674",
+      "fingerprint": "12445f175488200c0374dcd6fede945f4dc4b1e0874811859abaa2145f1992a4",
+      "manifest": "12c7456cc70654ec2154c15eb978ab26433d3c41c554269783fd972556d4a0fd",
+      "planHash": "5b2b6660775f421e257f8b876fc02194aa3a98ba663a4ef063040818affc0762",
+      "review": "dbd28a1a-ace0-4121-81fa-308629c13f0d",
+      "base": "bcc9c2933f4cfa87d23492025d342c8f64b5f8d6",
+      "head": "0ad900c4aac7296248fafd76318aa046f284ba68",
+      "integrated": "0ad900c4aac7296248fafd76318aa046f284ba68",
+      "branch": "orchiva/feature/ma3-hud-20261126/d1-ma-poc-20261126-001-hud-A"
+    },
+    {
+      "feature": "B",
+      "token": "ma-dfbc54dd8c14d2bd8a3fb57b088fbace6037eb17",
+      "result": "431fd0ca-0e65-4171-a7bc-c431ba3b1b8a",
+      "fingerprint": "851aac64626f241aeee90d3e3d0c252ea98c573c54b606296936ac3f09dcabd9",
+      "manifest": "6f956a9a84f47021b83dba197342bcc9478ad1eab9fdcb3b2a26e67d4363355f",
+      "planHash": "eb43f2dff219c19c6a1428ff07a050d994a3a0574f57c7d29958af55c0843590",
+      "review": "b6107345-6b8f-4c7d-8502-5d72957f3d37",
+      "base": "0ad900c4aac7296248fafd76318aa046f284ba68",
+      "head": "34deb0ab1bc2937025a82c25175e68542bf66463",
+      "integrated": "34deb0ab1bc2937025a82c25175e68542bf66463",
+      "branch": "orchiva/feature/ma3-hud-20261126/d1-ma-poc-20261126-001-hud-B"
+    },
+    {
+      "feature": "C",
+      "token": "ma-800cde92522d90d7189675c97048a07685f6dc90",
+      "result": "e58c1862-f625-45de-ac1c-7020dc95411c",
+      "fingerprint": "cec66aacf1c6426675d95ed93bd9556314e896c810265f56ff1ad6c06ffd87f7",
+      "manifest": "e899dd16a5a621ffee8e10f10659becd798010720be819d5d9bcd090cf2ce8bc",
+      "planHash": "77f38d3ce1d04e85c72aab5780e3a2af8dc8c599e9d6895b7bcf99f47dba8c38",
+      "review": "f5b0ba0e-7b39-40de-a8ed-1e7dbf3f7b51",
+      "base": "34deb0ab1bc2937025a82c25175e68542bf66463",
+      "head": "5ac829267f07453d70062b6593d42120cc711224",
+      "integrated": "5ac829267f07453d70062b6593d42120cc711224",
+      "branch": "orchiva/feature/ma3-hud-20261126/d1-ma-poc-20261126-001-hud-C"
+    },
+    {
+      "feature": "D",
+      "token": "ma-511281d59c60c27d5d498ee09483f776d760aeb2",
+      "result": "0dfe33a4-76ac-433e-8249-f19d087176d2",
+      "fingerprint": "a5969093114f6b387a900e6ca18f5e0dfc3a85bfcdee0e50e9d2ecce2553d89a",
+      "manifest": "3ca6eba4ef17073ce7c601de40dbc75742b25c6e4b8814895ca2aac8dbde4535",
+      "planHash": "f5491a7ca4b22867328e03fb665f2e492eafd1ec64fe508538ed91a43e48c514",
+      "review": "6ba2036c-52f6-4e22-a740-53150ff8029f",
+      "base": "5ac829267f07453d70062b6593d42120cc711224",
+      "head": "1cfa50e76202713db191917d07b6e5bc5c80740d",
+      "integrated": "1cfa50e76202713db191917d07b6e5bc5c80740d",
+      "branch": "orchiva/feature/ma3-hud-20261126/d1-ma-poc-20261126-001-hud-D"
+    },
+    {
+      "feature": "E",
+      "token": "ma-1ef671218f0999f08d119bd0815568fddf041a54",
+      "result": "24130844-7ed6-4e14-94d4-500fb125b993",
+      "fingerprint": "7d28c104a45811a7a1d78b0da060b0c31d6bf0101c14ef11522ddd9cc52def1f",
+      "manifest": "9acc75a1bd131d795a3cc921fe0dd39e3cdf7998df6ff7098a036f39b2482b57",
+      "planHash": "24a81eaacd237eccf066586c262495da469e174cd4695f3db8ee35850953bb31",
+      "review": "28986dd5-1ed2-4d7f-819f-6db08ad6c1b9",
+      "base": "1cfa50e76202713db191917d07b6e5bc5c80740d",
+      "head": "b9db7f880235cd184fe3e4ea75533a7fcaa59201",
+      "integrated": "b9db7f880235cd184fe3e4ea75533a7fcaa59201",
+      "branch": "orchiva/feature/ma3-hud-20261126/d1-ma-poc-20261126-001-hud-E"
+    },
+    {
+      "feature": "F",
+      "token": "ma-ac881091e285bf32f4d0337d9c9a1da645646778",
+      "result": "81b93d50-6070-4e07-b43d-8d1aade637fb",
+      "fingerprint": "4993036ff845394bc2a7185875e43df49f8869024d5482534886c5defe621f61",
+      "manifest": "d79705d29db1cfde1fe7044d370cbb8e9302c9e6a1211ae75cecb5cfafb04e13",
+      "planHash": "68ce713ee65c79c5f08af77f40bd8f594f2a314db3fa3ae9a20a54464128bdd3",
+      "review": "6834a8ad-997d-40c4-8e7f-70316578ba20",
+      "base": "b9db7f880235cd184fe3e4ea75533a7fcaa59201",
+      "head": "0bb1e234b636f5588098536c34d444e0f0b2afa1",
+      "integrated": "0bb1e234b636f5588098536c34d444e0f0b2afa1",
+      "branch": "orchiva/feature/ma3-hud-20261126/d1-ma-poc-20261126-001-hud-F"
+    }
+  ],
+  "tests": "✔ checks\\A.test.cjs (53.4231ms)\n✔ checks\\B.test.cjs (47.6965ms)\n✔ checks\\C.test.cjs (47.3368ms)\n✔ checks\\D.test.cjs (47.5336ms)\n✔ checks\\E.test.cjs (43.5546ms)\n✔ checks\\F.test.cjs (44.3267ms)\nℹ tests 6\nℹ suites 0\nℹ pass 6\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 94.1857\n",
+  "github": [
+    {
+      "feature": "A",
+      "issue": "https://github.com/kopite97/PoC-sandbox/issues/1",
+      "pr": "https://github.com/kopite97/PoC-sandbox/pull/2",
+      "base": "47daf034883bf4c5174761dfa91332e628990e65",
+      "head": "c3d2eabdecda59ff27ab6c61482937a982d062fc",
+      "issueBodyHash": "584e12d34e18e2a45cb00bed41070eec52fc62160a02f8d4fafd8380856c754e",
+      "merged": false
+    },
+    {
+      "feature": "B",
+      "issue": "https://github.com/kopite97/PoC-sandbox/issues/3",
+      "pr": "https://github.com/kopite97/PoC-sandbox/pull/4",
+      "base": "47daf034883bf4c5174761dfa91332e628990e65",
+      "head": "90a9d490cb6ec76b988594cb25683e0113422bf8",
+      "issueBodyHash": "7fa0f06f9443c25ed46b7d2485d66f19ebbd9a74b38cb3abac6a7556b9ee9fd5",
+      "merged": false
+    },
+    {
+      "feature": "C",
+      "issue": "https://github.com/kopite97/PoC-sandbox/issues/5",
+      "pr": "https://github.com/kopite97/PoC-sandbox/pull/6",
+      "base": "47daf034883bf4c5174761dfa91332e628990e65",
+      "head": "142b0971e94a988bbf084e21ef807648b06b234b",
+      "issueBodyHash": "61c4205b061f696124c5322dceb0defe4913890f88bc721ad48c3a530fef83fa",
+      "merged": false
+    },
+    {
+      "feature": "D",
+      "issue": "https://github.com/kopite97/PoC-sandbox/issues/7",
+      "pr": "https://github.com/kopite97/PoC-sandbox/pull/8",
+      "base": "47daf034883bf4c5174761dfa91332e628990e65",
+      "head": "1a34db3d60f64da125e1129b0dc0738e8e0e8b93",
+      "issueBodyHash": "7969c2b3f53fb39787b0d33724357dd56c4caebe455c08f71fd28da8437b892e",
+      "merged": false
+    },
+    {
+      "feature": "E",
+      "issue": "https://github.com/kopite97/PoC-sandbox/issues/9",
+      "pr": "https://github.com/kopite97/PoC-sandbox/pull/10",
+      "base": "47daf034883bf4c5174761dfa91332e628990e65",
+      "head": "904a614be1cceb9b31de1f1cade00e94ff7d9416",
+      "issueBodyHash": "2213f5cc2a8b2c9c63ea16f87389fbe3e6cc27b051976925f6066640bf1afc36",
+      "merged": false
+    }
+  ],
+  "externalEdit": {
+    "feature": "B",
+    "resolution": "adopt",
+    "hash": "7fa0f06f9443c25ed46b7d2485d66f19ebbd9a74b38cb3abac6a7556b9ee9fd5"
+  },
+  "remoteTarget": {
+    "repository": "kopite97/PoC-sandbox",
+    "repoId": 1454742772,
+    "base": "orchiva/integration/ma3-hud-20261126",
+    "main": "47daf034883bf4c5174761dfa91332e628990e65",
+    "tip": "47daf034883bf4c5174761dfa91332e628990e65",
+    "openPullRequests": 5,
+    "mergedPullRequests": 0
+  }
+}

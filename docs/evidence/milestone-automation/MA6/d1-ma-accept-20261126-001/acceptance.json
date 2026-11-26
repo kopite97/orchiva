@@ -1,0 +1,770 @@
+[
+  {
+    "game": "maze",
+    "projectId": "7bbd3518-2d4f-43d6-86cf-256bae708961",
+    "runId": "d1-ma-accept-20261126-001-maze",
+    "profile": {
+      "version": 1,
+      "pipeline": "unity-level-v1",
+      "roles": [
+        {
+          "role": "designer",
+          "tool": "planning",
+          "outputs": [
+            "design.json"
+          ],
+          "checks": [
+            "checks/Rules.test.cjs"
+          ]
+        },
+        {
+          "role": "builder",
+          "tool": "level",
+          "outputs": [
+            "Assets/Resources/Route.json"
+          ],
+          "checks": [
+            "checks/Level.test.cjs"
+          ]
+        },
+        {
+          "role": "programmer",
+          "tool": "coding",
+          "outputs": [
+            "Assets/Game/GoalRule.cs"
+          ],
+          "checks": [
+            "checks/Code.test.cjs"
+          ]
+        },
+        {
+          "role": "tester",
+          "tool": "qa",
+          "outputs": [
+            "qa.json"
+          ],
+          "checks": [
+            "checks/QA.test.cjs"
+          ]
+        },
+        {
+          "role": "tuner",
+          "tool": "qa",
+          "outputs": [
+            "tuning.json"
+          ],
+          "checks": [
+            "checks/TunePass.test.cjs"
+          ]
+        }
+      ]
+    },
+    "scope": "b0d2e943856217fbcd4fd0f6ddc8a819303ff7b1e2b367e40ad9eac0645ecbc7",
+    "roadmapRevision": "06e4a0fd89328e3362b55a5015f6eaa3aa973e88485282be323166d69a0afe3f",
+    "features": [
+      {
+        "feature": "Rules",
+        "token": "ma-ffb57784ac6204d5789ad2a056ec279c540c3acc",
+        "session": "5ee9ba76-5717-4589-a5ba-7cb52447cde9",
+        "planHash": "acff09c8c545c673292382fe3ac8ae872c805abd0dc844ce30f10cfbe068334d",
+        "result": "826fbf34-a210-4962-ae85-c8da592cf156",
+        "fingerprint": "f7ed2bee511cf6077c239b123f5da15a9b521fd320ed8e024008ba323287898b",
+        "commit": "1bb41d0e40578077b251a55e0475e5685093ce57",
+        "files": [
+          {
+            "path": "design.json",
+            "hash": "88f37cf4f513cce4e00de9c318f5e0f1959708aff385bd6f90be2e915e0a5667"
+          }
+        ],
+        "consumed": [],
+        "checks": [
+          {
+            "label": "checks/Rules.test.cjs",
+            "hash": "4067d998a73f6554d08806645b7138dddd80ef619a4cea17f1f13d6cf5019067",
+            "exit": 0
+          }
+        ]
+      },
+      {
+        "feature": "Level",
+        "token": "ma-f72ede51482ccca8c566ce40fdaad65b86683501",
+        "session": "801e1637-e83c-46be-b407-9ef78cf949bd",
+        "planHash": "c3470b4d1e3171fd1458afc771a64f0c5d7509cf9d51de236c0626105af5ae55",
+        "result": "fac6507d-4829-4aa1-a8e0-44669dd84b9a",
+        "fingerprint": "84ec47d3fd43ea8b585957dce5fb7e2cd85e933c87a6d04ed0d6914f6c18d507",
+        "commit": "978f7c50df05ffa4e5f8cef095129b84038f2db1",
+        "files": [
+          {
+            "path": "Assets/Resources/Route.json",
+            "hash": "5c1d22fc5b2c51c38b352f48db325b5c3e751bf5ab9365c2bedd8fa00b64ad07"
+          }
+        ],
+        "consumed": [
+          "826fbf34-a210-4962-ae85-c8da592cf156"
+        ],
+        "checks": [
+          {
+            "label": "checks/Level.test.cjs",
+            "hash": "9271d348b357782d1efa4d3e6648a98017c352cd4ead89aa671f38250fafa632",
+            "exit": 0
+          }
+        ]
+      },
+      {
+        "feature": "Code",
+        "token": "ma-9b3e672b8e9d316614ebc9c78cc025eb196cde6f",
+        "session": "0ebd4bfe-78fc-4ee7-a6a5-5f308090c95b",
+        "planHash": "6a5341a8bdb9b74340a10a67d1d86f7f87df9c06a257147cd45e7721801de43f",
+        "result": "8f401b28-77f6-4945-b820-09a9366e1b66",
+        "fingerprint": "3957d0482e6164792424a6b827150d64babe84e99276bf17f5469ec516f5ea59",
+        "commit": "337a8f1592efe832bde3bb4ded0b275278ea995b",
+        "files": [
+          {
+            "path": "Assets/Game/GoalRule.cs",
+            "hash": "7f964f4a206ee6221060d9aef19dab499d81545ba275b546774166a70e950fcd"
+          }
+        ],
+        "consumed": [
+          "826fbf34-a210-4962-ae85-c8da592cf156",
+          "fac6507d-4829-4aa1-a8e0-44669dd84b9a"
+        ],
+        "checks": [
+          {
+            "label": "checks/Code.test.cjs",
+            "hash": "709e917a5a5ee879b9cd488d08dbd20f4d2ecc69b81248f669baf33b3202d6ea",
+            "exit": 0
+          }
+        ]
+      },
+      {
+        "feature": "QA",
+        "token": "ma-d5f33bbc80e6a065fa4b2f80ab5b067d54f9e36d",
+        "session": "326cfff9-8d7e-4a3f-aef5-9cfcc6226fea",
+        "planHash": "f40a3c51faeaef58187f5bb3b5ecf36486c64ca29a4b545c252b4dfba9316b2d",
+        "result": "454661c2-dd8b-40a7-8c7c-5071dc8741a6",
+        "fingerprint": "8f92c9ded45b4bd974a06d987311c979b756bb4d0fdc3322bcd217772f195199",
+        "commit": "ca457637dc9274698aae72472ea0d5115372d40b",
+        "files": [
+          {
+            "path": "qa.json",
+            "hash": "f4651f0d949cf8098e4bdc29c36df40a9ebff0e9ee3ec6d1ee8c39dfb3b35c07"
+          }
+        ],
+        "consumed": [
+          "826fbf34-a210-4962-ae85-c8da592cf156",
+          "fac6507d-4829-4aa1-a8e0-44669dd84b9a",
+          "8f401b28-77f6-4945-b820-09a9366e1b66"
+        ],
+        "checks": [
+          {
+            "label": "checks/QA.test.cjs",
+            "hash": "8fe858c9598f8524c507825971ea401caf8d2e4b75455328125560460a59a042",
+            "exit": 0
+          }
+        ]
+      }
+    ],
+    "tip": "ca457637dc9274698aae72472ea0d5115372d40b",
+    "editor": "6000.3.27f1",
+    "attempt": "c111a4bc-3140-4b66-8a8e-a38d7a3bc92a",
+    "buildHash": "2a3457603ba7305936616e943e15e6e847ac5b5eb7c2b18912b717901a41a2dd",
+    "playerHash": "f083b0e879a9298cdcf9933a8f3b4f2b013e13f7d3e51221fc0d756b79e28807",
+    "artifact": "C:/Users/USER/lib/orchiva-plugin/.desktop-local/d1-ma-accept-20261126-001/data/desktop/unity-validation/c111a4bc-3140-4b66-8a8e-a38d7a3bc92a/build/Hud.exe",
+    "tests": [
+      {
+        "name": "EditMode",
+        "ms": 21338,
+        "exit": 0,
+        "cases": [
+          "HudRulesTests.ApprovedAward",
+          "HudRulesTests.ApprovedLabel"
+        ]
+      },
+      {
+        "name": "PlayMode",
+        "ms": 8201,
+        "exit": 0,
+        "cases": [
+          "HudPlayTests.CollectUpdatesSceneHud"
+        ]
+      },
+      {
+        "name": "build",
+        "ms": 25564,
+        "exit": 0
+      },
+      {
+        "name": "player",
+        "ms": 16754,
+        "exit": 0
+      }
+    ],
+    "level": {
+      "name": "Lantern Maze",
+      "moves": 4,
+      "collected": 0,
+      "cleared": true,
+      "wallBlocked": true
+    },
+    "history": [
+      {
+        "at": "2026-11-26T05:11:24.622Z",
+        "event": "범위 확정 및 요청 키 배정"
+      },
+      {
+        "at": "2026-11-26T05:12:07.009Z",
+        "event": "조율 accepted"
+      },
+      {
+        "at": "2026-11-26T05:12:12.127Z",
+        "event": "Rules plan-running"
+      },
+      {
+        "at": "2026-11-26T05:12:39.618Z",
+        "event": "Rules planned"
+      },
+      {
+        "at": "2026-11-26T05:12:53.636Z",
+        "event": "Rules running"
+      },
+      {
+        "at": "2026-11-26T05:13:36.811Z",
+        "event": "Rules awaiting-apply"
+      },
+      {
+        "at": "2026-11-26T05:15:27.778Z",
+        "event": "accepted Rules"
+      },
+      {
+        "at": "2026-11-26T05:15:35.910Z",
+        "event": "Level plan-running"
+      },
+      {
+        "at": "2026-11-26T05:16:10.239Z",
+        "event": "Level planned"
+      },
+      {
+        "at": "2026-11-26T05:16:19.690Z",
+        "event": "Level running"
+      },
+      {
+        "at": "2026-11-26T05:17:00.665Z",
+        "event": "Level awaiting-review"
+      },
+      {
+        "at": "2026-11-26T05:17:03.778Z",
+        "event": "Level awaiting-apply"
+      },
+      {
+        "at": "2026-11-26T05:18:44.128Z",
+        "event": "accepted Level"
+      },
+      {
+        "at": "2026-11-26T05:18:50.575Z",
+        "event": "Code plan-running"
+      },
+      {
+        "at": "2026-11-26T05:19:27.397Z",
+        "event": "Code ready"
+      },
+      {
+        "at": "2026-11-26T05:20:44.826Z",
+        "event": "Code running"
+      },
+      {
+        "at": "2026-11-26T05:24:52.945Z",
+        "event": "Code failed"
+      },
+      {
+        "at": "2026-11-26T05:24:55.411Z",
+        "event": "Code running"
+      },
+      {
+        "at": "2026-11-26T05:25:21.496Z",
+        "event": "Code awaiting-review"
+      },
+      {
+        "at": "2026-11-26T05:26:41.517Z",
+        "event": "accepted Code"
+      },
+      {
+        "at": "2026-11-26T05:26:49.045Z",
+        "event": "QA plan-running"
+      },
+      {
+        "at": "2026-11-26T05:27:22.559Z",
+        "event": "QA planned"
+      },
+      {
+        "at": "2026-11-26T05:27:30.596Z",
+        "event": "QA running"
+      },
+      {
+        "at": "2026-11-26T05:28:10.571Z",
+        "event": "QA awaiting-apply"
+      },
+      {
+        "at": "2026-11-26T05:31:28.352Z",
+        "event": "accepted QA"
+      },
+      {
+        "at": "2026-11-26T05:31:31.117Z",
+        "event": "UNITY_GATE_RUNNING"
+      },
+      {
+        "at": "2026-11-26T05:33:22.172Z",
+        "event": "handoff Prototype accepted"
+      },
+      {
+        "event": "completed",
+        "at": "2026-11-26T05:33:24.673Z"
+      }
+    ],
+    "decisions": [
+      {
+        "projectId": "7bbd3518-2d4f-43d6-86cf-256bae708961",
+        "runId": "d1-ma-accept-20261126-001-maze",
+        "basis": "906c6ce848ab8291aed9fcd07d4905d356564f144a4a025b32e7942a204e6930",
+        "verdict": "approve",
+        "note": "사용자 결정 “두 게임 모두 승인”. 제시된 빌드 2a3457603ba7의 Play 결과를 승인하고 Polish를 시작한다.",
+        "commandKey": "1895eefffcf84f6bb24f0ee6c2340c68",
+        "at": "2026-11-26T05:34:57.220Z",
+        "phase": "Play",
+        "next": "Polish",
+        "roadmapRevision": "06e4a0fd89328e3362b55a5015f6eaa3aa973e88485282be323166d69a0afe3f",
+        "sources": [
+          {
+            "featureId": "Rules",
+            "token": "ma-ffb57784ac6204d5789ad2a056ec279c540c3acc",
+            "resultId": "826fbf34-a210-4962-ae85-c8da592cf156",
+            "fingerprint": "f7ed2bee511cf6077c239b123f5da15a9b521fd320ed8e024008ba323287898b"
+          },
+          {
+            "featureId": "Level",
+            "token": "ma-f72ede51482ccca8c566ce40fdaad65b86683501",
+            "resultId": "fac6507d-4829-4aa1-a8e0-44669dd84b9a",
+            "fingerprint": "84ec47d3fd43ea8b585957dce5fb7e2cd85e933c87a6d04ed0d6914f6c18d507"
+          },
+          {
+            "featureId": "Code",
+            "token": "ma-9b3e672b8e9d316614ebc9c78cc025eb196cde6f",
+            "resultId": "8f401b28-77f6-4945-b820-09a9366e1b66",
+            "fingerprint": "3957d0482e6164792424a6b827150d64babe84e99276bf17f5469ec516f5ea59"
+          },
+          {
+            "featureId": "QA",
+            "token": "ma-d5f33bbc80e6a065fa4b2f80ab5b067d54f9e36d",
+            "resultId": "454661c2-dd8b-40a7-8c7c-5071dc8741a6",
+            "fingerprint": "8f92c9ded45b4bd974a06d987311c979b756bb4d0fdc3322bcd217772f195199"
+          }
+        ],
+        "attempt": "c111a4bc-3140-4b66-8a8e-a38d7a3bc92a",
+        "sha": "ca457637dc9274698aae72472ea0d5115372d40b",
+        "buildHash": "2a3457603ba7305936616e943e15e6e847ac5b5eb7c2b18912b717901a41a2dd",
+        "playerHash": "f083b0e879a9298cdcf9933a8f3b4f2b013e13f7d3e51221fc0d756b79e28807"
+      }
+    ],
+    "entryPlan": {
+      "token": "ma-1083d1d4e615e2afbe82cd0789e5dbcfaf6c3277",
+      "status": "ready",
+      "hash": "f9e91de5dfad9e5ac5e6c9f225db28841e34ad3eeee4baf293a87f5ae39d66ae",
+      "approvedBasis": "906c6ce848ab8291aed9fcd07d4905d356564f144a4a025b32e7942a204e6930"
+    },
+    "next": {
+      "id": "d1-ma-accept-20261126-001-maze-next",
+      "phase": "Polish",
+      "initial": "ca457637dc9274698aae72472ea0d5115372d40b",
+      "state": "active"
+    }
+  },
+  {
+    "game": "orchard",
+    "projectId": "ee824349-2ea8-4423-9e49-abcdf2f483de",
+    "runId": "d1-ma-accept-20261126-001-orchard",
+    "profile": {
+      "version": 1,
+      "pipeline": "unity-level-v1",
+      "roles": [
+        {
+          "role": "designer",
+          "tool": "planning",
+          "outputs": [
+            "design.json"
+          ],
+          "checks": [
+            "checks/Rules.test.cjs"
+          ]
+        },
+        {
+          "role": "builder",
+          "tool": "level",
+          "outputs": [
+            "Assets/Resources/Route.json"
+          ],
+          "checks": [
+            "checks/Level.test.cjs"
+          ]
+        },
+        {
+          "role": "programmer",
+          "tool": "coding",
+          "outputs": [
+            "Assets/Game/GoalRule.cs"
+          ],
+          "checks": [
+            "checks/Code.test.cjs"
+          ]
+        },
+        {
+          "role": "tester",
+          "tool": "qa",
+          "outputs": [
+            "qa.json"
+          ],
+          "checks": [
+            "checks/QA.test.cjs"
+          ]
+        },
+        {
+          "role": "tuner",
+          "tool": "qa",
+          "outputs": [
+            "tuning.json"
+          ],
+          "checks": [
+            "checks/TunePass.test.cjs"
+          ]
+        }
+      ]
+    },
+    "scope": "6e76ca34f767da96b32625583c680139416ae32da04e13a29ffa7e93e43d6fd8",
+    "roadmapRevision": "a9c04003d1c75084f0433797ae88812d163690feb157d6b8e3dd911f3ea46abe",
+    "features": [
+      {
+        "feature": "Rules",
+        "token": "ma-40f809e8b2c57e8c01a0d21b9e7657840d5d0f41",
+        "session": "f3b8266f-bf3b-4590-a43b-fe9510b7c5a9",
+        "planHash": "f250f0e4adf26f9913fb6f4405fd9355fface593ca8f8a3863478b97ac739278",
+        "result": "a836a2c4-2950-41ed-96c1-39d30937d586",
+        "fingerprint": "d5449e87bb88486ba3c41ab4d180057b599e64474c159c556edaf3c1902df2cc",
+        "commit": "2ed82c90143314881de5385e84be1b1a80af3a67",
+        "files": [
+          {
+            "path": "design.json",
+            "hash": "bab82c482b6a55ccbc7dbbf41c4f7cd1b6f966215b29d4439e346df17666a5cd"
+          }
+        ],
+        "consumed": [],
+        "checks": [
+          {
+            "label": "checks/Rules.test.cjs",
+            "hash": "fb5db7b0dbcc570fe9d7fc4ba6a484e55b1effc7fcac2e665818a8e8868bf22c",
+            "exit": 0
+          }
+        ]
+      },
+      {
+        "feature": "Level",
+        "token": "ma-61f71725d9e6ff3e79bab7931d9d1b977ac37399",
+        "session": "927513d1-4cbe-4c5e-9535-1f5f2872c120",
+        "planHash": "be80a2101758ec2021b46c4841c61128a1d6273ec29f6bb87a545234ae0e7b0a",
+        "result": "3aea1ae5-1b94-4525-9073-995702af6ecd",
+        "fingerprint": "76d8776c8c9783cfe168931b987b707370d3f8357a9a1511b248c66271dc2d14",
+        "commit": "1fe14eacae176049bba24d1a866559a842c18a6d",
+        "files": [
+          {
+            "path": "Assets/Resources/Route.json",
+            "hash": "83a2f1c4e2643df642c454d47e9b6cb9727ae76ab8f87b5159739751810f6341"
+          }
+        ],
+        "consumed": [
+          "a836a2c4-2950-41ed-96c1-39d30937d586"
+        ],
+        "checks": [
+          {
+            "label": "checks/Level.test.cjs",
+            "hash": "6da52ae63d58a43b64c997ede78f63b01dbfe2975987365fcfef35c431db279b",
+            "exit": 0
+          }
+        ]
+      },
+      {
+        "feature": "Code",
+        "token": "ma-6b99fba7bc3d0a2ed6144982f7d38ff58b20b742",
+        "session": "ad5e7d2c-e13b-4e59-897b-cc7686ee5c46",
+        "planHash": "3603a31c1ddfda69591ff0cc598949dada0315841975d970af18e204833a1ed2",
+        "result": "f0256411-3e24-4bfc-a5b4-d0a2774ff0c7",
+        "fingerprint": "89056971c6a84b08feb2c8b0c1316dc438672ee4e4f922d805f92d19e7a12ce7",
+        "commit": "21c518ec0ffb8481a8c9a0e5b6b659c9b5020af1",
+        "files": [
+          {
+            "path": "Assets/Game/GoalRule.cs",
+            "hash": "3da252176334ad7d921df9b32d258bf1dbbcf29034e152a5d429fd00d37aa911"
+          }
+        ],
+        "consumed": [
+          "a836a2c4-2950-41ed-96c1-39d30937d586",
+          "3aea1ae5-1b94-4525-9073-995702af6ecd"
+        ],
+        "checks": [
+          {
+            "label": "checks/Code.test.cjs",
+            "hash": "9c2c0161cec095d50603434b8f5ed0d7f6c8c2b432c343b7e3bb55bbfccff666",
+            "exit": 0
+          }
+        ]
+      },
+      {
+        "feature": "QA",
+        "token": "ma-a12d91fff7f1d835262b81e16a9a2f6796cfc329",
+        "session": "7d4e78b0-e251-40f1-9221-16c4368ab7d9",
+        "planHash": "224da954f62dc2b99b52d23e105bccbb8c295920da7a3a438bfc8c62e8dfee62",
+        "result": "98a26ee1-6f4a-409e-8f38-03c0a287482f",
+        "fingerprint": "a8f9b75e4a8c6b81c77547c8c33cc53d0d7c77dbd6eeb3c1f945482ee254aaa7",
+        "commit": "a3df3e8c6f3bf40b0426077a0cde97c3c87b59fa",
+        "files": [
+          {
+            "path": "qa.json",
+            "hash": "cdd6a290e95fc09fa8d9e0209b5806ba76dfb1cdca364f2fad11ec44ebf398bf"
+          }
+        ],
+        "consumed": [
+          "a836a2c4-2950-41ed-96c1-39d30937d586",
+          "3aea1ae5-1b94-4525-9073-995702af6ecd",
+          "f0256411-3e24-4bfc-a5b4-d0a2774ff0c7"
+        ],
+        "checks": [
+          {
+            "label": "checks/QA.test.cjs",
+            "hash": "8f85a1e74fe77b291cb02ea51bce17b21567fff33008271944ee256209e65c4f",
+            "exit": 0
+          }
+        ]
+      }
+    ],
+    "tip": "a3df3e8c6f3bf40b0426077a0cde97c3c87b59fa",
+    "editor": "6000.3.27f1",
+    "attempt": "fa242e69-36cb-4ca3-a200-fdb128ea2720",
+    "buildHash": "8078b35d6238127485d2c00456a013befd81956a087e5de58c5dd533362d22d4",
+    "playerHash": "f083b0e879a9298cdcf9933a8f3b4f2b013e13f7d3e51221fc0d756b79e28807",
+    "artifact": "C:/Users/USER/lib/orchiva-plugin/.desktop-local/d1-ma-accept-20261126-001/data/desktop/unity-validation/fa242e69-36cb-4ca3-a200-fdb128ea2720/build/Hud.exe",
+    "tests": [
+      {
+        "name": "EditMode",
+        "ms": 22695,
+        "exit": 0,
+        "cases": [
+          "HudRulesTests.ApprovedAward",
+          "HudRulesTests.ApprovedLabel"
+        ]
+      },
+      {
+        "name": "PlayMode",
+        "ms": 8765,
+        "exit": 0,
+        "cases": [
+          "HudPlayTests.CollectUpdatesSceneHud"
+        ]
+      },
+      {
+        "name": "build",
+        "ms": 22710,
+        "exit": 0
+      },
+      {
+        "name": "player",
+        "ms": 16838,
+        "exit": 0
+      }
+    ],
+    "level": {
+      "name": "Star Orchard",
+      "moves": 6,
+      "collected": 2,
+      "cleared": true,
+      "wallBlocked": true
+    },
+    "history": [
+      {
+        "at": "2026-11-26T05:13:14.462Z",
+        "event": "범위 확정 및 요청 키 배정"
+      },
+      {
+        "at": "2026-11-26T05:13:15.508Z",
+        "event": "GLOBAL_EXECUTION_BUSY"
+      },
+      {
+        "at": "2026-11-26T05:14:10.478Z",
+        "event": "조율 accepted"
+      },
+      {
+        "at": "2026-11-26T05:14:15.940Z",
+        "event": "Rules plan-running"
+      },
+      {
+        "at": "2026-11-26T05:14:41.929Z",
+        "event": "Rules ready"
+      },
+      {
+        "at": "2026-11-26T05:14:50.916Z",
+        "event": "Rules running"
+      },
+      {
+        "at": "2026-11-26T05:15:24.053Z",
+        "event": "Rules awaiting-review"
+      },
+      {
+        "at": "2026-11-26T05:15:28.102Z",
+        "event": "Rules awaiting-apply"
+      },
+      {
+        "at": "2026-11-26T05:15:33.493Z",
+        "event": "accepted Rules"
+      },
+      {
+        "at": "2026-11-26T05:15:36.598Z",
+        "event": "GLOBAL_EXECUTION_BUSY"
+      },
+      {
+        "at": "2026-11-26T05:17:03.972Z",
+        "event": "Level plan-running"
+      },
+      {
+        "at": "2026-11-26T05:18:04.382Z",
+        "event": "Level running"
+      },
+      {
+        "at": "2026-11-26T05:18:40.987Z",
+        "event": "Level awaiting-review"
+      },
+      {
+        "at": "2026-11-26T05:18:44.302Z",
+        "event": "Level awaiting-apply"
+      },
+      {
+        "at": "2026-11-26T05:18:48.288Z",
+        "event": "accepted Level"
+      },
+      {
+        "at": "2026-11-26T05:18:51.136Z",
+        "event": "GLOBAL_EXECUTION_BUSY"
+      },
+      {
+        "at": "2026-11-26T05:19:27.640Z",
+        "event": "Code plan-running"
+      },
+      {
+        "at": "2026-11-26T05:19:55.200Z",
+        "event": "Code ready"
+      },
+      {
+        "at": "2026-11-26T05:20:01.778Z",
+        "event": "Code running"
+      },
+      {
+        "at": "2026-11-26T05:20:38.695Z",
+        "event": "Code awaiting-review"
+      },
+      {
+        "at": "2026-11-26T05:20:45.049Z",
+        "event": "Code awaiting-apply"
+      },
+      {
+        "at": "2026-11-26T05:24:56.461Z",
+        "event": "accepted Code"
+      },
+      {
+        "at": "2026-11-26T05:24:59.350Z",
+        "event": "GLOBAL_EXECUTION_BUSY"
+      },
+      {
+        "at": "2026-11-26T05:25:21.860Z",
+        "event": "QA plan-running"
+      },
+      {
+        "at": "2026-11-26T05:26:03.371Z",
+        "event": "QA running"
+      },
+      {
+        "at": "2026-11-26T05:26:38.125Z",
+        "event": "QA awaiting-apply"
+      },
+      {
+        "at": "2026-11-26T05:26:43.150Z",
+        "event": "accepted QA"
+      },
+      {
+        "at": "2026-11-26T05:26:46.668Z",
+        "event": "GLOBAL_EXECUTION_BUSY"
+      },
+      {
+        "at": "2026-11-26T05:28:10.952Z",
+        "event": "UNITY_GATE_RUNNING"
+      },
+      {
+        "at": "2026-11-26T05:30:02.001Z",
+        "event": "handoff Prototype accepted"
+      },
+      {
+        "event": "completed",
+        "at": "2026-11-26T05:30:04.718Z"
+      }
+    ],
+    "decisions": [
+      {
+        "projectId": "ee824349-2ea8-4423-9e49-abcdf2f483de",
+        "runId": "d1-ma-accept-20261126-001-orchard",
+        "basis": "ea402371fcdb503ee1fd7ae475e3262dd18c5f2ae19d5c8c6b5ba87d411d83a1",
+        "verdict": "approve",
+        "note": "사용자 결정 “두 게임 모두 승인”. 제시된 빌드 8078b35d6238의 Play 결과를 승인하고 Polish를 시작한다.",
+        "commandKey": "a1899e89337f44819f6d3dfa43026a09",
+        "at": "2026-11-26T05:35:05.107Z",
+        "phase": "Play",
+        "next": "Polish",
+        "roadmapRevision": "a9c04003d1c75084f0433797ae88812d163690feb157d6b8e3dd911f3ea46abe",
+        "sources": [
+          {
+            "featureId": "Rules",
+            "token": "ma-40f809e8b2c57e8c01a0d21b9e7657840d5d0f41",
+            "resultId": "a836a2c4-2950-41ed-96c1-39d30937d586",
+            "fingerprint": "d5449e87bb88486ba3c41ab4d180057b599e64474c159c556edaf3c1902df2cc"
+          },
+          {
+            "featureId": "Level",
+            "token": "ma-61f71725d9e6ff3e79bab7931d9d1b977ac37399",
+            "resultId": "3aea1ae5-1b94-4525-9073-995702af6ecd",
+            "fingerprint": "76d8776c8c9783cfe168931b987b707370d3f8357a9a1511b248c66271dc2d14"
+          },
+          {
+            "featureId": "Code",
+            "token": "ma-6b99fba7bc3d0a2ed6144982f7d38ff58b20b742",
+            "resultId": "f0256411-3e24-4bfc-a5b4-d0a2774ff0c7",
+            "fingerprint": "89056971c6a84b08feb2c8b0c1316dc438672ee4e4f922d805f92d19e7a12ce7"
+          },
+          {
+            "featureId": "QA",
+            "token": "ma-a12d91fff7f1d835262b81e16a9a2f6796cfc329",
+            "resultId": "98a26ee1-6f4a-409e-8f38-03c0a287482f",
+            "fingerprint": "a8f9b75e4a8c6b81c77547c8c33cc53d0d7c77dbd6eeb3c1f945482ee254aaa7"
+          }
+        ],
+        "attempt": "fa242e69-36cb-4ca3-a200-fdb128ea2720",
+        "sha": "a3df3e8c6f3bf40b0426077a0cde97c3c87b59fa",
+        "buildHash": "8078b35d6238127485d2c00456a013befd81956a087e5de58c5dd533362d22d4",
+        "playerHash": "f083b0e879a9298cdcf9933a8f3b4f2b013e13f7d3e51221fc0d756b79e28807"
+      }
+    ],
+    "entryPlan": {
+      "token": "ma-75bca50722c3adf0424f35e80c80d3799ca58ce3",
+      "status": "ready",
+      "hash": "89f2751fa7215c0a2c3bad58a48ae89ad3f900c2066a87922b85b9c71e5da4d8",
+      "approvedBasis": "ea402371fcdb503ee1fd7ae475e3262dd18c5f2ae19d5c8c6b5ba87d411d83a1"
+    },
+    "next": {
+      "id": "d1-ma-accept-20261126-001-orchard-next",
+      "phase": "Polish",
+      "initial": "a3df3e8c6f3bf40b0426077a0cde97c3c87b59fa",
+      "state": "active"
+    }
+  }
+]

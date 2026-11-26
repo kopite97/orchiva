@@ -1,0 +1,94 @@
+Window: "Orchiva · 합성 UI 검증 (모델 호출 없음)", App: Orchiva.Desktop.UiTests.exe.
+	0 window (창) Orchiva · 합성 UI 검증 (모델 호출 없음) Secondary Actions: Raise
+		1 pane (창)
+			2 pane (창)
+				3 combo box (콤보 상자) Description: 합성 화면 선택
+				4 button (단추) 800 × 600
+				5 button (단추) 1280 × 900
+				6 button (단추) 1600 × 1000
+				7 button (단추) 밝게 / 어둡게
+				8 combo box (콤보 상자) Description: 합성 상태
+				9 custom (사용자 지정) ID: Navigation
+					10 button (단추) 탐색 닫기 ID: TogglePaneButton
+						54 text (텍스트) ID: PaneTitleTextBlock
+					11 window (창) Secondary Actions: Raise ID: PaneRoot
+						55 text (텍스트) Orchiva
+						12 pane (창) ID: MenuItemsScrollViewer
+							13 group (그룹) ID: MenuItemsHost
+								14 list item (목록 항목) (selectable) 프로젝트 선택 ID: ProjectsNavigation
+								15 list item (목록 항목) (selectable) 작업 시작 ID: HomeNavigation
+								16 list item (목록 항목) (selectable) PLAN 이력 ID: HistoryNavigation
+								17 list item (목록 항목) (selectable) 프로젝트 지침 ID: InstructionsNavigation
+								18 list item (목록 항목) (selectable, disabled) 질문 / 상담 · 준비 중
+						19 pane (창) ID: FooterItemsScrollViewer
+							20 group (그룹) ID: FooterMenuItemsHost
+								21 list item (목록 항목) (selectable) 기존 MVP 프로젝트
+								22 list item (목록 항목) (selectable) 기존 v2 이력
+								23 list item (목록 항목) (selectable) 연결 상태
+								24 list item (목록 항목) (selectable) 설정 ID: SettingsItem
+					25 pane (창) ID: PageScroll
+						26 status bar (상태 표시줄) ID: StatusBar
+							27 text (텍스트) 정보 아이콘 ID: StandardIcon
+							28 text (텍스트) 합성 UI 검증 ID: Title
+							29 text (텍스트) 모델·Agent·Worktree 생성 없음 · 실제 실행 결과가 아닙니다. ID: Message
+						30 text (텍스트) 프로젝트 지침 ID: PageTitle
+						31 text (텍스트) 실제 파일을 읽고 수정한 내용을 같은 파일에 저장합니다. ID: PageDescription
+						32 status bar (상태 표시줄) ID: Notice
+							33 text (텍스트) 성공 아이콘 ID: StandardIcon
+							34 text (텍스트) 반영됨 ID: Title
+							35 text (텍스트) 최신 파일과 실행 상태를 확인했습니다. ID: Message
+						110 text (텍스트) C:/UI-Fixture/한글 프로젝트/Source ID: ProjectLocation
+						356 text (텍스트) 실제 지침 파일
+						357 button (단추) 지침·누락 다시 확인
+						358 list (목록) 지침 파일 목록 ID: InstructionChoice
+							359 list item (목록 항목) (selectable) AGENTS.md
+								360 text (텍스트) AGENTS.md
+							361 list item (목록 항목) (selectable) docs/agents/project.md
+								362 text (텍스트) docs/agents/project.md
+							363 list item (목록 항목) (selectable) docs/plans/plans.md
+								364 text (텍스트) docs/plans/plans.md
+							365 list item (목록 항목) (selectable) docs/decisions/decisions.md
+								366 text (텍스트) docs/decisions/decisions.md
+							367 list item (목록 항목) (selectable) docs/evidence/evidence.md
+								368 text (텍스트) docs/evidence/evidence.md
+						369 text field (편집) (settable, string) 지침 경로 Value: AGENTS.md ID: InstructionPath
+							370 text (텍스트) 지침 경로
+						371 text field (편집) (settable, string) 적용 범위 Value: all ID: InstructionScope
+							372 text (텍스트) 적용 범위
+						373 text field (편집) (settable, string) 내용 Value: # 프로젝트 지침 합성 파일입니다. 실제 파일에 저장하지 않습니다. ## 작업 원칙 프로젝트의 기존 기능과 결과 이력을 보존합니다. 파일 이름은 프로젝트 명명 규칙을 따릅니다. ID: InstructionContent
+							374 text (텍스트) 내용
+						375 text (텍스트) 편집 시 읽은 내용과 현재 파일을 저장 시 대조합니다. 새 지침은 루트 AGENTS.md의 지도에서도 연결하세요.
+						376 button (단추) 지침 파일 저장
+						46 text (텍스트)
+						47 scroll bar (스크롤 막대) (settable, float) 세로 Value: 0 ID: VerticalScrollBar
+							377 button (단추) 세로 작은 감소 ID: VerticalSmallDecrease
+							378 button (단추) 세로 큰 감소 ID: VerticalLargeDecrease
+							379 button (단추) 세로 큰 증가 ID: VerticalLargeIncrease
+							380 button (단추) 세로 작은 증가 ID: VerticalSmallIncrease
+		48 title bar (제목 표시줄) (settable, string) Value: Orchiva · 합성 UI 검증 (모델 호출 없음)
+			49 menu bar (메뉴 모음) 시스템 ID: MenuBar
+				50 menu item (메뉴 항목) 시스템
+			51 button (단추) 최소화
+			52 button (단추) 최대화
+			53 button (단추) 닫기
+
+Document text: ```
+# 프로젝트 지침
+
+합성 파일입니다. 실제 파일에 저장하지 않습니다.
+
+## 작업 원칙
+프로젝트의 기존 기능과 결과 이력을 보존합니다.
+파일 이름은 프로젝트 명명 규칙을 따릅니다.
+```
+
+Focused element: 110 text (텍스트) C:/UI-Fixture/한글 프로젝트/Source ID: ProjectLocation
+
+Document text:
+# 프로젝트 지침
+
+합성 파일입니다. 실제 파일에 저장하지 않습니다.
+
+## 작업 원칙
+프로젝트의 기존 기능과 결과 이력을 보존합니다.
+파일 이름은 프로젝트 명명 규칙을 따릅니다.

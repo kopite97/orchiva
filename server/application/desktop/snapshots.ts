@@ -4,22 +4,36 @@ import { z } from "zod";
 import { git } from "../../config/project-config";
 import { bytes, digest, immutable, relativeFile } from "../../adapters/storage/project-files";
 import { Projects } from "./projects";
+import type { Binding } from "../../../shared/contracts/milestone-run";
+import { snapshotTree } from "../../adapters/storage/integration-git";
 import type { ProductionInput } from "../../../shared/contracts/desktop-production";
 import { productionSchema } from "../../../shared/contracts/desktop-production";
 const execute = promisify(execFile);
 export const inputSnapshot = z.object({ version: z.literal(1), baseCommit: z.string(), projectRevision: z.number(), instructionFingerprint: z.string(), inputHash: z.string(), parentContext: z.string().optional(), files: z.array(z.object({ path: z.string(), hash: z.string().nullable(), base64: z.string().nullable() })), fingerprint: z.string() });
 export type InputSnapshot = z.infer<typeof inputSnapshot>;
 export const internalFile = (path: string) => path.startsWith("docs/.orchiva/") || path.startsWith("docs/evidence/") || path.startsWith(".orchiva/") || path.startsWith(".git/") || /^docs\/(plans|decisions)\/plan-/.test(path) || path === "docs/plans/README.md";
-export async function captureInput(projects: Projects, id: string, input: ProductionInput) {
+export async function captureInput(projects: Projects, id: string, input: ProductionInput, binding?:Binding) {
   const p = await projects.project(id), instructions = await projects.instructions(id);
   if (!instructions.ready) throw new Error("INSTRUCTIONS_NOT_READY");
-  const baseCommit = await git(p.sourceRoot, "rev-parse", "--verify", `${p.config.baseRef}^{commit}`);
-  const { stdout } = await execute("git", ["-C", p.sourceRoot, "ls-files", "-z", "--cached", "--others", "--exclude-standard"], { windowsHide: true, maxBuffer: 4 * 1024 * 1024 });
-  const paths = [...new Set([...stdout.split("\0").filter(Boolean), ...instructions.files.map(x => x.path)])].filter(x => !internalFile(x) || instructions.files.some(f => f.path === x)).sort();
+  const baseCommit = binding?.integrationBase ?? await git(p.sourceRoot, "rev-parse", "--verify", `${p.config.baseRef}^{commit}`);
+  const selected=binding?.unityProfile?new Set([...instructions.files.map(f=>f.path),...binding.inputs.map(f=>f.path),...binding.checks.map(f=>f.path),...binding.outputs,...(binding.readPaths??[])]):null;
+  const committed=binding?.integrationBase?await snapshotTree(p.sourceRoot,baseCommit,path=>selected?selected.has(path):!internalFile(path)||instructions.files.some(f=>f.path===path)):null;
+  const stdout = committed ? [...committed.keys()].join("\0") : (await execute("git", ["-C", p.sourceRoot, "ls-files", "-z", "--cached", "--others", "--exclude-standard"], { windowsHide: true, maxBuffer: 4 * 1024 * 1024 })).stdout;
+  const paths = [...new Set([...stdout.split("\0").filter(Boolean), ...instructions.files.map(x => x.path), ...(binding?.inputs.map(f=>f.path)??[])]) ].filter(x => !internalFile(x) || instructions.files.some(f => f.path === x)).sort();
   if (paths.length > 1000) throw new Error("INPUT_FILE_LIMIT");
   const files: InputSnapshot["files"] = []; let size = 0;
   for (const path of paths) {
-    relativeFile(path); const content = await bytes(p.sourceRoot, path);
+    relativeFile(path);
+    const approvedInput=binding?.inputs.find(f=>f.path===path);
+    let content:Buffer|null;
+    if(!binding?.integrationBase) content=await bytes(p.sourceRoot,path);
+    else {
+      content=committed!.get(path)??null;
+      if(approvedInput && (content?digest(content):null)!==approvedInput.hash) {
+        content=await bytes(p.sourceRoot,path);
+        if((content?digest(content):null)!==approvedInput.hash) throw new Error("MILESTONE_INPUT_CHANGED");
+      }
+    }
     size += content?.length ?? 0; if (size > 16 * 1024 * 1024) throw new Error("INPUT_SIZE_LIMIT");
     files.push({ path, hash: content ? digest(content) : null, base64: content?.toString("base64") ?? null });
   }

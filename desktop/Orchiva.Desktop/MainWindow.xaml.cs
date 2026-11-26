@@ -22,10 +22,13 @@ public partial class MainWindow : Window
     private string settingsPath = "";
     private int refreshVersion;
     private bool loadingPage;
+    private bool syncingNavigation;
 
     public MainWindow()
     {
         InitializeComponent(); Root.DataContext = model;
+        WorkspacePanel.PageChanged += WorkspacePageChanged;
+        Navigation.SelectedItem = ProjectsNavigation;
         AppWindow.Resize(new Windows.Graphics.SizeInt32(1280, 900));
         model.ProjectName = "연결을 준비하세요";
         model.ProjectPath = "프로젝트를 아직 읽지 않았습니다.";
@@ -95,6 +98,9 @@ public partial class MainWindow : Window
             model.Connection = client.ConnectionState;
             model.Diagnostics = $"프로젝트 작업 연결\n데이터: {info.GetProperty("dataHome")}\n실행부: {info.GetProperty("paseoHome")}\n주소: {info.GetProperty("endpoint")}\n서버: {info.GetProperty("serverVersion")}";
             WorkspacePanel.Connect((method, input) => client.CallAsync(method, input, closing.Token));
+            WorkspacePanel.EnableIntegration(info.GetProperty("capabilities").EnumerateArray().Any(cap => cap.GetString() == "desktop.integration.sync"));
+            WorkspacePanel.EnableRuns(info.GetProperty("capabilities").EnumerateArray().Any(cap => cap.GetString() == "desktop.runs.create"));
+            WorkspacePanel.EnableRoadmap(info.GetProperty("capabilities").EnumerateArray().Any(cap => cap.GetString() == "desktop.roadmap.preview"));
             await RefreshAsync();
         }
         catch (Exception) when (!exiting) { ReportFailure("연결하지 못했습니다. 격리 실행부가 시작됐는지 확인한 뒤 다시 연결하세요."); }
@@ -122,8 +128,15 @@ public partial class MainWindow : Window
         model.Items.Clear(); AddPage(page);
         model.DetailTitle = "작업을 선택하세요"; model.Detail = "목록에서 작업을 선택하면 PLAN과 보존된 결과를 확인할 수 있습니다.";
         model.Updated = $"마지막 조회 {DateTime.Now:HH:mm:ss} · 읽기 전용";
-        model.Connection = runtime.GetProperty("restoring").GetBoolean() ? "복원 중" : "연결됨";
-        StatusBar.Severity = InfoBarSeverity.Informational; StatusBar.Title = "실행부 연결됨"; StatusBar.Message = "작업실에서 프로젝트·지침·제작 PLAN을 관리합니다. 화면 수용 검증은 대기 중입니다.";
+        ShowRuntimeStatus(runtime.GetProperty("restoring").GetBoolean());
+    }
+
+    private void ShowRuntimeStatus(bool restoring)
+    {
+        model.Connection = restoring ? "복원 중" : "연결됨";
+        StatusBar.Severity = InfoBarSeverity.Informational;
+        StatusBar.Title = restoring ? "실행 상태 복원 중" : "실행부 연결됨";
+        StatusBar.Message = restoring ? "저장된 이력을 조회할 수 있습니다. 복원이 끝난 뒤 실행을 재개하세요." : "프로젝트를 선택해 지침과 제작 PLAN을 관리하세요.";
     }
 
     private void AddPage(JsonElement page)
@@ -171,13 +184,26 @@ public partial class MainWindow : Window
     }
     private void Navigate(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
     {
-        if (ProjectPanel == null) return;
+        if (ProjectPanel == null || syncingNavigation) return;
         var tag = args.IsSettingsSelected ? "settings" : (args.SelectedItem as NavigationViewItem)?.Tag?.ToString();
-        WorkspacePanel.Visibility = tag == "workspace" ? Visibility.Visible : Visibility.Collapsed;
+        if (tag == null) return;
+        var workspace = tag is "projects" or "home" or "workhistory" or "instructions";
+        WorkspacePanel.Visibility = workspace ? Visibility.Visible : Visibility.Collapsed;
         ProjectPanel.Visibility = tag == "project" ? Visibility.Visible : Visibility.Collapsed;
         HistoryPanel.Visibility = tag == "history" ? Visibility.Visible : Visibility.Collapsed;
         ConnectionPanel.Visibility = tag == "connection" ? Visibility.Visible : Visibility.Collapsed;
         SettingsPanel.Visibility = tag == "settings" ? Visibility.Visible : Visibility.Collapsed;
+        if (workspace) WorkspacePanel.ShowPage(tag == "workhistory" ? "history" : tag);
+        PageScroll.ChangeView(null, 0, null, true);
+    }
+    private void WorkspacePageChanged(string page)
+    {
+        WorkspacePanel.Visibility = Visibility.Visible;
+        ProjectPanel.Visibility = HistoryPanel.Visibility = ConnectionPanel.Visibility = SettingsPanel.Visibility = Visibility.Collapsed;
+        syncingNavigation = true;
+        Navigation.SelectedItem = page switch { "projects" or "setup" => ProjectsNavigation, "history" => HistoryNavigation, "instructions" => InstructionsNavigation, _ => HomeNavigation };
+        syncingNavigation = false;
+        PageScroll.ChangeView(null, 0, null, true);
     }
     private void ApplyTheme() => Root.RequestedTheme = ThemeChoice.SelectedIndex switch { 1 => ElementTheme.Light, 2 => ElementTheme.Dark, _ => ElementTheme.Default };
     private void ThemeChanged(object sender, SelectionChangedEventArgs args) { if (!initialized) return; ApplyTheme(); SaveSettings(); }

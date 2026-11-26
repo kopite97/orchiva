@@ -1,0 +1,94 @@
+Window: "Orchiva · 변경 전 합성 UI 검증", App: Orchiva.Desktop.UiTests.exe.
+	0 window (창) Orchiva · 변경 전 합성 UI 검증 Secondary Actions: Raise
+		1 pane (창)
+			2 pane (창)
+				3 custom (사용자 지정) ID: Navigation
+					4 button (단추) 탐색 닫기 ID: TogglePaneButton
+						5 text (텍스트) ID: PaneTitleTextBlock
+					6 window (창) Secondary Actions: Raise ID: PaneRoot
+						7 pane (창) ID: MenuItemsScrollViewer
+							8 group (그룹) ID: MenuItemsHost
+								9 list item (목록 항목) (selectable) 작업실
+								10 list item (목록 항목) (selectable) 기존 MVP 프로젝트
+								11 list item (목록 항목) (selectable) 기존 v2 이력
+								12 list item (목록 항목) (selectable) 연결 상태
+						13 pane (창) ID: FooterItemsScrollViewer
+							14 group (그룹) ID: FooterMenuItemsHost
+								15 list item (목록 항목) (selectable) 설정 ID: SettingsItem
+					16 text (텍스트) Orchiva · 프로젝트와 PLAN
+					17 pane (창)
+						18 status bar (상태 표시줄) ID: StatusBar
+							19 text (텍스트) 정보 아이콘 ID: StandardIcon
+							20 text (텍스트) 변경 전 합성 UI ID: Title
+							21 text (텍스트) 3aad026 소스 · 모델/Agent/Worktree 없음 ID: Message
+						22 text (텍스트) 프로젝트 작업실
+						23 text (텍스트) 프로젝트의 파일에서 시작해, PLAN을 확인하고 결과를 검토하세요.
+						24 status bar (상태 표시줄) ID: Notice
+							25 text (텍스트) 성공 아이콘 ID: StandardIcon
+							26 text (텍스트) 반영됨 ID: Title
+							27 text (텍스트) 최신 파일과 실행 상태를 확인했습니다. ID: Message
+						28 combo box (콤보 상자) 프로젝트 ID: ProjectChoice
+						29 button (단추) 목록 새로 고침
+						30 text (텍스트) C:/UI-Fixture/한글 프로젝트/Source ID: ProjectLocation
+						31 tab (탭)
+							32 tab item (탭 항목) (selectable) 프로젝트·지침
+								33 text (텍스트) 프로젝트 추가
+								34 text field (편집) (settable, string) 프로젝트 이름 Value: 별빛 탐험 · 합성 프로젝트 ID: ProjectNameInput
+									35 text (텍스트) 프로젝트 이름
+								36 text field (편집) (settable, string) 소스 폴더의 절대 경로 Value: C:/UI-Fixture/한글 프로젝트/Source ID: SourceInput
+									37 text (텍스트) 소스 폴더의 절대 경로
+								38 button (단추) 프로젝트 등록
+								39 text (텍스트) 등록은 소스 파일을 변경하지 않습니다. 초기화 미리보기에서 생성·이관할 지침을 확인하세요.
+								40 button (단추) 초기화 미리보기
+								41 button (단추) 확인한 변경으로 초기화 ID: InitializeButton
+								42 text field (편집) 초기화 변경 내용 Value: AGENTS.md · 생성 예정 · 합성 # 지침 지도 - docs/agents/project.md - docs/plans/plans.md - docs/decisions/decisions.md - docs/evidence/evidence.md [] ID: InitPreview
+									43 text (텍스트) 초기화 변경 내용
+								44 text (텍스트) 프로젝트 설정
+								45 text field (편집) (settable, string) Git 기준 브랜치 Value: main ID: BaseRefInput
+									46 text (텍스트) Git 기준 브랜치
+								47 text field (편집) (settable, string) 결과물 폴더의 절대 경로 Value: C:\UI-Fixture\한글 프로젝트\Output ID: OutputInput
+									48 text (텍스트) 결과물 폴더의 절대 경로
+								49 button (단추) 프로젝트 설정 저장
+								50 text (텍스트) 실제 지침 파일
+								51 button (단추) 지침·누락 다시 확인
+								52 combo box (콤보 상자) 등록된 지침 ID: InstructionChoice
+								53 text field (편집) (settable, string) 지침 경로 Value: AGENTS.md ID: InstructionPath
+									54 text (텍스트) 지침 경로
+								55 text field (편집) (settable, string) 적용 범위 Value: all ID: InstructionScope
+									56 text (텍스트) 적용 범위
+								57 text field (편집) (settable, string) 내용 Value: # 프로젝트 지침 합성 파일입니다. 실제 파일에 저장하지 않습니다. ## 작업 원칙 프로젝트의 기존 기능과 결과 이력을 보존합니다. 파일 이름은 프로젝트 명명 규칙을 따릅니다. ID: InstructionContent
+									58 text (텍스트) 내용
+								59 button (단추) 지침 파일 저장
+								60 text (텍스트) 새 지침은 docs/agents 아래에 만드세요. 루트 AGENTS.md의 지도 링크도 편집해 연결합니다. 외부 수정이 있으면 덮어쓰지 않습니다.
+							61 tab item (탭 항목) (selectable) 요청·PLAN
+							62 tab item (탭 항목) (selectable) 실행·결과 검토
+							63 tab item (탭 항목) (selectable) 결과물·소스 반영
+						64 text (텍스트)
+						65 scroll bar (스크롤 막대) (settable, float) 세로 Value: 0 ID: VerticalScrollBar
+		70 title bar (제목 표시줄) (settable, string) Value: Orchiva · 변경 전 합성 UI 검증
+			71 menu bar (메뉴 모음) 시스템 ID: MenuBar
+				72 menu item (메뉴 항목) 시스템
+			73 button (단추) 최소화
+			74 button (단추) 최대화
+			75 button (단추) 닫기
+
+Document text: ```
+# 프로젝트 지침
+
+합성 파일입니다. 실제 파일에 저장하지 않습니다.
+
+## 작업 원칙
+프로젝트의 기존 기능과 결과 이력을 보존합니다.
+파일 이름은 프로젝트 명명 규칙을 따릅니다.
+```
+
+Focused element: 30 text (텍스트) C:/UI-Fixture/한글 프로젝트/Source ID: ProjectLocation
+
+Document text:
+# 프로젝트 지침
+
+합성 파일입니다. 실제 파일에 저장하지 않습니다.
+
+## 작업 원칙
+프로젝트의 기존 기능과 결과 이력을 보존합니다.
+파일 이름은 프로젝트 명명 규칙을 따릅니다.

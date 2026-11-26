@@ -1,0 +1,10 @@
+{
+  "runId": "d1-ma-poc-20261126-001-hud",
+  "removedGate": "accepted F",
+  "reconciliations": 3,
+  "state": "completed",
+  "result": "81b93d50-6070-4e07-b43d-8d1aade637fb",
+  "newRequests": 0,
+  "modelOrAgentCalls": 0,
+  "originalRunUnchanged": true
+}

@@ -1,12 +1,15 @@
 # D1~D6 데스크톱 전환 계획
 
 - 상태: `active`
+- 2026-11-26 사용자가 MA1·MA2 구현을 위해 on hold를 요청했다. UI-A 완료, 미검증 GUI와 D4~D6를 재개 대상으로 보존한다.
 - 작성일: 2026-11-16 · Asia/Seoul
 - 관련 설계: [전환 설계안](../design/desktop-transition.md), [사용자 합의와 인계](../design/desktop-handoff.md), [기존 MVP](../design/mvp-design.md)
 - 선행 조건: M0~M6 `completed`, 현재 소스·개발 환경의 [점검 기록](../decisions/desktop-readiness-20261116.md)
 - 최초 작성 근거: 환경 점검·기존 테스트·설계/계획 작성 요청에서는 앱 구현이 제외됐다. 이후의 현재 실행 승인은 아래에 기록한다.
 
 ## 현재 실행 승인
+
+2026-11-26 두 게임의 Polish 승인 후 사용자 지시로 재개했다. 이번 범위는 D1~D3의 G01~G11이며 Computer Use가 필요한 관측은 보류한다. [재개 후 검증 결과](../decisions/desktop-gui-resumption.md)를 따른다.
 
 2026-11-16 사용자가 “PLAN을 승인할게 작업 시작해줘”라고 지시했다. D1부터 순서대로 구현한다. 이전의 구현 제외 기록은 당시 범위의 이력이며 이번 승인으로 착수 근거가 갱신됐다. 최초 착수 범위는 D1 조회 UI·stdio 연결·격리 수명 검증이었다. D2~D6는 상세화 후 순차 진행하며 D1 완료를 전체 완료로 표시하지 않는다. 실행 결정: .NET 10 + WinUI 3, 공개 SDK를 사용하는 stdio bridge 채택. 창 닫기 설정 기본값은 앱 종료로 두고 D1은 조회 전용이라 작업 중단 동작을 추가하지 않는다. daemon 수명은 UI/bridge와 분리하고 D3 활성 작업 정책은 별도 상세화한다.
 
@@ -16,13 +19,23 @@
 
 ## 현재 단계 상태
 
+2026-11-26 재개 후 G03과 G05~G10의 기능 흐름을 격리 실행부에 연결한 WinUI 창에서 확인했다. G01의 콘솔 노출, G02·G04·G11의 배율·키보드·시각 수용은 부분 검증 상태다. [항목별 판정과 근거](../decisions/desktop-gui-resumption.md)를 기준으로 이어간다.
+
+2026-11-26 [UI-A](desktop-ui-alignment.md) 상세 단계 완료: 포함 화면 13개·전후 비교·800×600/1280×900/넓은 창·테마·입력 유지·빈 목록/오류/로딩/권한/반영 이력 표시를 확인했다. 배율 변경 검증은 사용자 지시로 보류했고 실제 관측은 125%다. [최종 결과와 G01~G11 교차표](../decisions/desktop-ui-alignment.md)를 따른다. 합성 화면 수용을 실제 모델·파일 반영·콘솔·트레이 시험으로 확대하지 않는다. 상위 PLAN은 active, D4~D6는 미착수다.
+
+2026-11-17 후속 승인: [UI-A](desktop-ui-alignment.md)를 이 active PLAN의 상세 실행 단계로 진행하며 기능 변경 없이 UI를 정합한다. 사용자가 이번 작업의 컴퓨터 유스를 허용했다. GUI 항목은 실제 관측한 범위만 갱신하고 D4~D6는 시작하지 않는다.
+
+2026-11-17 UI-A 실행: 화면 분리·공통 탐색·카드/반응형 배치 코드를 적용하고 모의 19개·기존 C# 13개(skip 0)·빌드·타입 검사를 통과했다. 변경 후 화면 탐색 중 물리 Escape로 컴퓨터 유스가 중지되어 시각 수용은 대기한다. [중간 결과](../decisions/desktop-ui-alignment.md)를 따르며 G01~G11과 D4~D6를 일괄 완료 처리하지 않는다.
+
+2026-11-17 기능 변경 없는 디자인 보정을 위한 [UI-A 세부 PLAN](desktop-ui-alignment.md)을 `proposed`로 작성했다. 기존 시안 14개와 현재 XAML/C#의 차이를 정리한 문서 작업이며 UI 구현은 아직 시작하지 않았다. 기존 기능 계약과 GUI 대기는 유지한다.
+
 2026-11-16 D2a/D2b와 D3 구현·비GUI 검증을 완료했다. 프로젝트 실제 docs/지침, v3 기록·전역 슬롯, AI PLAN, 제작·복구·중단·검토, B안 내보내기/선택 반영/부분 복원/undo를 연결했다. [완료 기록과 검증 구분](../decisions/desktop-d2-d3-completion.md), [증거 요약](../evidence/desktop-transition/d2-d3-20261116/summary.json)을 따른다. GUI G01~G11은 사용자 지시에 따라 대기이며 D4~D6는 미착수다. 전체 PLAN은 `active`다.
 
 ## 목표
 
 Windows exe에서 프로젝트와 분야를 고른 뒤 제작의 새 요청/수정 요청 또는 자유 질문을 진행하고, PLAN·실행·산출물·검토 이력을 보존하는 제품으로 전환한다. 기존 Node/Paseo 실행부를 유지하면서 중복 생성·재전송·실패 근거 유실을 방지한다.
 
-**첫 구현 단계 D1의 목표는 조회 가능한 .NET 화면과 연결·종료·재연결 기반**이다. D1만으로 제작 실행이나 다중 프로젝트가 완성됐다고 표시하지 않는다. 현재 **D1 구현·비GUI 검증은 완료했고 GUI 수용 검증은 대기**다. 숨김 runtime host와 공개 daemon run 연결, Node 97/97·C# 12/12, 경로·실패·재시작·정리를 확인했다. [최신 결과와 GUI 대기 G01~G05](../decisions/desktop-d1-runtime-completion.md)를 따른다. 이전 [화면 검증](../decisions/desktop-d1-gui-verification.md)은 보존하며 전체 계획은 `active`다. [구현 결과](../decisions/desktop-d1-foundation.md)와 [실행 안내](../guides/desktop-development.md)를 따른다.
+**첫 구현 단계 D1의 목표는 조회 가능한 .NET 화면과 연결·종료·재연결 기반**이다. [기반 구현 검증](../decisions/desktop-d1-runtime-completion.md)에서 숨김 runtime host와 공개 daemon run 연결, 경로·실패·재시작·정리를 확인했다. 현재 G03·G05의 기능 수용을 마쳤고 G01·G02·G04의 시각 수용이 남았다. [현재 GUI 검증 상태](../decisions/desktop-gui-resumption.md)와 [실행 안내](../guides/desktop-development.md)를 따른다.
 
 ## 현재 근거와 확인할 사항
 
@@ -189,10 +202,10 @@ step 3에서 일반 프로젝트 실행 허용을 추가하지 않는다. 포트
 - [x] 확정한 WinUI 3 + .NET 10의 SDK·통신·수명 정책과 개발 조합을 기록한다.
 - [ ] 첫 조회 화면부터 디자인 시안·공통 리소스·상태별 화면과 테마/접근성 검증을 완료한다.
 - [x] .NET 조회 화면과 Node bridge가 선택한 계약으로 실제 격리 Plugin에 연결된다.
-- [ ] 빈 상태·목록·상세·오류·복원 상태가 GUI에서 구분되고 읽기 전용 capability가 강제된다.
-- [x] V01~V12의 비GUI 검증 통과. 실제 연동·모의를 구분해 기록했다. GUI 부분은 사용자 지시로 G01~G05 대기이며 통과로 간주하지 않는다.
+- [x] 빈 상태·목록·상세·오류·복원 상태를 실제 WinUI에서 구분하고 D1 조회 경로의 변경 명령 거부를 확인했다. [복원 재시도와 빈 이력 검증](../decisions/desktop-gui-resumption.md)
+- [x] V01~V12의 비GUI 검증 통과. G01~G05의 현재 상태는 [재개 후 검증표](../decisions/desktop-gui-resumption.md)를 따른다.
 - [x] Agent/Workspace/메시지 생성 0, 기존 요청·실행 데이터와 sandbox 무변경을 확인한다.
-- [x] bridge 3회 수명·재연결·격리 daemon 재시작에서 기록·소유권·프로세스 정리가 검증된다. 이전 실제 앱 종료·재열기 1회는 보존하며 전체 앱 3회와 트레이 명시 종료는 G05로 대기한다.
+- [x] bridge 3회 수명·재연결·격리 daemon 재시작에서 기록·소유권·프로세스 정리가 검증된다. G05에서 WinUI 시험 앱을 4회 기동해 트레이 메뉴 종료 후 재열기 3회, 이력·설정 보존, daemon 독립 수명을 확인했다.
 - [x] 결과 문서·환경 안내·계획/목록을 갱신하고 D2~D6가 미완료임을 표시한다.
 
 ### 전체 전환의 완료 조건

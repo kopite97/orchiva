@@ -3,11 +3,13 @@ import { defineRpc } from "@getpaseo/plugin";
 import { recordSchema, tokenSchema } from "./feature-request";
 import { projectId, commandKey, hashSchema } from "./desktop-project";
 
+import { binding } from "./milestone-run";
+
 export const productionInput = z.object({ title: z.string().max(160), goal: z.string().max(12000), scope: z.string().max(12000), constraints: z.string().max(12000), discipline: z.enum(["planning", "coding"]), mode: z.enum(["new", "modify"]), parentToken: tokenSchema.nullable(), parentResultId: z.string().nullable(), provider: z.string().regex(/^codex\/.+$/), thinkingOptionId: z.string().nullable(), outputPath: z.string().max(200), validationProfile: z.enum(["files", "node-test"]).default("files") });
 export const planVersion = z.object({ revision: z.number().int().positive(), path: z.string(), content: z.string(), hash: hashSchema, inputHash: hashSchema, snapshotId: hashSchema, createdAt: z.string(), origin: z.enum(["ai", "external", "legacy"]) });
 const journal = z.object({ key: commandKey, kind: z.string(), payloadHash: hashSchema, state: z.enum(["pending", "applied", "failed", "unknown"]), phase: z.string(), outcome: z.string().nullable(), at: z.string() });
 export const productionSchema = z.object({
-  schemaVersion: z.literal(3), projectId, token: tokenSchema, revision: z.number().int().positive(), input: productionInput,
+  milestone: binding.optional(), schemaVersion: z.literal(3), projectId, token: tokenSchema, revision: z.number().int().positive(), input: productionInput,
   planName: z.string(), planVersions: z.array(planVersion), engine: recordSchema,
   journals: z.array(journal), planning: z.object({ key: commandKey, agentId: z.string().nullable(), directory: z.string(), snapshotId: hashSchema, prompt: z.string(), state: z.enum(["pending", "running", "unknown", "failed", "complete"]), error: z.string().nullable() }).nullable(),
   documentIntent: z.object({ path: z.string(), before: hashSchema.nullable(), content: z.string() }).nullable(),

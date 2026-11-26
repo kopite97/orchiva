@@ -1,0 +1,231 @@
+{
+  "version": 1,
+  "cli": "1.1.0",
+  "platform": "Windows x64",
+  "results": [
+    {
+      "version": 1,
+      "attempt": "caa0ba10-a736-4283-a466-98a0dff45d25",
+      "sha": "9984a9b7c40cd920a398ab8d8ceddb848656c821",
+      "profile": "hud-win64-v1",
+      "status": "failed",
+      "reason": "UNITY_PROCESS_FAILED: build",
+      "stages": [
+        {
+          "name": "EditMode",
+          "pid": 20364,
+          "started": 1795669041724,
+          "exit": 0,
+          "ms": 24725,
+          "logHash": "fa562d45fb10768c2b4a2391edb171e7fffe3789c25ec26f2190765485bea0e9",
+          "libraryBytes": 11557249,
+          "cases": [
+            "HudRulesTests.ApprovedAward",
+            "HudRulesTests.ApprovedLabel"
+          ],
+          "xmlHash": "6c890b9cc4a556e58c23dc6fe4f8935bde3b0f78f1c9a0c0921fe9d92ed425f6"
+        },
+        {
+          "name": "PlayMode",
+          "pid": 2908,
+          "started": 1795669067291,
+          "exit": 0,
+          "ms": 7959,
+          "logHash": "2d1a4f64fbd88f2bdb02aa05ea31cfa6d743bccee8a0dd6fa353c385bf1d798d",
+          "libraryBytes": 11159757,
+          "cases": [
+            "HudPlayTests.CollectUpdatesSceneHud"
+          ],
+          "xmlHash": "a5b68a030f4c5f9c8d4abdc10b5597ac466da79ea102da937577b3ec2f51b7a4"
+        },
+        {
+          "name": "build",
+          "pid": 26876,
+          "started": 1795669075994,
+          "exit": 2,
+          "ms": 12312,
+          "logHash": "97b687827b3490efbfcca559a0315d17e63b461c6b79b2c4115d3af7cb0f6e05"
+        }
+      ],
+      "peakSampledBytes": 15040032,
+      "editor": "6000.3.27f1",
+      "inputHash": "a8ec05554be2b5ce96062cf1a04eab6bff41367f3d6208fdbf5ee4f068d53cb1",
+      "profileHash": "ddea0c76b4274dd386c2499dbbb01e870ebb05a3ebb35c09c1ccce284ccaa7ee",
+      "build": {
+        "result": "Failed",
+        "target": "StandaloneWindows64",
+        "bytes": "3156",
+        "errors": 3
+      },
+      "distributionFiles": 0,
+      "tests": [
+        {
+          "mode": "EditMode",
+          "cases": [
+            "HudRulesTests.ApprovedAward",
+            "HudRulesTests.ApprovedLabel"
+          ],
+          "xmlHash": "6c890b9cc4a556e58c23dc6fe4f8935bde3b0f78f1c9a0c0921fe9d92ed425f6"
+        },
+        {
+          "mode": "PlayMode",
+          "cases": [
+            "HudPlayTests.CollectUpdatesSceneHud"
+          ],
+          "xmlHash": "a5b68a030f4c5f9c8d4abdc10b5597ac466da79ea102da937577b3ec2f51b7a4"
+        }
+      ],
+      "sourceFiles": [
+        {
+          "path": "Shared.unity",
+          "oid": "ca9fd3dcd27f4a8325b1966a8206787dd552b285",
+          "bytes": 23
+        },
+        {
+          "path": "label.txt",
+          "oid": "3171833a712944b63d361714f40dfc1f46fec015",
+          "bytes": 6
+        }
+      ],
+      "buildError": "HUD_SCENE_LABEL_REFERENCE_MISMATCH"
+    },
+    {
+      "version": 1,
+      "attempt": "be6d51f1-48b2-437e-bec4-1155063b03a8",
+      "sha": "0b99c53d45e763a0809f589493a34a1b7094ee34",
+      "profile": "hud-win64-v1",
+      "status": "passed",
+      "reason": "",
+      "stages": [
+        {
+          "name": "EditMode",
+          "pid": 26724,
+          "started": 1795669089851,
+          "exit": 0,
+          "ms": 20978,
+          "logHash": "06bc2753ec1da8101c807f2a00285cc6ab3e7bbe42d9044dcac61b083690c714",
+          "libraryBytes": 11406003,
+          "cases": [
+            "HudRulesTests.ApprovedAward",
+            "HudRulesTests.ApprovedLabel"
+          ],
+          "xmlHash": "3cdbad78b01265952d43681afac463335ccb5b70327e953dad98f46e4f174f13"
+        },
+        {
+          "name": "PlayMode",
+          "pid": 20696,
+          "started": 1795669111454,
+          "exit": 0,
+          "ms": 7783,
+          "logHash": "7c281d78edfe5a11c51470bdfd1cf80c4824ddf6645a07f19b5b6fcba2b385e6",
+          "libraryBytes": 11073658,
+          "cases": [
+            "HudPlayTests.CollectUpdatesSceneHud"
+          ],
+          "xmlHash": "393321987f8ff171dd55d5c01458c63424ca2c75b597d3381cc10c24a6b9f9e9"
+        },
+        {
+          "name": "build",
+          "pid": 19292,
+          "started": 1795669119973,
+          "exit": 0,
+          "ms": 32219,
+          "logHash": "5d1d2aec8d136beeb57a6417f9e044e5820e9ae9cb67991f9fb78fcf2d4ff525",
+          "libraryBytes": 52336863
+        },
+        {
+          "name": "player",
+          "pid": 8528,
+          "started": 1795669159264,
+          "exit": 0,
+          "ms": 12238,
+          "logHash": "b1dc710423938a358337f5ca619dd11eee9adc76e02d3f2b202fe746fb45ae35",
+          "libraryBytes": 52336863
+        }
+      ],
+      "peakSampledBytes": 142709927,
+      "editor": "6000.3.27f1",
+      "inputHash": "03df4ca66e291649ed3d98fdd556f929e884d7ddef2d7329b32c024a119f2b6c",
+      "profileHash": "ddea0c76b4274dd386c2499dbbb01e870ebb05a3ebb35c09c1ccce284ccaa7ee",
+      "buildHash": "116edd6e7d65de350e53ff19ea3e7961df2ad69f7df398ecc0d376e9a7d0bb01",
+      "playerHash": "f083b0e879a9298cdcf9933a8f3b4f2b013e13f7d3e51221fc0d756b79e28807",
+      "signal": {
+        "scene": "Hud",
+        "before": "SCORE 0",
+        "after": "SCORE 10",
+        "score": 10
+      },
+      "build": {
+        "result": "Succeeded",
+        "target": "StandaloneWindows64",
+        "bytes": "89442005",
+        "errors": 0
+      },
+      "distributionFiles": 140,
+      "tests": [
+        {
+          "mode": "EditMode",
+          "cases": [
+            "HudRulesTests.ApprovedAward",
+            "HudRulesTests.ApprovedLabel"
+          ],
+          "xmlHash": "3cdbad78b01265952d43681afac463335ccb5b70327e953dad98f46e4f174f13"
+        },
+        {
+          "mode": "PlayMode",
+          "cases": [
+            "HudPlayTests.CollectUpdatesSceneHud"
+          ],
+          "xmlHash": "393321987f8ff171dd55d5c01458c63424ca2c75b597d3381cc10c24a6b9f9e9"
+        }
+      ],
+      "sourceFiles": [
+        {
+          "path": "Shared.unity",
+          "oid": "040032c4bfd0c895d4d0820f885f1152871aba75",
+          "bytes": 23
+        },
+        {
+          "path": "label.txt",
+          "oid": "3171833a712944b63d361714f40dfc1f46fec015",
+          "bytes": 6
+        }
+      ]
+    }
+  ],
+  "native": {
+    "parent": "0b99c53d45e763a0809f589493a34a1b7094ee34",
+    "scope": "plan",
+    "inputBytes": 17866260,
+    "result": {
+      "version": 1,
+      "attempt": "51aa8083-7e1c-4b82-81d1-dbab288030c7",
+      "sha": "7f4a5f2b54af1983c0249e9168ae138827e93def",
+      "profile": "hud-win64-v1",
+      "status": "passed",
+      "reason": "",
+      "stages": [
+        {
+          "name": "EditMode",
+          "pid": 22728,
+          "exit": 0,
+          "ms": 19045,
+          "logHash": "33f1c80046e2dc87215b9556dd060523c86c45e1ae38eb2f7db4c95666faa874",
+          "libraryBytes": 29262382,
+          "cases": [
+            "HudRulesTests.ApprovedAward"
+          ],
+          "xmlHash": "4ec96734a629ac87481c6ee1924163dd340b4103e78a9657e56d9f2371bb0317"
+        }
+      ],
+      "peakSampledBytes": 47366518,
+      "editor": "6000.3.27f1",
+      "inputHash": "6f1c3ec1c19078192ba23f5d44ca368247a201ef409f58880a5f231fff9b6ed7",
+      "profileHash": "ddea0c76b4274dd386c2499dbbb01e870ebb05a3ebb35c09c1ccce284ccaa7ee"
+    }
+  },
+  "uiWidths": [
+    800,
+    1280
+  ]
+}

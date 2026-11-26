@@ -1,0 +1,186 @@
+[
+  {
+    "game": "maze",
+    "projectId": "7bbd3518-2d4f-43d6-86cf-256bae708961",
+    "runId": "d1-ma-accept-20261126-001-maze-next",
+    "token": "ma-1083d1d4e615e2afbe82cd0789e5dbcfaf6c3277",
+    "planHash": "f9e91de5dfad9e5ac5e6c9f225db28841e34ad3eeee4baf293a87f5ae39d66ae",
+    "session": "d8af4efe-b148-4957-9a97-3c34bc6325f0",
+    "resultId": "259cf432-3d24-4e7c-98c1-e5a421772031",
+    "branch": "orchiva/integration/maze",
+    "parent": "ca457637dc9274698aae72472ea0d5115372d40b",
+    "commit": "b69049deb7f4e465ac716ba10d722b677d0571e7",
+    "tuning": {
+      "tuning": "playtest"
+    },
+    "featureChecks": [
+      {
+        "name": "checks/TunePass.test.cjs",
+        "exit": 0
+      }
+    ],
+    "projectChecks": [
+      {
+        "path": "checks/Rules.test.cjs",
+        "sha256": "4067d998a73f6554d08806645b7138dddd80ef619a4cea17f1f13d6cf5019067"
+      },
+      {
+        "path": "checks/Level.test.cjs",
+        "sha256": "9271d348b357782d1efa4d3e6648a98017c352cd4ead89aa671f38250fafa632"
+      },
+      {
+        "path": "checks/Code.test.cjs",
+        "sha256": "709e917a5a5ee879b9cd488d08dbd20f4d2ecc69b81248f669baf33b3202d6ea"
+      },
+      {
+        "path": "checks/QA.test.cjs",
+        "sha256": "8fe858c9598f8524c507825971ea401caf8d2e4b75455328125560460a59a042"
+      },
+      {
+        "path": "checks/TunePass.test.cjs",
+        "sha256": "7cab1d8d1580b6888b1ec8c65121bd6e8757042989342161044d64a210aabbdc"
+      }
+    ],
+    "attempt": "05832187-49a8-46a4-ab83-75ab92093a71",
+    "editor": "6000.3.27f1",
+    "stages": [
+      {
+        "name": "EditMode",
+        "exit": 0,
+        "ms": 20136,
+        "pid": 25060,
+        "cases": [
+          "HudRulesTests.ApprovedAward",
+          "HudRulesTests.ApprovedLabel"
+        ]
+      },
+      {
+        "name": "PlayMode",
+        "exit": 0,
+        "ms": 8320,
+        "pid": 27088,
+        "cases": [
+          "HudPlayTests.CollectUpdatesSceneHud"
+        ]
+      },
+      {
+        "name": "build",
+        "exit": 0,
+        "ms": 19786,
+        "pid": 22620
+      },
+      {
+        "name": "player",
+        "exit": 0,
+        "ms": 19853,
+        "pid": 24056
+      }
+    ],
+    "target": "StandaloneWindows64",
+    "buildErrors": 0,
+    "distributionHash": "6ad433dd71e3d07fbaa5075eeccc189ba37d74f4fcb7034e2368c20fd06f4c83",
+    "artifact": "C:/Users/USER/lib/orchiva-plugin/.desktop-local/d1-ma-accept-20261126-001/data/desktop/unity-validation/05832187-49a8-46a4-ab83-75ab92093a71/build/Hud.exe",
+    "playerHash": "f083b0e879a9298cdcf9933a8f3b4f2b013e13f7d3e51221fc0d756b79e28807",
+    "level": {
+      "name": "Lantern Maze",
+      "moves": 4,
+      "collected": 0,
+      "cleared": true
+    },
+    "blockedBoundary": true,
+    "hud": "SCORE 10",
+    "frame": 3
+  },
+  {
+    "game": "orchard",
+    "projectId": "ee824349-2ea8-4423-9e49-abcdf2f483de",
+    "runId": "d1-ma-accept-20261126-001-orchard-next",
+    "token": "ma-75bca50722c3adf0424f35e80c80d3799ca58ce3",
+    "planHash": "89f2751fa7215c0a2c3bad58a48ae89ad3f900c2066a87922b85b9c71e5da4d8",
+    "session": "b8c3d68e-05e1-4445-8594-0a8907785dbc",
+    "resultId": "59e72fe0-b919-465b-aedf-1590c33bb659",
+    "branch": "orchiva/integration/orchard",
+    "parent": "a3df3e8c6f3bf40b0426077a0cde97c3c87b59fa",
+    "commit": "4a6be1ca416c45d42a98a05d43c720c96677cfc0",
+    "tuning": {
+      "tuning": "playtest"
+    },
+    "featureChecks": [
+      {
+        "name": "checks/TunePass.test.cjs",
+        "exit": 0
+      }
+    ],
+    "projectChecks": [
+      {
+        "path": "checks/Rules.test.cjs",
+        "sha256": "fb5db7b0dbcc570fe9d7fc4ba6a484e55b1effc7fcac2e665818a8e8868bf22c"
+      },
+      {
+        "path": "checks/Level.test.cjs",
+        "sha256": "6da52ae63d58a43b64c997ede78f63b01dbfe2975987365fcfef35c431db279b"
+      },
+      {
+        "path": "checks/Code.test.cjs",
+        "sha256": "9c2c0161cec095d50603434b8f5ed0d7f6c8c2b432c343b7e3bb55bbfccff666"
+      },
+      {
+        "path": "checks/QA.test.cjs",
+        "sha256": "8f85a1e74fe77b291cb02ea51bce17b21567fff33008271944ee256209e65c4f"
+      },
+      {
+        "path": "checks/TunePass.test.cjs",
+        "sha256": "7cab1d8d1580b6888b1ec8c65121bd6e8757042989342161044d64a210aabbdc"
+      }
+    ],
+    "attempt": "872e1be6-57b3-42ff-ad5e-9ec09b894487",
+    "editor": "6000.3.27f1",
+    "stages": [
+      {
+        "name": "EditMode",
+        "exit": 0,
+        "ms": 19058,
+        "pid": 20164,
+        "cases": [
+          "HudRulesTests.ApprovedAward",
+          "HudRulesTests.ApprovedLabel"
+        ]
+      },
+      {
+        "name": "PlayMode",
+        "exit": 0,
+        "ms": 11393,
+        "pid": 3988,
+        "cases": [
+          "HudPlayTests.CollectUpdatesSceneHud"
+        ]
+      },
+      {
+        "name": "build",
+        "exit": 0,
+        "ms": 20243,
+        "pid": 23172
+      },
+      {
+        "name": "player",
+        "exit": 0,
+        "ms": 17819,
+        "pid": 26540
+      }
+    ],
+    "target": "StandaloneWindows64",
+    "buildErrors": 0,
+    "distributionHash": "e47471a990500dc6f701d86553120eb3361dd6dc5a4cb7dd6f7dd8e8ff08252d",
+    "artifact": "C:/Users/USER/lib/orchiva-plugin/.desktop-local/d1-ma-accept-20261126-001/data/desktop/unity-validation/872e1be6-57b3-42ff-ad5e-9ec09b894487/build/Hud.exe",
+    "playerHash": "f083b0e879a9298cdcf9933a8f3b4f2b013e13f7d3e51221fc0d756b79e28807",
+    "level": {
+      "name": "Star Orchard",
+      "moves": 6,
+      "collected": 2,
+      "cleared": true
+    },
+    "blockedBoundary": true,
+    "hud": "SCORE 10",
+    "frame": 3
+  }
+]

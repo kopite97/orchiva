@@ -19,31 +19,39 @@ import { CodexPlanGenerator, validateGeneratedPlan, type PlanGenerator } from ".
 import { captureInput, loadSnapshot, sameInput, storeSnapshot, type InputSnapshot } from "./snapshots";
 import { atomic, bytes, digest, immutable, relativeFile, safePath } from "../../adapters/storage/project-files";
 
+import { binding as bindingSchema, type Binding } from "../../../shared/contracts/milestone-run";
+import { validateSnapshot } from "./milestone-validation";
+
 type Command = { projectId: string; token: string; commandKey: string; expectedRevision: number };
 const now = () => new Date().toISOString();
 export class ProductionService {
+  unityBusy?:()=>Promise<boolean>;
+  reservations?: (project: string) => Promise<{token:string;runId:string;generation:number}[]>;
+  milestoneGuard?: (id: string, binding: Binding) => Promise<void>;
   private engineLocks = new RequestLocks();
   private stores = new Map<string, ProductionStore>();
   private timer?: ReturnType<typeof setTimeout>;
   private running?: Promise<void>;
   private stopped = false;
+  private generatePlan?: () => Promise<void>;
   restoring = true;
   constructor(readonly projects: Projects, private legacy: RequestStore, private api: () => Promise<PaseoApi>, private generator: PlanGenerator = new CodexPlanGenerator(), private cancel?: (id: string) => Promise<void>) {}
   async store(id: string) {
     const p = await this.projects.project(id);
     let store = this.stores.get(id);
-    if (!store || store.root !== p.sourceRoot) { store = new ProductionStore(p.sourceRoot, id, () => this.projects.own(p.sourceRoot)); this.stores.set(id, store); }
+    if (!store || store.root !== p.sourceRoot) { store = new ProductionStore(p.sourceRoot, id, () => this.projects.own(p.sourceRoot), () => this.reservations?.(id) ?? Promise.resolve([])); this.stores.set(id, store); }
     return store;
   }
   async required(id: string, token: string) { const doc = await (await this.store(id)).envelope(token); if (!doc) throw new Error("NOT_FOUND"); return doc; }
   async list(id: string) { const all = await (await this.store(id)).all(); return { issues: all.issues, records: all.records.map(x => ({ token: x.token, input: { title: x.input.title }, engine: { status: x.engine.status, result: x.engine.result ? { id: x.engine.result.id } : null }, legacy: !!x.legacy })) }; }
   async assertSlot(except?: { projectId: string; token: string }, allowLegacyToken?: string) {
+    if(await this.unityBusy?.())throw Error("UNITY_EDITOR_BUSY");
     const legacy = await this.legacy.diagnostics();
     if (legacy.issues.length || legacy.activeTokens.some(x => x !== allowLegacyToken)) throw new Error("LEGACY_EXECUTION_BUSY_OR_INVALID");
     for (const view of await this.projects.list()) {
       if (!view.available) throw new Error("PROJECT_UNAVAILABLE_OR_INVALID");
       if (!view.initialized) continue;
-      const state = await (await this.store(view.projectId)).diagnostics();
+      const state = await (await this.store(view.projectId)).diagnostics(except?.projectId === view.projectId ? except.token : undefined);
       if (state.issues.length) throw new Error("PROJECT_RECORD_INVALID");
       if (state.activeTokens.some(token => view.projectId !== except?.projectId || token !== except.token)) throw new Error("GLOBAL_EXECUTION_BUSY");
     }
@@ -63,9 +71,14 @@ export class ProductionService {
   private command(doc: Production, key: string, kind: string, payload: unknown, state: "pending" | "applied" = "applied") {
     const item: Production["journals"][number] = { key, kind, payloadHash: payloadHash(payload), state, phase: "accepted", outcome: null as string | null, at: now() }; doc.journals.push(item); return item;
   }
-  async save(input: Command & { input: ProductionInput }) {
+  async save(input: Command & { input: ProductionInput }, binding?: Binding) {
     return this.projects.exclusive(async () => {
       const store = await this.store(input.projectId); let doc = await store.envelope(input.token);
+      if (doc?.milestone && (!binding || payloadHash(doc.milestone) !== payloadHash(bindingSchema.parse(binding)))) throw new Error("MILESTONE_BOUND_REQUEST");
+      if (binding) {
+        await this.milestoneGuard?.(input.projectId,binding);
+        if (doc && !doc.milestone) throw new Error("IDEMPOTENCY_CONFLICT");
+      }
       if (doc && this.replay(doc, input.commandKey, "draft", input.input)) return doc;
       if (doc) { this.revision(doc, input.expectedRevision); if (!["draft", "ready"].includes(doc.engine.status) || ["pending", "running", "unknown"].includes(doc.planning?.state ?? "")) throw new Error("REQUEST_NOT_EDITABLE"); }
       else if (input.expectedRevision !== 0) throw new Error("REVISION_CONFLICT");
@@ -80,6 +93,7 @@ export class ProductionService {
         const engine = createRequest(input.token, { ...feature, title: feature.title || "제목 없음", goal: feature.goal || "작성 중" }); engine.revision = 1; engine.updatedAt = now(); engine.status = "draft";
         doc = productionSchema.parse({ schemaVersion: 3, projectId: input.projectId, token: input.token, revision: 1, input: value, planName: "plan-" + input.token, planVersions: [], engine, journals: [], planning: null, documentIntent: null, legacy: null, reviews: [], exports: [] });
       }
+      if (binding) doc.milestone = binding;
       doc.input = value; doc.engine.feature = feature; doc.engine.status = "draft"; doc.engine.confirmationSource = null; doc.engine.confirmedPlanRevision = null;
       doc.engine.criteria = [{ id: "quality", text: value.goal || "요청 결과 검토", checkIds: [], manualMethod: "결과 검토 화면에서 사용자가 품질을 확인", legacy: false }];
       this.command(doc, input.commandKey, "draft", value); await store.put(doc); return doc;
@@ -93,7 +107,8 @@ export class ProductionService {
       if (["pending", "running", "unknown"].includes(doc.planning?.state ?? "")) throw new Error("PLANNING_IN_PROGRESS");
       if (!["draft", "ready"].includes(doc.engine.status) || !doc.input.title.trim() || !doc.input.goal.trim()) throw new Error("PLAN_INPUT_REQUIRED");
       await this.validateModel(input.projectId, doc.input); await this.projects.output(input.projectId);
-      const snapshot = await captureInput(this.projects, input.projectId, doc.input), snapshotId = await storeSnapshot(store.root, snapshot);
+      const snapshot = await captureInput(this.projects, input.projectId, doc.input, doc.milestone), snapshotId = await storeSnapshot(store.root, snapshot);
+      if (doc.milestone) { await this.milestoneGuard?.(doc.projectId,doc.milestone); validateSnapshot(doc.milestone,snapshot); }
       doc.planning = { key: input.commandKey, agentId: null, directory: join(this.projects.directory, "planning", input.projectId, input.commandKey), snapshotId, prompt: "정형 입력과 고정 snapshot의 읽기 전용 AI 계획 작성", state: "pending", error: null };
       this.command(doc, input.commandKey, "plan", { revision: input.expectedRevision }, "pending");
       await store.put(doc); this.wake(); return doc;
@@ -101,12 +116,13 @@ export class ProductionService {
   }
   private async publishPlan(store: ProductionStore, doc: Production, content: string, snapshot: InputSnapshot, origin: "ai" | "external") {
     validateGeneratedPlan(content);
-    const checks = doc.input.validationProfile === "node-test" ? snapshot.files.filter(x => /(^|\/)(test[s]?\/.*|[^/]+\.test)\.(mjs|cjs|js)$/.test(x.path) && x.hash).slice(0, 8).map((x, i) => ({ id: `auto-${i + 1}`, kind: "node-test" as const, path: x.path, label: "프로젝트 테스트: " + x.path })) : [];
+    if (doc.milestone) validateSnapshot(doc.milestone,snapshot);
+    const checks = doc.milestone ? doc.milestone.checks.map((f,i) => ({ id: "auto-"+(i+1), kind:"node-test" as const, path:f.path, label:f.path })) : doc.input.validationProfile === "node-test" ? snapshot.files.filter(x => /(^|\/)(test[s]?\/.*|[^/]+\.test)\.(mjs|cjs|js)$/.test(x.path) && x.hash).slice(0, 8).map((x, i) => ({ id: `auto-${i + 1}`, kind: "node-test" as const, path: x.path, label: "프로젝트 테스트: " + x.path })) : [];
     if (doc.input.validationProfile === "node-test" && !checks.length) throw new Error("VALIDATION_PROFILE_HAS_NO_TESTS");
     doc.engine.checks = checks;
     doc.engine.criteria[0].checkIds = checks.map(x => x.id);
     const project = await this.projects.project(doc.projectId);
-    const runtimeConfig = { repositoryPath: project.sourceRoot, baseRef: project.config.baseRef, provider: doc.input.provider, maxActiveTasks: 1 as const };
+    const runtimeConfig = { repositoryPath: project.sourceRoot, baseRef: doc.milestone?.integrationBase ?? project.config.baseRef, provider: doc.input.provider, maxActiveTasks: 1 as const };
     const plan = buildPlan(doc.engine, snapshot.baseCommit, runtimeConfig);
     plan.requestPlan.content = content;
     plan.taskPlan.content = content + "\n\n## 실행 경계\n승인한 범위만 이 Worktree에서 수행한다. 원본 소스·다른 저장소 접근, commit/push/merge, 요청하지 않은 README·지침 생성은 금지한다. 검증 실패는 숨기지 않는다.\n";
@@ -131,10 +147,10 @@ export class ProductionService {
     return this.projects.exclusive(async () => {
       const store = await this.store(input.projectId), doc = await this.required(input.projectId, input.token);
       if (this.replay(doc, input.commandKey, "sync-plan", { revision: input.expectedRevision })) return doc;
-      this.revision(doc, input.expectedRevision); if (["pending", "running", "unknown"].includes(doc.planning?.state ?? "")) throw new Error("PLANNING_IN_PROGRESS"); if (!["draft", "ready"].includes(doc.engine.status)) throw new Error("PLAN_ALREADY_EXECUTED");
+      this.revision(doc, input.expectedRevision); if (doc.milestone?.coordinator) throw new Error("MILESTONE_BOUND_REQUEST"); if (["pending", "running", "unknown"].includes(doc.planning?.state ?? "")) throw new Error("PLANNING_IN_PROGRESS"); if (!["draft", "ready"].includes(doc.engine.status)) throw new Error("PLAN_ALREADY_EXECUTED");
       const latest = doc.planVersions.at(-1); if (!latest) throw new Error("PLAN_REQUIRED");
       const content = (await bytes(store.root, latest.path))?.toString("utf8"); if (!content) throw new Error("PLAN_MISSING");
-      const snapshot = await captureInput(this.projects, input.projectId, doc.input);
+      const snapshot = await captureInput(this.projects, input.projectId, doc.input, doc.milestone);
       this.command(doc, input.commandKey, "sync-plan", { revision: input.expectedRevision });
       await this.publishPlan(store, doc, content, snapshot, "external"); return doc;
     });
@@ -164,11 +180,15 @@ export class ProductionService {
       const store = await this.store(input.projectId), doc = await this.required(input.projectId, input.token), payload = { planHash: input.planHash };
       if (this.replay(doc, input.commandKey, "start", payload)) return doc;
       this.revision(doc, input.expectedRevision); await this.assertSlot(input);
+      if (doc.milestone) {
+        if (doc.milestone.coordinator) throw new Error("MILESTONE_BOUND_REQUEST");
+        await this.milestoneGuard?.(doc.projectId,doc.milestone);
+      }
       if (doc.documentIntent) throw new Error("PLAN_DOCUMENT_PENDING");
       if (["pending", "running", "unknown"].includes(doc.planning?.state ?? "")) throw new Error("PLANNING_IN_PROGRESS");
       const plan = doc.planVersions.at(-1); if (!plan || plan.hash !== input.planHash) throw new Error("PLAN_STALE");
       const actual = await bytes(store.root, plan.path); if (!actual || digest(actual) !== plan.hash) throw new Error("PLAN_EXTERNAL_CHANGE");
-      const expected = await loadSnapshot(store.root, plan.snapshotId), current = await captureInput(this.projects, input.projectId, doc.input);
+      const expected = await loadSnapshot(store.root, plan.snapshotId), current = await captureInput(this.projects, input.projectId, doc.input, doc.milestone);
       if (!sameInput(expected, current)) throw new Error("PLAN_INPUT_CHANGED");
       await this.validateModel(input.projectId, doc.input); await this.projects.output(input.projectId);
       const enginePlan = doc.engine.plans.at(-1)!;
@@ -182,7 +202,9 @@ export class ProductionService {
       const store = await this.store(input.projectId), doc = await this.required(input.projectId, input.token);
       const { expectedRevision, ...payload } = input;
       if (this.replay(doc, input.commandKey, kind, payload)) return doc;
-      this.revision(doc, expectedRevision); await this.assertSlot(input); const runtime = await this.runtime(doc), tracker = new TrackExecution(store, this.engineLocks);
+      this.revision(doc, expectedRevision); await this.assertSlot(input);
+      if (doc.milestone?.generation) await this.milestoneGuard?.(doc.projectId,doc.milestone);
+      const runtime = await this.runtime(doc), tracker = new TrackExecution(store, this.engineLocks);
       this.command(doc, input.commandKey, kind, payload, "pending"); await store.put(doc);
       if (kind === "resume") await tracker.resume({ token: input.token, key: input.commandKey, instruction: input.instruction, resultId: input.resultId, expectedRevision: doc.engine.revision }, runtime);
       else if (kind === "revalidate") await tracker.refresh(input.token, runtime, undefined, true, { commandKey: input.commandKey, resultId: input.resultId ?? null, expectedRevision: doc.engine.revision });
@@ -237,6 +259,7 @@ export class ProductionService {
       if (!result || result.id !== input.resultId || !["awaiting-review", "failed"].includes(doc.engine.status)) throw new Error("STALE_RESULT");
       const runtime = await this.runtime(doc), observed = await runtime.observe(doc.engine);
       if (["running", "needs-input"].includes(observed.status) || observed.sourceKey !== result.sourceKey || await runtime.fingerprint(doc.engine) !== result.fingerprint) throw new Error("RESULT_CHANGED");
+      if (input.approved && doc.milestone && (doc.milestone.coordinator || result.checks.length !== doc.milestone.checks.length || doc.milestone.checks.some((check,i) => result.checks[i]?.inputFingerprint !== check.hash))) throw new Error("MILESTONE_CHECK_MISSING");
       if (input.approved && (!input.qualityConfirmed || !input.checksAcknowledged || result.failure || result.executionFailure || result.checks.some(x => !x.passed || (x.status && x.status !== "passed")))) throw new Error("REVIEW_NOT_READY");
       if (!input.approved && !input.note.trim()) throw new Error("REVIEW_REASON_REQUIRED");
       doc.reviews.push({ id: randomUUID(), resultId: result.id, fingerprint: result.fingerprint, approved: input.approved, qualityConfirmed: input.qualityConfirmed, checksAcknowledged: input.checksAcknowledged, note: input.note, at: now() });
@@ -271,7 +294,11 @@ export class ProductionService {
   startWorker() { this.wake(); }
   wake() {
     if (this.stopped || this.running) return; clearTimeout(this.timer);
-    this.running = this.projects.exclusive(() => this.cycle()).catch(() => undefined).finally(() => { this.running = undefined; if (!this.stopped) { this.timer = setTimeout(() => this.wake(), 3000); this.timer.unref(); } });
+    this.running = this.projects.exclusive(() => this.cycle()).then(async () => {
+      const job = this.generatePlan;
+      this.generatePlan = undefined;
+      if (job) await job();
+    }).catch(() => undefined).finally(() => { this.running = undefined; if (!this.stopped) { this.timer = setTimeout(() => this.wake(), 3000); this.timer.unref(); } });
   }
   async settle() { await this.running; }
   async close() { this.stopped = true; clearTimeout(this.timer); await this.running; }
@@ -301,7 +328,7 @@ export class ProductionService {
                 const content = (await bytes(doc.planning.directory, "answer.md"))?.toString("utf8");
                 if (!content || JSON.parse(complete.toString("utf8")).hash !== digest(content)) throw new Error("PLAN_COMPLETION_INVALID");
                 const snapshot = await loadSnapshot(store.root, doc.planning.snapshotId);
-                if (!sameInput(snapshot, await captureInput(this.projects, doc.projectId, doc.input))) { doc.planning.state = "failed"; doc.planning.error = "PLANNING_INPUT_CHANGED"; journal.state = "failed"; await store.put(doc); }
+                if (!sameInput(snapshot, await captureInput(this.projects, doc.projectId, doc.input, doc.milestone))) { doc.planning.state = "failed"; doc.planning.error = "PLANNING_INPUT_CHANGED"; journal.state = "failed"; await store.put(doc); }
                 else { journal.state = "applied"; journal.outcome = digest(content); await this.publishPlan(store, doc, content, snapshot, "ai"); }
               } else if (failed) { doc.planning.state = "failed"; doc.planning.error = "PLAN_PROVIDER_FAILED"; journal.state = "failed"; await store.put(doc); }
               else {
@@ -315,15 +342,33 @@ export class ProductionService {
             }
             await this.assertSlot(doc); const snapshot = await loadSnapshot(store.root, doc.planning.snapshotId);
             doc.planning.state = "running"; journal.phase = "model"; await store.put(doc);
-            try {
-              const content = await this.generator.generate(doc.planning.directory, doc.input, snapshot);
-              if (!sameInput(snapshot, await captureInput(this.projects, doc.projectId, doc.input))) throw new Error("PLANNING_INPUT_CHANGED");
-              journal.state = "applied"; journal.outcome = digest(content);
-              await this.publishPlan(store, doc, content, snapshot, "ai");
-            } catch (error) {
-              doc.planning.state = "failed"; doc.planning.error = error instanceof Error ? error.message : "PLAN_FAILED"; journal.state = "failed"; await store.put(doc);
-            }
-            continue;
+            // The durable planning journal owns the global slot while the model runs.
+            // Keep the registry lock available for pause, list and unrelated drafts.
+            const request = doc;
+            this.generatePlan = async () => {
+              try {
+                const bound = request.milestone;
+                const paths = bound ? new Set([...bound.inputs.map(f=>f.path), ...bound.checks.map(f=>f.path), ...bound.outputs, ...(bound.readPaths??[])]) : null;
+                const context = paths ? { ...snapshot, parentContext:bound?.brief ?? snapshot.parentContext, files:snapshot.files.filter(f=>paths.has(f.path) && !bound?.sectionOnly?.includes(f.path)) } : snapshot;
+                const content = await this.generator.generate(request.planning!.directory, request.input, context, !!bound);
+                await this.projects.exclusive(async () => {
+                  const latest = await this.required(request.projectId,request.token);
+                  if (latest.planning?.key !== journal.key) throw new Error("REVISION_CONFLICT");
+                  if (!sameInput(snapshot, await captureInput(this.projects, latest.projectId, latest.input, latest.milestone))) throw new Error("PLANNING_INPUT_CHANGED");
+                  const command = latest.journals.find(j=>j.key===journal.key)!;
+                  command.state="applied"; command.outcome=digest(content);
+                  await this.publishPlan(store,latest,content,snapshot,"ai");
+                });
+              } catch (error) {
+                await this.projects.exclusive(async () => {
+                  const latest=await this.required(request.projectId,request.token);
+                  if (latest.planning?.key!==journal.key || latest.planning.state==="complete") return;
+                  latest.planning.state="failed"; latest.planning.error=error instanceof Error?error.message:"PLAN_FAILED";
+                  latest.journals.find(j=>j.key===journal.key)!.state="failed"; await store.put(latest);
+                });
+              }
+            };
+            return;
           }
           if (doc.planVersions.length && (occupiesSlot(doc.engine) || doc.journals.some(x => ["stop", "permission"].includes(x.kind) && ["pending", "unknown"].includes(x.state)))) {
             const runtime = await this.runtime(doc);

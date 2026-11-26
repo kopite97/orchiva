@@ -4,6 +4,11 @@ import { join } from "node:path";
 import { projectsRpc as p } from "../../../shared/contracts/desktop-project";
 import { productionRpc as r } from "../../../shared/contracts/desktop-production";
 import { Projects } from "../../application/desktop/projects";
+import { MilestoneRuns } from "../../application/desktop/milestone-run";
+import { integrationRpc } from "../../../shared/contracts/milestone-integration";
+import { runRpc, runView } from "../../../shared/contracts/milestone-run";
+import { Roadmaps } from "../../application/desktop/roadmap";
+import { roadmapRpc } from "../../../shared/contracts/milestone-roadmap";
 import { ProductionService } from "../../application/desktop/production";
 import { ProductionArtifacts } from "../../application/desktop/artifacts";
 import type { RequestStore } from "../../application/ports";
@@ -14,8 +19,33 @@ export function contributeDesktop(server: PluginServerContext, legacy: RequestSt
   const service = new ProductionService(projects, legacy, () => connection.start(), undefined, async id => (await connection.start()).cancelAgent(id)), artifacts = new ProductionArtifacts(service);
   let stopped = false;
   const opened = ready.then(() => projects.open());
-  void opened.then(() => { if (!stopped) service.startWorker(); }).catch(() => undefined);
   // Register synchronously, before SDK contribution collection completes.
+  const roadmaps = new Roadmaps(projects, service);
+  const runs = new MilestoneRuns(roadmaps,artifacts);
+  server.handle(integrationRpc["desktop.integration.policy"],async i=>{await opened;return runs.integrations.policy(i.projectId);});
+  server.handle(integrationRpc["desktop.integration.get"],async i=>{await opened;await projects.project(i.projectId);return runs.integrations.get(i.projectId,i.runId);});
+  server.handle(integrationRpc["desktop.integration.configure"],async i=>{await opened;return projects.exclusive(async()=>{
+    const run=await runs.get(i.projectId,i.runId);
+    if(!run.integration && run.state!=="completed")throw new Error("INTEGRATION_MODE_LOCKED");
+    return runs.integrations.configure(run,i.settings);
+  });});
+  server.handle(integrationRpc["desktop.integration.advance"],async i=>{await opened;return projects.exclusive(async()=>{
+    const run=await runs.get(i.projectId,i.runId),state=await runs.integrations.get(i.projectId,i.runId);
+    if(!state)throw new Error("INTEGRATION_REQUIRED");return runs.integrations.advance(run,state);
+  });});
+  server.handle(integrationRpc["desktop.integration.sync"],async i=>{await opened;return projects.exclusive(async()=>runs.integrations.sync(await runs.get(i.projectId,i.runId),i));});
+  service.milestoneGuard = (id,binding) => runs.guard(id,binding);
+  void opened.then(() => { if (!stopped) { service.startWorker(); runs.wake(); } }).catch(() => undefined);
+  server.handle(runRpc["desktop.runs.phase"],async i=>{await opened;return runs.phases.review(await runs.get(i.projectId,i.runId));});
+  server.handle(runRpc["desktop.runs.decide"],async i=>{await opened;return runs.phases.decide(i);});
+  server.handle(runRpc["desktop.runs.get"],async i=>{await opened;return runs.view(i.projectId,i.runId);});
+  server.handle(runRpc["desktop.runs.unity"],async i=>{await opened;return runs.validateUnity(i);});
+  server.handle(runRpc["desktop.runs.list"],async i=>{await opened;return runs.list(i.projectId);});
+  server.handle(runRpc["desktop.runs.create"],async i=>{await opened;return runs.create(i);});
+  server.handle(runRpc["desktop.runs.control"],async i=>{await opened;return runs.control(i);});
+  server.handle(roadmapRpc["desktop.roadmap.read"], async i => { await opened; return roadmaps.read(i.projectId); });
+  server.handle(roadmapRpc["desktop.roadmap.save"], async i => { await opened; return roadmaps.save(i.projectId, i.expectedRevision, i.roadmap); });
+  server.handle(roadmapRpc["desktop.roadmap.preview"], async i => { await opened; return roadmaps.preview(i.projectId, i.selection); });
   server.handle(p["desktop.projects.list"], async () => { await opened; return projects.list(); });
   server.handle(p["desktop.projects.register"], async i => { await opened; return projects.register(i.sourceRoot, i.name); });
   server.handle(p["desktop.projects.preview"], async i => { await opened; return projects.preview(i.projectId); });
@@ -45,5 +75,5 @@ export function contributeDesktop(server: PluginServerContext, legacy: RequestSt
   server.handle(r["desktop.requests.undo"], async i => { await opened; return artifacts.undo(i.projectId, i.token, i.resultId, i.transferKey); });
   server.handle(r["desktop.requests.transfers"], async i => { await opened; return artifacts.transfers(i.projectId, i.token, i.resultId); });
   server.handle(r["desktop.requests.import-legacy"], async i => { await opened; return service.importLegacy(i.projectId, i.token, i.commandKey, await readFile(join(dataHome, "requests", i.token + ".json"), "utf8")); });
-  return { service, close: async () => { stopped = true; await opened.catch(() => undefined); await service.close(); await connection.dispose(); await projects.close(); } };
+  return { service, close: async () => { stopped = true; await opened.catch(() => undefined); await runs.close(); await service.close(); await connection.dispose(); await projects.close(); } };
 }

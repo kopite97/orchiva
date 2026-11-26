@@ -1,0 +1,255 @@
+{
+  "recordedDate": "2026-11-17",
+  "timezone": "Asia/Seoul",
+  "plan": "docs/plans/desktop-ui-alignment.md",
+  "status": "proposed",
+  "sourceRoot": "C:/Users/USER/lib/orchiva-plugin",
+  "branch": "main",
+  "baseCommit": "3aad0263a460b8155e33cf209d36758fea245c0a",
+  "inspection": {
+    "method": "local PNG visual inspection and current XAML/C# source review",
+    "computerUse": false,
+    "currentAppLaunched": false,
+    "currentD2D3RenderingObserved": false,
+    "historicalD1ImagesAreNotCurrentRendering": true,
+    "wireframes": [
+      {
+        "path": "docs/evidence/desktop-transition/20261116-wireframe-capture-001/01-projects.png",
+        "sha256": "5adfe6d045c16c7f2ec30a7e7b04a8a815782cabe4381b9abea01e67e0d25b39"
+      },
+      {
+        "path": "docs/evidence/desktop-transition/20261116-wireframe-capture-001/02-setup.png",
+        "sha256": "29ccaec517f2253c6d1010a89ee96532611853572dce285ccbba508c9367505c"
+      },
+      {
+        "path": "docs/evidence/desktop-transition/20261116-wireframe-capture-001/03-home.png",
+        "sha256": "f70ea9067794c5bd72d34d6c1e3299ddf4c4450e20cb9d1bbd191c9d3fbb0581"
+      },
+      {
+        "path": "docs/evidence/desktop-transition/20261116-wireframe-capture-001/04-new.png",
+        "sha256": "55ee22ff5ba9ce7a52a0ac7f54e345f95b26a20eef08580815529b467759ed69"
+      },
+      {
+        "path": "docs/evidence/desktop-transition/20261116-wireframe-capture-001/05-modify.png",
+        "sha256": "30e2b11df322e78d0c64d71d3767fcb6b905c8bddbde7b02aa2ab967d28c83d3"
+      },
+      {
+        "path": "docs/evidence/desktop-transition/20261116-wireframe-capture-001/06-plan.png",
+        "sha256": "f1356b474b6a74659009fcaa9286ab1d35327bc83996347d656843ac4389048b"
+      },
+      {
+        "path": "docs/evidence/desktop-transition/20261116-wireframe-capture-001/07-run.png",
+        "sha256": "70e9f3ac983577e15a85fbbc243151109c54992b77ebe1867ba6794830945983"
+      },
+      {
+        "path": "docs/evidence/desktop-transition/20261116-wireframe-capture-001/08-result.png",
+        "sha256": "8af00b8937eaf686439b07bad9f8064a3e13b14cac594b1979ecdbd32ca71767"
+      },
+      {
+        "path": "docs/evidence/desktop-transition/20261116-wireframe-capture-001/09-apply.png",
+        "sha256": "d86e430fe878b622156f4e8f52e390a21f85b418f12b8d0ad8ae87d4c205700d"
+      },
+      {
+        "path": "docs/evidence/desktop-transition/20261116-wireframe-capture-001/10-history.png",
+        "sha256": "1dbd44e37feb5145986f7eb87b48da6ee938d83c5ce6d7c393f460d05ec4e3e6"
+      },
+      {
+        "path": "docs/evidence/desktop-transition/20261116-wireframe-capture-001/11-instructions.png",
+        "sha256": "035f143b317bfe52ea8bc40b73dc93ec8ecd2de9d8c68821f6683d60d4a0d458"
+      },
+      {
+        "path": "docs/evidence/desktop-transition/20261116-wireframe-capture-001/12-chat.png",
+        "sha256": "23952844a9b823b3df3763f84bd84298183945cd633b36fccc340c34a2fdade9"
+      },
+      {
+        "path": "docs/evidence/desktop-transition/20261116-wireframe-capture-001/13-settings.png",
+        "sha256": "e63303614e9b7dd57f60e6a07f68b06fa63c46f39f3bebdb2ae11f7f4cef56d8"
+      },
+      {
+        "path": "docs/evidence/desktop-transition/20261116-wireframe-capture-001/14-connection.png",
+        "sha256": "ea67bac7a70513319aaf8bfaa0cd13633575c335e0dd6b91a0ab60ec6feeef40"
+      }
+    ],
+    "historicalD1Screens": [
+      {
+        "path": "docs/evidence/desktop-transition/d1-20261116-003/01-history-light.png",
+        "sha256": "a6e6b843a22e9a863b8a385c7b270b3b2974d7f559d14c57ad63ce3436abb6fd"
+      },
+      {
+        "path": "docs/evidence/desktop-transition/d1-20261116-003/03-project-light.png",
+        "sha256": "18781188691e140a915694d03bf7723b1d28b32ce5fc543a2203bb237fd114df"
+      },
+      {
+        "path": "docs/evidence/desktop-transition/d1-20261116-003/04-settings-dark.png",
+        "sha256": "e253cf08b4990c01517c40f61ea4c6f593e4767e81132cb2b5a3c07f6f0f9ef8"
+      }
+    ],
+    "sourceFiles": [
+      {
+        "path": "desktop/Orchiva.Desktop/MainWindow.xaml",
+        "sha256": "067e1c825f080c95bf053d24fb7f8f079fe6adc40606da8cfe09e86116c1fec8"
+      },
+      {
+        "path": "desktop/Orchiva.Desktop/MainWindow.xaml.cs",
+        "sha256": "97128957b5c992dcd280477b2b4710abbd62407e1abb172bf3ac4444d1a23179"
+      },
+      {
+        "path": "desktop/Orchiva.Desktop/ProductionWorkspace.xaml",
+        "sha256": "d06286b2e7a668f6ae981c7755a367053e668cf283f27e9679d2f9906bcfba27"
+      },
+      {
+        "path": "desktop/Orchiva.Desktop/ProductionWorkspace.xaml.cs",
+        "sha256": "0097ee68bada9e4cf49098da8d7765c52093d17b2a7d84a77759e86bf2c3a3d4"
+      },
+      {
+        "path": "desktop/Orchiva.Desktop/DesktopViewModel.cs",
+        "sha256": "612108f96012d405eb47dc3a169094b5855603986c5235a25a5239246be10107"
+      },
+      {
+        "path": "desktop/Orchiva.Desktop/Themes/Orchiva.xaml",
+        "sha256": "fd2bb2d2952e51c644e772069d0879a18be7ee3aa71f2a0bd45d99b56a2c03d7"
+      }
+    ]
+  },
+  "baselineWorkspace": {
+    "pivots": [
+      "프로젝트·지침",
+      "요청·PLAN",
+      "실행·결과 검토",
+      "결과물·소스 반영"
+    ],
+    "actionTags": [
+      "projects",
+      "register",
+      "preview",
+      "initialize",
+      "configure",
+      "instructions",
+      "save-instruction",
+      "requests",
+      "new",
+      "import-legacy",
+      "save",
+      "plan",
+      "observe",
+      "sync-plan",
+      "start",
+      "stop",
+      "attention",
+      "permission",
+      "approve",
+      "reject",
+      "revalidate",
+      "resume",
+      "reconcile",
+      "retry",
+      "export",
+      "diff",
+      "apply",
+      "transfers",
+      "continue-apply",
+      "undo"
+    ],
+    "namedControls": [
+      "Notice",
+      "Busy",
+      "ProjectChoice",
+      "ProjectLocation",
+      "ProjectNameInput",
+      "SourceInput",
+      "InitializeButton",
+      "InitPreview",
+      "BaseRefInput",
+      "OutputInput",
+      "InstructionChoice",
+      "InstructionPath",
+      "InstructionScope",
+      "InstructionContent",
+      "RequestChoice",
+      "LegacyToken",
+      "RequestStatus",
+      "Discipline",
+      "RequestMode",
+      "ParentChoice",
+      "TitleInput",
+      "GoalInput",
+      "ScopeInput",
+      "ConstraintsInput",
+      "OutputPathInput",
+      "ModelChoice",
+      "LevelChoice",
+      "ValidationChoice",
+      "PlanText",
+      "PlanLocation",
+      "PlanConfirmed",
+      "ExecutionStatus",
+      "PermissionChoice",
+      "PermissionDetails",
+      "PermissionAction",
+      "PermissionConfirmed",
+      "ResultText",
+      "QualityConfirmed",
+      "ChecksConfirmed",
+      "ReviewNote",
+      "ResumeInput",
+      "ExportLocation",
+      "DiffFiles",
+      "DiffText",
+      "TransferChoice",
+      "TransferKey"
+    ]
+  },
+  "scope": {
+    "implementationStarted": false,
+    "guiVerification": "pending-user-computer-use-deferral",
+    "runtimeOrModelCalls": 0,
+    "newAgentsOrWorktrees": 0,
+    "backendOrContractChanges": 0,
+    "newGameDisciplinesIncluded": false,
+    "planUiScreens": [
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08",
+      "09",
+      "10",
+      "11",
+      "13",
+      "14"
+    ],
+    "excludedConversationScreen": "12: D4 not implemented",
+    "wireframeOnlyFeaturesImplemented": false
+  },
+  "documentationValidation": {
+    "status": "passed",
+    "markdownFiles": 38,
+    "localLinkTargetsChecked": 361,
+    "broken": [],
+    "utf8ReplacementCharacters": [],
+    "missingTemplateSections": [],
+    "activePlanCount": 1,
+    "planAndIndexProposed": true,
+    "onlyDocsChanged": true,
+    "originalImagesUnchanged": true,
+    "gitDiffCheck": "passed",
+    "changedFilesWhitespaceIssues": [],
+    "changedFiles": [
+      "docs/design/desktop-ui.md",
+      "docs/plans/README.md",
+      "docs/plans/desktop-transition.md",
+      "docs/evidence/desktop-ui-alignment/20261117-plan-001/summary.json",
+      "docs/plans/desktop-ui-alignment.md"
+    ]
+  },
+  "tests": {
+    "build": "not-run-documentation-only",
+    "node": "not-run-documentation-only",
+    "dotnet": "not-run-documentation-only",
+    "gui": "not-run-user-deferral",
+    "live": "not-run-documentation-only"
+  }
+}

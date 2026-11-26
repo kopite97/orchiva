@@ -1,0 +1,159 @@
+Window: "Orchiva · 합성 UI 검증 (모델 호출 없음)", App: Orchiva.Desktop.UiTests.exe.
+	0 window (창) Orchiva · 합성 UI 검증 (모델 호출 없음) Secondary Actions: Raise
+		1 pane (창)
+			2 pane (창)
+				3 combo box (콤보 상자) Description: 합성 화면 선택
+				4 button (단추) 800 × 600
+				5 button (단추) 1280 × 900
+				6 button (단추) 1600 × 1000
+				7 button (단추) 밝게 / 어둡게
+				8 combo box (콤보 상자) Description: 합성 상태
+				9 custom (사용자 지정) ID: Navigation
+					10 button (단추) 탐색 닫기 ID: TogglePaneButton
+						54 text (텍스트) ID: PaneTitleTextBlock
+					11 window (창) Secondary Actions: Raise ID: PaneRoot
+						55 text (텍스트) Orchiva
+						12 pane (창) ID: MenuItemsScrollViewer
+							13 group (그룹) ID: MenuItemsHost
+								14 list item (목록 항목) (selectable) 프로젝트 선택 ID: ProjectsNavigation
+								15 list item (목록 항목) (selectable) 작업 시작 ID: HomeNavigation
+								16 list item (목록 항목) (selectable) PLAN 이력 ID: HistoryNavigation
+								17 list item (목록 항목) (selectable) 프로젝트 지침 ID: InstructionsNavigation
+								18 list item (목록 항목) (selectable, disabled) 질문 / 상담 · 준비 중
+						19 pane (창) ID: FooterItemsScrollViewer
+							20 group (그룹) ID: FooterMenuItemsHost
+								21 list item (목록 항목) (selectable) 기존 MVP 프로젝트
+								22 list item (목록 항목) (selectable) 기존 v2 이력
+								23 list item (목록 항목) (selectable) 연결 상태
+								24 list item (목록 항목) (selectable) 설정 ID: SettingsItem
+					25 pane (창) ID: PageScroll
+						26 status bar (상태 표시줄) ID: StatusBar
+							27 text (텍스트) 정보 아이콘 ID: StandardIcon
+							28 text (텍스트) 합성 UI 검증 ID: Title
+							29 text (텍스트) 모델·Agent·Worktree 생성 없음 · 실제 실행 결과가 아닙니다. ID: Message
+						30 text (텍스트) 실행과 복구 ID: PageTitle
+						31 text (텍스트) 현재 실행 상태와 필요한 응답을 확인합니다. ID: PageDescription
+						32 status bar (상태 표시줄) ID: Notice
+							33 text (텍스트) 성공 아이콘 ID: StandardIcon
+							34 text (텍스트) 반영됨 ID: Title
+							35 text (텍스트) 최신 파일과 실행 상태를 확인했습니다. ID: Message
+						110 text (텍스트) C:/UI-Fixture/한글 프로젝트/Source ID: ProjectLocation
+						111 text (텍스트) 결과 검토 대기 · 저장 버전 3 · ui-request-001 PLAN 작성: complete ID: RequestStatus
+						208 text (텍스트) 결과 검토 대기 · 저장 버전 3 · ui-request-001 PLAN 작성: complete ID: ExecutionStatus
+						209 text (텍스트) 실행 상태와 관측 오류를 구분합니다. 중단 요청 후 실제 종료를 확인합니다.
+						210 button (단추) 실행 상태·결과 새로 고침
+						211 button (단추) 에이전트 권한·확인 요청
+							212 text (텍스트) 에이전트 권한·확인 요청
+						213 text (텍스트) 같은 세션에서 보완
+						214 text field (편집) (settable, string) 같은 실행에 전달할 보완 내용 ID: ResumeInput
+							215 text (텍스트) 같은 실행에 전달할 보완 내용
+						216 button (단추) 같은 세션에서 재개
+						217 text (텍스트) 실패 복구
+						218 button (단추) 불확실한 전송 대조
+						219 button (단추) 확인된 준비 실패 재시도
+						220 button (단추) 현재 실행 중단 요청
+						221 button (단추) 결과 검토 →
+						222 button (단추) 확인한 PLAN
+						46 text (텍스트)
+						47 scroll bar (스크롤 막대) (settable, float) 세로 Value: 0 ID: VerticalScrollBar
+							204 button (단추) 세로 작은 감소 ID: VerticalSmallDecrease
+							205 button (단추) 세로 큰 감소 ID: VerticalLargeDecrease
+							206 button (단추) 세로 큰 증가 ID: VerticalLargeIncrease
+							207 button (단추) 세로 작은 증가 ID: VerticalSmallIncrease
+		48 title bar (제목 표시줄) (settable, string) Value: Orchiva · 합성 UI 검증 (모델 호출 없음)
+			49 menu bar (메뉴 모음) 시스템 ID: MenuBar
+				50 menu item (메뉴 항목) 시스템
+			51 button (단추) 최소화
+			52 button (단추) 최대화
+			53 button (단추) 닫기
+
+Document text: ```
+Orchiva
+
+프로젝트 선택
+
+작업 시작
+
+PLAN 이력
+
+프로젝트 지침
+
+질문 / 상담 · 준비 중
+기존 MVP 프로젝트
+기존 v2 이력
+
+연결 상태
+설정
+
+
+합성 UI 검증
+모델·Agent·Worktree 생성 없음 · 실제 실행 결과가 아닙니다.
+실행과 복구
+현재 실행 상태와 필요한 응답을 확인합니다.
+
+반영됨
+최신 파일과 실행 상태를 확인했습니다.
+C:/UI-Fixture/한글 프로젝트/Source
+결과 검토 대기 · 저장 버전 3 · ui-request-001
+PLAN 작성: complete
+실행 상태와 관측 오류를 구분합니다. 중단 요청 후 실제 종료를 확인합니다.
+실행 상태·결과 새로 고침
+에이전트 권한·확인 요청
+같은 세션에서 보완
+같은 실행에 전달할 보완 내용
+같은 세션에서 재개
+실패 복구
+불확실한 전송 대조
+확인된 준비 실패 재시도
+현재 실행 중단 요청
+결과 검토 →
+확인한 PLAN
+
+
+```
+
+Focused element: 110 text (텍스트) C:/UI-Fixture/한글 프로젝트/Source ID: ProjectLocation
+
+Document text:
+Orchiva
+
+프로젝트 선택
+
+작업 시작
+
+PLAN 이력
+
+프로젝트 지침
+
+질문 / 상담 · 준비 중
+기존 MVP 프로젝트
+기존 v2 이력
+
+연결 상태
+설정
+
+
+합성 UI 검증
+모델·Agent·Worktree 생성 없음 · 실제 실행 결과가 아닙니다.
+실행과 복구
+현재 실행 상태와 필요한 응답을 확인합니다.
+
+반영됨
+최신 파일과 실행 상태를 확인했습니다.
+C:/UI-Fixture/한글 프로젝트/Source
+결과 검토 대기 · 저장 버전 3 · ui-request-001
+PLAN 작성: complete
+실행 상태와 관측 오류를 구분합니다. 중단 요청 후 실제 종료를 확인합니다.
+실행 상태·결과 새로 고침
+에이전트 권한·확인 요청
+같은 세션에서 보완
+같은 실행에 전달할 보완 내용
+같은 세션에서 재개
+실패 복구
+불확실한 전송 대조
+확인된 준비 실패 재시도
+현재 실행 중단 요청
+결과 검토 →
+확인한 PLAN
+
+

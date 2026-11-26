@@ -1,0 +1,31 @@
+{
+  "date": "2026-11-17",
+  "status": "ui-implemented-visual-acceptance-pending",
+  "desktopBuild": {
+    "passed": true,
+    "warnings": 0,
+    "errors": 0
+  },
+  "testHostBuild": {
+    "passed": true,
+    "warnings": 0,
+    "errors": 0
+  },
+  "typecheck": "passed",
+  "mockChecks": 19,
+  "bridgeTests": {
+    "passed": 13,
+    "failed": 0,
+    "skipped": 0
+  },
+  "desktopVerify": "passed; agents/workspaces before and after 0",
+  "runtimeCleanup": "owned isolated daemon stopped; fixture and original request hashes unchanged",
+  "gui": "physical Escape stopped computer use; no subsequent GUI calls; after visual acceptance unexecuted",
+  "testHost": "left open; synthetic data only, no bridge connection",
+  "git": "local only; no commit or push",
+  "documentation": {
+    "relativeLinks": 373,
+    "broken": []
+  },
+  "gitDiffCheck": "passed"
+}

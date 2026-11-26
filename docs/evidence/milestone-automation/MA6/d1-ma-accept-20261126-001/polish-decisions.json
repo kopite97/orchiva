@@ -1,0 +1,50 @@
+[
+  {
+    "projectId": "7bbd3518-2d4f-43d6-86cf-256bae708961",
+    "runId": "d1-ma-accept-20261126-001-maze-next",
+    "phase": "Polish",
+    "next": null,
+    "basis": "f85d55cfe10031920226adf54caaafda18927683923b67452e7c5c0e000c4110",
+    "sha": "b69049deb7f4e465ac716ba10d722b677d0571e7",
+    "buildHash": "6ad433dd71e3d07fbaa5075eeccc189ba37d74f4fcb7034e2368c20fd06f4c83",
+    "playerHash": "f083b0e879a9298cdcf9933a8f3b4f2b013e13f7d3e51221fc0d756b79e28807",
+    "attempt": "05832187-49a8-46a4-ab83-75ab92093a71",
+    "verdict": "approve",
+    "note": "사용자 결정 “두 게임의 Polish 빌드 모두 승인”. b69049de 빌드 승인.",
+    "roadmapRevision": "06e4a0fd89328e3362b55a5015f6eaa3aa973e88485282be323166d69a0afe3f",
+    "sources": [
+      {
+        "featureId": "TunePass",
+        "token": "ma-1083d1d4e615e2afbe82cd0789e5dbcfaf6c3277",
+        "resultId": "259cf432-3d24-4e7c-98c1-e5a421772031",
+        "fingerprint": "3a0a7a13a3caa82cbd3267c59e4e33fa518cec62c495f7bc93390e4a629f037d"
+      }
+    ],
+    "at": "2026-11-26T07:13:41.357Z",
+    "commandKey": "polish-approve-maze-f85d55cfe100"
+  },
+  {
+    "projectId": "ee824349-2ea8-4423-9e49-abcdf2f483de",
+    "runId": "d1-ma-accept-20261126-001-orchard-next",
+    "phase": "Polish",
+    "next": null,
+    "basis": "b743fc0f94d6a632765a125b3740c77982f0fbc386959699c7b4f697bb132c24",
+    "sha": "4a6be1ca416c45d42a98a05d43c720c96677cfc0",
+    "buildHash": "e47471a990500dc6f701d86553120eb3361dd6dc5a4cb7dd6f7dd8e8ff08252d",
+    "playerHash": "f083b0e879a9298cdcf9933a8f3b4f2b013e13f7d3e51221fc0d756b79e28807",
+    "attempt": "872e1be6-57b3-42ff-ad5e-9ec09b894487",
+    "verdict": "approve",
+    "note": "사용자 결정 “두 게임의 Polish 빌드 모두 승인”. 4a6be1ca 빌드 승인.",
+    "roadmapRevision": "a9c04003d1c75084f0433797ae88812d163690feb157d6b8e3dd911f3ea46abe",
+    "sources": [
+      {
+        "featureId": "TunePass",
+        "token": "ma-75bca50722c3adf0424f35e80c80d3799ca58ce3",
+        "resultId": "59e72fe0-b919-465b-aedf-1590c33bb659",
+        "fingerprint": "df9c652af979a35c5b49ac31bc829251f8e5cf3e0a76457c0c77bfcfc1a97930"
+      }
+    ],
+    "at": "2026-11-26T07:13:42.449Z",
+    "commandKey": "polish-approve-orchard-b743fc0f94d6"
+  }
+]

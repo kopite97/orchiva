@@ -10,6 +10,9 @@ import { PaseoRuntime } from "./runtime";
 import { assertWorktree, type ProjectConfig } from "../../config/project-config";
 import type { Runtime, LifecycleRuntime, RecoveryRuntime, Observation } from "../../application/ports";
 
+import { validateOutputs } from "../../application/desktop/milestone-validation";
+import { snapshotFiles } from "../storage/evidence";
+
 export class DesktopRuntime implements Runtime, LifecycleRuntime, RecoveryRuntime {
   readonly base: PaseoRuntime;
   constructor(private api: PaseoApi, private config: ProjectConfig, readonly document: Production, private snapshot: InputSnapshot) { this.base = new PaseoRuntime(api, config); }
@@ -20,7 +23,16 @@ export class DesktopRuntime implements Runtime, LifecycleRuntime, RecoveryRuntim
   verifyResources(record: RequestRecord) { return this.base.verifyResources(record); }
   lookupDelivery(record: RequestRecord, command: RequestRecord["commands"][number]) { return this.base.lookupDelivery(record, command); }
   observe(record: RequestRecord) { return this.base.observe(record); }
-  collect(record: RequestRecord, observation: Observation) { return this.base.collect(record, observation); }
+  async collect(record: RequestRecord, observation: Observation) {
+    const bound = this.document.milestone;
+    if (!bound) return this.base.collect(record,observation);
+    const result = await this.base.collect({ ...record, checks: [] }, observation);
+    const snapshot = await snapshotFiles(record.worktreePath!, record.checks);
+    Object.assign(result, { files:snapshot.files, fingerprint:snapshot.fingerprint, changedFiles:snapshot.changedFiles });
+    try { await validateOutputs(bound,this.snapshot,record,result); }
+    catch (error) { result.failure = error instanceof Error ? error.message : "MILESTONE_VALIDATION_FAILED"; }
+    return result;
+  }
   fingerprint(record: RequestRecord) { return this.base.fingerprint(record); }
   resume(record: RequestRecord) { return this.base.resume(record); }
   async writePlans(record: RequestRecord) {

@@ -1,0 +1,10 @@
+{
+  "name": "Hud.Play",
+  "references": [
+    "Hud.Game"
+  ],
+  "includePlatforms": [],
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ]
+}

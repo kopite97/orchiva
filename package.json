@@ -45,5 +45,8 @@
     "ws": "8.22.2",
     "zod": "^4.4.3"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "saxes": "6.0.0"
+  }
 }

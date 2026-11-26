@@ -1,0 +1,86 @@
+{
+  "observedAt": "2026-11-26T03:16:27.107Z",
+  "repository": "kopite97/PoC-sandbox",
+  "integrationBranch": "orchiva/integration/ma3-hud-20261126",
+  "base": "47daf034883bf4c5174761dfa91332e628990e65",
+  "workflow": "https://github.com/kopite97/PoC-sandbox/actions/runs/45747577111",
+  "workflowCommit": "dde7f763a98f071cb681283a4a1fdc4ae2e3be81",
+  "requiredCheck": {
+    "context": "ma3-approved-output",
+    "app_id": 15368
+  },
+  "strict": true,
+  "enforceAdmins": true,
+  "dismissStaleReviews": true,
+  "requiredApprovals": 1,
+  "collaborators": [
+    "kopite97"
+  ],
+  "prs": [
+    {
+      "pr": "https://github.com/kopite97/PoC-sandbox/pull/2",
+      "head": "c3d2eabdecda59ff27ab6c61482937a982d062fc",
+      "checkRun": 139667294339,
+      "conclusion": "success",
+      "reviewCount": 0,
+      "merged": false,
+      "issue": "https://github.com/kopite97/PoC-sandbox/issues/1",
+      "issueState": "open"
+    },
+    {
+      "pr": "https://github.com/kopite97/PoC-sandbox/pull/4",
+      "head": "90a9d490cb6ec76b988594cb25683e0113422bf8",
+      "checkRun": 139667308954,
+      "conclusion": "success",
+      "reviewCount": 0,
+      "merged": false,
+      "issue": "https://github.com/kopite97/PoC-sandbox/issues/3",
+      "issueState": "open"
+    },
+    {
+      "pr": "https://github.com/kopite97/PoC-sandbox/pull/6",
+      "head": "142b0971e94a988bbf084e21ef807648b06b234b",
+      "checkRun": 139667323223,
+      "conclusion": "success",
+      "reviewCount": 0,
+      "merged": false,
+      "issue": "https://github.com/kopite97/PoC-sandbox/issues/5",
+      "issueState": "open"
+    },
+    {
+      "pr": "https://github.com/kopite97/PoC-sandbox/pull/8",
+      "head": "1a34db3d60f64da125e1129b0dc0738e8e0e8b93",
+      "checkRun": 139667336728,
+      "conclusion": "success",
+      "reviewCount": 0,
+      "merged": false,
+      "issue": "https://github.com/kopite97/PoC-sandbox/issues/7",
+      "issueState": "open"
+    },
+    {
+      "pr": "https://github.com/kopite97/PoC-sandbox/pull/10",
+      "head": "904a614be1cceb9b31de1f1cade00e94ff7d9416",
+      "checkRun": 139667350771,
+      "conclusion": "success",
+      "reviewCount": 0,
+      "merged": false,
+      "issue": "https://github.com/kopite97/PoC-sandbox/issues/9",
+      "issueState": "open"
+    }
+  ],
+  "product": {
+    "feature": "A",
+    "pr": "https://github.com/kopite97/PoC-sandbox/pull/2",
+    "head": "c3d2eabdecda59ff27ab6c61482937a982d062fc",
+    "base": "47daf034883bf4c5174761dfa91332e628990e65",
+    "merged": false,
+    "merge": null,
+    "issue": "https://github.com/kopite97/PoC-sandbox/issues/1",
+    "issueState": "open",
+    "phase": "awaiting-review",
+    "protectedChecks": [
+      "ma3-approved-output"
+    ],
+    "lastError": "GITHUB_REVIEW_REQUIRED"
+  }
+}

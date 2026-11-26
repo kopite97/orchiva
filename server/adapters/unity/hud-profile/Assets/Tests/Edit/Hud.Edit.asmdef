@@ -1,0 +1,12 @@
+{
+  "name": "Hud.Edit",
+  "references": [
+    "Hud.Game"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ]
+}

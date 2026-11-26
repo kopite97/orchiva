@@ -56,6 +56,8 @@
 
 ### 후속 버전으로 미룰 기능
 
+데스크톱 Milestone 확장에서 추가한 로컬 2-worker 실행과 단건 슬롯의 공존 범위는 [MA4 검증 기록](../decisions/milestone-parallel-execution.md)에 정리했다. Windows Player까지 이어지는 데스크톱 검증 프로필은 [MA5 검증 기록](../decisions/milestone-unity-validation.md)을 따른다. 두 게임의 프로젝트별 필수 검사, 레벨 플레이, 사용자 빌드 승인과 다음 Phase 실행은 [MA6 수용 기록](../decisions/milestone-project-acceptance.md)에 정리했다. 아래 범위는 기존 MVP 기준이다.
+
 다중 TASK와 의존성, 병렬 실행·대기열·예약, 자동 계획 생성과 대화형 계획 수정, 무인 자동 코드 수정, 다중 사용자·프로젝트·daemon, 원격 접속, 범용 shell 검증·의존성 설치·Unity 빌드, 자동 Git 게시와 배포, 알림 연동, 비용 정산은 제외한다. 사용자 요청에 따른 Worktree 삭제·자동 청소도 포함하지 않으며 결과는 로컬에 보존한다.
 
 실행 중 질문·권한 승인·중단은 Paseo 세션에서 처리한다. MVP의 `Codex 세션 열기`는 해당 세션으로 이동하며, Orchiva 안에 별도의 채팅이나 권한 승인 UI를 만들지 않는다. 중단을 관측하면 자동 완료하지 않고 `failed`와 중단 사유를 기록한다.

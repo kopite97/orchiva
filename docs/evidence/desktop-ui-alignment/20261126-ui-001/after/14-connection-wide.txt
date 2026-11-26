@@ -1,0 +1,113 @@
+Window: "Orchiva · 합성 UI 검증 (모델 호출 없음)", App: Orchiva.Desktop.UiTests.exe.
+	0 window (창) Orchiva · 합성 UI 검증 (모델 호출 없음) Secondary Actions: Raise
+		1 pane (창)
+			2 pane (창)
+				3 combo box (콤보 상자) Description: 합성 화면 선택
+				4 button (단추) 800 × 600
+				5 button (단추) 1280 × 900
+				6 button (단추) 1600 × 1000
+				7 button (단추) 밝게 / 어둡게
+				8 combo box (콤보 상자) Description: 합성 상태
+				9 custom (사용자 지정) ID: Navigation
+					10 button (단추) 탐색 닫기 ID: TogglePaneButton
+						54 text (텍스트) ID: PaneTitleTextBlock
+					11 window (창) Secondary Actions: Raise ID: PaneRoot
+						55 text (텍스트) Orchiva
+						12 pane (창) ID: MenuItemsScrollViewer
+							13 group (그룹) ID: MenuItemsHost
+								14 list item (목록 항목) (selectable) 프로젝트 선택 ID: ProjectsNavigation
+								15 list item (목록 항목) (selectable) 작업 시작 ID: HomeNavigation
+								16 list item (목록 항목) (selectable) PLAN 이력 ID: HistoryNavigation
+								17 list item (목록 항목) (selectable) 프로젝트 지침 ID: InstructionsNavigation
+								18 list item (목록 항목) (selectable, disabled) 질문 / 상담 · 준비 중
+						19 pane (창) ID: FooterItemsScrollViewer
+							20 group (그룹) ID: FooterMenuItemsHost
+								21 list item (목록 항목) (selectable) 기존 MVP 프로젝트
+								22 list item (목록 항목) (selectable) 기존 v2 이력
+								23 list item (목록 항목) (selectable) 연결 상태
+								24 list item (목록 항목) (selectable) 설정 ID: SettingsItem
+					25 pane (창) ID: PageScroll
+						26 status bar (상태 표시줄) ID: StatusBar
+							27 text (텍스트) 정보 아이콘 ID: StandardIcon
+							28 text (텍스트) 합성 UI 검증 ID: Title
+							29 text (텍스트) 모델·Agent·Worktree 생성 없음 · 실제 실행 결과가 아닙니다. ID: Message
+						390 text (텍스트) 연결과 실행 준비
+						391 text (텍스트) 실행부 연결 상태를 확인하고 작업을 준비합니다.
+						392 text (텍스트) 실행부
+						393 text (텍스트) 환경 설정 필요
+						394 button (단추) 격리 실행부 시작
+						395 button (단추) 다시 연결
+						396 button (단추) 연결 진단 상세
+							397 text (텍스트) 연결 진단 상세
+						398 text (텍스트) 연결 실패는 실행 실패를 의미하지 않습니다. 마지막으로 조회한 내용을 보존합니다.
+						46 text (텍스트)
+						47 scroll bar (스크롤 막대) (settable, float) 세로 Value: 0 ID: VerticalScrollBar
+		48 title bar (제목 표시줄) (settable, string) Value: Orchiva · 합성 UI 검증 (모델 호출 없음)
+			49 menu bar (메뉴 모음) 시스템 ID: MenuBar
+				50 menu item (메뉴 항목) 시스템
+			51 button (단추) 최소화
+			52 button (단추) 최대화
+			53 button (단추) 닫기
+
+Document text: ```
+Orchiva
+
+프로젝트 선택
+
+작업 시작
+
+PLAN 이력
+
+프로젝트 지침
+
+질문 / 상담 · 준비 중
+기존 MVP 프로젝트
+기존 v2 이력
+
+연결 상태
+설정
+
+
+합성 UI 검증
+모델·Agent·Worktree 생성 없음 · 실제 실행 결과가 아닙니다.
+연결과 실행 준비
+실행부 연결 상태를 확인하고 작업을 준비합니다.
+실행부
+환경 설정 필요
+격리 실행부 시작
+다시 연결
+연결 진단 상세
+연결 실패는 실행 실패를 의미하지 않습니다. 마지막으로 조회한 내용을 보존합니다.
+```
+
+Focused element: 2 pane (창)
+
+Document text:
+Orchiva
+
+프로젝트 선택
+
+작업 시작
+
+PLAN 이력
+
+프로젝트 지침
+
+질문 / 상담 · 준비 중
+기존 MVP 프로젝트
+기존 v2 이력
+
+연결 상태
+설정
+
+
+합성 UI 검증
+모델·Agent·Worktree 생성 없음 · 실제 실행 결과가 아닙니다.
+연결과 실행 준비
+실행부 연결 상태를 확인하고 작업을 준비합니다.
+실행부
+환경 설정 필요
+격리 실행부 시작
+다시 연결
+연결 진단 상세
+연결 실패는 실행 실패를 의미하지 않습니다. 마지막으로 조회한 내용을 보존합니다.

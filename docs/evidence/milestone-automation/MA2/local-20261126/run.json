@@ -1,0 +1,680 @@
+{
+  "runId": "d1-ma-poc-20261126-001-hud",
+  "projectId": "be8046a5-782c-4939-ba41-8ef09a84be31",
+  "desktopBridgeVerified": true,
+  "advising": [
+    {
+      "token": "ma-00e8aef1319f863d04515a7fd8601f0aa24122cb",
+      "owner": "HUD",
+      "title": "Milestone 조율 HUD",
+      "planHash": "e2583bef6424518c759f9591675eb5425e2b34518b2d67a72d496ca8681b58b3",
+      "requestedAt": "2026-11-26T02:03:47.701Z",
+      "completedAt": "2026-11-26T02:04:37.089Z"
+    },
+    {
+      "token": "ma-5ea911066f7b6743302df6675d7294e75abf7521",
+      "owner": "HUD",
+      "title": "HUD 결과 인계",
+      "planHash": "29caaccc856de27c3f0b78a9fedb1a7147b498aa29d89d81be76f4628900cb9f",
+      "requestedAt": "2026-11-26T02:23:02.224Z",
+      "completedAt": "2026-11-26T02:23:38.658Z"
+    },
+    {
+      "token": "ma-a66375ceb1f20892290073f2d9ea9da3c9b9b97b",
+      "owner": "HUD",
+      "title": "HUD 결과 인계",
+      "planHash": "04348ef1c6f3031973292dbfc0a90d4682edb16d40f312bea78af519784b5d89",
+      "requestedAt": "2026-11-26T02:25:58.580Z",
+      "completedAt": "2026-11-26T02:26:31.979Z"
+    }
+  ],
+  "sameSessionRecovery": [
+    {
+      "id": "D",
+      "agent": "59b890aa-a159-4ba6-888b-8b1e43f5f70b",
+      "workspace": "wks_5f55e3e36f08a7c1",
+      "resultId": "5d0aac6f-9951-4ad7-9100-9cd87f9e3c30"
+    }
+  ],
+  "scopeHash": "c41761858e0cdef42b2c079695f26488282ef2880950848964cdbf758d4d6c59",
+  "model": "codex/gpt-6.1-sol",
+  "selection": {
+    "phase": "P",
+    "first": "HUD",
+    "last": "Handoff"
+  },
+  "isolatedWorkerPids": [
+    22344,
+    26404,
+    25572,
+    26884,
+    25484,
+    13388
+  ],
+  "maxOverlappingExecutions": 1,
+  "manualDraftOutsideRun": true,
+  "coordinators": [
+    {
+      "milestone": "HUD",
+      "token": "ma-00e8aef1319f863d04515a7fd8601f0aa24122cb",
+      "status": "accepted",
+      "planHash": "e2583bef6424518c759f9591675eb5425e2b34518b2d67a72d496ca8681b58b3",
+      "priorHandoffs": [
+        {
+          "token": "ma-5ea911066f7b6743302df6675d7294e75abf7521",
+          "revision": "9ecd5392cc72009e21c04041a2f6b12575ca0d20d158ddc5c0280cbef1de3aae",
+          "planHash": "29caaccc856de27c3f0b78a9fedb1a7147b498aa29d89d81be76f4628900cb9f",
+          "verdict": "blocked"
+        }
+      ],
+      "handoff": {
+        "token": "ma-a66375ceb1f20892290073f2d9ea9da3c9b9b97b",
+        "revision": "67de1884215bd72d76fb54c53bbd21ce708e7ae682d12a20675f3aff2f999f29",
+        "verdict": "accepted",
+        "report": "## 목표\n\n기준 SHA `bcc9c2933f4cfa87d23492025d342c8f64b5f8d6`에 연결된 HUD 결과의 검토·반영 증거와 의존성을 정리하고 인계 판정을 작성한다. 제공된 검증 기록에 따르면 A~E가 모두 통과했으며, 실제 충돌이나 미충족 의존성이 없어 READY로 판정한다.\n\n## 범위\n\n- 제공된 assignment, handoff, verification 기록만 읽기 전용으로 분석한다.\n- 구현, 파일 쓰기, 명령 실행, 네트워크 접근, 외부 도구 호출, 하위 에이전트 생성은 수행하지 않는다.\n- 제공된 프로젝트 지침 지도는 적용하되, 도구 호출 금지에 따라 링크된 지침 본문은 열람하지 않았다. 따라서 세부 파일 명명 규칙 준수 여부는 확정하지 않는다.\n- 판정은 서비스가 실제 대조를 통과한 결과만 verification에 포함했다는 입력 조건에 근거한다.\n\n## 작업 순서\n\n1. A~E의 할당 결과 ID와 handoff 및 verification의 결과 ID가 일치하는지 대조한다.\n2. 각 결과의 독립 검토 승인, 검사 통과, 선택 반영 이력을 확인한다.\n3. handoff의 파일 경로·해시와 verifiedSourceFiles의 경로·해시를 대조한다.\n4. 의존 관계 `A → C → D`, `B → D`, `A → E`의 충족 여부를 정리한다.\n5. 파일 변경 영향과 충돌 근거를 정리하고 최종 인계 상태를 기록한다.\n\n## 산출물\n\n산출물은 이 PLAN 원문 한 건이다. 저장이 별도로 승인되는 경우 제안 파일명은 `docs/plans/hud-result-handoff.md`이며, 실제 저장 전 프로젝트 계획 명명 규칙을 확인한다. README나 별도 지침서는 추가하지 않는다.\n\n인계 요약은 다음과 같다.\n\n| 항목 | 결과 내용 | 의존성 | 제공된 증거에 따른 상태 |\n| --- | --- | --- | --- |\n| A | `rules.txt`: `score=10` | 없음 | 승인·검사·반영·해시 대조 통과 |\n| B | `label.txt`: `SCORE` | 없음 | 승인·검사·반영·해시 대조 통과 |\n| C | `score.cjs`: `module.exports = 10;` | A 충족 | 승인·검사·반영·해시 대조 통과 |\n| D | `hud.cjs`: `module.exports = 'SCORE 10';` | B, C 충족 | 승인·검사·반영·해시 대조 통과 |\n| E | `qa.txt`: `Verified score=10` | A 충족 | 승인·검사·반영·해시 대조 통과 |\n\n## 검증\n\n제공된 기록을 대조한 결과:\n\n- A~E의 결과 ID가 각 handoff와 verification에서 일치한다.\n- 모든 독립 검토가 `approved: true`이다.\n- `checks/A.test.cjs`부터 `checks/E.test.cjs`까지 모두 `passed`, 종료 코드 `0`이다.\n- 모든 결과에 선택 반영 이력이 존재한다.\n- 다섯 파일의 handoff 해시와 verifiedSourceFiles 해시가 각각 일치한다.\n- 서비스가 고정 검사 원본과 검사 결과 및 현재 원본 파일 해시까지 대조했다는 조건이 제공되어 있다.\n\n명령은 실행하지 않는다. 후속 재검증이 필요할 때만 프로젝트 검증 지침을 확인한 뒤 해당 검사 실행 명령을 제안한다.\n\n## 검토\n\n변경 영향은 점수 규칙 A가 점수 모듈 C와 검증 결과 E로 이어지고, 레이블 B와 점수 모듈 C가 HUD 결과 D로 모이는 구조다. 점수 `10`, 레이블 `SCORE`, HUD 문자열 `SCORE 10` 사이에 내용상 모순이 없다.\n\n각 항목의 출력 경로가 서로 달라 할당된 출력 사이의 경로 충돌이 없다. 모든 선행 항목이 검토·반영·검증을 통과했으므로 남은 미충족 의존성도 없다. reports가 비어 있다는 사실만으로 충돌을 추정하지 않는다.\n\nREADY 판정은 제공된 다섯 결과의 인계 범위에 한정하며, 프로젝트 전체 구현 완료를 의미하지 않는다.\n\n## 실패 복구\n\n추후 파일 해시 변경, 검사 실패, 승인 철회, 반영 이력 불일치가 확인되면 해당 결과의 인계를 중단하고 BLOCKED로 재판정한다. A의 문제는 C·D·E, B 또는 C의 문제는 D에 미치는 영향을 함께 재검토한다.\n\n복구 시 마지막 검증 통과 기록과 현재 상태의 차이를 식별하고, 수정·재검사·독립 검토·반영 및 해시 대조가 완료된 뒤 READY 여부를 다시 판단한다. 이 계획 단계에서는 파일 복원이나 재반영을 실행하지 않는다.\n\nMA_VERDICT 67de1884215bd72d76fb54c53bbd21ce708e7ae682d12a20675f3aff2f999f29 READY",
+        "planHash": "04348ef1c6f3031973292dbfc0a90d4682edb16d40f312bea78af519784b5d89"
+      }
+    },
+    {
+      "milestone": "Handoff",
+      "token": "ma-54d967ba1aed762d31ea07d361503c10e71dbe74",
+      "status": "skipped",
+      "planHash": null
+    }
+  ],
+  "intervals": [
+    {
+      "id": "A",
+      "from": "2026-11-26T02:05:17.142Z",
+      "to": "2026-11-26T02:06:38.453Z"
+    },
+    {
+      "id": "B",
+      "from": "2026-11-26T02:09:27.455Z",
+      "to": "2026-11-26T02:10:14.644Z"
+    },
+    {
+      "id": "C",
+      "from": "2026-11-26T02:10:56.960Z",
+      "to": "2026-11-26T02:11:53.222Z"
+    },
+    {
+      "id": "D",
+      "from": "2026-11-26T02:13:35.412Z",
+      "to": "2026-11-26T02:20:22.979Z"
+    },
+    {
+      "id": "E",
+      "from": "2026-11-26T02:21:06.851Z",
+      "to": "2026-11-26T02:22:57.193Z"
+    },
+    {
+      "id": "F",
+      "from": "2026-11-26T02:27:08.989Z",
+      "to": "2026-11-26T02:28:15.412Z"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "A",
+      "token": "ma-da34e2f41aeb43ec9a939404c18c37edd4963441",
+      "workspace": "wks_25293c15066a6349",
+      "agent": "9e8020af-8363-47bb-92c0-97c16e680f25",
+      "planHash": "5b2b6660775f421e257f8b876fc02194aa3a98ba663a4ef063040818affc0762",
+      "resultId": "cfe2f77c-cdd1-4feb-a533-6add8ef9c674",
+      "fingerprint": "12445f175488200c0374dcd6fede945f4dc4b1e0874811859abaa2145f1992a4",
+      "inputs": [],
+      "files": [
+        {
+          "path": "rules.txt",
+          "hash": "deff5018f22b453312c25ab3245192fdd770564f4da56c281aeee978986c53b9"
+        }
+      ],
+      "transfers": [
+        "ma-da34e2f41aeb43ec9a939404c18c37edd4963441-apply"
+      ],
+      "review": "dbd28a1a-ace0-4121-81fa-308629c13f0d",
+      "checks": [
+        {
+          "checkId": "auto-1",
+          "status": "passed",
+          "inputFingerprint": "b1f7ddb0b819c8e06afd6845ffd8841fd62cb8274a29534eccdf40f8de79d00b",
+          "label": "checks/A.test.cjs",
+          "command": "node --test checks/A.test.cjs",
+          "passed": true,
+          "exitCode": 0,
+          "output": "✔ checks\\A.test.cjs (0.468ms)\nℹ tests 1\nℹ suites 0\nℹ pass 1\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 10.6334\n",
+          "durationMs": 84
+        }
+      ],
+      "attempts": [
+        {
+          "id": "67b4df83-29e5-4b39-9dab-6cca48784ee3",
+          "at": "2026-11-26T02:06:05.926Z",
+          "failure": null,
+          "checks": [
+            {
+              "passed": true,
+              "input": "b1f7ddb0b819c8e06afd6845ffd8841fd62cb8274a29534eccdf40f8de79d00b",
+              "output": "✔ checks\\A.test.cjs (0.4683ms)\nℹ tests 1\nℹ suites 0\nℹ pass 1\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 10.4274\n"
+            }
+          ]
+        },
+        {
+          "id": "8f06308e-cc6a-4c7d-aaca-1e7e7c3c9f60",
+          "at": "2026-11-26T02:06:07.901Z",
+          "failure": "MILESTONE_CHECK_FAILED",
+          "checks": [
+            {
+              "passed": false,
+              "input": "b1f7ddb0b819c8e06afd6845ffd8841fd62cb8274a29534eccdf40f8de79d00b",
+              "output": "✖ checks\\A.test.cjs (0.4642ms)\nℹ tests 1\nℹ suites 0\nℹ pass 0\nℹ fail 1\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 11.2435\n\n✖ failing tests:\n\ntest at checks\\A.test.cjs:1:1\n✖ checks\\A.test.cjs (0.4642ms)\n  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n  + actual - expected\n  \n  + 'score=0'\n  - 'score=10'\n           ^\n  \n      at Object.<anonymous> (C:\\Users\\USER\\AppData\\Local\\Temp\\orchiva-validation-xA8fDF\\checks\\A.test.cjs:1:79)\n      at Module._compile (node:internal/modules/cjs/loader:1872:14)\n      at Object..js (node:internal/modules/cjs/loader:2003:10)\n      at Module.load (node:internal/modules/cjs/loader:1594:32)\n      at Module._load (node:internal/modules/cjs/loader:1396:12)\n      at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n      at loadCJSModuleWithModuleLoad (node:internal/modules/esm/translators:372:15)\n      at ModuleWrap.<anonymous> (node:internal/modules/esm/translators:244:9)\n      at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\n      at async node:internal/modules/esm/loader:643:26 {\n    generatedMessage: true,\n    code: 'ERR_ASSERTION',\n    actual: 'score=0',\n    expected: 'score=10',\n    operator: 'strictEqual',\n    diff: 'simple'\n  }\n"
+            }
+          ]
+        },
+        {
+          "id": "cfe2f77c-cdd1-4feb-a533-6add8ef9c674",
+          "at": "2026-11-26T02:06:31.868Z",
+          "failure": null,
+          "checks": [
+            {
+              "passed": true,
+              "input": "b1f7ddb0b819c8e06afd6845ffd8841fd62cb8274a29534eccdf40f8de79d00b",
+              "output": "✔ checks\\A.test.cjs (0.468ms)\nℹ tests 1\nℹ suites 0\nℹ pass 1\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 10.6334\n"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "token": "ma-dfbc54dd8c14d2bd8a3fb57b088fbace6037eb17",
+      "workspace": "wks_7fdcb0fab01c8fc2",
+      "agent": "61adcc30-ccc7-44df-ae6e-c5c084044170",
+      "planHash": "eb43f2dff219c19c6a1428ff07a050d994a3a0574f57c7d29958af55c0843590",
+      "resultId": "431fd0ca-0e65-4171-a7bc-c431ba3b1b8a",
+      "fingerprint": "851aac64626f241aeee90d3e3d0c252ea98c573c54b606296936ac3f09dcabd9",
+      "inputs": [],
+      "files": [
+        {
+          "path": "label.txt",
+          "hash": "e0eaf36252b821a11646c96f93ea40277423c3053c86d31915444f0b5ae0ea46"
+        }
+      ],
+      "transfers": [
+        "ma-dfbc54dd8c14d2bd8a3fb57b088fbace6037eb17-apply"
+      ],
+      "review": "b6107345-6b8f-4c7d-8502-5d72957f3d37",
+      "checks": [
+        {
+          "checkId": "auto-1",
+          "status": "passed",
+          "inputFingerprint": "533093740ab2151e52cf020d83eda9f5650ba511a1fc47e21dc02a9e28e9884d",
+          "label": "checks/B.test.cjs",
+          "command": "node --test checks/B.test.cjs",
+          "passed": true,
+          "exitCode": 0,
+          "output": "✔ checks\\B.test.cjs (0.44ms)\nℹ tests 1\nℹ suites 0\nℹ pass 1\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 10.1646\n",
+          "durationMs": 80
+        }
+      ],
+      "attempts": [
+        {
+          "id": "431fd0ca-0e65-4171-a7bc-c431ba3b1b8a",
+          "at": "2026-11-26T02:10:08.541Z",
+          "failure": null,
+          "checks": [
+            {
+              "passed": true,
+              "input": "533093740ab2151e52cf020d83eda9f5650ba511a1fc47e21dc02a9e28e9884d",
+              "output": "✔ checks\\B.test.cjs (0.44ms)\nℹ tests 1\nℹ suites 0\nℹ pass 1\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 10.1646\n"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "token": "ma-800cde92522d90d7189675c97048a07685f6dc90",
+      "workspace": "wks_f07b1fb9704f0703",
+      "agent": "8ede2270-261a-4c19-9606-8c1f8fd23df4",
+      "planHash": "77f38d3ce1d04e85c72aab5780e3a2af8dc8c599e9d6895b7bcf99f47dba8c38",
+      "resultId": "e58c1862-f625-45de-ac1c-7020dc95411c",
+      "fingerprint": "cec66aacf1c6426675d95ed93bd9556314e896c810265f56ff1ad6c06ffd87f7",
+      "inputs": [
+        {
+          "from": "A",
+          "path": "rules.txt",
+          "hash": "deff5018f22b453312c25ab3245192fdd770564f4da56c281aeee978986c53b9"
+        }
+      ],
+      "files": [
+        {
+          "path": "score.cjs",
+          "hash": "e1165c989f50f15ba1780cbbdceabdd7f8fa5e0ebe9f6b9bccd8e2fa175b65ab"
+        }
+      ],
+      "transfers": [
+        "ma-800cde92522d90d7189675c97048a07685f6dc90-apply"
+      ],
+      "review": "f5b0ba0e-7b39-40de-a8ed-1e7dbf3f7b51",
+      "checks": [
+        {
+          "checkId": "auto-1",
+          "status": "passed",
+          "inputFingerprint": "bf006e1fce99d3f37326428925fb472016d60e6b64d953253ae2801064fc5b04",
+          "label": "checks/C.test.cjs",
+          "command": "node --test checks/C.test.cjs",
+          "passed": true,
+          "exitCode": 0,
+          "output": "✔ checks\\C.test.cjs (0.4476ms)\nℹ tests 1\nℹ suites 0\nℹ pass 1\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 10.3822\n",
+          "durationMs": 107
+        }
+      ],
+      "attempts": [
+        {
+          "id": "e58c1862-f625-45de-ac1c-7020dc95411c",
+          "at": "2026-11-26T02:11:46.036Z",
+          "failure": null,
+          "checks": [
+            {
+              "passed": true,
+              "input": "bf006e1fce99d3f37326428925fb472016d60e6b64d953253ae2801064fc5b04",
+              "output": "✔ checks\\C.test.cjs (0.4476ms)\nℹ tests 1\nℹ suites 0\nℹ pass 1\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 10.3822\n"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "D",
+      "token": "ma-511281d59c60c27d5d498ee09483f776d760aeb2",
+      "workspace": "wks_5f55e3e36f08a7c1",
+      "agent": "59b890aa-a159-4ba6-888b-8b1e43f5f70b",
+      "planHash": "f5491a7ca4b22867328e03fb665f2e492eafd1ec64fe508538ed91a43e48c514",
+      "resultId": "0dfe33a4-76ac-433e-8249-f19d087176d2",
+      "fingerprint": "a5969093114f6b387a900e6ca18f5e0dfc3a85bfcdee0e50e9d2ecce2553d89a",
+      "inputs": [
+        {
+          "from": "B",
+          "path": "label.txt",
+          "hash": "e0eaf36252b821a11646c96f93ea40277423c3053c86d31915444f0b5ae0ea46"
+        },
+        {
+          "from": "C",
+          "path": "score.cjs",
+          "hash": "e1165c989f50f15ba1780cbbdceabdd7f8fa5e0ebe9f6b9bccd8e2fa175b65ab"
+        }
+      ],
+      "files": [
+        {
+          "path": "hud.cjs",
+          "hash": "efa117f4e66d53bae6f5ea79b5e6403cc577b062b38ea7b20fd7d131bd2bfacf"
+        }
+      ],
+      "transfers": [
+        "ma-511281d59c60c27d5d498ee09483f776d760aeb2-apply"
+      ],
+      "review": "6ba2036c-52f6-4e22-a740-53150ff8029f",
+      "checks": [
+        {
+          "checkId": "auto-1",
+          "status": "passed",
+          "inputFingerprint": "2463e1f0e41d12afa78ebf5c469c30ee3761cf8cb8bb9ea2bc11a77529d1bf33",
+          "label": "checks/D.test.cjs",
+          "command": "node --test checks/D.test.cjs",
+          "passed": true,
+          "exitCode": 0,
+          "output": "✔ checks\\D.test.cjs (0.4648ms)\nℹ tests 1\nℹ suites 0\nℹ pass 1\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 10.495\n",
+          "durationMs": 96
+        }
+      ],
+      "attempts": [
+        {
+          "id": "5d0aac6f-9951-4ad7-9100-9cd87f9e3c30",
+          "at": "2026-11-26T02:19:34.402Z",
+          "failure": "MILESTONE_OUTPUT_MISSING: hud.cjs",
+          "checks": []
+        },
+        {
+          "id": "0dfe33a4-76ac-433e-8249-f19d087176d2",
+          "at": "2026-11-26T02:20:16.111Z",
+          "failure": null,
+          "checks": [
+            {
+              "passed": true,
+              "input": "2463e1f0e41d12afa78ebf5c469c30ee3761cf8cb8bb9ea2bc11a77529d1bf33",
+              "output": "✔ checks\\D.test.cjs (0.4648ms)\nℹ tests 1\nℹ suites 0\nℹ pass 1\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 10.495\n"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "E",
+      "token": "ma-1ef671218f0999f08d119bd0815568fddf041a54",
+      "workspace": "wks_a51a12c3df2549bc",
+      "agent": "f9d7ded5-9346-40fe-a90f-55706c901f5c",
+      "planHash": "24a81eaacd237eccf066586c262495da469e174cd4695f3db8ee35850953bb31",
+      "resultId": "24130844-7ed6-4e14-94d4-500fb125b993",
+      "fingerprint": "7d28c104a45811a7a1d78b0da060b0c31d6bf0101c14ef11522ddd9cc52def1f",
+      "inputs": [
+        {
+          "from": "A",
+          "path": "rules.txt",
+          "hash": "deff5018f22b453312c25ab3245192fdd770564f4da56c281aeee978986c53b9"
+        }
+      ],
+      "files": [
+        {
+          "path": "qa.txt",
+          "hash": "6d81108e534d4dd0ff73464a5e4181d61127d3a87cac6108390fda0887a563b0"
+        }
+      ],
+      "transfers": [
+        "ma-1ef671218f0999f08d119bd0815568fddf041a54-apply"
+      ],
+      "review": "28986dd5-1ed2-4d7f-819f-6db08ad6c1b9",
+      "checks": [
+        {
+          "checkId": "auto-1",
+          "status": "passed",
+          "inputFingerprint": "4036740faf224896aebff9bb45b60a8c48bcb08b69372f5d15a625188af9c0aa",
+          "label": "checks/E.test.cjs",
+          "command": "node --test checks/E.test.cjs",
+          "passed": true,
+          "exitCode": 0,
+          "output": "✔ checks\\E.test.cjs (0.4332ms)\nℹ tests 1\nℹ suites 0\nℹ pass 1\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 10.0601\n",
+          "durationMs": 94
+        }
+      ],
+      "attempts": [
+        {
+          "id": "24130844-7ed6-4e14-94d4-500fb125b993",
+          "at": "2026-11-26T02:21:49.779Z",
+          "failure": null,
+          "checks": [
+            {
+              "passed": true,
+              "input": "4036740faf224896aebff9bb45b60a8c48bcb08b69372f5d15a625188af9c0aa",
+              "output": "✔ checks\\E.test.cjs (0.4332ms)\nℹ tests 1\nℹ suites 0\nℹ pass 1\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 10.0601\n"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "F",
+      "token": "ma-ac881091e285bf32f4d0337d9c9a1da645646778",
+      "workspace": "wks_eca556f1847bffb6",
+      "agent": "6995136d-644c-48a7-9f1a-c4e4efc9efe7",
+      "planHash": "68ce713ee65c79c5f08af77f40bd8f594f2a314db3fa3ae9a20a54464128bdd3",
+      "resultId": "81b93d50-6070-4e07-b43d-8d1aade637fb",
+      "fingerprint": "4993036ff845394bc2a7185875e43df49f8869024d5482534886c5defe621f61",
+      "inputs": [
+        {
+          "from": "D",
+          "path": "hud.cjs",
+          "hash": "efa117f4e66d53bae6f5ea79b5e6403cc577b062b38ea7b20fd7d131bd2bfacf"
+        },
+        {
+          "from": "E",
+          "path": "qa.txt",
+          "hash": "6d81108e534d4dd0ff73464a5e4181d61127d3a87cac6108390fda0887a563b0"
+        }
+      ],
+      "files": [
+        {
+          "path": "handoff.txt",
+          "hash": "2f514da3db352827f7952d422b1dea2973237a345c49b11a26ed1b9731ebeb6f"
+        }
+      ],
+      "transfers": [
+        "ma-ac881091e285bf32f4d0337d9c9a1da645646778-apply"
+      ],
+      "review": "6834a8ad-997d-40c4-8e7f-70316578ba20",
+      "checks": [
+        {
+          "checkId": "auto-1",
+          "status": "passed",
+          "inputFingerprint": "6fbf5f3dd7ef7e3e94c4593bc6c6a8ccb6bc1fffdfc02bf20bb3f79f7036c793",
+          "label": "checks/F.test.cjs",
+          "command": "node --test checks/F.test.cjs",
+          "passed": true,
+          "exitCode": 0,
+          "output": "✔ checks\\F.test.cjs (0.4457ms)\nℹ tests 1\nℹ suites 0\nℹ pass 1\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 10.2738\n",
+          "durationMs": 140
+        }
+      ],
+      "attempts": [
+        {
+          "id": "81b93d50-6070-4e07-b43d-8d1aade637fb",
+          "at": "2026-11-26T02:28:07.347Z",
+          "failure": null,
+          "checks": [
+            {
+              "passed": true,
+              "input": "6fbf5f3dd7ef7e3e94c4593bc6c6a8ccb6bc1fffdfc02bf20bb3f79f7036c793",
+              "output": "✔ checks\\F.test.cjs (0.4457ms)\nℹ tests 1\nℹ suites 0\nℹ pass 1\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 10.2738\n"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "history": [
+    {
+      "at": "2026-11-26T02:03:42.393Z",
+      "event": "범위 확정 및 요청 키 배정"
+    },
+    {
+      "at": "2026-11-26T02:04:37.388Z",
+      "event": "조율 accepted"
+    },
+    {
+      "at": "2026-11-26T02:05:15.553Z",
+      "event": "A ready"
+    },
+    {
+      "at": "2026-11-26T02:05:18.928Z",
+      "event": "A planned"
+    },
+    {
+      "at": "2026-11-26T02:05:31.584Z",
+      "event": "A running"
+    },
+    {
+      "at": "2026-11-26T02:06:06.903Z",
+      "event": "A awaiting-review"
+    },
+    {
+      "at": "2026-11-26T02:06:10.683Z",
+      "event": "A running"
+    },
+    {
+      "at": "2026-11-26T02:06:33.681Z",
+      "event": "A awaiting-review"
+    },
+    {
+      "at": "2026-11-26T02:06:35.887Z",
+      "event": "A awaiting-apply"
+    },
+    {
+      "at": "2026-11-26T02:06:40.394Z",
+      "event": "accepted A"
+    },
+    {
+      "at": "2026-11-26T02:07:31.494Z",
+      "event": "B ready"
+    },
+    {
+      "at": "2026-11-26T02:08:34.653Z",
+      "event": "pause"
+    },
+    {
+      "at": "2026-11-26T02:09:24.130Z",
+      "event": "resume"
+    },
+    {
+      "at": "2026-11-26T02:09:37.465Z",
+      "event": "B running"
+    },
+    {
+      "at": "2026-11-26T02:10:09.777Z",
+      "event": "B awaiting-review"
+    },
+    {
+      "at": "2026-11-26T02:10:12.117Z",
+      "event": "B awaiting-apply"
+    },
+    {
+      "at": "2026-11-26T02:10:16.916Z",
+      "event": "accepted B"
+    },
+    {
+      "at": "2026-11-26T02:10:22.593Z",
+      "event": "C plan-running"
+    },
+    {
+      "at": "2026-11-26T02:10:55.248Z",
+      "event": "C ready"
+    },
+    {
+      "at": "2026-11-26T02:10:58.819Z",
+      "event": "C planned"
+    },
+    {
+      "at": "2026-11-26T02:11:08.099Z",
+      "event": "C running"
+    },
+    {
+      "at": "2026-11-26T02:11:47.427Z",
+      "event": "C awaiting-review"
+    },
+    {
+      "at": "2026-11-26T02:11:49.782Z",
+      "event": "C awaiting-apply"
+    },
+    {
+      "at": "2026-11-26T02:11:54.329Z",
+      "event": "accepted C"
+    },
+    {
+      "at": "2026-11-26T02:12:00.440Z",
+      "event": "D plan-running"
+    },
+    {
+      "at": "2026-11-26T02:12:24.799Z",
+      "event": "pause"
+    },
+    {
+      "at": "2026-11-26T02:13:31.326Z",
+      "event": "resume"
+    },
+    {
+      "at": "2026-11-26T02:13:31.421Z",
+      "event": "D ready"
+    },
+    {
+      "at": "2026-11-26T02:13:44.711Z",
+      "event": "D running"
+    },
+    {
+      "at": "2026-11-26T02:19:35.543Z",
+      "event": "D failed"
+    },
+    {
+      "at": "2026-11-26T02:19:37.861Z",
+      "event": "D running"
+    },
+    {
+      "at": "2026-11-26T02:20:17.981Z",
+      "event": "D awaiting-review"
+    },
+    {
+      "at": "2026-11-26T02:20:20.232Z",
+      "event": "D awaiting-apply"
+    },
+    {
+      "at": "2026-11-26T02:20:25.610Z",
+      "event": "accepted D"
+    },
+    {
+      "at": "2026-11-26T02:20:31.490Z",
+      "event": "E plan-running"
+    },
+    {
+      "at": "2026-11-26T02:21:04.483Z",
+      "event": "E ready"
+    },
+    {
+      "at": "2026-11-26T02:21:08.344Z",
+      "event": "E planned"
+    },
+    {
+      "at": "2026-11-26T02:21:15.471Z",
+      "event": "E running"
+    },
+    {
+      "at": "2026-11-26T02:21:51.007Z",
+      "event": "E awaiting-review"
+    },
+    {
+      "at": "2026-11-26T02:21:52.434Z",
+      "event": "E awaiting-apply"
+    },
+    {
+      "at": "2026-11-26T02:22:58.979Z",
+      "event": "accepted E"
+    },
+    {
+      "at": "2026-11-26T02:23:39.578Z",
+      "event": "handoff HUD blocked"
+    },
+    {
+      "at": "2026-11-26T02:23:42.531Z",
+      "event": "MILESTONE_ADVISOR_BLOCKED"
+    },
+    {
+      "at": "2026-11-26T02:25:54.985Z",
+      "event": "변경된 검증 근거로 인계 재검토"
+    },
+    {
+      "at": "2026-11-26T02:26:33.582Z",
+      "event": "handoff HUD accepted"
+    },
+    {
+      "at": "2026-11-26T02:26:40.749Z",
+      "event": "F plan-running"
+    },
+    {
+      "at": "2026-11-26T02:27:07.731Z",
+      "event": "F ready"
+    },
+    {
+      "at": "2026-11-26T02:27:11.400Z",
+      "event": "F planned"
+    },
+    {
+      "at": "2026-11-26T02:27:23.851Z",
+      "event": "F running"
+    },
+    {
+      "at": "2026-11-26T02:28:08.667Z",
+      "event": "F awaiting-review"
+    },
+    {
+      "at": "2026-11-26T02:28:11.662Z",
+      "event": "F awaiting-apply"
+    },
+    {
+      "at": "2026-11-26T02:28:17.601Z",
+      "event": "accepted F"
+    },
+    {
+      "event": "completed",
+      "at": "2026-11-26T02:28:19.894Z"
+    }
+  ],
+  "integratedChecks": "✔ checks\\A.test.cjs (76.0968ms)\n✔ checks\\B.test.cjs (64.2875ms)\n✔ checks\\C.test.cjs (61.7371ms)\n✔ checks\\D.test.cjs (57.9484ms)\n✔ checks\\E.test.cjs (47.2316ms)\n✔ checks\\F.test.cjs (40.9406ms)\nℹ tests 6\nℹ suites 0\nℹ pass 6\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 113.7606\n"
+}

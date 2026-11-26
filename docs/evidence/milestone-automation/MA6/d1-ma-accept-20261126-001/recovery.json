@@ -1,0 +1,112 @@
+{
+  "foreign": {
+    "registered": "7bbd3518-2d4f-43d6-86cf-256bae708961",
+    "old": "d1-ma-accept-20261126-001-maze",
+    "observed": "active",
+    "review": {
+      "eligible": false,
+      "reason": "PHASE_LOCAL_EVIDENCE_REQUIRED",
+      "next": "Polish",
+      "elapsedMs": 560204,
+      "calls": 0,
+      "decisions": []
+    },
+    "dispatches": 0,
+    "blocked": [
+      "수용 근거가 없는 범위 밖 선행: Mismatch"
+    ]
+  },
+  "guiRerun": {
+    "parent": "d1-ma-accept-20261126-001-maze",
+    "runId": "621678b912ed442cb59b9ea9419f3526",
+    "blocked": "확인 필요\n수용 근거가 없는 범위 밖 선행: Mismatch\nDependent / Later · 선행 수용 필요\n선행 [\r\n  \"Mismatch\"\r\n] · 허용 파일 [\r\n  \"tuning.json\"\r\n]\n적용 문서 [\r\n  \"AGENTS.md\",\r\n  \"docs/agents/workflow.md\",\r\n  \"docs/plans/plans.md\",\r\n  \"docs/decisions/decisions.md\",\r\n  \"docs/evidence/evidence.md\",\r\n  \"checks/TunePass.test.cjs\"\r\n]"
+  },
+  "repair": {
+    "parent": "621678b912ed442cb59b9ea9419f3526",
+    "runId": "d1-ma-accept-recovery-20261126-build-fault",
+    "oldScope": "0e3b0d93ecec24e197b8a351a7be933677480c5def320af9de5d8fe8ce12c1a5",
+    "newScope": "86515d0b1dcde976cdb297bb576195187f8b996c4157c8e6e7c266745a7c611a"
+  },
+  "mismatch": {
+    "runId": "d1-ma-accept-recovery-20261126-build-fault",
+    "parent": "621678b912ed442cb59b9ea9419f3526",
+    "feature": "Mismatch",
+    "sha": "1cbe638d079ebc5eb7c275c5b576c69413c7441b",
+    "attempt": "29d18ca9-ef58-4bd9-8a17-5fbe389b285f",
+    "reason": "UNITY_PROCESS_FAILED: build",
+    "build": "Failed",
+    "errors": 3,
+    "phase": {
+      "eligible": false,
+      "reason": "PHASE_PARTIAL_RANGE",
+      "next": null,
+      "elapsedMs": 207699,
+      "calls": 2,
+      "decisions": []
+    }
+  },
+  "shadow": {
+    "isolatedOperator": true,
+    "basis": "ea402371fcdb503ee1fd7ae475e3262dd18c5f2ae19d5c8c6b5ba87d411d83a1",
+    "history": [
+      "reject",
+      "approve"
+    ],
+    "replayed": 2,
+    "stale": "PHASE_POLICY_CHANGED"
+  },
+  "worker": {
+    "session": "0ebd4bfe-78fc-4ee7-a6a5-5f308090c95b",
+    "journal": [
+      "draft",
+      "plan",
+      "start",
+      "stop",
+      "resume",
+      "review",
+      "export"
+    ],
+    "results": [
+      {
+        "id": "1f1220f1-aa16-4a95-9a07-facfa1b9f537",
+        "failure": "MILESTONE_CHECK_FAILED",
+        "executionFailure": "사용자 중단 요청 후 실행 종료를 확인했습니다."
+      },
+      {
+        "id": "8f401b28-77f6-4945-b820-09a9366e1b66",
+        "failure": null,
+        "executionFailure": null
+      }
+    ]
+  },
+  "workspaces": [
+    {
+      "image": "maze-approved.png",
+      "projectId": "7bbd3518-2d4f-43d6-86cf-256bae708961",
+      "run": "d1-ma-accept-20261126-001-maze",
+      "report": "플레이 검토 가능\n다음 Phase Polish · 소요 0:22:00.051 · 제작 PLAN·실행 호출 11 · 청구 금액 미제공\n커밋 ca457637dc9274698aae72472ea0d5115372d40b\n빌드 SHA-256 2a3457603ba7305936616e943e15e6e847ac5b5eb7c2b18912b717901a41a2dd\nC:\\Users\\USER\\lib\\orchiva-plugin\\.desktop-local\\d1-ma-accept-20261126-001\\data\\desktop\\unity-validation\\c111a4bc-3140-4b66-8a8e-a38d7a3bc92a\\build\\Hud.exe\nLantern Maze · 4회 이동 · 0개 수집 · 클리어\n2026-11-26T05:34:57.220Z · approve · 사용자 결정 “두 게임 모두 승인”. 제시된 빌드 2a3457603ba7의 Play 결과를 승인하고 Polish를 시작한다.",
+      "registered": true
+    },
+    {
+      "image": "orchard-approved.png",
+      "projectId": "ee824349-2ea8-4423-9e49-abcdf2f483de",
+      "run": "d1-ma-accept-20261126-001-orchard",
+      "report": "플레이 검토 가능\n다음 Phase Polish · 소요 0:16:50.256 · 제작 PLAN·실행 호출 10 · 청구 금액 미제공\n커밋 a3df3e8c6f3bf40b0426077a0cde97c3c87b59fa\n빌드 SHA-256 8078b35d6238127485d2c00456a013befd81956a087e5de58c5dd533362d22d4\nC:\\Users\\USER\\lib\\orchiva-plugin\\.desktop-local\\d1-ma-accept-20261126-001\\data\\desktop\\unity-validation\\fa242e69-36cb-4ca3-a200-fdb128ea2720\\build\\Hud.exe\nStar Orchard · 6회 이동 · 2개 수집 · 클리어\n2026-11-26T05:35:05.107Z · approve · 사용자 결정 “두 게임 모두 승인”. 제시된 빌드 8078b35d6238의 Play 결과를 승인하고 Polish를 시작한다.",
+      "registered": true
+    },
+    {
+      "image": "build-failed.png",
+      "projectId": "7bbd3518-2d4f-43d6-86cf-256bae708961",
+      "run": "d1-ma-accept-recovery-20261126-build-fault",
+      "report": "진행 차단 · PHASE_PARTIAL_RANGE\n다음 Phase  · 소요 0:04:21.614 · 제작 PLAN·실행 호출 2 · 청구 금액 미제공\n커밋 \n빌드 SHA-256 \n",
+      "registered": true
+    },
+    {
+      "image": "test-rejected.png",
+      "projectId": "ee824349-2ea8-4423-9e49-abcdf2f483de",
+      "run": "d1-ma-accept-20261126-001-orchard",
+      "report": "플레이 검토 가능\n다음 Phase Polish · 소요 0:16:50.256 · 제작 PLAN·실행 호출 10 · 청구 금액 미제공\n커밋 a3df3e8c6f3bf40b0426077a0cde97c3c87b59fa\n빌드 SHA-256 8078b35d6238127485d2c00456a013befd81956a087e5de58c5dd533362d22d4\nC:\\Users\\USER\\lib\\orchiva-plugin\\.desktop-local\\d1-ma-accept-20261126-001\\data\\desktop\\unity-validation\\fa242e69-36cb-4ca3-a200-fdb128ea2720\\build\\Hud.exe\nStar Orchard · 6회 이동 · 2개 수집 · 클리어\n2026-11-26T05:30:56.436Z · reject · 격리된 회귀 복제본에서 반려 시 다음 Phase가 차단되는지 검증",
+      "registered": true
+    }
+  ]
+}

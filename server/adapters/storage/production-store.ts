@@ -7,10 +7,15 @@ import type { RequestStore } from "../../application/ports";
 import { RequestLocks } from "../../application/request-locks";
 import { atomic, absent, safePath } from "./project-files";
 
+export function productionBusy(doc:Production) {
+  return occupiesSlot(doc.engine) || ["pending","running","unknown"].includes(doc.planning?.state ?? "") ||
+    doc.journals.some(j=>["pending","unknown"].includes(j.state));
+}
+
 /** One v3 envelope is authoritative; the proven v2 engine is an embedded component. */
 export class ProductionStore implements RequestStore {
   private locks = new RequestLocks();
-  constructor(readonly root: string, readonly projectId: string, private own: () => Promise<void>) {}
+  constructor(readonly root: string, readonly projectId: string, private own: () => Promise<void>, private reservations?: () => Promise<{ token:string; runId:string; generation:number }[]>) {}
   private file(token: string) { return safePath(this.root, `docs/.orchiva/requests/${tokenSchema.parse(token)}.json`); }
   async exclusive<T>(action: () => Promise<T>) { await this.own(); return this.locks.run("request", action); }
   async envelope(token: string): Promise<Production | null> {
@@ -28,6 +33,11 @@ export class ProductionStore implements RequestStore {
       const old = await this.envelope(next.token);
       if (old && old.revision !== next.revision) throw new Error("REVISION_CONFLICT");
       const doc = productionSchema.parse(structuredClone(next));
+      if (doc.milestone?.generation) {
+        const claim=(await this.reservations?.())?.find(c=>c.token===doc.token);
+        if (!claim || claim.generation!==doc.milestone.generation || claim.runId!==doc.milestone.runId)
+          throw new Error("MILESTONE_STALE_WORKER");
+      }
       if (old) {
         assertAppendOnly(old.engine, doc.engine);
         for (const key of ["planVersions", "reviews", "exports"] as const) if (JSON.stringify(doc[key].slice(0, old[key].length)) !== JSON.stringify(old[key])) throw new Error("IMMUTABLE_HISTORY");
@@ -64,5 +74,19 @@ export class ProductionStore implements RequestStore {
     return { records, issues };
   }
   async list() { return (await this.all()).records.map(x => x.engine); }
-  async diagnostics() { const all = await this.all(); return { issues: all.issues.map(file => ({ file, code: "INVALID_V3_RECORD" })), activeTokens: all.records.filter(x => occupiesSlot(x.engine) || ["pending", "running", "unknown"].includes(x.planning?.state ?? "") || x.journals.some(j => ["pending", "unknown"].includes(j.state))).map(x => x.token) }; }
+  async diagnostics(requester?: string) {
+    const all = await this.all(), claims = await this.reservations?.() ?? [];
+    for (const claim of claims) {
+      const held=all.records.find(d=>d.token===claim.token);
+      if (held && (held.milestone?.runId!==claim.runId || held.milestone.generation!==claim.generation)) throw new Error("MILESTONE_STALE_WORKER");
+    }
+    const own = claims.find(c => c.token === requester);
+    const bound = all.records.find(d => d.token === requester)?.milestone;
+    if (bound?.generation && (!own || own.generation !== bound.generation || own.runId !== bound.runId))
+      throw new Error("MILESTONE_STALE_WORKER");
+    const peers = new Set(own ? claims.filter(c => c.runId === own.runId).map(c => c.token) : []);
+    const active = all.records.filter(productionBusy).map(x => x.token);
+    return { issues: all.issues.map(file => ({file,code:"INVALID_V3_RECORD"})),
+      activeTokens: [...new Set([...active,...claims.map(c => c.token)])].filter(token => !peers.has(token)) };
+  }
 }

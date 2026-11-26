@@ -1,0 +1,17 @@
+[
+  {
+    "sha": "9984a9b7c40cd920a398ab8d8ceddb848656c821",
+    "attempt": "caa0ba10-a736-4283-a466-98a0dff45d25",
+    "gate": "failed",
+    "next": "waiting",
+    "reason": "UNITY_PROCESS_FAILED: build"
+  },
+  {
+    "sha": "0b99c53d45e763a0809f589493a34a1b7094ee34",
+    "attempt": "be6d51f1-48b2-437e-bec4-1155063b03a8",
+    "gate": "passed",
+    "next": "reserved",
+    "base": "0b99c53d45e763a0809f589493a34a1b7094ee34",
+    "reason": ""
+  }
+]

@@ -2,7 +2,7 @@ import type { ExecutionResult, RequestRecord } from "../../shared/contracts/feat
 export type Lookup<T> = { kind: "found"; value: T } | { kind: "absent" } | { kind: "unknown"; reason: string };
 export interface RequestStore {
   exclusive<T>(action: () => Promise<T>): Promise<T>;
-  diagnostics(): Promise<{ issues: { file: string; code: string }[]; activeTokens: string[] }>;
+  diagnostics(requester?: string): Promise<{ issues: { file: string; code: string }[]; activeTokens: string[] }>;
   get(token: string): Promise<RequestRecord | null>;
   save(record: RequestRecord): Promise<void>;
   list(): Promise<RequestRecord[]>;

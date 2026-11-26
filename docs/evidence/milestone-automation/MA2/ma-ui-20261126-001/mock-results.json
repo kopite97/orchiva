@@ -1,0 +1,256 @@
+{
+  "passed": true,
+  "checks": [
+    "01 saved input restores identical payload",
+    "02 navigation preserves input and timer with zero RPC",
+    "03 timeout retry preserves command key revision and payload",
+    "04 save payload equals existing input contract",
+    "05 unsaved PLAN creation blocked",
+    "06 unconfirmed start blocked",
+    "07 confirmed start retains PLAN hash",
+    "08 new PLAN and result reset confirmations",
+    "09 review retains current result and confirmation values",
+    "10 unconfirmed permission blocked",
+    "11 permission preserves hash and selected behavior",
+    "12 selected paths survive navigation",
+    "13 partial apply reuses transfer key",
+    "14 undo uses displayed transfer key",
+    "15 busy disables target selection",
+    "16 modification preserves parent token and result",
+    "17 current historical failed skipped evidence remains distinct",
+    "18 history maps plan revision",
+    "19 new draft clears presentation"
+  ],
+  "calls": [
+    {
+      "method": "desktop.projects.list",
+      "input": {}
+    },
+    {
+      "method": "desktop.instructions.read",
+      "input": {
+        "projectId": "11111111-1111-4111-8111-111111111111"
+      }
+    },
+    {
+      "method": "desktop.requests.list",
+      "input": {
+        "projectId": "11111111-1111-4111-8111-111111111111"
+      }
+    },
+    {
+      "method": "desktop.models",
+      "input": {
+        "projectId": "11111111-1111-4111-8111-111111111111"
+      }
+    },
+    {
+      "method": "desktop.requests.get",
+      "input": {
+        "projectId": "11111111-1111-4111-8111-111111111111",
+        "token": "ui-request-001"
+      }
+    },
+    {
+      "method": "desktop.requests.save",
+      "input": {
+        "projectId": "11111111-1111-4111-8111-111111111111",
+        "token": "ui-request-001",
+        "expectedRevision": 3,
+        "input": {
+          "title": "\uC778\uBCA4\uD1A0\uB9AC \uC815\uB82C \uD654\uBA74 \uAC1C\uC120",
+          "goal": "\uC544\uC774\uD15C\uC744 \uC885\uB958\uC640 \uC774\uB984\uC21C\uC73C\uB85C \uC815\uB9AC\uD558\uACE0 \uAE34 \uD55C\uAD6D\uC5B4 \uC774\uB984\uB3C4 \uC77D\uAE30 \uC27D\uAC8C \uD45C\uC2DC\uD569\uB2C8\uB2E4.",
+          "scope": "\uC778\uBCA4\uD1A0\uB9AC \uD654\uBA74\uACFC \uAD00\uB828 \uD45C\uC2DC \uCF54\uB4DC",
+          "constraints": "\uC800\uC7A5 \uD615\uC2DD\uACFC \uAC8C\uC784 \uADDC\uCE59\uC740 \uC720\uC9C0\uD569\uB2C8\uB2E4.",
+          "discipline": "coding",
+          "mode": "new",
+          "parentToken": null,
+          "parentResultId": null,
+          "provider": "codex/fixture",
+          "thinkingOptionId": "medium",
+          "outputPath": "features/inventory",
+          "validationProfile": "files"
+        },
+        "commandKey": "f0ec3596625b4e5898f3288706348b19"
+      }
+    },
+    {
+      "method": "desktop.requests.save",
+      "input": {
+        "projectId": "11111111-1111-4111-8111-111111111111",
+        "token": "ui-request-001",
+        "expectedRevision": 3,
+        "input": {
+          "title": "\uC778\uBCA4\uD1A0\uB9AC \uC815\uB82C \uD654\uBA74 \uAC1C\uC120",
+          "goal": "\uC544\uC774\uD15C\uC744 \uC885\uB958\uC640 \uC774\uB984\uC21C\uC73C\uB85C \uC815\uB9AC\uD558\uACE0 \uAE34 \uD55C\uAD6D\uC5B4 \uC774\uB984\uB3C4 \uC77D\uAE30 \uC27D\uAC8C \uD45C\uC2DC\uD569\uB2C8\uB2E4.",
+          "scope": "\uC778\uBCA4\uD1A0\uB9AC \uD654\uBA74\uACFC \uAD00\uB828 \uD45C\uC2DC \uCF54\uB4DC",
+          "constraints": "\uC800\uC7A5 \uD615\uC2DD\uACFC \uAC8C\uC784 \uADDC\uCE59\uC740 \uC720\uC9C0\uD569\uB2C8\uB2E4.",
+          "discipline": "coding",
+          "mode": "new",
+          "parentToken": null,
+          "parentResultId": null,
+          "provider": "codex/fixture",
+          "thinkingOptionId": "medium",
+          "outputPath": "features/inventory",
+          "validationProfile": "files"
+        },
+        "commandKey": "f0ec3596625b4e5898f3288706348b19"
+      }
+    },
+    {
+      "method": "desktop.requests.plan",
+      "input": {
+        "projectId": "11111111-1111-4111-8111-111111111111",
+        "token": "ui-request-001",
+        "expectedRevision": 3,
+        "commandKey": "c51d5b97791e4814a64fc341a6a4b263"
+      }
+    },
+    {
+      "method": "desktop.requests.start",
+      "input": {
+        "projectId": "11111111-1111-4111-8111-111111111111",
+        "token": "ui-request-001",
+        "expectedRevision": 3,
+        "planHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "commandKey": "2b77724d5e7f4af1b27ea9aac7c4f72b"
+      }
+    },
+    {
+      "method": "desktop.requests.get",
+      "input": {
+        "projectId": "11111111-1111-4111-8111-111111111111",
+        "token": "ui-request-001"
+      }
+    },
+    {
+      "method": "desktop.requests.get",
+      "input": {
+        "projectId": "11111111-1111-4111-8111-111111111111",
+        "token": "ui-request-001"
+      }
+    },
+    {
+      "method": "desktop.requests.review",
+      "input": {
+        "projectId": "11111111-1111-4111-8111-111111111111",
+        "token": "ui-request-001",
+        "expectedRevision": 3,
+        "resultId": "ui-result-002",
+        "approved": false,
+        "qualityConfirmed": true,
+        "checksAcknowledged": false,
+        "note": "\uD569\uC131 \uAC80\uD1A0",
+        "commandKey": "965d617d70fb4a148d0276cc0ca49c0d"
+      }
+    },
+    {
+      "method": "desktop.requests.attention",
+      "input": {
+        "projectId": "11111111-1111-4111-8111-111111111111",
+        "token": "ui-request-001"
+      }
+    },
+    {
+      "method": "desktop.requests.permission",
+      "input": {
+        "projectId": "11111111-1111-4111-8111-111111111111",
+        "token": "ui-request-001",
+        "expectedRevision": 3,
+        "requestId": "permission-001",
+        "requestHash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "actionId": "deny-001",
+        "behavior": "deny",
+        "commandKey": "a7e3dc83b1934b4ea4d9ee3c7a822605"
+      }
+    },
+    {
+      "method": "desktop.requests.diff",
+      "input": {
+        "projectId": "11111111-1111-4111-8111-111111111111",
+        "token": "ui-request-001",
+        "resultId": "ui-result-002"
+      }
+    },
+    {
+      "method": "desktop.requests.apply",
+      "input": {
+        "projectId": "11111111-1111-4111-8111-111111111111",
+        "token": "ui-request-001",
+        "expectedRevision": 3,
+        "resultId": "ui-result-002",
+        "paths": [
+          "src/InventoryView.cs"
+        ],
+        "commandKey": "5af4193387db4ae5bda0d7076b7537c1"
+      }
+    },
+    {
+      "method": "desktop.requests.transfers",
+      "input": {
+        "projectId": "11111111-1111-4111-8111-111111111111",
+        "token": "ui-request-001",
+        "resultId": "ui-result-002"
+      }
+    },
+    {
+      "method": "desktop.requests.apply",
+      "input": {
+        "projectId": "11111111-1111-4111-8111-111111111111",
+        "token": "ui-request-001",
+        "expectedRevision": 3,
+        "resultId": "ui-result-002",
+        "commandKey": "ui-transfer-001",
+        "paths": [
+          "src/InventoryView.cs"
+        ]
+      }
+    },
+    {
+      "method": "desktop.requests.undo",
+      "input": {
+        "projectId": "11111111-1111-4111-8111-111111111111",
+        "token": "ui-request-001",
+        "resultId": "ui-result-002",
+        "transferKey": "ui-transfer-001"
+      }
+    },
+    {
+      "method": "desktop.requests.save",
+      "input": {
+        "projectId": "11111111-1111-4111-8111-111111111111",
+        "token": "ui-request-001",
+        "expectedRevision": 3,
+        "input": {
+          "title": "\uC778\uBCA4\uD1A0\uB9AC \uC815\uB82C \uD654\uBA74 \uAC1C\uC120",
+          "goal": "\uC544\uC774\uD15C\uC744 \uC885\uB958\uC640 \uC774\uB984\uC21C\uC73C\uB85C \uC815\uB9AC\uD558\uACE0 \uAE34 \uD55C\uAD6D\uC5B4 \uC774\uB984\uB3C4 \uC77D\uAE30 \uC27D\uAC8C \uD45C\uC2DC\uD569\uB2C8\uB2E4.",
+          "scope": "\uC778\uBCA4\uD1A0\uB9AC \uD654\uBA74\uACFC \uAD00\uB828 \uD45C\uC2DC \uCF54\uB4DC",
+          "constraints": "\uC800\uC7A5 \uD615\uC2DD\uACFC \uAC8C\uC784 \uADDC\uCE59\uC740 \uC720\uC9C0\uD569\uB2C8\uB2E4.",
+          "discipline": "coding",
+          "mode": "new",
+          "parentToken": null,
+          "parentResultId": null,
+          "provider": "codex/fixture",
+          "thinkingOptionId": "medium",
+          "outputPath": "features/inventory",
+          "validationProfile": "files"
+        },
+        "commandKey": "b4b8782e9be04c67b9164665581f8d12"
+      }
+    },
+    {
+      "method": "desktop.projects.preview",
+      "input": {
+        "projectId": "11111111-1111-4111-8111-111111111111"
+      }
+    },
+    {
+      "method": "desktop.requests.get",
+      "input": {
+        "projectId": "11111111-1111-4111-8111-111111111111",
+        "token": "ui-request-001"
+      }
+    }
+  ],
+  "rasterizationScale": 1.25
+}

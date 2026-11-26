@@ -4,7 +4,7 @@ import { payloadHash } from "../domain/record-v2";
 
 /** Caller holds project, then request lock. Slot is derived from durable requests. */
 export async function assertSlot(store: RequestStore, token: string) {
-  const state = await store.diagnostics();
+  const state = await store.diagnostics(token);
   if (state.issues.length) throw new Error("STORAGE_UNHEALTHY: resolve invalid records before starting effects");
   const occupied = state.activeTokens.filter(item => item !== token);
   if (occupied.length) throw new Error(`BUSY: ${occupied.join(", ")}`);

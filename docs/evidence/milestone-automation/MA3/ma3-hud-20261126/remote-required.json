@@ -1,0 +1,9 @@
+{
+  "trial": "ma3-required-20261126",
+  "runId": "d1-ma-poc-20261126-001-hud",
+  "mode": "github",
+  "waiting": "A",
+  "unchangedIntegrationSha": "bcc9c2933f4cfa87d23492025d342c8f64b5f8d6",
+  "featureHead": "0ad900c4aac7296248fafd76318aa046f284ba68",
+  "nextFeatureAllocated": false
+}

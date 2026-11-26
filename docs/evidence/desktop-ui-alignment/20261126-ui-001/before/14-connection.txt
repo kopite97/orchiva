@@ -1,0 +1,84 @@
+Window: "Orchiva · 변경 전 합성 UI 검증", App: Orchiva.Desktop.UiTests.exe.
+	0 window (창) Orchiva · 변경 전 합성 UI 검증 Secondary Actions: Raise
+		1 pane (창)
+			2 pane (창)
+				3 custom (사용자 지정) ID: Navigation
+					4 button (단추) 탐색 닫기 ID: TogglePaneButton
+						5 text (텍스트) ID: PaneTitleTextBlock
+					6 window (창) Secondary Actions: Raise ID: PaneRoot
+						7 pane (창) ID: MenuItemsScrollViewer
+							8 group (그룹) ID: MenuItemsHost
+								9 list item (목록 항목) (selectable) 작업실
+								10 list item (목록 항목) (selectable) 기존 MVP 프로젝트
+								11 list item (목록 항목) (selectable) 기존 v2 이력
+								12 list item (목록 항목) (selectable) 연결 상태
+						13 pane (창) ID: FooterItemsScrollViewer
+							14 group (그룹) ID: FooterMenuItemsHost
+								15 list item (목록 항목) (selectable) 설정 ID: SettingsItem
+					16 text (텍스트) Orchiva · 프로젝트와 PLAN
+					17 pane (창)
+						18 status bar (상태 표시줄) ID: StatusBar
+							19 text (텍스트) 정보 아이콘 ID: StandardIcon
+							20 text (텍스트) 변경 전 합성 UI ID: Title
+							21 text (텍스트) 3aad026 소스 · 모델/Agent/Worktree 없음 ID: Message
+						194 text (텍스트) 연결과 실행 준비
+						195 text (텍스트) 환경 설정 필요
+						196 button (단추) 격리 실행부 시작
+						197 button (단추) 다시 연결
+						198 text (텍스트) ORCHIVA_DESKTOP_CONFIG에 격리 실행 설정 JSON 경로를 지정하세요. 기본 데이터 폴더로 자동 연결하지 않습니다.
+						199 text (텍스트) 연결 실패는 실행 실패를 의미하지 않습니다. 마지막으로 조회한 내용을 보존합니다.
+						64 text (텍스트)
+						65 scroll bar (스크롤 막대) (settable, float) 세로 Value: 0 ID: VerticalScrollBar
+		70 title bar (제목 표시줄) (settable, string) Value: Orchiva · 변경 전 합성 UI 검증
+			71 menu bar (메뉴 모음) 시스템 ID: MenuBar
+				72 menu item (메뉴 항목) 시스템
+			73 button (단추) 최소화
+			74 button (단추) 최대화
+			75 button (단추) 닫기
+
+Document text: ```
+
+작업실
+
+기존 MVP 프로젝트
+
+기존 v2 이력
+
+연결 상태
+설정
+Orchiva · 프로젝트와 PLAN
+
+
+변경 전 합성 UI
+3aad026 소스 · 모델/Agent/Worktree 없음
+연결과 실행 준비
+환경 설정 필요
+격리 실행부 시작
+다시 연결
+ORCHIVA_DESKTOP_CONFIG에 격리 실행 설정 JSON 경로를 지정하세요. 기본 데이터 폴더로 자동 연결하지 않습니다.
+연결 실패는 실행 실패를 의미하지 않습니다. 마지막으로 조회한 내용을 보존합니다.
+```
+
+Focused element: 198 text (텍스트) ORCHIVA_DESKTOP_CONFIG에 격리 실행 설정 JSON 경로를 지정하세요. 기본 데이터 폴더로 자동 연결하지 않습니다.
+
+Document text:
+
+작업실
+
+기존 MVP 프로젝트
+
+기존 v2 이력
+
+연결 상태
+설정
+Orchiva · 프로젝트와 PLAN
+
+
+변경 전 합성 UI
+3aad026 소스 · 모델/Agent/Worktree 없음
+연결과 실행 준비
+환경 설정 필요
+격리 실행부 시작
+다시 연결
+ORCHIVA_DESKTOP_CONFIG에 격리 실행 설정 JSON 경로를 지정하세요. 기본 데이터 폴더로 자동 연결하지 않습니다.
+연결 실패는 실행 실패를 의미하지 않습니다. 마지막으로 조회한 내용을 보존합니다.

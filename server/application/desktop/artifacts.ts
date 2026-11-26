@@ -34,13 +34,13 @@ export class ProductionArtifacts {
       const plan = doc.planVersions.find(x => x.revision === doc.engine.confirmedPlanRevision)!;
       const snapshot = await loadSnapshot(store.root, plan.snapshotId), refs = (await this.service.projects.instructions(input.projectId)).files.map(x => x.path);
       const files: TransferManifest["files"] = [];
-      for (const path of result.changedFiles) {
+      for (const path of doc.milestone?.outputs ?? result.changedFiles) {
         relativeFile(path);
         if (internalFile(path) || refs.includes(path) || /(^|\/)AGENTS\.md$/i.test(path)) continue;
         const before = snapshot.files.find(x => x.path === path)?.hash ?? null, content = await bytes(doc.engine.worktreePath!, path), after = content ? digest(content) : null;
         if (before !== after) files.push({ path, before, after, content: content?.toString("base64") ?? null });
       }
-      if (!files.length) throw new Error("NO_OUTPUT_CHANGES");
+      if (!files.length && !doc.milestone) throw new Error("NO_OUTPUT_CHANGES");
       const manifest: TransferManifest = { version: 1, projectId: input.projectId, token: doc.token, resultId: result.id, fingerprint: result.fingerprint, files };
       const serialized = JSON.stringify(manifest), manifestHash = digest(serialized);
       if (Buffer.byteLength(serialized) > 24 * 1024 * 1024) throw new Error("EXPORT_SIZE_LIMIT");
@@ -73,6 +73,7 @@ export class ProductionArtifacts {
   async apply(input: Command & { paths: string[] }) {
     return this.service.projects.exclusive(async () => {
       const store = await this.service.store(input.projectId), doc = await this.service.required(input.projectId, input.token);
+      if(doc.milestone?.integrationBase) throw new Error("INTEGRATION_MODE_LOCKED");
       const payloadHash = digest(JSON.stringify({ resultId: input.resultId, paths: [...new Set(input.paths)].sort() })), prior = doc.journals.find(x => x.key === input.commandKey);
       if (prior && (prior.kind !== "apply" || prior.payloadHash !== payloadHash)) throw new Error("IDEMPOTENCY_CONFLICT");
       if (prior?.state === "applied") { const result = await readTransfer(store.root, input.commandKey); if (!result) throw new Error("TRANSFER_NOT_FOUND"); return result; }
