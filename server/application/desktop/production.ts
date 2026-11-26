@@ -35,6 +35,7 @@ export class ProductionService {
   private stopped = false;
   private generatePlan?: () => Promise<void>;
   restoring = true;
+  externalSlotCheck: () => Promise<void> = async () => {};
   constructor(readonly projects: Projects, private legacy: RequestStore, private api: () => Promise<PaseoApi>, private generator: PlanGenerator = new CodexPlanGenerator(), private cancel?: (id: string) => Promise<void>) {}
   async store(id: string) {
     const p = await this.projects.project(id);
@@ -46,6 +47,7 @@ export class ProductionService {
   async list(id: string) { const all = await (await this.store(id)).all(); return { issues: all.issues, records: all.records.map(x => ({ token: x.token, input: { title: x.input.title }, engine: { status: x.engine.status, result: x.engine.result ? { id: x.engine.result.id } : null }, legacy: !!x.legacy })) }; }
   async assertSlot(except?: { projectId: string; token: string }, allowLegacyToken?: string) {
     if(await this.unityBusy?.())throw Error("UNITY_EDITOR_BUSY");
+    await this.externalSlotCheck();
     const legacy = await this.legacy.diagnostics();
     if (legacy.issues.length || legacy.activeTokens.some(x => x !== allowLegacyToken)) throw new Error("LEGACY_EXECUTION_BUSY_OR_INVALID");
     for (const view of await this.projects.list()) {
@@ -83,6 +85,9 @@ export class ProductionService {
       if (doc) { this.revision(doc, input.expectedRevision); if (!["draft", "ready"].includes(doc.engine.status) || ["pending", "running", "unknown"].includes(doc.planning?.state ?? "")) throw new Error("REQUEST_NOT_EDITABLE"); }
       else if (input.expectedRevision !== 0) throw new Error("REVISION_CONFLICT");
       const value = productionInput.parse(input.input); if (value.outputPath) relativeFile(value.outputPath);
+      if (["art", "sound", "effect"].includes(value.discipline)) {
+        if (!value.media || value.media.kind !== value.discipline || value.validationProfile !== "files") throw new Error("MEDIA_SPEC_REQUIRED");
+      } else if (value.media) throw new Error("MEDIA_SPEC_UNEXPECTED");
       if (value.mode === "modify") {
         if (!value.parentToken) throw new Error("PARENT_REQUEST_REQUIRED");
         const parent = await store.envelope(value.parentToken);
@@ -115,6 +120,7 @@ export class ProductionService {
     });
   }
   private async publishPlan(store: ProductionStore, doc: Production, content: string, snapshot: InputSnapshot, origin: "ai" | "external") {
+    if (doc.input.media) content = content.replace(/<!-- orchiva-media -->[\s\S]*?<!-- \/orchiva-media -->/g, "").trimEnd() + "\n\n<!-- orchiva-media -->\n## 임시 미디어 생성 계약\n이 요청은 orchiva-procedural-v1의 시험용 도형/합성음/확산 링 생성만 지원한다. 자연어 기반 이미지·음악 모델이나 엔진 전용 파티클 제작이 아니다. 아래 규격이 실제 생성 입력이며 자유문장과 다르면 실행 전에 입력을 수정한다. 결과는 media/" + doc.token + "/ 아래에 생성하며 실행 에이전트는 이를 바꾸지 않고 검토한다.\n```json\n" + JSON.stringify(doc.input.media, null, 2) + "\n```\n<!-- /orchiva-media -->\n";
     validateGeneratedPlan(content);
     if (doc.milestone) validateSnapshot(doc.milestone,snapshot);
     const checks = doc.milestone ? doc.milestone.checks.map((f,i) => ({ id: "auto-"+(i+1), kind:"node-test" as const, path:f.path, label:f.path })) : doc.input.validationProfile === "node-test" ? snapshot.files.filter(x => /(^|\/)(test[s]?\/.*|[^/]+\.test)\.(mjs|cjs|js)$/.test(x.path) && x.hash).slice(0, 8).map((x, i) => ({ id: `auto-${i + 1}`, kind: "node-test" as const, path: x.path, label: "프로젝트 테스트: " + x.path })) : [];
@@ -350,7 +356,7 @@ export class ProductionService {
                 const bound = request.milestone;
                 const paths = bound ? new Set([...bound.inputs.map(f=>f.path), ...bound.checks.map(f=>f.path), ...bound.outputs, ...(bound.readPaths??[])]) : null;
                 const context = paths ? { ...snapshot, parentContext:bound?.brief ?? snapshot.parentContext, files:snapshot.files.filter(f=>paths.has(f.path) && !bound?.sectionOnly?.includes(f.path)) } : snapshot;
-                const content = await this.generator.generate(request.planning!.directory, request.input, context, !!bound);
+                const content = await this.generator.generate(request.planning!.directory, request.input, context, request.token, !!bound);
                 await this.projects.exclusive(async () => {
                   const latest = await this.required(request.projectId,request.token);
                   if (latest.planning?.key !== journal.key) throw new Error("REVISION_CONFLICT");

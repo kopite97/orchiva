@@ -2,13 +2,23 @@
 
 작성일: 2026-11-13 · Asia/Seoul
 
-상태: 사용자 합의 방향 정리 완료. 2026-11-16 [전환 계획](../plans/desktop-transition.md) 승인 후 D1부터 구현했으며 전체 PLAN은 `active`다. [D1 결과](../decisions/desktop-d1-foundation.md)에 초기 실행 차단을, 후속 [화면 검증](../decisions/desktop-d1-gui-verification.md)에 사용자 환경 변경 후 C# 7/7·핵심 GUI 통과와 남은 보완을 기록했다. 이후 [실행부 보완](../decisions/desktop-d1-runtime-completion.md)으로 D1 구현·비GUI 검증을 완료했다. 컴퓨터 유스는 사용자 지시로 대기하며 D1~D3 구현·비GUI 검증은 완료했다. [D2·D3 최신 기록](../decisions/desktop-d2-d3-completion.md)을 따르며 GUI G01~G11과 D4~D6는 미완료다.
+## 새 데스크톱 채팅 시작 프롬프트 · 2026-11-26
+
+> kopite97/orchiva의 최신 main에서 이어서 작업해줘. AGENTS.md와 docs/plans/README.md, docs/plans/desktop-transition.md, docs/plans/desktop-fresh-pc-validation.md를 먼저 읽어줘. MA1~MA6와 두 게임의 Polish 승인은 완료됐고, MA3 독립 리뷰는 후속 항목이야. D4 상담과 D5 미디어, D6 기존 PC 검증까지 반영돼 있어. 이번 PC에서는 Computer Use를 사용할 수 있어. 먼저 이 환경이 D6 새 PC 실측 조건에 맞는지 확인하고, 개발 도구 설치 전의 초기 상태를 기록해줘. 새 실행 ID와 격리된 시험 프로젝트를 사용해 새 PC PLAN의 N01~N07을 진행해줘. 통합된 WinUI에서 G01·G02·G04·G11도 실제 화면으로 재검증하고, 통과·실패·미실행과 근거를 PLAN에 갱신해줘. 로그인처럼 내 참여가 필요한 단계에서 알려줘.
+
+이 프롬프트를 새 채팅에서 보내면 해당 검증을 시작한다. Git으로 전달되는 것은 소스·PLAN·공유용 검증 근거다. 배포본은 [패키지 안내](../guides/desktop-package.md)에 따라 별도 빌드 환경에서 준비하고 버전·지문을 고정한다. 기존 PC의 인증 정보, 실행 세션, 게임 빌드와 `.desktop-local/` 원장은 각 PC의 로컬 데이터다. 아래의 날짜별 진행 내용은 해당 시점의 기록이다.
+
+상태: 2026-11-16 [전환 계획](../plans/desktop-transition.md) 승인 후 D1~D3 구현·비GUI·GUI G01~G11과 [D4 질문·상담 구현·검증](../decisions/desktop-d4-conversation.md)을 완료했다. [D1~D3 GUI 결과](../decisions/desktop-d1-d3-gui-20261116.md)는 실제·합성 시험과 사용자 조작/시각 확인을 구분한다. 2026-11-17 [D5 임시 미디어 제작](../decisions/desktop-d5-media.md)까지 구현·검증을 완료했다. D6는 사용자 지시로 배포·통합 수용을 진행 중이며 전체 PLAN은 `active`다. 초기 [D1 결과](../decisions/desktop-d1-foundation.md), [이전 화면 검증](../decisions/desktop-d1-gui-verification.md), [실행부 보완](../decisions/desktop-d1-runtime-completion.md), [D2·D3 비GUI 기록](../decisions/desktop-d2-d3-completion.md)은 당시의 이력으로 보존한다.
 
 후속 점검은 [현재 PC 준비 기록](../decisions/desktop-readiness-20261116.md)을 따른다. 2026-11-16 초기 보류 이후 사용자는 WinUI 3 + .NET 10, 첫 구현부터 디자인, B안의 앱 내 선택 적용을 확정했다. 프로젝트마다 docs/ 폴더를 필수로 두고 agents/·plans/·decisions/에서 실제 지침과 PLAN·결정/작업 이력을 관리한다. 아래 합의 방향과 기존 인계 이력은 유지하며, 새 설계의 추천안을 확정 사항으로 취급하지 않는다.
 
 Orchiva의 다음 방향은 Windows .NET 앱에서 사용자의 게임 프로젝트를 선택하고, 분야와 요청 방식에 맞게 PLAN 기반 작업을 수행하는 것이다. 1차 전환에서는 기존 Orchiva 실행 로직과 Paseo를 연결한다. 이 문서는 다른 PC의 개발자나 에이전트가 대화 전체를 다시 읽지 않고 현재 소스와 합의한 방향을 이어받기 위한 기준이다. 문서 작성·GitHub 저장 요청은 데스크톱 구현 착수 지시와 구분한다.
 
-## 현재 구현 기준
+## 2026-11-17 D6b 인계
+
+현재 PC에서 도구/인증 진단, 실제 코딩·임시 미디어·상담, 창 종료/복원, 명시적 Plugin 재로드와 오프라인 배포본 교체·중단 복구를 확인했다. [D6b 결과](../decisions/desktop-d6-integration.md)와 [배포 안내](../guides/desktop-package.md)를 따른다. 새 PC 실측은 [별도 PLAN](../plans/desktop-fresh-pc-validation.md)만 작성해 보류했다. 서명 없는 로컬 검증본이며 정식 배포·새 PC 수용 완료가 아니다. 검증 당시 D5/D6 변경은 미커밋 상태였으며, 후속 사용자 지시로 main 반영·push한다. 최종 반영은 Git 이력을 따른다.
+
+## 초기 인계 당시 구현 기준
 
 - 소스 원격: [kopite97/orchiva](https://github.com/kopite97/orchiva). 기준 브랜치는 main이다.
 - 이번 문서 작업 전의 구현 기준: [7950654 — M6 구현·검증 완료](https://github.com/kopite97/orchiva/commit/7950654dc2e70909d86b8edc4d10403bce9c05d4).
@@ -166,7 +176,7 @@ npm run verify 및 verify:lifecycle은 기존 PC의 PoC 요청·Worktree·daemon
 
 현재 PC의 소스 위치는 C:/Users/USER/lib/orchiva-plugin, 실행 sandbox는 C:/Users/USER/lib/orchiva-PoC다. 두 저장소의 역할과 원격을 혼동하지 않는다. 실제 실행 원본과 증거는 보존하고, RNG 등 운영 프로젝트에서 시험하지 않는다.
 
-## 다음 개발자에게 전달할 문장
+## 초기 전환 계획의 인계 문장 · 2026-11-13
 
 > AGENTS.md와 docs/design/desktop-handoff.md를 먼저 읽고 현재 Git 상태 및 M0~M6의 구현 기준을 확인해 주세요. 다음 방향은 .NET 데스크톱 앱과 기존 Orchiva·Paseo 실행부의 연결입니다. 프로젝트별 기획·코딩·아트·사운드·특수효과·질문, 새 요청·수정 요청, 실제 지침 파일 편집, PLAN 기반 작업, 소스·결과물 분리를 반영해야 합니다. 확정 방향과 미정 세부 사항을 구분하고, 현재 요청한 범위에 맞춰 상세 계획 또는 구현을 이어가 주세요. 기존 증거와 사용자 변경을 보존하고 운영 게임 저장소를 시험 대상으로 사용하지 마세요.
 
@@ -176,6 +186,28 @@ npm run verify 및 verify:lifecycle은 기존 PC의 PoC 요청·Worktree·daemon
 - [PoC 결과](../decisions/poc-results.md), [현재 MVP 설계](mvp-design.md), [M6 수용 결과](../decisions/m6-acceptance.md)
 - 기술 후보 검토 자료: [WinUI 3](https://learn.microsoft.com/en-us/windows/apps/winui/winui3/), [.NET 지원 정책](https://dotnet.microsoft.com/en-us/platform/support/policy), [Codex App Server](https://learn.chatgpt.com/docs/app-server)
 
+## 2026-11-17 D5 인계
+
+D4까지 `e0248d9`로 main에 반영한 뒤, 사용자 요청으로 D5를 구현했다. 별도 생성 도구가 없다는 답변에 따라 임시 로컬 절차적 생성기를 선택했다. 아트 PNG 도형·사운드 WAV 단음·효과 PNG 시트/JSON을 PLAN 확인 뒤 Worktree에 생성하고, 파일 규격/해시 검사·WinUI 미리보기/재생·기존 B안 선택 반영/undo와 연결했다. 자연어 이미지/음악 모델이나 Unity 파티클 제작 기능은 아니다.
+
+[D5 결과](../decisions/desktop-d5-media.md)와 [증거](../evidence/desktop-transition/d5-20261117/summary.json)에 한도·미지원·실제/모의/GUI 검증을 기록했다. 원형 비율 결함을 발견한 실행 001과 수정 후 통과한 002, 의도적 PNG 손상/복구 결과를 모두 보존한다. 시험 앱·daemon은 종료했고 사용자 원본 요청 해시는 변하지 않았다. 이 D5 변경은 로컬이며 아직 commit/push하지 않았다. D6 배포 작업은 시작하지 않았다.
+
+## 2026-11-16 D4 인계
+
+`f080480` 이후 로컬 변경으로 질문·상담을 구현하고 검증했다. 사용자가 도구 전체 차단을 접근 권한·승인 정책 선택으로 바꾸는 방향을 승인했다. 자유 입력과 동일 Agent 후속 메시지, 고정 모델/지침/정책, 원자적 대화 저장, 전역 실행 슬롯, 승인/중단 이력, 실제 stdio·GUI 흐름을 제공한다. 상세 계약·실패 보존·명령·증거는 [D4 결과](../decisions/desktop-d4-conversation.md)를 따른다.
+
+기본은 읽기 전용/필요 시 승인이다. 작업 경로는 원본 프로젝트이며 명시적 수정 요청이 선택한 권한에 따라 직접 반영될 수 있다. D3 선택 적용·undo와 구분한다. Codex 0.166.0에서 거부한 `untrusted`는 비활성화했고 `on-request`·`never`를 제공한다. 모든 도구 차단이나 모든 도구별 승인을 보장하지 않는다. 정책 변경은 새 대화에서만 적용한다.
+
+시험 소유 `.desktop-local/d4-20261116-001`의 unknown과 `002`의 미지원 정책 실패를 삭제하지 않는다. 제품은 불확실한 전송을 자동 재송신하지 않는다. 지원 정책의 재시작 후속 대화와 GUI 첫/후속 전송·중단을 검증했고 공유용 증거는 docs/evidence에 있다. Node 116/116, C# 9 통과·5 D1 fixture 미지정 건너뜀, WinUI build 경고/오류 0이다. D4 변경은 아직 commit/push하지 않았으며 D5/D6는 미착수다.
+
 ## 2026-11-16 D2·D3 진행 기록
 
 사용자가 컴퓨터 유스 없이 D3까지 진행하도록 지시했다. 프로젝트 추가·초기화와 실제 docs/지침, v3 이력·전역 슬롯, 정형 입력 기반 AI PLAN, 기획/코딩 제작·동일 세션 복구·중단·결과 검토·B안 선택 반영을 구현했다. [구현 계약과 검증](../decisions/desktop-d2-d3-completion.md)에 자동/모의/실제 연동 결과와 GUI G01~G11 대기를 구분했다. D4~D6는 시작하지 않았으며 이 기록을 전체 제품 완성이나 배포 완료로 해석하지 않는다.
+
+## 2026-11-16 D1~D3 GUI 검증 후 인계
+
+사용자의 후속 GUI 검증 지시로 실제 WinUI에서 프로젝트 초기화·지침 충돌·AI PLAN·제작·실패 복구·중단·수정 요청·승인·내보내기·선택 반영·이어 처리·undo를 확인하고 화면/입력 갱신 문제를 수정했다. Node 108/108, C# 13/13, typecheck와 WinUI build가 통과했다. 실제 연동과 합성 권한/복원 상태의 범위는 [GUI 결정 기록](../decisions/desktop-d1-d3-gui-20261116.md)에서 구분한다.
+
+D1~D3 GUI 수용 G01~G11을 완료했다. 마지막 트레이 복원/명시 종료는 사용자 조작과 앱/bridge 종료 관측으로, 125%·150% 선명도는 사용자의 실제 모니터 확인으로 마무리했다. 배율은 100%로 복원하고 설정 및 최종 시험 앱을 닫았다. 두 시험 daemon을 포함한 소유 프로세스/포트 정리와 보존 데이터 상태는 기록에 연결된 cleanup/followup JSON을 따른다.
+
+최종 수정본은 `.desktop-local/d1-20261116-gui-001/gui-build/Orchiva.Desktop.exe`에서 검증한 뒤 기본 `desktop/Orchiva.Desktop/bin/x64/Debug/net10.0-windows10.0.26100.0/win-x64/` 출력에도 재빌드해 후속 배율 시험을 수행했다. 이 PC에서는 프로젝트 로컬 SDK의 WindowsDesktop runtime을 사용하므로 실행 자식 환경에 `DOTNET_ROOT`/`DOTNET_ROOT_X64`를 `.desktop-local/tools/dotnet`의 절대 경로로 지정했다. 경로 누락으로 발생한 설치 안내와 재실행 경위도 기록했다. 최종 배포 검증은 D6 범위다. 이번 GUI 변경은 `main`의 `3aad026` 이후 로컬 변경이며 commit/push하지 않았다. 계획은 `active`, D4~D6는 미착수다.

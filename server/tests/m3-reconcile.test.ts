@@ -14,6 +14,19 @@ import type { LifecycleRuntime, Observation } from "../application/ports";
 import { beginCommand } from "../application/execution-slot";
 
 const feature = { title: "M3", goal: "Observe", scope: "One file", constraints: "Sandbox", validation: "Proof", completionCriteria: "File exists" };
+test("empty desktop storage connects without resolving a nonexistent legacy project", async t => {
+  const directory = await mkdtemp(join(tmpdir(), "orchiva-empty-legacy-")), store = new JsonRequestStore(directory);
+  await store.open();
+  t.after(async () => { await store.close(); await rm(directory, { recursive: true, force: true }); });
+  const starter = new StartFeatureRequest(store), tracker = new TrackExecution(store, starter.locks);
+  let resolutions = 0;
+  const worker = new Reconciler(store, starter, tracker, () => ({
+    runtime: async () => { resolutions++; throw new Error("NO_LEGACY_PROJECT"); }, ping: async () => {}, close: async () => {}
+  }));
+  t.after(() => worker.stop());
+  worker.start(); await worker.settle(); worker.assertReady();
+  assert.equal(resolutions, 0); assert.equal(worker.snapshot().restoring, false);
+});
 async function fixture(t: TestContext) {
   const directory = await mkdtemp(join(tmpdir(), "orchiva-m3-")), store = new JsonRequestStore(directory);
   t.after(async () => { await store.close(); await rm(directory, { recursive: true, force: true }); });

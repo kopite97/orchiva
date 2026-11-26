@@ -7,15 +7,17 @@
     <NavigationViewItem x:Name="HomeNavigation" Content="작업 시작" Tag="home" Icon="Edit"/>
     <NavigationViewItem x:Name="HistoryNavigation" Content="PLAN 이력" Tag="workhistory" Icon="Clock"/>
     <NavigationViewItem x:Name="InstructionsNavigation" Content="프로젝트 지침" Tag="instructions" Icon="Document"/>
-    <NavigationViewItem Content="질문 / 상담 · 준비 중" IsEnabled="False" Icon="Message"/>
+    <NavigationViewItem x:Name="ConversationNavigation" Content="질문 / 상담" Tag="conversation" Icon="Message"/>
    </NavigationView.MenuItems>
    <NavigationView.FooterMenuItems>
     <NavigationViewItem Content="기존 MVP 프로젝트" Tag="project" Icon="Folder"/>
     <NavigationViewItem Content="기존 v2 이력" Tag="history" Icon="Clock"/>
     <NavigationViewItem Content="연결 상태" Tag="connection" Icon="Link"/>
    </NavigationView.FooterMenuItems>
-   <ScrollViewer x:Name="PageScroll" HorizontalScrollBarVisibility="Disabled" HorizontalScrollMode="Disabled"><StackPanel Padding="{StaticResource PagePadding}" Spacing="20" MaxWidth="1280" HorizontalAlignment="Stretch">
+   <Grid RowSpacing="12"><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
     <InfoBar x:Name="StatusBar" IsOpen="True" IsClosable="False" Severity="Informational" Title="연결 대기" Message="지정한 실행부에 연결한 뒤 작업실에서 프로젝트를 선택하세요."/>
+    <local:ConversationWorkspace x:Name="ConversationPanel" Grid.Row="1" Visibility="Collapsed"/>
+   <ScrollViewer Grid.Row="1" x:Name="PageScroll" HorizontalScrollBarVisibility="Disabled" HorizontalScrollMode="Disabled"><StackPanel Padding="{StaticResource PagePadding}" Spacing="20" MaxWidth="1280" HorizontalAlignment="Stretch">
     <local:ProductionWorkspace x:Name="WorkspacePanel"/>
     <StackPanel x:Name="ProjectPanel" Spacing="16" Visibility="Collapsed"><TextBlock Text="프로젝트" Style="{StaticResource PageHeading}"/><TextBlock Text="연결한 실행부의 실제 프로젝트 정보를 읽습니다." Style="{StaticResource BodyText}"/>
      <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1" CornerRadius="8" Padding="20"><StackPanel Spacing="10"><TextBlock Text="{Binding ProjectName}" Style="{StaticResource SectionHeading}"/><TextBlock Text="{Binding ProjectPath}" Style="{StaticResource BodyText}"/><TextBlock Text="{Binding ProjectInfo}" Style="{StaticResource BodyText}"/></StackPanel></Border>
@@ -34,10 +36,11 @@
       <Grid ColumnSpacing="24"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions><StackPanel Spacing="8"><TextBlock Text="테마" Style="{StaticResource SectionHeading}"/><TextBlock Text="앱 전체에 적용합니다." Style="{StaticResource BodyText}"/></StackPanel><ComboBox Grid.Column="1" x:Name="ThemeChoice" AutomationProperties.Name="테마" SelectedIndex="0" SelectionChanged="ThemeChanged" VerticalAlignment="Center"><ComboBoxItem Content="시스템 설정"/><ComboBoxItem Content="밝게"/><ComboBoxItem Content="어둡게"/></ComboBox></Grid>
       <Grid ColumnSpacing="24"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions><StackPanel Spacing="8"><TextBlock Text="창 닫기" Style="{StaticResource SectionHeading}"/><TextBlock Text="닫기 버튼의 동작입니다." Style="{StaticResource BodyText}"/></StackPanel><ComboBox Grid.Column="1" x:Name="CloseChoice" AutomationProperties.Name="닫기 버튼 동작" SelectedIndex="0" SelectionChanged="CloseChanged" VerticalAlignment="Center"><ComboBoxItem Content="앱 종료"/><ComboBoxItem Content="트레이 최소화"/></ComboBox></Grid>
      </StackPanel></Border>
+     <TextBlock Text="실행 도구 준비" Style="{StaticResource SectionHeading}"/><Button Content="Git·Codex 설치와 인증 확인" Click="CheckTools"/><TextBlock x:Name="ToolStatus" Text="상태만 확인하며 설치·로그인·인증 변경은 수행하지 않습니다." Style="{StaticResource BodyText}" IsTextSelectionEnabled="True"/>
      <TextBlock Text="앱 종료는 화면과 연결 프로세스를 닫습니다. 실행 중인 제작 작업은 분리된 실행부에서 계속됩니다." Style="{StaticResource BodyText}"/>
     </StackPanel>
     <TextBlock Text="{Binding Updated}" Style="{StaticResource BodyText}"/>
-   </StackPanel></ScrollViewer>
+   </StackPanel></ScrollViewer></Grid>
   </NavigationView>
  </Grid>
 </Window>

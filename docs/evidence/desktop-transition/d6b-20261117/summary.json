@@ -1,0 +1,173 @@
+{
+  "date": "2026-11-17",
+  "timezone": "Asia/Seoul",
+  "baseline": "e0248d9 plus local D5/D6 changes",
+  "runId": "d6b-20261117-live-001",
+  "package": {
+    "directory": ".desktop-local/d6b-20261117 배포 003",
+    "files": 32570,
+    "bytes": 1154186872,
+    "manifestSha256": "d4ed3148c291e363c911f79c2f6f7a450727eb2f9897ae924f52100f5b361f21",
+    "signed": false
+  },
+  "cases": [
+    {
+      "kind": "coding",
+      "token": "d6b-20261117-live-001-coding",
+      "agentId": "51aaa401-dcf5-47a2-96a9-de5bd3d83d70",
+      "workspaceId": "wks_19b0e9b9745ffb11",
+      "failedResult": "77bc324b-54bc-4a1a-a394-663757076cca",
+      "resultId": "26603b58-c946-4a3b-83e2-f905774cd10d",
+      "passed": true
+    },
+    {
+      "kind": "art",
+      "token": "d6b-20261117-live-001-art",
+      "agentId": "9e7d3a86-2d79-4402-aef6-7493c08b60dd",
+      "workspaceId": "wks_2a45f52306812161",
+      "sha256": "fa71b38ed0afe796948032143d152674f888820b069308aad89c3884999c828f",
+      "media": {
+        "width": 128,
+        "height": 96,
+        "transparentPixels": 7660,
+        "visibleBounds": {
+          "left": 26,
+          "top": 10,
+          "width": 76,
+          "height": 76
+        }
+      },
+      "resultId": "c515fed6-7353-41b5-8689-939a36c1ae5b",
+      "passed": true
+    },
+    {
+      "kind": "sound",
+      "token": "d6b-20261117-live-001-sound",
+      "agentId": "370e7b9f-5a86-45ba-b4f0-b32c8b50005b",
+      "workspaceId": "wks_354b15f3164988f5",
+      "sha256": "a4fc6a058f8fde20d3fcd8d33244fc7f91c2a748e4263f519b5ddfb9314de205",
+      "media": {
+        "channels": 1,
+        "sampleRate": 44100,
+        "seconds": 1.5
+      },
+      "resultId": "d34be247-e6ac-4a9f-b265-e1222e00ab58",
+      "passed": true
+    },
+    {
+      "kind": "effect",
+      "token": "d6b-20261117-live-001-effect",
+      "agentId": "cab4f92d-cd7b-45d3-8ca0-b1a766bf0c55",
+      "workspaceId": "wks_78d91ca785d44995",
+      "sha256": "cb7a98d7c8c26a317d48f0651c6c2ca93279c9c2fdf80bc47f08c845a4d26c1d",
+      "media": {
+        "width": 512,
+        "height": 64,
+        "transparentPixels": 32644,
+        "visibleBounds": {
+          "left": 26,
+          "top": 5,
+          "width": 417,
+          "height": 54
+        }
+      },
+      "resultId": "3be0998c-dd0b-40e9-b970-23dfe7bcb106",
+      "passed": true
+    }
+  ],
+  "conversation": {
+    "id": "29216657-39a2-42da-b38b-4240626f1422",
+    "agentId": "6b843eb6-485e-46f6-83f2-54d6b0250445",
+    "turns": [
+      {
+        "id": "90128fc1-4457-4bdc-9eb3-62559c7a01ce",
+        "messageId": "2b0763e4-b91e-446e-9716-288d03c3821e",
+        "state": "answered"
+      },
+      {
+        "id": "a1688a10-45a5-4867-9cc8-e530e40459de",
+        "messageId": "cc532507-2376-448a-905a-55cfe5230292",
+        "state": "answered"
+      }
+    ]
+  },
+  "workerFault": {
+    "pid": 25072,
+    "startedAt": "2026-11-16T16:03:03.139Z",
+    "firstTurn": "90128fc1-4457-4bdc-9eb3-62559c7a01ce",
+    "recoveredPid": 25324,
+    "recovery": "explicit public plugin reload after worker exit; not automatic restart"
+  },
+  "inventory": {
+    "agents": 5,
+    "workspaces": 5,
+    "worktrees": 4,
+    "localCheckouts": 1
+  },
+  "gui": {
+    "wide": [
+      1266,
+      893
+    ],
+    "compact": [
+      520,
+      893
+    ],
+    "compactResize": "user",
+    "diagnostics": "pass",
+    "closeDuringCoding": "running",
+    "reopenedResult": "pass",
+    "normalUpdateDefaultProfile": "pass"
+  },
+  "maintenance": {
+    "runningDaemonRejected": true,
+    "guiLeaseRejected": true,
+    "crashExitCode": 86,
+    "crashPhase": "config",
+    "recovered": true,
+    "filesPreservedBeforeAfterAndRestart": 60,
+    "dataDigest": "b9941a958f9645662e89d4704471ebc9648ae0cc61155327bd4788af453d3ac4",
+    "journalId": "c0e9e4d9-8424-455c-b92d-0d55ff321fe6",
+    "sameIdsAfterRestart": true,
+    "finalPackage003RestartAndPreservation": true,
+    "finalIsolatedJournal": "38375fff-0570-4b85-a198-10b2c56bd3bd",
+    "finalDefaultJournal": "6563cd0a-7b30-4798-b011-c62c3e7c75c3"
+  },
+  "validation": {
+    "typecheck": "pass",
+    "nodeTests": 125,
+    "packageTests": 1,
+    "csharpPassed": 13,
+    "csharpSkipped": 8,
+    "pendingStartupGuardFocusedTest": 1,
+    "releasePublish": "pass",
+    "documentFiles": 8,
+    "localLinks": 195,
+    "guiBinaryEquality002To003": true
+  },
+  "harnessFailure": {
+    "mode": "verify",
+    "message": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n5 !== 4\n",
+    "at": "2026-11-16T16:21:22.334Z",
+    "resolution": "Workspace inventory includes one consultation source checkout; four production worktree IDs match exactly."
+  },
+  "deferred": [
+    "fresh-PC installation/login/reboot per proposed PLAN",
+    "signed public release and redistribution review"
+  ],
+  "cleanup": "pass: no owned package processes or listening endpoints; data retained",
+  "testedInitialPackage": {
+    "directory": ".desktop-local/d6b-20261117 배포 002",
+    "files": 32570,
+    "bytes": 1154186846,
+    "manifestSha256": "ae8fc69ddba217e06620d4db4fa25111e00bd85819b9238c2ef5f39321890884",
+    "signed": false
+  },
+  "finalRuntime": {
+    "state": "connected",
+    "startedAt": "2026-11-16T16:30:29.927Z",
+    "restoring": false,
+    "maxConcurrentCycles": 1,
+    "pid": 45928
+  }
+}

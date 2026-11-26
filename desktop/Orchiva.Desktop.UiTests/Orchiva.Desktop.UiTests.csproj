@@ -11,6 +11,9 @@
   <ItemGroup>
     <ApplicationDefinition Include="../Orchiva.Desktop/App.xaml" Link="App.xaml"/>
     <Page Include="../Orchiva.Desktop/MainWindow.xaml" Link="MainWindow.xaml"/>
+    <Page Include="../Orchiva.Desktop/ConversationWorkspace.xaml" Link="ConversationWorkspace.xaml"/>
+    <Compile Include="../Orchiva.Desktop/ConversationWorkspace.xaml.cs" Link="ConversationWorkspace.xaml.cs"/>
+    <Compile Include="../Orchiva.Desktop/WrapPanel.cs" Link="WrapPanel.cs"/>
     <Page Include="../Orchiva.Desktop/ProductionWorkspace.xaml" Link="ProductionWorkspace.xaml"/>
     <Page Include="../Orchiva.Desktop/Themes/Orchiva.xaml" Link="Themes/Orchiva.xaml"/>
     <Compile Include="../Orchiva.Desktop/MainWindow.xaml.cs" Link="MainWindow.xaml.cs"/>

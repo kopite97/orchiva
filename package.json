@@ -30,6 +30,7 @@
     "desktop:test": "dotnet test desktop/Orchiva.Bridge.Tests/Orchiva.Bridge.Tests.csproj -p:RestoreLockedMode=true",
     "desktop:verify": "node --import tsx scripts/desktop-foundation.mjs",
     "desktop:production": "node --import tsx scripts/desktop-production.mjs",
+    "desktop:package": "node scripts/package-desktop.mjs",
     "project:instructions": "node --import tsx scripts/project-instructions.mjs"
   },
   "devDependencies": {

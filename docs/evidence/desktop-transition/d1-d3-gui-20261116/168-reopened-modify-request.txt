@@ -1,0 +1,157 @@
+Window: "Orchiva", App: Orchiva.Desktop.exe.
+	0 window (창) Orchiva Secondary Actions: Raise
+		1 pane (창)
+			2 pane (창)
+				3 custom (사용자 지정) ID: Navigation
+					4 button (단추) 탐색 닫기 ID: TogglePaneButton
+						5 text (텍스트) ID: PaneTitleTextBlock
+					6 window (창) Secondary Actions: Raise ID: PaneRoot
+						7 pane (창) ID: MenuItemsScrollViewer
+							8 group (그룹) ID: MenuItemsHost
+								9 list item (목록 항목) (selectable) 작업실
+								10 list item (목록 항목) (selectable) 기존 MVP 프로젝트
+								11 list item (목록 항목) (selectable) 기존 v2 이력
+								12 list item (목록 항목) (selectable) 연결 상태
+						13 pane (창) ID: FooterItemsScrollViewer
+							14 group (그룹) ID: FooterMenuItemsHost
+								15 list item (목록 항목) (selectable) 설정 ID: SettingsItem
+					16 status bar (상태 표시줄) ID: StatusBar
+						17 text (텍스트) 정보 아이콘 ID: StandardIcon
+						18 text (텍스트) 실행부 연결됨 ID: Title
+						19 text (텍스트) 작업실에서 프로젝트·지침·제작 PLAN을 관리합니다. ID: Message
+					20 status bar (상태 표시줄) ID: Notice
+						21 text (텍스트) 성공 아이콘 ID: StandardIcon
+						22 text (텍스트) 반영됨 ID: Title
+						23 text (텍스트) 최신 파일과 실행 상태를 확인했습니다. ID: Message
+					24 pane (창)
+						25 text (텍스트) 프로젝트 작업실
+						26 text (텍스트) 프로젝트의 파일에서 시작해, PLAN을 확인하고 결과를 검토하세요.
+						27 combo box (콤보 상자) 프로젝트 ID: ProjectChoice
+						28 button (단추) 목록 새로 고침
+						29 text (텍스트) C:\Dev\Orchiva\.desktop-local\d1-20261116-gui-001\시험 소스 ID: ProjectLocation
+						30 tab (탭)
+							31 tab item (탭 항목) (selectable) 프로젝트·지침
+							60 tab item (탭 항목) (selectable) 요청·PLAN
+								93 button (단추) 작업 이력 불러오기
+								94 button (단추) 새 요청 작성
+								95 combo box (콤보 상자) 프로젝트 PLAN 이력 ID: RequestChoice
+								96 button (단추) 이전 v2 이력 가져오기
+									97 text (텍스트) 이전 v2 이력 가져오기
+								98 text (텍스트) 결과 검토 대기 · 저장 버전 24 · 3d990bacaf5b4471a5fb1a4de1ea4263 PLAN 작성: complete ID: RequestStatus
+								99 combo box (콤보 상자) 작업 분야 ID: Discipline
+								100 combo box (콤보 상자) 요청 유형 ID: RequestMode
+								101 combo box (콤보 상자) 수정할 이전 작업 ID: ParentChoice
+								102 text field (편집) (settable, string) 요청 제목 Value: GUI 수정·중단·다중 반영 검증 ID: TitleInput
+									103 text (텍스트) 요청 제목
+								104 text field (편집) (settable, string) 원하는 결과 Value: 기존 answer.txt를 보존하고 alpha.txt와 beta.txt에 각각 alpha와 beta 및 LF 한 개를 작성한다. ID: GoalInput
+									105 text (텍스트) 원하는 결과
+								106 text field (편집) (settable, string) 작업 범위 Value: alpha.txt와 beta.txt 두 파일만 추가한다. ID: ScopeInput
+									107 text (텍스트) 작업 범위
+								108 text field (편집) (settable, string) 제약·참고 사항 Value: 실제 제작 시작 시 중단 검증을 위해 로컬 Node 타이머로 60초 대기한 뒤 파일을 만든다. 이후 같은 세션 재개 지시가 있으면 기다리지 않는다. 기존 테스트·지침·answer.txt 변경 금지. 현재 시험 Worktree만 사용. commit/push/merge/하위 에이전트/추가 문서/의존성 생성 금지. ID: ConstraintsInput
+									109 text (텍스트) 제약·참고 사항
+								110 text field (편집) (settable, string) 결과물 하위 폴더 (선택) ID: OutputPathInput
+									111 text (텍스트) 결과물 하위 폴더 (선택)
+								112 combo box (콤보 상자) 모델 ID: ModelChoice
+								113 combo box (콤보 상자) 수준 ID: LevelChoice
+								114 combo box (콤보 상자) 자동 확인 ID: ValidationChoice
+								115 button (단추) 요청 저장
+								116 button (단추) AI로 PLAN 작성
+								117 button (단추) 상태 다시 읽기
+								118 text field (편집) PLAN 원문 Value: ## 목표 - 상태: `proposed` - GUI 수정·중단·다중 반영 검증을 위해 프로젝트 루트에 `alpha.txt`와 `beta.txt`를 추가한다. - 각 파일은 정확히 `alpha\n`, `beta\n`을 담으며, 기존 `answer.txt`의 `42\n`과 나머지 파일은 보존한다. - 기준 SHA는 `67bba863c6c2a8b417580ffae5e0ce1a939ac06e`이며, 이전 결과를 자동 반영하지 않고 현재 소스를 기준으로 수행한다. ## 범위 - 현재 시험 Worktree의 루트 `alpha.txt`, `beta.txt` 두 파일만 추가한다. - 기존 테스트·지침·`answer.txt`를 수정하지 않는다. - commit·push·merge·하위 에이전트·추가 문서·의존성을 생성하지 않는다. - snapshot에 없는 참조 지침은 누락 사실로 기록하며 임의로 복원하지 않는다. 별도 PLAN·README·검증 기록 파일은 추가하지 않고 실행 결과 보고에 근거를 남긴다. ## 작업 순서 1. 현재 시험 Worktree와 기준 SHA, 기존 변경 상태를 확인한다. `answer.txt`와 기존 파일의 상태를 읽어 보존 기준을 확보한다. 2. `alpha.txt`, `beta.txt`의 존재 여부를 확인한다. 기존 파일이나 외부 변경이 발견되면 덮어쓰지 않고 요청과의 충돌 여부를 확인한다. 3. 최초 제작 시작 시 다음 로컬 Node 타이머로 60초 대기한다. 대기 완료 전에는 두 파일을 생성하지 않는다. ```powershell node -e "setTimeout(() => {}, 60000)" ``` 4. 대기 중 중단 지시가 오면 타이머를 종료하고 파일 생성을 중단한다. 같은 세션에서 명시적인 재개 지시를 받으면 현재 파일 상태를 다시 확인하고 대기를 반복하지 않는다. 5. 루트에 `alpha.txt`와 `beta.txt`를 생성한다. UTF-8 BOM 없이 각 문자열 뒤에 LF 한 개만 기록한다. 6. 바이트·기존 테스트·변경 범위를 검증한다. 외부 편집이 발생하면 검증을 다시 수행한다. 7. 실행 결과에 대기·중단·재개 여부, 검증 결과와 최종 변경 파일을 기록한다. 자동 검증 결과와 사용자 검토 결과를 구분한다. ## 산출물 | 파일 | 정확한 내용 | 바이트 | | --- | --- | --- | | `alpha.txt` | `alpha\n` | `61 6c 70 68 61 0a` — 6바이트 | | `beta.txt` | `beta\n` | `62 65 74 61 0a` — 5바이트 | `answer.txt`는 기존 `34 32 0a` — 3바이트를 유지한다. ## 검증 제작 시 다음 명령을 사용한다. - 정확한 파일 바이트와 `answer.txt` 보존 확인: ```powershell node -e "const fs=require('node:fs'); const assert=require('node:assert/strict'); for(const [p,h] of [['alpha.txt','616c7068610a'],['beta.txt','626574610a'],['answer.txt','34320a']]) assert.equal(fs.readFileSync(p).toString('hex'),h,p); console.log('파일 바이트 검증 통과');" ``` - 기존 테스트 회귀 확인: ```powershell node --test checks/value.test.mjs ``` - 변경 범위 확인: ```powershell git status --short --untracked-files=all git diff --name-status git diff --check ``` 작업 전 상태와 비교하여 이번 작업의 추가분이 루트 두 파일뿐인지 확인한다. 기존 테스트는 `answer.txt`를 검사하므로 두 신규 파일의 정확성은 별도 바이트 검증으로 판정한다. ## 검토 - GUI에서 두 신규 파일이 각각 올바른 내용으로 표시되는지 확인한다. - 최초 실행은 60초 대기 후 생성되는지 확인한다. - 중단 시험을 수행했다면 중단 후 파일 생성이 이어지지 않는지, 같은 세션 재개 시 추가 대기 없이 진행되는지 확인한다. - 다중 반영 대상이 `alpha.txt`, `beta.txt` 두 파일인지와 기존 `answer.txt`가 보존됐는지 검토한다. - 자동 검증 통과와 사용자 완료 판단을 별도로 보고한다. ## 실패 복구 - 중단되면 실행 중인 타이머와 후속 파일 생성이 멈췄는지 확인한다. - 일부 파일만 생성됐다면 같은 세션 재개 시 파일 상태를 다시 읽고, 이번 작업에서 만든 파일만 보완한다. 정확한 파일은 유지하고 외부 변경은 덮어쓰지 않는다. - 검증 실패 시 두 대상 파일 중 원인이 확인된 부분만 수정한 뒤 관련 검증을 다시 수행한다. - 작업 취소 시 이번 실행에서 새로 만든 두 파일만 제거한다. 기존 파일과 기존 변경은 보존하며 일괄 초기화는 사용하지 않는다. - 실패·중단·재검증 결과는 실행 결과 보고에 구분해 남기고, 검증이 끝나기 전에 완료로 판정하지 않는다. ID: PlanText
+									119 text (텍스트) PLAN 원문
+								120 text (텍스트) docs/plans/plan-3d990bacaf5b4471a5fb1a4de1ea4263.md ID: PlanLocation
+								121 button (단추) 외부에서 수정한 PLAN 다시 읽기
+								122 checkbox (확인란) 이 PLAN과 실행 범위를 확인했습니다. ID: PlanConfirmed
+									123 text (텍스트) 이 PLAN과 실행 범위를 확인했습니다.
+								124 button (단추) 확인한 PLAN 실행
+							61 tab item (탭 항목) (selectable) 실행·결과 검토
+							62 tab item (탭 항목) (selectable) 결과물·소스 반영
+						63 scroll bar (스크롤 막대) (settable, float) 세로 Value: 0 ID: VerticalScrollBar
+		68 title bar (제목 표시줄) (settable, string) Value: Orchiva
+			69 menu bar (메뉴 모음) 시스템 ID: MenuBar
+				70 menu item (메뉴 항목) 시스템
+			71 button (단추) 최소화
+			72 button (단추) 최대화
+			73 button (단추) 닫기
+
+Document text: ```
+## 목표
+
+- 상태: `proposed`
+- GUI 수정·중단·다중 반영 검증을 위해 프로젝트 루트에 `alpha.txt`와 `beta.txt`를 추가한다.
+- 각 파일은 정확히 `alpha\n`, `beta\n`을 담으며, 기존 `answer.txt`의 `42\n`과 나머지 파일은 보존한다.
+- 기준 SHA는 `67bba863c6c2a8b417580ffae5e0ce1a939ac06e`이며, 이전 결과를 자동 반영하지 않고 현재 소스를 기준으로 수행한다.
+
+## 범위
+
+- 현재 시험 Worktree의 루트 `alpha.txt`, `beta.txt` 두 파일만 추가한다.
+- 기존 테스트·지침·`answer.txt`를 수정하지 않는다.
+- commit·push·merge·하위 에이전트·추가 문서·의존성을 생성하지 않는다.
+- snapshot에 없는 참조 지침은 누락 사실로 기록하며 임의로 복원하지 않는다. 별도 PLAN·README·검증 기록 파일은 추가하지 않고 실행 결과 보고에 근거를 남긴다.
+
+## 작업 순서
+
+1. 현재 시험 Worktree와 기준 SHA, 기존 변경 상태를 확인한다. `answer.txt`와 기존 파일의 상태를 읽어 보존 기준을 확보한다.
+2. `alpha.txt`, `beta.txt`의 존재 여부를 확인한다. 기존 파일이나 외부 변경이 발견되면 덮어쓰지 않고 요청과의 충돌 여부를 확인한다.
+3. 최초 제작 시작 시 다음 로컬 Node 타이머로 60초 대기한다. 대기 완료 전에는 두 파일을 생성하지 않는다.
+
+   ```powershell
+   node -e "setTimeout(() => {}, 60000)"
+   ```
+
+4. 대기 중 중단 지시가 오면 타이머를 종료하고 파일 생성을 중단한다. 같은 세션에서 명시적인 재개 지시를 받으면 현재 파일 상태를 다시 확인하고 대기를 반복하지 않는다.
+5. 루트에 `alpha.txt`와 `beta.txt`를 생성한다. UTF-8 BOM 없이 각 문자열 뒤에 LF 한 개만 기록한다.
+6. 바이트·기존 테스트·변경 범위를 검증한다. 외부 편집이 발생하면 검증을 다시 수행한다.
+7. 실행 결과에 대기·중단·재개 여부, 검증 결과와 최종 변경 파일을 기록한다. 자동 검증 결과와 사용자 검토 결과를 구분한다.
+
+## 산출물
+
+| 파일 | 정확한 내용 | 바이트 |
+| --- | --- | --- |
+| `alpha.txt` | `alpha\n` | `61 6c 70 68 61 0a` — 6바이트 |
+| `beta.txt` | `beta\n` | `62 65 74 61 0a` — 5바이트 |
+
+`answer.txt`는 기존 `34 32 0a` — 3바이트를 유지한다.
+
+## 검증
+
+제작 시 다음 명령을 사용한다.
+
+- 정확한 파일 바이트와 `answer.txt` 보존 확인:
+
+  ```powershell
+  node -e "const fs=require('node:fs'); const assert=require('node:assert/strict'); for(const [p,h] of [['alpha.txt','616c7068610a'],['beta.txt','626574610a'],['answer.txt','34320a']]) assert.equal(fs.readFileSync(p).toString('hex'),h,p); console.log('파일 바이트 검증 통과');"
+  ```
+
+- 기존 테스트 회귀 확인:
+
+  ```powershell
+  node --test checks/value.test.mjs
+  ```
+
+- 변경 범위 확인:
+
+  ```powershell
+  git status --short --untracked-files=all
+  git diff --name-status
+  git diff --check
+  ```
+
+작업 전 상태와 비교하여 이번 작업의 추가분이 루트 두 파일뿐인지 확인한다. 기존 테스트는 `answer.txt`를 검사하므로 두 신규 파일의 정확성은 별도 바이트 검증으로 판정한다.
+
+## 검토
+
+- GUI에서 두 신규 파일이 각각 올바른 내용으로 표시되는지 확인한다.
+- 최초 실행은 60초 대기 후 생성되는지 확인한다.
+- 중단 시험을 수행했다면 중단 후 파일 생성이 이어지지 않는지, 같은 세션 재개 시 추가 대기 없이 진행되는지 확인한다.
+- 다중 반영 대상이 `alpha.txt`, `beta.txt` 두 파일인지와 기존 `answer.txt`가 보존됐는지 검토한다.
+- 자동 검증 통과와 사용자 완료 판단을 별도로 보고한다.
+
+## 실패 복구
+
+- 중단되면 실행 중인 타이머와 후속 파일 생성이 멈췄는지 확인한다.
+- 일부 파일만 생성됐다면 같은 세션 재개 시 파일 상태를 다시 읽고, 이번 작업에서 만든 파일만 보완한다. 정확한 파일은 유지하고 외부 변경은 덮어쓰지 않는다.
+- 검증 실패 시 두 대상 파일 중 원인이 확인된 부분만 수정한 뒤 관련 검증을 다시 수행한다.
+- 작업 취소 시 이번 실행에서 새로 만든 두 파일만 제거한다. 기존 파일과 기존 변경은 보존하며 일괄 초기화는 사용하지 않는다.
+- 실패·중단·재검증 결과는 실행 결과 보고에 구분해 남기고, 검증이 끝나기 전에 완료로 판정하지 않는다.
+```

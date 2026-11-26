@@ -169,32 +169,32 @@
             <TextBlock Text="기능 · 개선 · 오류 수정" TextWrapping="Wrap" />
           </StackPanel>
         </Button>
-        <Button Tag="2" Click="ChooseDiscipline" IsEnabled="False" MinHeight="72" Margin="0,0,12,12" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="20" Height="116" AutomationProperties.Name="아트 · 후속 단계">
+        <Button Tag="2" Click="ChooseDiscipline" IsEnabled="True" MinHeight="72" Margin="0,0,12,12" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="20" Height="116" AutomationProperties.Name="아트">
           <StackPanel Spacing="8">
             <FontIcon Glyph="" HorizontalAlignment="Left" FontSize="20" />
             <TextBlock Text="아트" FontSize="18" FontWeight="SemiBold" />
-            <TextBlock Text="이미지 · 리소스 · 후속 단계" TextWrapping="Wrap" />
+            <TextBlock Text="임시 도형 PNG" TextWrapping="Wrap" />
           </StackPanel>
         </Button>
-        <Button Tag="3" Click="ChooseDiscipline" IsEnabled="False" MinHeight="72" Margin="0,0,12,12" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="20" Height="116" AutomationProperties.Name="사운드 · 후속 단계">
+        <Button Tag="3" Click="ChooseDiscipline" IsEnabled="True" MinHeight="72" Margin="0,0,12,12" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="20" Height="116" AutomationProperties.Name="사운드">
           <StackPanel Spacing="8">
             <FontIcon Glyph="" HorizontalAlignment="Left" FontSize="20" />
             <TextBlock Text="사운드" FontSize="18" FontWeight="SemiBold" />
-            <TextBlock Text="효과음 · 음악 · 후속 단계" TextWrapping="Wrap" />
+            <TextBlock Text="임시 합성음 WAV" TextWrapping="Wrap" />
           </StackPanel>
         </Button>
-        <Button Tag="4" Click="ChooseDiscipline" IsEnabled="False" MinHeight="72" Margin="0,0,12,12" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="20" Height="116" AutomationProperties.Name="특수효과 · 후속 단계">
+        <Button Tag="4" Click="ChooseDiscipline" IsEnabled="True" MinHeight="72" Margin="0,0,12,12" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="20" Height="116" AutomationProperties.Name="특수효과">
           <StackPanel Spacing="8">
             <FontIcon Glyph="" HorizontalAlignment="Left" FontSize="20" />
             <TextBlock Text="특수효과" FontSize="18" FontWeight="SemiBold" />
-            <TextBlock Text="엔진 · 연출 · 후속 단계" TextWrapping="Wrap" />
+            <TextBlock Text="임시 확산 링 시트" TextWrapping="Wrap" />
           </StackPanel>
         </Button>
-        <Button Tag="5" Click="ChooseDiscipline" IsEnabled="False" MinHeight="72" Margin="0,0,12,12" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="20" Height="116" AutomationProperties.Name="질문 / 상담 · 후속 단계">
+        <Button Tag="5" Click="OpenConversation" IsEnabled="True" MinHeight="72" Margin="0,0,12,12" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="20" Height="116" AutomationProperties.Name="질문 / 상담">
           <StackPanel Spacing="8">
             <FontIcon Glyph="" HorizontalAlignment="Left" FontSize="20" />
             <TextBlock Text="질문 / 상담" FontSize="18" FontWeight="SemiBold" />
-            <TextBlock Text="자유롭게 대화 · 후속 단계" TextWrapping="Wrap" />
+            <TextBlock Text="자유롭게 대화" TextWrapping="Wrap" />
           </StackPanel>
         </Button>
       </VariableSizedWrapGrid>
@@ -291,14 +291,13 @@
           <Border Style="{StaticResource SurfaceCard}">
             <StackPanel Spacing="16">
               <TextBlock Text="작업 대상" Style="{StaticResource SectionHeading}" />
-              <ComboBox x:Name="Discipline" Header="작업 분야" SelectedIndex="1" HorizontalAlignment="Stretch">
-                <ComboBoxItem Content="기획" />
-                <ComboBoxItem Content="코딩" />
-                <ComboBoxItem Content="아트 · 후속 단계" IsEnabled="False" />
-                <ComboBoxItem Content="사운드 · 후속 단계" IsEnabled="False" />
-                <ComboBoxItem Content="특수효과 · 후속 단계" IsEnabled="False" />
-                <ComboBoxItem Content="질문/상담 · 후속 단계" IsEnabled="False" />
-              </ComboBox>
+              <ComboBox x:Name="Discipline" Header="작업 분야" SelectedIndex="1" SelectionChanged="MediaDisciplineChanged"><ComboBoxItem Content="기획"/><ComboBoxItem Content="코딩"/><ComboBoxItem Content="아트 · 임시 도형 PNG"/><ComboBoxItem Content="사운드 · 임시 합성음 WAV"/><ComboBoxItem Content="특수효과 · 임시 확산 링 시트"/></ComboBox>
+     <StackPanel x:Name="MediaSettings" Visibility="Collapsed" Spacing="8">
+      <TextBlock Text="임시 절차적 생성: 아래 규격으로 시험용 자산을 만듭니다. 자유 문장의 화풍·음악·Unity 파티클을 생성하는 모델이 아닙니다. 수정 요청은 새 규격의 별도 결과를 만듭니다." TextWrapping="Wrap"/>
+      <presentation:ActionPanel><NumberBox x:Name="MediaWidth" Header="이미지/프레임 너비" Value="128" Minimum="8" Maximum="1024" Width="190"/><NumberBox x:Name="MediaHeight" Header="이미지/프레임 높이" Value="128" Minimum="8" Maximum="1024" Width="190"/><TextBox x:Name="MediaColor" Header="색상 (#RRGGBB)" Text="#55AAFF" Width="190"/></presentation:ActionPanel>
+      <presentation:ActionPanel><NumberBox x:Name="MediaSeconds" Header="음원/효과 길이(초)" Value="1" Minimum="0.1" Maximum="10" Width="190"/><NumberBox x:Name="MediaFrequency" Header="음원 주파수(Hz)" Value="440" Minimum="40" Maximum="12000" Width="190"/><NumberBox x:Name="MediaFrames" Header="효과 프레임 수" Value="8" Minimum="2" Maximum="16" Width="190"/></presentation:ActionPanel>
+      <TextBlock Text="아트: 투명 배경 원형 · 사운드: 44.1kHz 모노 사인파/페이드 · 효과: 가로 시트와 재생 정보 JSON. 선택한 분야에 해당하는 규격만 사용합니다." TextWrapping="Wrap"/>
+     </StackPanel>
               <ComboBox x:Name="RequestMode" Header="요청 유형" SelectedIndex="0" HorizontalAlignment="Stretch" SelectionChanged="RequestModeChanged">
                 <ComboBoxItem Content="새 요청" />
                 <ComboBoxItem Content="선택한 이전 작업의 수정 요청" />
@@ -475,6 +474,12 @@
       <Expander Header="검증 근거와 결과 이력 원문" HorizontalAlignment="Stretch">
         <TextBox x:Name="ResultText" Header="검증 근거와 결과 이력" IsReadOnly="True" AcceptsReturn="True" MinHeight="240" MaxHeight="700" TextWrapping="Wrap" />
       </Expander>
+     <StackPanel x:Name="MediaPreviewPanel" Visibility="Collapsed" Spacing="8">
+      <Button Content="검증된 미디어 미리보기" Tag="media-preview" Click="Action"/>
+      <TextBlock x:Name="MediaPreviewInfo" TextWrapping="Wrap"/>
+      <Border Background="#FF303642" Padding="8"><Image x:Name="MediaImage" MaxHeight="320" Stretch="Uniform" AutomationProperties.Name="생성 이미지 또는 효과 프레임 시트"/></Border>
+      <MediaPlayerElement x:Name="MediaPlayer" AreTransportControlsEnabled="True" AutoPlay="False" Visibility="Collapsed" Height="120" AutomationProperties.Name="생성 음원 재생"/>
+     </StackPanel>
       <Border Style="{StaticResource ActionBar}">
         <presentation:ActionPanel>
           <Button Content="완료 승인" Tag="approve" Click="Action" Style="{StaticResource AccentButtonStyle}" />

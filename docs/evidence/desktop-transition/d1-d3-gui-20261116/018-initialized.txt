@@ -1,0 +1,82 @@
+Window: "Orchiva", App: Orchiva.Desktop.exe.
+	0 window (창) Orchiva Secondary Actions: Raise
+		1 pane (창)
+			2 pane (창)
+				3 custom (사용자 지정) ID: Navigation
+					4 button (단추) 탐색 닫기 ID: TogglePaneButton
+						5 text (텍스트) ID: PaneTitleTextBlock
+					6 window (창) Secondary Actions: Raise ID: PaneRoot
+						7 pane (창) ID: MenuItemsScrollViewer
+							8 group (그룹) ID: MenuItemsHost
+								9 list item (목록 항목) (selectable) 작업실
+								10 list item (목록 항목) (selectable) 기존 MVP 프로젝트
+								11 list item (목록 항목) (selectable) 기존 v2 이력
+								12 list item (목록 항목) (selectable) 연결 상태
+						13 pane (창) ID: FooterItemsScrollViewer
+							14 group (그룹) ID: FooterMenuItemsHost
+								15 list item (목록 항목) (selectable) 설정 ID: SettingsItem
+					16 text (텍스트) Orchiva · 프로젝트와 PLAN
+					17 pane (창)
+						18 status bar (상태 표시줄) ID: StatusBar
+							19 text (텍스트) 정보 아이콘 ID: StandardIcon
+							20 text (텍스트) 실행부 연결됨 ID: Title
+							21 text (텍스트) 작업실에서 프로젝트·지침·제작 PLAN을 관리합니다. 화면 수용 검증은 대기 중입니다. ID: Message
+						87 text (텍스트) 프로젝트 작업실
+						88 text (텍스트) 프로젝트의 파일에서 시작해, PLAN을 확인하고 결과를 검토하세요.
+						89 status bar (상태 표시줄) ID: Notice
+							90 text (텍스트) 성공 아이콘 ID: StandardIcon
+							91 text (텍스트) 반영됨 ID: Title
+							92 text (텍스트) 등록 지침과 루트 지도 연결을 확인했습니다. ID: Message
+						183 progress bar (진행률 표시줄) 다른 용무 중 ID: Busy
+						93 combo box (콤보 상자) (disabled) 프로젝트 ID: ProjectChoice
+						94 button (단추) 목록 새로 고침
+						95 text (텍스트) C:\Dev\Orchiva\.desktop-local\d1-20261116-gui-001\시험 소스 ID: ProjectLocation
+						96 tab (탭)
+							97 tab item (탭 항목) (selectable) 프로젝트·지침
+								98 text (텍스트) 프로젝트 추가
+								99 text field (편집) (settable, string) 프로젝트 이름 Value: GUI 검증 프로젝트 · 긴 한국어 이름 ID: ProjectNameInput
+									100 text (텍스트) 프로젝트 이름
+								101 text field (편집) (settable, string) 소스 폴더의 절대 경로 Value: C:\Dev\Orchiva\.desktop-local\d1-20261116-gui-001\시험 소스 ID: SourceInput
+									102 text (텍스트) 소스 폴더의 절대 경로
+								103 button (단추) 프로젝트 등록
+								104 text (텍스트) 등록은 소스 파일을 변경하지 않습니다. 초기화 미리보기에서 생성·이관할 지침을 확인하세요.
+								105 button (단추) 초기화 미리보기
+								106 button (단추) (disabled) 확인한 변경으로 초기화 ID: InitializeButton
+								107 text field (편집) 초기화 변경 내용 Value: docs/agents/workflow.md · 누락된 기본 지침/목록 # 작업 지침 루트 AGENTS.md와 작업 경로에 적용되는 등록 지침을 먼저 읽는다. 현재 PLAN의 목표와 범위만 수행하고 기존 변경을 보존한다. 원본 소스 반영은 별도 검토 후 선택한 파일만 적용한다. 파일 이름은 목적을 드러내는 소문자 kebab-case를 기본으로 하고 프로젝트의 기존 명명 규칙을 우선한다. 결과물에는 요청하지 않은 README나 지침서를 관례적으로 만들지 않는다. 자동 commit·push·merge를 하지 않는다. docs/plans/plans.md · 누락된 기본 지침/목록 # PLAN 규칙 PLAN은 작업 단위다. 목표·입력·범위·작업 순서·산출물·자동 확인·사용자 검토·실패 복구를 기록한다. 정형 입력과 지침을 분석한 AI 계획을 확인한 뒤 실행한다. 상태는 proposed / active / completed / failed / cancelled로 표시하며 계획 작성과 구현 완료를 구분한다. revision·실행·결과·판정은 덮어쓰지 않는다. 외부 편집 후에는 다시 확인한다. 작업 종료 시 evidence/<플랜 이름>/<실행 ID>/ 근거와 decisions 기록을 연결한다. docs/plans/README.md · 누락된 기본 지침/목록 # PLAN 목록 <!-- orchiva:plans:start --> | PLAN | 상태 | | --- | --- | <!-- orchiva:plans:end --> docs/decisions/decisions.md · 누락된 기본 지침/목록 # 결정 기록 규칙 PLAN과 연결하여 맥락·대안·결정·근거·영향·후속 작업을 기록한다. 과거 결정·실패·검토를 지우지 않고 후속 기록을 추가한다. 자동 검증과 사람이 확인한 품질을 구분한다. docs/evidence/evidence.md · 누락된 기본 지침/목록 # 검증 근거 규칙 검증 자료가 생기면 <플랜 이름>/<실행 ID>/에 종류·절차·기대 결과·실제 결과·미실행 사유를 기록한다. 플랜 작업 종료마다 근거를 정리하고 실패와 재검증도 별도 실행으로 보존한다. 인증값·개인 요청 원문·큰 원시 로그를 공유 근거에 포함하지 않는다. 자동 검사 통과와 사용자 완료 판단을 구분한다. AGENTS.md · 기존 지침 보존 + 필수 지도 연결 # 프로젝트 지침 <!-- orchiva:instructions:start --> ## Orchiva 지침 지도 | 적용 범위 | 지침 | | --- | --- | | all | [docs/agents/workflow.md](docs/agents/workflow.md) | | all | [docs/plans/plans.md](docs/plans/plans.md) | | all | [docs/decisions/decisions.md](docs/decisions/decisions.md) | | all | [docs/evidence/evidence.md](docs/evidence/evidence.md) | <!-- orchiva:instructions:end --> docs/.orchiva/project.json · 프로젝트 식별·설정 { "schemaVersion": 1, "projectId": "b4eb6369-c697-4111-aeaa-823754f809d9", "name": "GUI 검증 프로젝트 · 긴 한국어 이름", "revision": 1, "templateVersion": 1, "baseRef": "main", "outputRoot": null, "instructionRefs": [ { "path": "docs/agents/workflow.md", "scope": "all", "required": true }, { "path": "docs/plans/plans.md", "scope": "all", "required": true }, { "path": "docs/decisions/decisions.md", "scope": "all", "required": true }, { "path": "docs/evidence/evidence.md", "scope": "all", "required": true } ] } [] ID: InitPreview
+									108 text (텍스트) 초기화 변경 내용
+								109 text (텍스트) 프로젝트 설정
+								110 text field (편집) (settable, string) Git 기준 브랜치 Value: main ID: BaseRefInput
+									111 text (텍스트) Git 기준 브랜치
+								112 text field (편집) (settable, string) 결과물 폴더의 절대 경로 ID: OutputInput
+									113 text (텍스트) 결과물 폴더의 절대 경로
+								114 button (단추) 프로젝트 설정 저장
+								115 text (텍스트) 실제 지침 파일
+								116 button (단추) 지침·누락 다시 확인
+								117 combo box (콤보 상자) (disabled) 등록된 지침 ID: InstructionChoice
+								118 text field (편집) (settable, string) 지침 경로 ID: InstructionPath
+									119 text (텍스트) 지침 경로
+								120 text field (편집) (settable, string) 적용 범위 Value: all ID: InstructionScope
+									121 text (텍스트) 적용 범위
+								122 text field (편집) (settable, string) 내용 ID: InstructionContent
+									123 text (텍스트) 내용
+								124 button (단추) 지침 파일 저장
+								125 text (텍스트) 새 지침은 docs/agents 아래에 만드세요. 루트 AGENTS.md의 지도 링크도 편집해 연결합니다. 외부 수정이 있으면 덮어쓰지 않습니다.
+							126 tab item (탭 항목) (selectable) 요청·PLAN
+							127 tab item (탭 항목) (selectable) 실행·결과 검토
+							128 tab item (탭 항목) (selectable) 결과물·소스 반영
+						64 text (텍스트) 마지막 조회 20:54:29 · 읽기 전용
+						65 scroll bar (스크롤 막대) (settable, float) 세로 Value: 603 ID: VerticalScrollBar
+							179 button (단추) 세로 작은 감소 ID: VerticalSmallDecrease
+							180 button (단추) 세로 큰 감소 ID: VerticalLargeDecrease
+							181 button (단추) 세로 큰 증가 ID: VerticalLargeIncrease
+							182 button (단추) 세로 작은 증가 ID: VerticalSmallIncrease
+		70 title bar (제목 표시줄) (settable, string) Value: Orchiva
+			71 menu bar (메뉴 모음) 시스템 ID: MenuBar
+				144 menu item (메뉴 항목) 시스템
+			73 button (단추) 최소화
+			74 button (단추) 최대화
+			75 button (단추) 닫기
+
+Document text: ```
+all
+```

@@ -1,0 +1,184 @@
+{
+  "stage": "D5",
+  "baseline": "e0248d9",
+  "date": "2026-11-17",
+  "status": "complete",
+  "generator": "orchiva-procedural-v1",
+  "runs": [
+    {
+      "runId": "d1-d5-20261116-001",
+      "verifiedAt": "2026-11-16T15:01:30.728Z",
+      "verdict": "pipeline passed; art aspect-ratio defect superseded by 002",
+      "cases": [
+        {
+          "token": "d1-d5-20261116-001-art",
+          "kind": "art",
+          "agentId": "5edc4956-dd98-417e-b18d-393aecc96b21",
+          "workspaceId": "wks_6a274da63c3a717e",
+          "decoded": {
+            "width": 128,
+            "height": 96,
+            "transparentPixels": 6132
+          },
+          "sha256": "eb91b577633fd5d665f8149027aaa5a388a494f5fe5e788f7a0992746cc23aff",
+          "bytes": 506,
+          "firstResult": "bffdc61a-8e41-4cc3-8867-9e94ebc73d25",
+          "failedResult": "dd52086c-0cb7-4b9b-9a8f-784afba90a2e",
+          "resultId": "ab03c23f-4c5e-4991-b6ce-524e49aea353",
+          "pipelinePassed": true
+        },
+        {
+          "token": "d1-d5-20261116-001-sound",
+          "kind": "sound",
+          "agentId": "e488b26f-78b0-482b-ade2-0c10b38964eb",
+          "workspaceId": "wks_e4a404e2e9c60d9b",
+          "decoded": {
+            "channels": 1,
+            "sampleRate": 44100,
+            "seconds": 1.5
+          },
+          "sha256": "a4fc6a058f8fde20d3fcd8d33244fc7f91c2a748e4263f519b5ddfb9314de205",
+          "bytes": 132344,
+          "resultId": "6ba50628-fa9f-4c20-ba79-2c17ea9f31ce",
+          "pipelinePassed": true
+        },
+        {
+          "token": "d1-d5-20261116-001-effect",
+          "kind": "effect",
+          "agentId": "3881b6f1-bae6-49b0-b0fa-8d670cc7d516",
+          "workspaceId": "wks_611570572ab5f538",
+          "decoded": {
+            "width": 512,
+            "height": 64,
+            "transparentPixels": 32644
+          },
+          "sha256": "cb7a98d7c8c26a317d48f0651c6c2ca93279c9c2fdf80bc47f08c845a4d26c1d",
+          "bytes": 1487,
+          "resultId": "08f956ff-c4a8-479a-8805-8d5727ccb092",
+          "pipelinePassed": true
+        }
+      ]
+    },
+    {
+      "runId": "d1-d5-20261117-002",
+      "verifiedAt": "2026-11-16T15:08:26.417Z",
+      "verdict": "passed",
+      "cases": [
+        {
+          "token": "d1-d5-20261117-002-art",
+          "kind": "art",
+          "agentId": "cc6948f3-6edd-4321-8df6-458eb8c4a85f",
+          "workspaceId": "wks_31f78d3ddd58a08e",
+          "decoded": {
+            "width": 128,
+            "height": 96,
+            "transparentPixels": 7660
+          },
+          "sha256": "fa71b38ed0afe796948032143d152674f888820b069308aad89c3884999c828f",
+          "bytes": 533,
+          "firstResult": "96237ca0-decb-49db-8a8c-8bc88e9bcfff",
+          "failedResult": "15760340-ec58-43d4-8fd3-7ee479a09500",
+          "resultId": "96f4f838-a3d0-415a-90e9-798ebec014ea",
+          "pipelinePassed": true
+        },
+        {
+          "token": "d1-d5-20261117-002-sound",
+          "kind": "sound",
+          "agentId": "f5a29f9c-4bf0-4ee5-aa69-2e3017d0bd65",
+          "workspaceId": "wks_79ee4f1e6f942b32",
+          "decoded": {
+            "channels": 1,
+            "sampleRate": 44100,
+            "seconds": 1.5
+          },
+          "sha256": "a4fc6a058f8fde20d3fcd8d33244fc7f91c2a748e4263f519b5ddfb9314de205",
+          "bytes": 132344,
+          "resultId": "6e83b561-151f-43df-9bb0-ab9314c4f8fa",
+          "pipelinePassed": true
+        },
+        {
+          "token": "d1-d5-20261117-002-effect",
+          "kind": "effect",
+          "agentId": "bbda4eb9-e219-4bc0-8271-b9f02fa7fb2d",
+          "workspaceId": "wks_3e67f190427bf714",
+          "decoded": {
+            "width": 512,
+            "height": 64,
+            "transparentPixels": 32644
+          },
+          "sha256": "cb7a98d7c8c26a317d48f0651c6c2ca93279c9c2fdf80bc47f08c845a4d26c1d",
+          "bytes": 1487,
+          "resultId": "c24c9fca-afdd-4a01-89ed-11c47501a90d",
+          "pipelinePassed": true
+        }
+      ]
+    }
+  ],
+  "tests": {
+    "node": 120,
+    "nodeFailed": 0,
+    "typecheck": "pass",
+    "winuiBuild": {
+      "warnings": 0,
+      "errors": 0
+    },
+    "csharp": {
+      "passed": 9,
+      "skipped": 6,
+      "total": 15,
+      "reason": "D1/D4 fixture not supplied"
+    },
+    "afterRestartD5Csharp": {
+      "passed": 1,
+      "total": 1
+    }
+  },
+  "gui": {
+    "wide": "1266x893 capture",
+    "compact": "802x893 capture; user resized window",
+    "png": "corrected circular shape in rectangular canvas, transparent preview",
+    "wav": "playback start and finish at 100%; no subjective listening claim",
+    "effect": "8-frame horizontal sheet, final frame transparent; no animation playback",
+    "invalidInput": "Korean error with input preserved, no request saved",
+    "reconnect": "idle owned daemon stop/start; retained result and explicit reconnect",
+    "screenshots": {
+      "art-corrected-compact.png": "002: corrected circle and restored result after daemon restart",
+      "effect-preview.png": "001: horizontal effect sheet",
+      "sound-preview.png": "001: playback reached 100 percent",
+      "restart-disconnected.png": "002: preserved last result on disconnect",
+      "invalid-spec-compact.png": "002: invalid input rejected",
+      "art-preview.png": "001: aspect ratio defect before correction",
+      "input-preserved-compact.png": "002: invalid color retained"
+    }
+  },
+  "cleanup": {
+    "ownedAppPids": [
+      25416,
+      8924
+    ],
+    "ownedDaemonPids": [
+      25072,
+      17208
+    ],
+    "processesStopped": true,
+    "originalAndLegacyRequestHashesUnchanged": true,
+    "recordsAndFailuresPreserved": true
+  },
+  "limits": {
+    "perMediaFile": 33554432,
+    "totalMediaBytes": 134217728,
+    "mediaFileCount": 100,
+    "pixels": 16777216,
+    "exportJsonBytes": 25165824,
+    "sourceInputPerFile": 2097152,
+    "sourceInputTotal": 16777216
+  },
+  "notClaimed": [
+    "external image/music model",
+    "Unity or Aseprite integration",
+    "arbitrary media editing",
+    "subjective audio quality",
+    "new PC distribution"
+  ],
+  "remotePublished": false
+}

@@ -237,7 +237,7 @@ internal sealed class DesktopAcceptance(MainWindow window, string home, string e
             var draft = content.Text;
             File.AppendAllText(path, "\n외부 변경\n");
             await Act("save-instruction", true);
-            Check(content.Text == draft && File.ReadAllText(path).EndsWith("외부 변경\n") && Field<InfoBar>("Notice").Message.Contains("FILE_CHANGED"), "G06 external conflict preserves user input and disk");
+            Check(content.Text == draft && File.ReadAllText(path).EndsWith("외부 변경\n") && Field<InfoBar>("Notice").Message == DesktopViewModel.Error("FILE_CHANGED"), "G06 external conflict preserves user input and disk");
             await Act("new");
             Field<TextBox>("TitleInput").Text = "GUI acceptance";
             Field<TextBox>("GoalInput").Text = "Write answer.txt containing 42 and note.txt containing ok, both with a trailing newline.";
@@ -300,7 +300,7 @@ internal sealed class DesktopAcceptance(MainWindow window, string home, string e
             diff.SelectedItem = diff.Items.Cast<WorkspaceChoice>().Single(x => x.Value["path"]!.ToString() == "answer.txt");
             var current = File.Exists(Path.Combine(source,"answer.txt")) ? File.ReadAllText(Path.Combine(source,"answer.txt")) : "";
             var exported = Path.Combine(Field<TextBlock>("ExportLocation").Text.Split('\n').Last(), "answer.txt");
-            var expected = $"현재 소스\n{current}\n\n결과물\n{File.ReadAllText(exported)}";
+            var expected = $"파일: answer.txt\n\n현재 소스\n{current}\n\n결과물\n{File.ReadAllText(exported)}";
             Check(Field<TextBox>("DiffText").Text.ReplaceLineEndings("\n") == expected.ReplaceLineEndings("\n"), "G10 selected diff matches source and exported bytes");
             await Act("transfers");
             var transfers = Field<ComboBox>("TransferChoice");
@@ -394,7 +394,7 @@ internal sealed class DesktopAcceptance(MainWindow window, string home, string e
         using (var writer = new StreamWriter(new FileStream(conflictPath, FileMode.CreateNew, FileAccess.Write)))
             writer.Write("local edit\n");
         await Act("apply", true);
-        Check(Field<InfoBar>("Notice").Message.Contains("SOURCE_FILE_CONFLICT") && File.ReadAllText(Path.Combine(source,"answer.txt")) == "local edit\n", "G10 conflict preserves local change");
+        Check(Field<InfoBar>("Notice").Message == DesktopViewModel.Error("SOURCE_FILE_CONFLICT") && File.ReadAllText(Path.Combine(source,"answer.txt")) == "local edit\n", "G10 conflict preserves local change");
         File.Delete(Path.Combine(source,"answer.txt")); // created by this test in its disposable clone
         await Act("diff");
         foreach (var item in files.Items.Cast<WorkspaceChoice>().Where(x => x.Value["path"]!.ToString() is "answer.txt" or "note.txt")) files.SelectedItems.Add(item);

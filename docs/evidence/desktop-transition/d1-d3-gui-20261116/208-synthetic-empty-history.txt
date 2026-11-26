@@ -1,0 +1,58 @@
+Window: "Orchiva", App: Orchiva.Desktop.exe.
+	0 window (창) Orchiva Secondary Actions: Raise
+		1 pane (창)
+			2 pane (창)
+				3 custom (사용자 지정) ID: Navigation
+					4 button (단추) 탐색 닫기 ID: TogglePaneButton
+						5 text (텍스트) ID: PaneTitleTextBlock
+					6 window (창) Secondary Actions: Raise ID: PaneRoot
+						7 pane (창) ID: MenuItemsScrollViewer
+							8 group (그룹) ID: MenuItemsHost
+								9 list item (목록 항목) (selectable) 작업실
+								10 list item (목록 항목) (selectable) 기존 MVP 프로젝트
+								11 list item (목록 항목) (selectable) 기존 v2 이력
+								12 list item (목록 항목) (selectable) 연결 상태
+						13 pane (창) ID: FooterItemsScrollViewer
+							14 group (그룹) ID: FooterMenuItemsHost
+								15 list item (목록 항목) (selectable) 설정 ID: SettingsItem
+					16 status bar (상태 표시줄) ID: StatusBar
+						17 text (텍스트) 정보 아이콘 ID: StandardIcon
+						18 text (텍스트) 실행부 연결됨 ID: Title
+						19 text (텍스트) 작업실에서 프로젝트·지침·제작 PLAN을 관리합니다. ID: Message
+					71 pane (창) ID: OtherPages
+						72 text (텍스트) PLAN 이력
+						73 text (텍스트) 아직 저장된 작업이 없습니다.
+						74 list (목록) ID: Requests
+						75 button (단추) (disabled) 다음 20개 보기 ID: NextPage
+						76 text (텍스트) 작업을 선택하세요
+						77 text (텍스트) 목록에서 작업을 선택하면 PLAN과 보존된 결과를 확인할 수 있습니다.
+						78 text (텍스트) 마지막 조회 21:40:29 · 기존 MVP 조회
+						79 scroll bar (스크롤 막대) (settable, float) 세로 Value: 0 ID: VerticalScrollBar
+		64 title bar (제목 표시줄) (settable, string) Value: Orchiva
+			65 menu bar (메뉴 모음) 시스템 ID: MenuBar
+				70 menu item (메뉴 항목) 시스템
+			67 button (단추) 최소화
+			68 button (단추) 최대화
+			69 button (단추) 닫기
+
+Document text: ```
+
+작업실
+
+기존 MVP 프로젝트
+
+기존 v2 이력
+
+연결 상태
+설정
+
+
+실행부 연결됨
+작업실에서 프로젝트·지침·제작 PLAN을 관리합니다.
+PLAN 이력
+아직 저장된 작업이 없습니다.
+다음 20개 보기
+작업을 선택하세요
+목록에서 작업을 선택하면 PLAN과 보존된 결과를 확인할 수 있습니다.
+마지막 조회 21:40:29 · 기존 MVP 조회
+```

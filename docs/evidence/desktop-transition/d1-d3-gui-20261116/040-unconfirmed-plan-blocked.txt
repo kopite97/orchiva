@@ -1,0 +1,84 @@
+Window: "Orchiva", App: Orchiva.Desktop.exe.
+	0 window (창) Orchiva Secondary Actions: Raise
+		1 pane (창)
+			2 pane (창)
+				3 custom (사용자 지정) ID: Navigation
+					4 button (단추) 탐색 닫기 ID: TogglePaneButton
+						5 text (텍스트) ID: PaneTitleTextBlock
+					6 window (창) Secondary Actions: Raise ID: PaneRoot
+						7 pane (창) ID: MenuItemsScrollViewer
+							8 group (그룹) ID: MenuItemsHost
+								9 list item (목록 항목) (selectable) 작업실
+								10 list item (목록 항목) (selectable) 기존 MVP 프로젝트
+								11 list item (목록 항목) (selectable) 기존 v2 이력
+								12 list item (목록 항목) (selectable) 연결 상태
+						13 pane (창) ID: FooterItemsScrollViewer
+							14 group (그룹) ID: FooterMenuItemsHost
+								15 list item (목록 항목) (selectable) 설정 ID: SettingsItem
+					16 text (텍스트) Orchiva · 프로젝트와 PLAN
+					17 pane (창)
+						18 status bar (상태 표시줄) ID: StatusBar
+							19 text (텍스트) 정보 아이콘 ID: StandardIcon
+							20 text (텍스트) 실행부 연결됨 ID: Title
+							21 text (텍스트) 작업실에서 프로젝트·지침·제작 PLAN을 관리합니다. 화면 수용 검증은 대기 중입니다. ID: Message
+						87 text (텍스트) 프로젝트 작업실
+						88 text (텍스트) 프로젝트의 파일에서 시작해, PLAN을 확인하고 결과를 검토하세요.
+						89 status bar (상태 표시줄) ID: Notice
+							90 text (텍스트) 경고 아이콘 ID: StandardIcon
+							91 text (텍스트) 확인 필요 · 입력 유지 ID: Title
+							92 text (텍스트) PLAN 내용을 확인하고 확인란을 선택하세요. ID: Message
+						93 combo box (콤보 상자) 프로젝트 ID: ProjectChoice
+						94 button (단추) 목록 새로 고침
+						95 text (텍스트) C:\Dev\Orchiva\.desktop-local\d1-20261116-gui-001\시험 소스 ID: ProjectLocation
+						96 tab (탭)
+							97 tab item (탭 항목) (selectable) 프로젝트·지침
+							126 tab item (탭 항목) (selectable) 요청·PLAN
+								208 button (단추) 작업 이력 불러오기
+								209 button (단추) 새 요청 작성
+								210 combo box (콤보 상자) 프로젝트 PLAN 이력 ID: RequestChoice
+								211 button (단추) 이전 v2 이력 가져오기
+									212 text (텍스트) 이전 v2 이력 가져오기
+								213 text (텍스트) 초안 · 저장 버전 3 · e8ff3f54204d4b0a9547aebcc1b2c23e PLAN 작성: running ID: RequestStatus
+								214 combo box (콤보 상자) 작업 분야 ID: Discipline
+								215 combo box (콤보 상자) 요청 유형 ID: RequestMode
+								216 combo box (콤보 상자) 수정할 이전 작업 ID: ParentChoice
+								217 text field (편집) (settable, string) 요청 제목 Value: GUI 제작·복구 검증 ID: TitleInput
+									218 text (텍스트) 요청 제목
+								219 text field (편집) (settable, string) 원하는 결과 Value: 프로젝트 루트 answer.txt에 숫자 42와 줄바꿈 하나를 작성한다. ID: GoalInput
+									220 text (텍스트) 원하는 결과
+								221 text field (편집) (settable, string) 작업 범위 Value: answer.txt 한 파일만 제작하고 기존 checks/value.test.mjs를 통과한다. ID: ScopeInput
+									222 text (텍스트) 작업 범위
+								223 text field (편집) (settable, string) 제약·참고 사항 Value: 기존 테스트·지침 변경 금지. 현재 시험 Worktree만 사용. commit/push/merge와 하위 에이전트 생성 금지. README·보고서·추가 파일·의존성 생성 금지. ID: ConstraintsInput
+									224 text (텍스트) 제약·참고 사항
+								225 text field (편집) (settable, string) 결과물 하위 폴더 (선택) ID: OutputPathInput
+									226 text (텍스트) 결과물 하위 폴더 (선택)
+								227 combo box (콤보 상자) 모델 ID: ModelChoice
+								228 combo box (콤보 상자) 수준 ID: LevelChoice
+								229 combo box (콤보 상자) 자동 확인 ID: ValidationChoice
+								230 button (단추) 요청 저장
+								231 button (단추) AI로 PLAN 작성
+								232 button (단추) 상태 다시 읽기
+								233 text field (편집) PLAN 원문 ID: PlanText
+									234 text (텍스트) PLAN 원문
+								235 text (텍스트) ID: PlanLocation
+								236 button (단추) 외부에서 수정한 PLAN 다시 읽기
+								237 checkbox (확인란) 이 PLAN과 실행 범위를 확인했습니다. ID: PlanConfirmed
+								238 button (단추) 확인한 PLAN 실행
+							127 tab item (탭 항목) (selectable) 실행·결과 검토
+							128 tab item (탭 항목) (selectable) 결과물·소스 반영
+						64 text (텍스트) 마지막 조회 20:54:29 · 읽기 전용
+						65 scroll bar (스크롤 막대) (settable, float) 세로 Value: 1296 ID: VerticalScrollBar
+							299 button (단추) 세로 작은 감소 ID: VerticalSmallDecrease
+							300 button (단추) 세로 큰 감소 ID: VerticalLargeDecrease
+							301 button (단추) 세로 큰 증가 ID: VerticalLargeIncrease
+							302 button (단추) 세로 작은 증가 ID: VerticalSmallIncrease
+		70 title bar (제목 표시줄) (settable, string) Value: Orchiva
+			71 menu bar (메뉴 모음) 시스템 ID: MenuBar
+				144 menu item (메뉴 항목) 시스템
+			73 button (단추) 최소화
+			74 button (단추) 최대화
+			75 button (단추) 닫기
+
+Document text: ```
+기존 테스트·지침 변경 금지. 현재 시험 Worktree만 사용. commit/push/merge와 하위 에이전트 생성 금지. README·보고서·추가 파일·의존성 생성 금지.
+```

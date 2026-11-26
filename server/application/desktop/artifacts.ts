@@ -5,9 +5,25 @@ import { bytes, digest, immutable, relativeFile, safePath, absent, inside } from
 import { internalFile, loadSnapshot } from "./snapshots";
 import { applyTransfer, previewTransfer, readTransfer, transferManifest, undoTransfer, type TransferManifest } from "./transfers";
 import { occupiesSlot } from "../../domain/record-v2";
+import { mediaBudget } from "../../../shared/contracts/desktop-media";
+import { inspectPng, inspectWav } from "../../adapters/media/inspect-media";
 type Command = { projectId: string; token: string; expectedRevision: number; commandKey: string; resultId: string };
 export class ProductionArtifacts {
   constructor(private service: ProductionService) {}
+  async mediaPreview(id: string, token: string, resultId: string, path: string, offset: number) {
+    const doc = await this.service.required(id, token), result = doc.engine.result, spec = doc.input.media;
+    if (!spec || !result || result.id !== resultId || occupiesSlot(doc.engine)) throw new Error("MEDIA_PREVIEW_NOT_READY");
+    const name = spec.kind === "sound" ? "tone.wav" : spec.kind === "art" ? "shape.png" : "effect.png";
+    if (path !== `media/${token}/${name}` || !result.changedFiles.includes(path)) throw new Error("MEDIA_PREVIEW_PATH_INVALID");
+    if (await (await this.service.runtime(doc)).fingerprint(doc.engine) !== result.fingerprint) throw new Error("RESULT_CHANGED");
+    const content = await bytes(doc.engine.worktreePath!, path, mediaBudget.perFile);
+    const evidence = result.files?.find(f => f.path === path);
+    if (!content || digest(content) !== evidence?.sha256) throw new Error("RESULT_CHANGED");
+    try { if (spec.kind === "sound") inspectWav(content); else inspectPng(content); }
+    catch { throw new Error("MEDIA_PREVIEW_NOT_READY"); }
+    if (!Number.isInteger(offset) || offset < 0 || offset >= content.length) throw new Error("MEDIA_PREVIEW_OFFSET_INVALID");
+    return { path, mime: spec.kind === "sound" ? "audio/wav" : "image/png", sha256: digest(content), size: content.length, offset, content: content.subarray(offset, offset + 128 * 1024).toString("base64"), spec };
+  }
   private file(token: string, result: string) { relativeFile(token); relativeFile(result); return `docs/.orchiva/exports/${token}/${result}.json`; }
   async manifest(id: string, token: string, resultId: string) {
     const doc = await this.service.required(id, token), store = await this.service.store(id), entry = doc.exports.find(x => x.resultId === resultId);
@@ -37,11 +53,11 @@ export class ProductionArtifacts {
       for (const path of doc.milestone?.outputs ?? result.changedFiles) {
         relativeFile(path);
         if (internalFile(path) || refs.includes(path) || /(^|\/)AGENTS\.md$/i.test(path)) continue;
-        const before = snapshot.files.find(x => x.path === path)?.hash ?? null, content = await bytes(doc.engine.worktreePath!, path), after = content ? digest(content) : null;
+        const before = snapshot.files.find(x => x.path === path)?.hash ?? null, content = await bytes(doc.engine.worktreePath!, path, doc.input.media ? 32 * 1024 * 1024 : 2 * 1024 * 1024), after = content ? digest(content) : null;
         if (before !== after) files.push({ path, before, after, content: content?.toString("base64") ?? null });
       }
       if (!files.length && !doc.milestone) throw new Error("NO_OUTPUT_CHANGES");
-      const manifest: TransferManifest = { version: 1, projectId: input.projectId, token: doc.token, resultId: result.id, fingerprint: result.fingerprint, files };
+      const manifest: TransferManifest = { version: 1, ...(doc.input.media ? { media: true as const } : {}), projectId: input.projectId, token: doc.token, resultId: result.id, fingerprint: result.fingerprint, files };
       const serialized = JSON.stringify(manifest), manifestHash = digest(serialized);
       if (Buffer.byteLength(serialized) > 24 * 1024 * 1024) throw new Error("EXPORT_SIZE_LIMIT");
       await immutable(store.root, this.file(doc.token, result.id), serialized);

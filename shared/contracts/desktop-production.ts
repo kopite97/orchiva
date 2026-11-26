@@ -2,10 +2,11 @@ import { z } from "zod";
 import { defineRpc } from "@getpaseo/plugin";
 import { recordSchema, tokenSchema } from "./feature-request";
 import { projectId, commandKey, hashSchema } from "./desktop-project";
+import { mediaSpec } from "./desktop-media";
 
 import { binding } from "./milestone-run";
 
-export const productionInput = z.object({ title: z.string().max(160), goal: z.string().max(12000), scope: z.string().max(12000), constraints: z.string().max(12000), discipline: z.enum(["planning", "coding"]), mode: z.enum(["new", "modify"]), parentToken: tokenSchema.nullable(), parentResultId: z.string().nullable(), provider: z.string().regex(/^codex\/.+$/), thinkingOptionId: z.string().nullable(), outputPath: z.string().max(200), validationProfile: z.enum(["files", "node-test"]).default("files") });
+export const productionInput = z.object({ title: z.string().max(160), goal: z.string().max(12000), scope: z.string().max(12000), constraints: z.string().max(12000), discipline: z.enum(["planning", "coding", "art", "sound", "effect"]), media: mediaSpec.optional(), mode: z.enum(["new", "modify"]), parentToken: tokenSchema.nullable(), parentResultId: z.string().nullable(), provider: z.string().regex(/^codex\/.+$/), thinkingOptionId: z.string().nullable(), outputPath: z.string().max(200), validationProfile: z.enum(["files", "node-test"]).default("files") });
 export const planVersion = z.object({ revision: z.number().int().positive(), path: z.string(), content: z.string(), hash: hashSchema, inputHash: hashSchema, snapshotId: hashSchema, createdAt: z.string(), origin: z.enum(["ai", "external", "legacy"]) });
 const journal = z.object({ key: commandKey, kind: z.string(), payloadHash: hashSchema, state: z.enum(["pending", "applied", "failed", "unknown"]), phase: z.string(), outcome: z.string().nullable(), at: z.string() });
 export const productionSchema = z.object({
@@ -24,6 +25,7 @@ const command = { ...id, commandKey, expectedRevision: z.number().int().positive
 export const modelList = z.object({ models: z.array(z.object({ provider: z.string(), label: z.string(), levels: z.array(z.object({ id: z.string(), label: z.string() })) })), ready: z.boolean(), issue: z.string().nullable() });
 const transferResult = z.object({ key: z.string(), state: z.enum(["applying", "applied", "undoing", "undone"]), paths: z.array(z.string()), completed: z.array(z.string()), restored: z.array(z.string()) });
 export const productionRpc = {
+  "desktop.requests.media-preview": defineRpc({ name: "desktop.requests.media-preview", input: z.object({ ...id, resultId: z.string(), path: z.string(), offset: z.number().int().min(0).max(32 * 1024 * 1024) }).strict(), output: z.object({ path: z.string(), mime: z.string(), sha256: hashSchema, size: z.number(), offset: z.number(), content: z.string(), spec: mediaSpec }) }),
   "desktop.models": defineRpc({ name: "desktop.models", input: z.object({ projectId }).strict(), output: modelList }),
   "desktop.requests.list": defineRpc({ name: "desktop.requests.list", input: z.object({ projectId }).strict(), output: z.object({ records: z.array(z.object({ token: tokenSchema, input: z.object({ title: z.string() }), engine: z.object({ status: z.string(), result: z.object({ id: z.string() }).nullable() }), legacy: z.boolean() })), issues: z.array(z.string()) }) }),
   "desktop.requests.get": defineRpc({ name: "desktop.requests.get", input: z.object(id).strict(), output: productionSchema }),

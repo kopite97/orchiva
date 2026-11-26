@@ -45,7 +45,7 @@ export default function contribute(server: PluginServerContext) {
   server.handle(pageRpc, async input => { await ready; return requestPage(await store.list(), input); });
   server.handle(detailRpc, async ({ token }) => { await ready; const record = await store.get(token); return record ? { record, failure: failureView(record), allowedActions: allowedActions(record) } : null; });
   server.handle(serviceStatusRpc, async () => { await ready; return reconciler.snapshot(); });
-  server.handle(runtimeInfoRpc, async () => { await ready; return { protocolVersion: 1 as const, serverVersion: "desktop-d3" as const, dataHome: settings.dataHome, paseoHome: settings.paseoHome, endpoint: settings.endpoint, isolated: settings.isolationRoot !== null, pid: process.pid, startedAt, capabilities: Object.keys(desktopContracts), restoring: reconciler.snapshot().restoring || desktop.service.restoring }; });
+  server.handle(runtimeInfoRpc, async () => { await ready; return { protocolVersion: 1 as const, serverVersion: "desktop-d5" as const, dataHome: settings.dataHome, paseoHome: settings.paseoHome, endpoint: settings.endpoint, isolated: settings.isolationRoot !== null, pid: process.pid, startedAt, capabilities: Object.keys(desktopContracts), restoring: reconciler.snapshot().restoring || desktop.service.restoring }; });
   server.handle(saveDraftRpc, async input => { await ready; return drafts.save(input); });
   server.handle(preparePlanRpc, async (input, { paseo }) => drafts.prepare(input, await runtime(paseo)));
   server.handle(preflightRpc, async (_, { paseo }) => {

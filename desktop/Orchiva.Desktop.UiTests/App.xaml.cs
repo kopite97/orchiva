@@ -64,6 +64,22 @@ public partial class App : Application
             try
             {
                 var checks = await WorkspaceChecks.Run(workspace, mock);
+                Access.Call(workspace, "OpenConversation", new Button(), new RoutedEventArgs());
+                if (Access.Get<ConversationWorkspace>(window, "ConversationPanel").Visibility != Visibility.Visible ||
+                    Access.Get<ScrollViewer>(window, "PageScroll").Visibility != Visibility.Collapsed)
+                    throw new Exception("Conversation navigation from the workspace");
+                checks.Add("20 workspace opens D4 conversation");
+                Access.Get<NavigationView>(window, "Navigation").SelectedItem = Access.Get<NavigationViewItem>(window, "HomeNavigation");
+                foreach (var (index, kind) in new[] { (2, "art"), (3, "sound"), (4, "effect") })
+                {
+                    Access.Call(workspace, "ChooseDiscipline", new Button { Tag = index.ToString() }, new RoutedEventArgs());
+                    var input = (JsonObject)Access.Call(workspace, "Input")!;
+                    if (workspace.Visibility != Visibility.Visible || Access.Get<StackPanel>(workspace, "MediaSettings").Visibility != Visibility.Visible ||
+                        input["discipline"]?.ToString() != kind || input["media"]?["kind"]?.ToString() != kind)
+                        throw new Exception("Media selection from the workspace: " + kind);
+                }
+                checks.Add("21 all three D5 media profiles accessible from workspace");
+                await (Task)Access.Call(workspace, "LoadDocument", true)!;
                 if (Environment.GetEnvironmentVariable("ORCHIVA_MILESTONE_UI") == "1")
                     await MilestoneChecks.Run(window, workspace, mock, output);
                 var status = Access.Get<InfoBar>(window, "StatusBar"); status.Title = "합성 UI 검증"; status.Message = "모델·Agent·Worktree 생성 없음 · 실제 실행 결과가 아닙니다.";

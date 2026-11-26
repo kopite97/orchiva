@@ -1,0 +1,58 @@
+Window: "Orchiva", App: Orchiva.Desktop.exe.
+	0 window (창) Orchiva Secondary Actions: Raise
+		1 pane (창)
+			2 pane (창)
+				3 custom (사용자 지정) ID: Navigation
+					4 button (단추) 탐색 닫기 ID: TogglePaneButton
+						5 text (텍스트) ID: PaneTitleTextBlock
+					6 window (창) Secondary Actions: Raise ID: PaneRoot
+						7 pane (창) ID: MenuItemsScrollViewer
+							8 group (그룹) ID: MenuItemsHost
+								9 list item (목록 항목) (selectable) 작업실
+								10 list item (목록 항목) (selectable) 기존 MVP 프로젝트
+								11 list item (목록 항목) (selectable) 기존 v2 이력
+								12 list item (목록 항목) (selectable) 연결 상태
+						13 pane (창) ID: FooterItemsScrollViewer
+							14 group (그룹) ID: FooterMenuItemsHost
+								15 list item (목록 항목) (selectable) 설정 ID: SettingsItem
+					16 status bar (상태 표시줄) ID: StatusBar
+						17 text (텍스트) 정보 아이콘 ID: StandardIcon
+						18 text (텍스트) 실행부 연결됨 ID: Title
+						19 text (텍스트) 작업실에서 프로젝트·지침·제작 PLAN을 관리합니다. ID: Message
+					172 pane (창) ID: OtherPages
+						173 text (텍스트) 설정
+						174 combo box (콤보 상자) 테마 ID: ThemeChoice
+						175 combo box (콤보 상자) 닫기 버튼 동작 ID: CloseChoice
+						176 text (텍스트) 앱 종료는 화면과 연결 프로세스를 닫습니다. 실행부의 수명은 분리되어 있으며 진행 중인 작업은 계속됩니다. 작업 중단은 실행 화면에서 요청하세요.
+						177 text (텍스트) 마지막 조회 21:17:00 · 기존 MVP 조회
+						178 scroll bar (스크롤 막대) (settable, float) 세로 Value: 0 ID: VerticalScrollBar
+							193 button (단추) 세로 작은 감소 ID: VerticalSmallDecrease
+							194 button (단추) 세로 큰 감소 ID: VerticalLargeDecrease
+							195 button (단추) 세로 큰 증가 ID: VerticalLargeIncrease
+							196 button (단추) 세로 작은 증가 ID: VerticalSmallIncrease
+		68 title bar (제목 표시줄) (settable, string) Value: Orchiva
+			69 menu bar (메뉴 모음) 시스템 ID: MenuBar
+				70 menu item (메뉴 항목) 시스템
+			71 button (단추) 최소화
+			72 button (단추) 최대화
+			73 button (단추) 닫기
+
+Document text: ```
+
+작업실
+
+기존 MVP 프로젝트
+
+기존 v2 이력
+
+연결 상태
+설정
+
+
+실행부 연결됨
+작업실에서 프로젝트·지침·제작 PLAN을 관리합니다.
+앱 종료는 화면과 연결 프로세스를 닫습니다. 실행부의 수명은 분리되어 있으며 진행 중인 작업은 계속됩니다. 작업 중단은 실행 화면에서 요청하세요.
+마지막 조회 21:17:00 · 기존 MVP 조회
+
+
+```

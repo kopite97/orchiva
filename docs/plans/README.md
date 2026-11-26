@@ -2,13 +2,10 @@
 
 기존 제품 범위는 [MVP 설계](../design/mvp-design.md), 후속 방향은 [데스크톱 인계](../design/desktop-handoff.md)와 [전환 설계안](../design/desktop-transition.md), 작업 절차는 [공통 흐름](../agents/workflow.md), 계획 작성·상태 규칙은 [계획 규칙](AGENTS.md)을 따른다.
 
-데스크톱 전환 PLAN은 `active`다. 2026-11-26 두 게임의 Polish 승인 후 D1~D3 GUI 기능 검증을 재개했다. [G01~G11 판정과 남은 시각 검증](../decisions/desktop-gui-resumption.md)
+2026-11-26 통합 인계. MA1~MA6와 두 게임의 Polish 승인을 완료했다. 데스크톱 D1~D5 및 D6의 기존 PC 검증 기록을 합쳤다. UI-A와 Milestone 화면이 합쳐진 버전의 G01·G02·G04·G11은 새 데스크톱에서 다시 관측한다. Computer Use를 사용할 수 있다. [새 PC 설치·로그인 검증](desktop-fresh-pc-validation.md)은 아직 실측 전이다.
 
 ## 등록된 계획
 
-2026-11-26 사용자의 보류·구현 지시로 데스크톱 전환을 `paused`로 변경했다. MA1 범위 고정과 MA2 직렬 실행을 순서대로 완료했다. [로컬 PoC와 재현 절차](../decisions/milestone-local-poc.md).
-
-2026-11-26 [UI-A](desktop-ui-alignment.md) 상세 단계를 `completed`로 마무리했다. 화면 13개·전후 비교·폭/테마/오류·입력 유지 수용 및 모의 19개 재검증을 완료했다. 사용자 지시로 배율 변경 시험은 이번 완료 조건에서 제외하며 실제 관측 배율은 125%다. [최종 결과](../decisions/desktop-ui-alignment.md). UI-A 완료 당시 상위 D1~D6는 `active`였고, 이후 보류 지시를 받았다. 실제 실행을 동반하는 G01~G11의 미검증 부분과 D4~D6 미착수는 유지한다. 아래 11월 17일 대기 상태는 당시 이력이다.
 
 | 순서 | 계획 | 상태 | 실행 범위 |
 | --- | --- | --- | --- |
@@ -19,13 +16,14 @@
 | 5 | [M4 조건별 판정·과거 결과](m4-evidence-review.md) | `completed` | 조건별 근거, 검사 변경, 결과 상세와 지문 확인 |
 | 6 | [M5 실패·재개·중복 명령](m5-recovery.md) | `completed` | 실패별 복구, 초기 재시도, 미확정 대조, 동일 세션 재개 |
 | 7 | [M6 통합 수용·장애·성능·사용 안내](m6-acceptance.md) | `completed` | A01~A16 수용, 저장/전송/프로세스 장애, 100건·30회 성능 및 30분 운영, 안내·사람 첫 사용 확인 |
-| 8 | [데스크톱 전환 D1~D6](desktop-transition.md) | `active` | Polish 승인 후 D1~D3 GUI 검증 재개. [G01~G11 검증 결과와 보류 항목](../decisions/desktop-gui-resumption.md). D4~D6 미착수 |
+| 8 | [데스크톱 전환 D1~D6](desktop-transition.md) | `active` | D1~D5 완료. D6a 배포·첫 실행 및 [D6b 현재 PC 통합](../decisions/desktop-d6-integration.md) 구현·검증 완료. 새 PC 실측은 별도 PLAN 보류, 정식 공개 배포 조건 남음. main 반영은 Git 이력 참조 |
 | 9 | [MA1 로드맵 구간과 실행 입력 고정](milestone-scope.md) | `completed` | 선택 구간·Feature 1~5개·의존성·지침을 고정하고 작업실에서 미리보기 |
 | 10 | [MA2 Milestone 조율과 로컬 직렬 실행](milestone-local-run.md) | `completed` | 단건과 공존하는 한 슬롯 실행, Milestone별 조율, 결과 인계·재개까지 로컬 PoC |
 | 11 | [MA3 로컬 Git 통합과 GitHub 동기화](milestone-git-integration.md) | `completed` | [1인 승인으로 최신 필수 검사·PR 병합·Issue 종료 5/5](../decisions/milestone-git-integration.md). 실제 독립 리뷰 수용 항목은 미검증으로 보존 |
 | 12 | [MA4 자원 충돌을 고려한 제한 병렬 실행](milestone-parallel-execution.md) | `completed` | [A·B 실제 병렬, 공용 Scene 대기, A → B → C 로컬 통합과 고정 검사 3/3](../decisions/milestone-parallel-execution.md) |
 | 13 | [MA5 Unity 통합 검사·빌드와 플레이 검증](milestone-unity-validation.md) | `completed` | [MA4 통합 SHA의 Unity 검사·Windows Player 실행·실패 후 인계 복구](../decisions/milestone-unity-validation.md) |
 | 14 | [MA6 분야별 프로필 재사용과 프로젝트 수용](milestone-project-acceptance.md) | `completed` | [두 게임의 검사·Player·사용자 승인과 다음 Phase 인계](../decisions/milestone-project-acceptance.md) |
+| 15 | [D6 새 PC 설치·로그인 검증](desktop-fresh-pc-validation.md) | `proposed` | 별도 Windows 환경의 N01~N07 실측 대기 |
 
 **Milestone 자동화 구현 순서 (2026-11-26).** [기술 검토서](../design/roadmap-pipeline-review.md)를 여섯 개의 구현 PLAN으로 나눴다. MA1→MA2에서 GitHub 없이 단일 슬롯 로컬 PoC를 끝내고, MA3에서 통합 기준 SHA를 만든 뒤 MA4의 병렬 실행, MA5의 Unity 검증, MA6의 두 게임 수용으로 이어간다. 데스크톱 전환을 보류한 뒤 MA1·MA2를 순서대로 검증했다. D4 상담은 선행 조건이 없고, D5의 제작 도구와 D6의 설치·배포는 해당 단계의 인계 지점에서 연결한다.
 
@@ -48,7 +46,9 @@
 
 ## 후속 단계
 
-2026-11-16 사용자가 지금까지의 데스크톱 전환 작업을 커밋하고 main에 반영·push하도록 지시했다. D1~D3 소스·설계·계획·공유용 검증 근거를 포함하며 로컬 실행 데이터와 빌드 산출물은 제외한다. 검증 시점의 미커밋 기록은 당시 이력으로 보존한다. GUI G01~G11 대기와 D4~D6 미착수 상태는 유지하며, 원격 반영 결과는 Git 이력과 origin/main을 따른다.
+현재 D4 변경은 `main`의 `f080480` 이후 로컬 소스·문서에 저장했으며 이번 변경은 commit/push하지 않았다. D1~D3의 최종 반영은 Git 이력을 따른다. 아래 원격 반영 요청은 이전 작업의 이력이다.
+
+2026-11-16 사용자가 당시까지의 데스크톱 전환 작업을 커밋하고 main에 반영·push하도록 지시했다. D1~D3 소스·설계·계획·공유용 검증 근거를 포함하며 로컬 실행 데이터와 빌드 산출물은 제외했다. 검증 시점의 미커밋 기록은 당시 이력으로 보존한다. 그 원격 반영 시점에는 GUI G01~G11 대기와 D4~D6 미착수 상태였으며, 이후 GUI 검증의 현재 상태는 위 목록을 따른다. 원격 반영 결과는 Git 이력과 origin/main을 따른다.
 
 다음은 설계상의 순서다. 상세 계획을 작성할 때 위 목록에 등록하며, 이 표만으로 구현 상태나 승인을 나타내지 않는다.
 
