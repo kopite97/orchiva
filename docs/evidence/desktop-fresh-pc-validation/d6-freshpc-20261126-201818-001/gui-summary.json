@@ -1,0 +1,58 @@
+{
+  "runId": "d6-freshpc-20261126-201818-001",
+  "scope": "Supplemental GUI on existing-tool PC, not fresh-PC acceptance",
+  "packageManifestSha256": "ff39605a940f03c1f9e5a48d173466db58d055906dc1e8433445cb1ac7aeb39d",
+  "profile": "%LOCALAPPDATA%/Orchiva.Desktop/runtime-v1",
+  "profileAbsentBeforeLaunch": true,
+  "endpoint": "127.0.0.1:52335",
+  "projectId": "cafdadbf-cd29-44f8-80ed-28d20572ce4a",
+  "projectName": "D6 GUI d6-freshpc-20261126-201818-001",
+  "projectSource": "<source>/.desktop-local/d6-freshpc-20261126-201818-001/sandbox/source",
+  "projectRegistered": true,
+  "projectInitialized": false,
+  "projectSourceFilesAfterTest": 0,
+  "appLaunches": 2,
+  "runtimeConnection": "pass; first launch UI reached connected by 20:37:23 KST; reopening reached connected by 20:42:10 KST",
+  "projectReload": "pass after explicit list refresh",
+  "projectsJsonSha256BeforeAndAfterReopen": "23618d55521705ef8f577fe8d356b0d849f73424f3bf1e67934596a058aae969",
+  "G01": {
+    "status": "not-run (remaining instantaneous startup observation)",
+    "observed": "No persistent console window in sampled inventories before/after two launches, while connected, or at cleanup; GUI connected successfully.",
+    "limitation": "Sampled windows and app screenshots do not prove absence of a momentary console flash during startup."
+  },
+  "G02_G11": {
+    "status": "environment-blocked",
+    "reason": "Windows Settings remained on gear splash with no accessibility tree across repeated observations. Explicit exe launch first reported no targetable window; ms-settings:display opened only the splash. Closed the test Settings window.",
+    "actualScalePercent": null,
+    "requestedScales": [100,150,200],
+    "scaleChanges": 0,
+    "restoration": "Not applicable: scale never changed.",
+    "visualLimitation": "Some small Korean glyph strokes appear broken in captured images; display scale/capture rendering cause not established. No readability pass claimed."
+  },
+  "G04": {
+    "status": "not-run (remaining full navigation acceptance)",
+    "observedPasses": ["Light and dark Settings contrast", "Tab from theme to close behavior with visible focus border", "Shift+Tab back to theme", "Down changed light to dark; Home restored system theme", "Tab showed project-navigation focus", "Project form entry and registration"],
+    "remaining": ["Full workspace tab order, Enter/Escape interaction", "Other pages and long text/contrast at requested scales"],
+    "accessibilityCaveat": "focused_element reported a stale text node; focus judgments used displayed visual border, not that field.",
+    "themeRestored": "system (theme=0); close behavior unchanged (close=0)"
+  },
+  "modelCalls": 0,
+  "sameCommandReinvocations": 0,
+  "logins": 0,
+  "logouts": 0,
+  "reboots": 0,
+  "networkFaultsInjected": 0,
+  "cleanup": {
+    "observedAt": "2026-11-26T20:42:58.9632958+09:00",
+    "method": "Close owned GUI, then bundled node/Paseo daemon stop --home <owned profile>/paseo after checking InstallRoot/IsolationRoot/PaseoHome",
+    "daemonStopExitCode": 0,
+    "remainingPackageProcesses": [],
+    "remainingTcp52335": [],
+    "remainingOrchivaOrSettingsWindows": [],
+    "projectHashUnchanged": true,
+    "authFileStillExists": true,
+    "preserved": ["Original ZIP", "Extracted package", "New profile/project registration", "Empty sandbox source/output", "Evidence screenshots"],
+    "existingDataDeleted": false,
+    "authContentsReadCopiedOrHashed": false
+  }
+}

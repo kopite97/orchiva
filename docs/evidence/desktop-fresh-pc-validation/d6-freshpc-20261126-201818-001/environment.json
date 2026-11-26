@@ -1,0 +1,37 @@
+{
+  "runId": "d6-freshpc-20261126-201818-001",
+  "observedAt": "2026-11-26T20:18:18.3105547+09:00",
+  "sourceCommit": "19741abec12cc7315281e5223604d7ddff5c7957",
+  "sourceBranch": "main",
+  "initialWorkingTree": "clean; user supplied package ZIP arrived later",
+  "methods": ["OS CIM", "Get-Command -All", "Uninstall registry names/versions", "Test-Path", "SDK directory names", "Git executable VersionInfo", "git --no-optional-locks status; git rev-parse HEAD"],
+  "os": {"caption": "Microsoft Windows 11 Home", "version": "10.0.26200", "build": "26200", "architecture": "AMD64"},
+  "tools": {
+    "node": {"present": true, "path": "%ProgramFiles%/nodejs/node.exe", "registryVersion": "24.14.0"},
+    "git": {"present": true, "path": "%ProgramFiles%/Git/cmd/git.exe", "fileVersion": "2.43.0.windows.1"},
+    "dotnet": {"present": true, "path": "%ProgramFiles%/dotnet/dotnet.exe", "sdkDirectories": ["8.0.101"]},
+    "codexCli": {"present": true, "path": "%APPDATA%/npm/codex.cmd", "version": null},
+    "npm": true, "npx": true, "winget": true, "choco": false, "scoop": false,
+    "codexDesktopBundledTools": ["git", "node", "codex", "rg", "pwsh"]
+  },
+  "pathExistenceOnly": {
+    "%USERPROFILE%/.codex": true,
+    "%USERPROFILE%/.codex/auth.json": true,
+    "%USERPROFILE%/.git-credentials": false,
+    "%APPDATA%/GitHub CLI/hosts.yml": false,
+    "%LOCALAPPDATA%/GitHub CLI/hosts.yml": false,
+    "%USERPROFILE%/.orchiva": false,
+    "%USERPROFILE%/.paseo-orchiva": false,
+    "%USERPROFILE%/.paseo": false,
+    "%LOCALAPPDATA%/Orchiva.Desktop": false,
+    "<source>/.desktop-local": false,
+    "<source>/.desktop-local/tools/dotnet/dotnet.exe": false,
+    "<source>/node_modules": false,
+    "%USERPROFILE%/.dotnet/dotnet.exe": false
+  },
+  "environmentVariablePresenceOnly": {"CODEX_HOME": false, "ORCHIVA_DESKTOP_CONFIG": false, "DOTNET_ROOT": false, "OPENAI_API_KEY": false},
+  "cleanEnvironment": {"result": "environment-blocked", "reasons": ["Development Node and .NET SDK pre-exist", "Git and Codex CLI pre-exist", "Codex auth file pre-exists; validity and auth method not inspected"]},
+  "scopeLimit": "Named locations/current-user context only; no whole-disk absence claim or credential-store enumeration. No auth content read, copied or hashed.",
+  "initialSurveySideEffects": {"installs": 0, "builds": 0, "appLaunches": 0, "productModelCalls": 0, "logins": 0, "logouts": 0, "deletions": 0},
+  "priorPc": "User reports prior uncommitted survey remains on previous PC; not imported or treated as this PC's evidence."
+}

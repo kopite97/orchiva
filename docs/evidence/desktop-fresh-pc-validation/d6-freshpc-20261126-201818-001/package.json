@@ -1,0 +1,32 @@
+{
+  "runId": "d6-freshpc-20261126-201818-001",
+  "archive": "<source>/d6-fresh-20261126-001-package.zip",
+  "archiveBytes": 401770305,
+  "archiveSha256": "34c27e396f4a0c8def749e5972d7eaf5c680d2ccf0f403e4d5c647b51d87a04e",
+  "archiveFilesIncludingManifest": 32641,
+  "archiveEntriesIncludingDirectories": 37051,
+  "archiveUnsafePathsLinksOrPrivateFilenames": 0,
+  "archiveCaseInsensitiveDuplicates": 0,
+  "extractedPackage": "<source>/.desktop-local/d6-freshpc-20261126-201818-001/received/d6-fresh-20261126-001-package",
+  "extractionCompletedAt": "2026-11-26T20:33:46.2787453+09:00",
+  "manifestSha256": "ff39605a940f03c1f9e5a48d173466db58d055906dc1e8433445cb1ac7aeb39d",
+  "expectedManifestMatched": true,
+  "version": "0.1.0-d6b-preview",
+  "platform": "win-x64",
+  "filesExcludingManifest": 32640,
+  "bytesExcludingManifest": 1154704642,
+  "claimedSourceCommit": "19741abec12cc7315281e5223604d7ddff5c7957",
+  "sourceProvenance": "User handoff; manifest has no sourceCommit field. Local source HEAD matches; compiled source provenance not independently proven.",
+  "verification": {
+    "result": "pass",
+    "command": "Existing Node 24.14.0: node scripts/package-desktop.mjs verify <extractedPackage>",
+    "exitCode": 0,
+    "stdout": {"files":32640,"bytes":1154704642,"version":"0.1.0-d6b-preview"},
+    "checks": ["Manifest fingerprint before and after extraction", "Schema", "Required files", "All file sizes and SHA-256", "Missing/extra files", "Manifest case-insensitive duplicates and path traversal", "Links", "Representative private filenames"],
+    "completedBy": "2026-11-26T20:36:53+09:00",
+    "installs": 0,
+    "builds": 0
+  },
+  "bundledVersions": {"node":"v26.13.0","paseo":"0.15.4","windowsAppSdk":"2.6.5","dotnet":"10.0.12"},
+  "buildWarningHandoff": "esbuild/msgpackr-extract/node-pty lifecycle approval warnings reported by user; manifest pass does not establish runtime functionality."
+}
