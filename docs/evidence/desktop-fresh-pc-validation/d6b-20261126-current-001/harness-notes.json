@@ -1,0 +1,20 @@
+{
+  "lastComparisonFailure": {
+    "mode": "verify",
+    "message": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n... Skipped lines\n\n  {\n    agents: [\n      {\n        id: '393d40ff-2606-40ec-a3af-f16b1300ccd4'\n      },\n...\n            hash: '7a5d8374161d51c9a504b160a9648731821d4598c6e387e5a33b046bf4dbad8b',\n+           id: null\n-           id: '0e57c0f1-2d7b-44b1-a17b-37a79a00c74f'\n          }\n        ]\n      }\n    ],\n    workspaces: [\n",
+    "at": "2026-11-26T12:05:11.261Z"
+  },
+  "restorationComparison": "Provider transcript may omit clientMessageId after restart; persisted conversation turn/message ID, exact message hash/count, agent/workspace/result/response/file identity remain checked.",
+  "localDriver": "driver.mjs (local run root)",
+  "commands": [
+    "node --import tsx scripts/desktop-integrated.mjs setup d6b-20261126-current-001",
+    "node .desktop-local/d6b-20261126-current-001/driver.mjs plan",
+    "node .desktop-local/d6b-20261126-current-001/driver.mjs start",
+    "node .desktop-local/d6b-20261126-current-001/driver.mjs conversation",
+    "node .desktop-local/d6b-20261126-current-001/driver.mjs review",
+    "node .desktop-local/d6b-20261126-current-001/driver.mjs conversation-reconcile",
+    "node .desktop-local/d6b-20261126-current-001/driver.mjs baseline",
+    "node .desktop-local/d6b-20261126-current-001/driver.mjs verify --proxy"
+  ],
+  "warning": "Historical execution commands; do not replay model commands. Driver and original state remain local, not a general product CLI."
+}

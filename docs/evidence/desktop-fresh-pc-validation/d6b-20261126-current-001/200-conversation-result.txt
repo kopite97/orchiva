@@ -1,0 +1,119 @@
+Window: "Orchiva", App: Orchiva.Desktop.exe.
+	0 window (창) Orchiva Secondary Actions: Raise
+		1 pane (창)
+			2 pane (창)
+				3 custom (사용자 지정) ID: Navigation
+					4 button (단추) 탐색 열기 ID: TogglePaneButton
+					5 window (창) Secondary Actions: Raise ID: PaneRoot
+						6 pane (창) ID: MenuItemsScrollViewer
+							7 group (그룹) ID: MenuItemsHost
+								8 list item (목록 항목) (selectable) 프로젝트 선택 ID: ProjectsNavigation
+								9 list item (목록 항목) (selectable) 작업 시작 ID: HomeNavigation
+								10 list item (목록 항목) (selectable) PLAN 이력 ID: HistoryNavigation
+								11 list item (목록 항목) (selectable) 프로젝트 지침 ID: InstructionsNavigation
+								12 list item (목록 항목) (selectable) 질문 / 상담 ID: ConversationNavigation
+						13 pane (창) ID: FooterItemsScrollViewer
+							14 group (그룹) ID: FooterMenuItemsHost
+								15 list item (목록 항목) (selectable) 기존 MVP 프로젝트
+								16 list item (목록 항목) (selectable) 기존 v2 이력
+								17 list item (목록 항목) (selectable) 연결 상태
+								18 list item (목록 항목) (selectable) 설정 ID: SettingsItem
+					19 status bar (상태 표시줄) ID: StatusBar
+						20 text (텍스트) 정보 아이콘 ID: StandardIcon
+						21 text (텍스트) 실행부 연결됨 ID: Title
+						22 text (텍스트) 작업실에서 프로젝트·지침·제작 PLAN을 관리합니다. ID: Message
+					115 pane (창)
+						116 text (텍스트) 질문 · 상담
+						117 status bar (상태 표시줄) ID: Notice
+							118 text (텍스트) 성공 아이콘 ID: StandardIcon
+							119 text (텍스트) 반영됨 ID: Title
+							120 text (텍스트) 대화 기록과 실행 상태를 확인했습니다. ID: Message
+						121 button (단추) 프로젝트 목록
+						122 combo box (콤보 상자) 프로젝트 ID: ProjectChoice
+						123 button (단추) 대화 목록 새로 고침
+						124 button (단추) 새 대화
+						125 text (텍스트) 원본 프로젝트 경로: C:\Dev\Orchiva\.desktop-local\d6b-20261126-current-001\시험 소스 ID: PathText
+						126 combo box (콤보 상자) 저장된 대화 ID: ConversationChoice
+						127 combo box (콤보 상자) (disabled) 모델 ID: ModelChoice
+						128 combo box (콤보 상자) (disabled) 추론 수준 ID: LevelChoice
+						129 combo box (콤보 상자) (disabled) 접근 권한 ID: AccessChoice
+						130 combo box (콤보 상자) (disabled) 승인 방식 ID: ApprovalChoice
+						131 text (텍스트) 현재 Codex는 보수적 승인(untrusted)을 지원하지 않습니다.
+						132 text (텍스트) 읽기 전용 · 승인 요청 없음 파일 쓰기와 명령의 네트워크 접근 제한 · 웹 검색 도구 꺼짐 · 조회 명령 사용 가능 추가 권한 요청을 허용하면 표시된 작업은 기존 제한을 넘을 수 있습니다. ID: PolicyText
+						133 text (텍스트) 수정 권한에서는 원본 프로젝트가 직접 바뀔 수 있습니다. 제작의 선택 반영·되돌리기는 이 대화에 적용되지 않습니다. 모델·권한·승인 방식 변경은 새 대화에서 적용합니다.
+						134 text (텍스트) 응답 완료 · 1개 턴 ID: StateText
+						135 combo box (콤보 상자) 대화 이력 · 턴 선택 ID: TurnChoice
+						136 text (텍스트) 사용자 도구 호출이나 파일 변경 없이 게임 튜토리얼을 짧고 명확하게 만드는 방법을 한국어 두 문장으로 설명해 주세요. ID: QuestionText
+						137 text (텍스트) 응답 튜토리얼은 꼭 필요한 조작과 목표만 한 번에 하나씩 알려 주고, 짧은 안내 직후 직접 해 보게 만드세요. 성공하면 즉시 피드백을 주고, 추가 설명은 필요할 때만 보여 주세요. ID: ResponseText
+						138 text field (편집) (settable, string) 메시지 ID: InputText
+							139 text (텍스트) 메시지
+						140 button (단추) 보내기 ID: SendButton
+						141 button (단추) 상태 새로 고침
+						142 button (단추) (disabled) 현재 작업 중단 ID: StopButton
+						143 text (텍스트) 실행 승인 요청
+						144 combo box (콤보 상자) 대기 중인 요청 ID: PermissionChoice
+						145 text (텍스트) 대기 중인 승인 요청이 없습니다. ID: PermissionText
+						146 combo box (콤보 상자) 응답 선택 ID: PermissionAction
+						147 button (단추) 선택한 승인 응답 보내기
+						148 text (텍스트) ID: JournalText
+						149 scroll bar (스크롤 막대) (settable, float) 세로 Value: 0 ID: VerticalScrollBar
+							182 button (단추) 세로 작은 감소 ID: VerticalSmallDecrease
+							183 button (단추) 세로 큰 감소 ID: VerticalLargeDecrease
+							184 button (단추) 세로 큰 증가 ID: VerticalLargeIncrease
+							185 button (단추) 세로 작은 증가 ID: VerticalSmallIncrease
+		37 title bar (제목 표시줄) (settable, string) Value: Orchiva
+			38 menu bar (메뉴 모음) 시스템 ID: MenuBar
+				43 menu item (메뉴 항목) 시스템
+			40 button (단추) 최소화
+			41 button (단추) 최대화
+			42 button (단추) 닫기
+
+Document text: ```
+
+프로젝트 선택
+
+작업 시작
+
+PLAN 이력
+
+프로젝트 지침
+
+질문 / 상담
+기존 MVP 프로젝트
+기존 v2 이력
+
+연결 상태
+설정
+
+
+실행부 연결됨
+작업실에서 프로젝트·지침·제작 PLAN을 관리합니다.
+질문 · 상담
+
+반영됨
+대화 기록과 실행 상태를 확인했습니다.
+프로젝트 목록
+대화 목록 새로 고침
+새 대화
+원본 프로젝트 경로: C:\Dev\Orchiva\.desktop-local\d6b-20261126-current-001\시험 소스
+현재 Codex는 보수적 승인(untrusted)을 지원하지 않습니다.
+읽기 전용 · 승인 요청 없음
+파일 쓰기와 명령의 네트워크 접근 제한 · 웹 검색 도구 꺼짐 · 조회 명령 사용 가능
+추가 권한 요청을 허용하면 표시된 작업은 기존 제한을 넘을 수 있습니다.
+수정 권한에서는 원본 프로젝트가 직접 바뀔 수 있습니다. 제작의 선택 반영·되돌리기는 이 대화에 적용되지 않습니다. 모델·권한·승인 방식 변경은 새 대화에서 적용합니다.
+응답 완료 · 1개 턴
+사용자
+도구 호출이나 파일 변경 없이 게임 튜토리얼을 짧고 명확하게 만드는 방법을 한국어 두 문장으로 설명해 주세요.
+응답
+튜토리얼은 꼭 필요한 조작과 목표만 한 번에 하나씩 알려 주고, 짧은 안내 직후 직접 해 보게 만드세요. 성공하면 즉시 피드백을 주고, 추가 설명은 필요할 때만 보여 주세요.
+메시지
+질문하거나 필요한 작업을 요청하세요.
+보내기
+상태 새로 고침
+현재 작업 중단
+실행 승인 요청
+대기 중인 승인 요청이 없습니다.
+선택한 승인 응답 보내기
+
+
+```

@@ -1,0 +1,7 @@
+{
+  "pid": 4876,
+  "backend": "127.0.0.1:60596",
+  "advertised": "127.0.0.1:54927",
+  "reason": "Owned loopback fault-injection proxy; public daemon run; UI handshake endpoints remain equal",
+  "time": "2026-11-26T21:04:57.8081654+09:00"
+}

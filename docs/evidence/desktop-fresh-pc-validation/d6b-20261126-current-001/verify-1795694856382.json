@@ -1,0 +1,82 @@
+{
+  "runId": "d6b-20261126-current-001",
+  "observedAt": "2026-11-26T12:07:36.382Z",
+  "agents": [
+    {
+      "id": "393d40ff-2606-40ec-a3af-f16b1300ccd4"
+    },
+    {
+      "id": "8f18d92c-dbbb-47e1-8513-876ee7e40b9c"
+    }
+  ],
+  "workspaces": [
+    {
+      "id": "wks_42bea964a966faae",
+      "kind": "worktree"
+    },
+    {
+      "id": "wks_fdb13b55153737a8",
+      "kind": "local_checkout"
+    }
+  ],
+  "turns": [
+    {
+      "agentId": "393d40ff-2606-40ec-a3af-f16b1300ccd4",
+      "messages": [
+        {
+          "id": null,
+          "hash": "b26ddbd7b65cc3a078c383229c7c0f2843c5b57ec28dceffeafe46445a6935a0"
+        }
+      ]
+    },
+    {
+      "agentId": "8f18d92c-dbbb-47e1-8513-876ee7e40b9c",
+      "messages": [
+        {
+          "id": null,
+          "hash": "7a5d8374161d51c9a504b160a9648731821d4598c6e387e5a33b046bf4dbad8b"
+        }
+      ]
+    }
+  ],
+  "request": {
+    "token": "d6b-20261126-current-001-coding",
+    "status": "completed",
+    "agentId": "393d40ff-2606-40ec-a3af-f16b1300ccd4",
+    "workspaceId": "wks_42bea964a966faae",
+    "resultId": "d382a05d-1a39-4908-ac67-b1aa399a14cb",
+    "results": [
+      "d382a05d-1a39-4908-ac67-b1aa399a14cb"
+    ],
+    "checks": [
+      {
+        "checkId": "auto-1",
+        "status": "passed",
+        "failureKind": null,
+        "inputFingerprint": "33331c9ba64266aad60d01cc013ba4046319671f9aa36257c7aea5ed3a60e25c",
+        "truncated": false,
+        "label": "프로젝트 테스트: checks/value.test.mjs",
+        "command": "node --test --test-isolation=none checks/value.test.mjs",
+        "passed": true,
+        "exitCode": 0,
+        "output": "✔ answer (0.61ms)\nℹ tests 1\nℹ suites 0\nℹ pass 1\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 7.7034\n",
+        "durationMs": 79
+      }
+    ],
+    "planHash": "c429fd21e3e7c49dc86cfe36751ba8aeb2a062cbc495793188b36f9ad7a7cedf",
+    "fileHash": "084c799cd551dd1d8d5c5f9a5d593b2e931f5e36122ee5c793c1d08a19839cc0"
+  },
+  "conversation": {
+    "id": "86205b25-1ab5-4f37-9fb6-4722fa8c2ace",
+    "agentId": "8f18d92c-dbbb-47e1-8513-876ee7e40b9c",
+    "turns": [
+      {
+        "id": "01049f79-9d4f-4135-ab41-95c9a8ff6515",
+        "messageId": "0e57c0f1-2d7b-44b1-a17b-37a79a00c74f",
+        "state": "answered"
+      }
+    ],
+    "responseHash": "ad893279e430a58b3130788c2347ebfe68771d724e0c6c33ff5c3182a2dff382",
+    "responseLength": 97
+  }
+}

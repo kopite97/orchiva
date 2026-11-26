@@ -1,0 +1,22 @@
+{
+  "runId": "d6b-20261126-current-001",
+  "observedAt": "2026-11-26T21:16:22.7729949+09:00",
+  "daemonStopExitCode": 0,
+  "ownedProcesses": [],
+  "ownedListeners": [],
+  "retained": [
+    "profile",
+    "시험 소스",
+    "결과물",
+    "current-pc.json",
+    "driver.mjs",
+    "network-proxy.mjs",
+    "network-events.json"
+  ],
+  "theme": 0,
+  "close": 0,
+  "primaryScaleRestored": 100,
+  "rebootPerformed": false,
+  "vmInstalled": false,
+  "manifestSha256": "ff39605a940f03c1f9e5a48d173466db58d055906dc1e8433445cb1ac7aeb39d"
+}

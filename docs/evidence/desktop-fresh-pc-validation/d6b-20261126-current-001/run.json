@@ -1,0 +1,17 @@
+{
+  "runId": "d6b-20261126-current-001",
+  "head": "4f45127a39b4e5878d40cbbd7d5d37301d7966c1",
+  "packageVersion": "0.1.0-d6b-preview",
+  "manifestSha256": "FF39605A940F03C1F9E5A48D173466DB58D055906DC1E8433445CB1AC7AEB39D",
+  "endpoint": "127.0.0.1:60596",
+  "authMode": "ChatGPT account (CLI status only)",
+  "budget": {
+    "approved": true,
+    "minutes": 30,
+    "started": false,
+    "turns": 3
+  },
+  "scope": "Current-PC N04-N07 and GUI; clean install N01-N03 deferred unless VM selected",
+  "profile": "isolated .desktop-local run; existing default profile unchanged",
+  "recordStage": "Preparation before first model turn; final outcome is summary.json"
+}

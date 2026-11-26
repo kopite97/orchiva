@@ -1,0 +1,228 @@
+{
+  "runId": "d6-fresh-20261126-001",
+  "capturedAt": "2026-11-26T20:09:41.0990051+09:00",
+  "stage": "Before any install/build/app launch by this chat",
+  "os": {
+    "caption": "Microsoft Windows 11 Home",
+    "version": "10.0.26300",
+    "build": "26300",
+    "architecture": "64비트",
+    "lastBoot": "2026-11-13T18:52:02.5+09:00"
+  },
+  "commands": [
+    {
+      "name": "git",
+      "present": true,
+      "paths": [
+        "C:\\Program Files\\Git\\cmd\\git.exe",
+        "C:\\Program Files\\WindowsApps\\OpenAI.CodexPrimaryRuntime.v26-1123-915-0_26.1123.915.0_x64__3k8sg7r9htsxt\\dependencies\\native\\git\\cmd\\git.exe"
+      ]
+    },
+    {
+      "name": "node",
+      "present": true,
+      "paths": [
+        "C:\\Program Files\\nodejs\\node.exe",
+        "C:\\Program Files\\WindowsApps\\OpenAI.CodexPrimaryRuntime.v26-1123-915-0_26.1123.915.0_x64__3k8sg7r9htsxt\\dependencies\\node\\bin\\node.exe"
+      ]
+    },
+    {
+      "name": "npm",
+      "present": true,
+      "paths": [
+        "C:\\Program Files\\nodejs\\npm.ps1",
+        "C:\\Program Files\\nodejs\\npm.cmd",
+        "C:\\Program Files\\nodejs\\npm"
+      ]
+    },
+    {
+      "name": "dotnet",
+      "present": false,
+      "paths": []
+    },
+    {
+      "name": "codex",
+      "present": true,
+      "paths": [
+        "%USERPROFILE%\\AppData\\Roaming\\npm\\codex.ps1",
+        "%USERPROFILE%\\AppData\\Roaming\\npm\\codex.cmd",
+        "%USERPROFILE%\\AppData\\Roaming\\npm\\codex",
+        "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.1120.6357.0_x64__2p2nqsd0c76g0\\app\\resources\\codex.exe"
+      ]
+    },
+    {
+      "name": "winget",
+      "present": true,
+      "paths": [
+        "%USERPROFILE%\\AppData\\Local\\Microsoft\\WindowsApps\\winget.exe"
+      ]
+    },
+    {
+      "name": "gh",
+      "present": true,
+      "paths": [
+        "C:\\Program Files\\GitHub CLI\\gh.exe"
+      ]
+    }
+  ],
+  "locations": [
+    {
+      "path": "%USERPROFILE%\\.orchiva",
+      "exists": false
+    },
+    {
+      "path": "%USERPROFILE%\\.paseo-orchiva",
+      "exists": false
+    },
+    {
+      "path": "%USERPROFILE%\\.codex\\auth.json",
+      "exists": true
+    },
+    {
+      "path": "%USERPROFILE%\\AppData\\Local\\Orchiva.Desktop",
+      "exists": true
+    },
+    {
+      "path": "C:/Program Files/dotnet",
+      "exists": false
+    },
+    {
+      "path": "C:/Program Files/nodejs",
+      "exists": true
+    },
+    {
+      "path": "C:/Program Files/Git",
+      "exists": true
+    },
+    {
+      "path": "C:/Dev/Orchiva/.desktop-local",
+      "exists": true
+    },
+    {
+      "path": "C:/Dev/Orchiva/node_modules",
+      "exists": true
+    },
+    {
+      "path": "C:/Dev/Orchiva/desktop/Orchiva.Desktop/bin",
+      "exists": true
+    }
+  ],
+  "installedProducts": [
+    {
+      "DisplayName": "Git",
+      "DisplayVersion": "2.56.0.3",
+      "Publisher": "The Git Development Community"
+    },
+    {
+      "DisplayName": "Node.js",
+      "DisplayVersion": "26.13.0",
+      "Publisher": "Node.js Foundation"
+    },
+    {
+      "DisplayName": "Microsoft Windows Application Compatibility Fix Database",
+      "DisplayVersion": null,
+      "Publisher": null
+    },
+    {
+      "DisplayName": "Logitech G HUB",
+      "DisplayVersion": "2026.7.1011216",
+      "Publisher": "Logitech"
+    },
+    {
+      "DisplayName": "GitHub CLI",
+      "DisplayVersion": "2.103.3",
+      "Publisher": "GitHub, Inc."
+    },
+    {
+      "DisplayName": "Microsoft Visual Studio Code (User)",
+      "DisplayVersion": "1.147.0",
+      "Publisher": "Microsoft Corporation"
+    }
+  ],
+  "processes": [
+    {
+      "Id": 19380,
+      "ProcessName": "codex"
+    },
+    {
+      "Id": 24976,
+      "ProcessName": "codex"
+    },
+    {
+      "Id": 14232,
+      "ProcessName": "codex-code-mode-host"
+    },
+    {
+      "Id": 26732,
+      "ProcessName": "codex-computer-use-swift"
+    },
+    {
+      "Id": 11396,
+      "ProcessName": "codex-windows-sandbox-service"
+    },
+    {
+      "Id": 21336,
+      "ProcessName": "node"
+    },
+    {
+      "Id": 22700,
+      "ProcessName": "node"
+    },
+    {
+      "Id": 42568,
+      "ProcessName": "node"
+    },
+    {
+      "Id": 20644,
+      "ProcessName": "node_repl"
+    },
+    {
+      "Id": 27312,
+      "ProcessName": "node_repl"
+    },
+    {
+      "Id": 43568,
+      "ProcessName": "node_repl"
+    }
+  ],
+  "environmentFlags": [
+    {
+      "name": "ORCHIVA_DESKTOP_CONFIG",
+      "present": false
+    },
+    {
+      "name": "ORCHIVA_DATA_DIR",
+      "present": false
+    },
+    {
+      "name": "PASEO_HOME",
+      "present": false
+    },
+    {
+      "name": "CODEX_HOME",
+      "present": false
+    },
+    {
+      "name": "NODE_PATH",
+      "present": false
+    }
+  ],
+  "gitHead": "19741abec12cc7315281e5223604d7ddff5c7957",
+  "notes": [
+    "Authentication file existence only; contents not accessed.",
+    "No development tools installed by this chat.",
+    "Bundled agent/tool runtimes are distinct from globally installed developer runtimes."
+  ],
+  "supplemental": {
+    "localDotnetSdk": "10.0.401",
+    "localDotnetPath": "C:/Dev/Orchiva/.desktop-local/tools/dotnet/dotnet.exe",
+    "git": "2.56.0.windows.3",
+    "node": "26.13.0",
+    "npm": "11.20.0",
+    "codex": "0.166.0",
+    "existingPackagedProfile": true,
+    "existingHistoricalPackages": true,
+    "freshEnvironmentEligible": false,
+    "reason": "Pre-existing developer runtimes, Git/Codex, auth file and Orchiva profile; cannot claim clean installation or unauthenticated baseline."
+  }
+}

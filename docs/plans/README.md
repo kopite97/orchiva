@@ -2,7 +2,7 @@
 
 기존 제품 범위는 [MVP 설계](../design/mvp-design.md), 후속 방향은 [데스크톱 인계](../design/desktop-handoff.md)와 [전환 설계안](../design/desktop-transition.md), 작업 절차는 [공통 흐름](../agents/workflow.md), 계획 작성·상태 규칙은 [계획 규칙](AGENTS.md)을 따른다.
 
-2026-11-26 통합 인계. MA1~MA6와 두 게임의 Polish 승인을 완료했다. 데스크톱 D1~D5 및 D6의 기존 PC 검증 기록을 합쳤다. UI-A와 Milestone 화면이 합쳐진 버전의 G01·G02·G04·G11은 새 데스크톱에서 다시 관측한다. Computer Use를 사용할 수 있다. [새 PC 설치·로그인 검증](desktop-fresh-pc-validation.md)은 아직 실측 전이다.
+2026-11-26 통합 인계 및 현재 PC 후속 시험 완료. MA1~MA6와 두 게임의 Polish 승인은 완료했으며 MA3 독립 리뷰는 후속이다. D6 원격·로컬 조사를 합치고 실제 PLAN·제작·상담, 창 종료/실행부 재시작 복원, 로컬 통신 장애/복구와 정리를 확인했다. 통합 WinUI의 100/150/200% 조작과 키보드 일부도 관측했다. 사용자 결정으로 깨끗한 설치/VM과 PC 재부팅은 후속이며, G01 순간 콘솔·G04 전체 경로 등 미관측 범위는 [D6 상세 PLAN](desktop-fresh-pc-validation.md)에 남겼다.
 
 ## 등록된 계획
 
@@ -16,14 +16,14 @@
 | 5 | [M4 조건별 판정·과거 결과](m4-evidence-review.md) | `completed` | 조건별 근거, 검사 변경, 결과 상세와 지문 확인 |
 | 6 | [M5 실패·재개·중복 명령](m5-recovery.md) | `completed` | 실패별 복구, 초기 재시도, 미확정 대조, 동일 세션 재개 |
 | 7 | [M6 통합 수용·장애·성능·사용 안내](m6-acceptance.md) | `completed` | A01~A16 수용, 저장/전송/프로세스 장애, 100건·30회 성능 및 30분 운영, 안내·사람 첫 사용 확인 |
-| 8 | [데스크톱 전환 D1~D6](desktop-transition.md) | `active` | D1~D5와 D6 기존 PC 검증 완료. 2026-11-26 새 PC 상세 단계 재개: N01~N07 환경 차단. 전달본 무결성·보조 연결/재열기/정리 통과, 배율 차단·GUI 잔여 및 정식 공개 배포 조건 남음 |
+| 8 | [데스크톱 전환 D1~D6](desktop-transition.md) | `active` | D1~D5 및 D6 기존 PC 검증과 통합 후 현재 PC N04/N06/N07 통과, N05 부분 통과. 깨끗한 설치/VM·재부팅·GUI 잔여·정식 공개 배포 조건은 후속 |
 | 9 | [MA1 로드맵 구간과 실행 입력 고정](milestone-scope.md) | `completed` | 선택 구간·Feature 1~5개·의존성·지침을 고정하고 작업실에서 미리보기 |
 | 10 | [MA2 Milestone 조율과 로컬 직렬 실행](milestone-local-run.md) | `completed` | 단건과 공존하는 한 슬롯 실행, Milestone별 조율, 결과 인계·재개까지 로컬 PoC |
 | 11 | [MA3 로컬 Git 통합과 GitHub 동기화](milestone-git-integration.md) | `completed` | [1인 승인으로 최신 필수 검사·PR 병합·Issue 종료 5/5](../decisions/milestone-git-integration.md). 실제 독립 리뷰 수용 항목은 미검증으로 보존 |
 | 12 | [MA4 자원 충돌을 고려한 제한 병렬 실행](milestone-parallel-execution.md) | `completed` | [A·B 실제 병렬, 공용 Scene 대기, A → B → C 로컬 통합과 고정 검사 3/3](../decisions/milestone-parallel-execution.md) |
 | 13 | [MA5 Unity 통합 검사·빌드와 플레이 검증](milestone-unity-validation.md) | `completed` | [MA4 통합 SHA의 Unity 검사·Windows Player 실행·실패 후 인계 복구](../decisions/milestone-unity-validation.md) |
 | 14 | [MA6 분야별 프로필 재사용과 프로젝트 수용](milestone-project-acceptance.md) | `completed` | [두 게임의 검사·Player·사용자 승인과 다음 Phase 인계](../decisions/milestone-project-acceptance.md) |
-| 15 | [D6 새 PC 설치·로그인 검증](desktop-fresh-pc-validation.md) | 8번 `active`에 통합 | `d6-freshpc-20261126-201818-001`: N01~N07 환경 차단, 전체 32,640파일 무결성 통과. 기존 PC 보조 연결·등록·idle 재열기·정리 통과. G02/G11 배율 차단, G01/G04 잔여 미실행. [근거](../decisions/desktop-fresh-pc-validation.md). 독립 active PLAN 아님 |
+| 15 | [D6 새 PC 설치·로그인 검증](desktop-fresh-pc-validation.md) | 8번 `active`에 통합 | 원격·로컬 기록 통합, `d6b-20261126-current-001` 정리 완료. 실제 3턴·중복 없음·로컬 통신 복구·100/150/200% 관측. N01~N03/VM·N05 재부팅은 사용자 결정으로 후속, G01/G04 등 잔여 명시. [근거](../decisions/desktop-fresh-pc-validation.md). 독립 active PLAN 아님 |
 
 **Milestone 자동화 구현 순서 (2026-11-26).** [기술 검토서](../design/roadmap-pipeline-review.md)를 여섯 개의 구현 PLAN으로 나눴다. MA1→MA2에서 GitHub 없이 단일 슬롯 로컬 PoC를 끝내고, MA3에서 통합 기준 SHA를 만든 뒤 MA4의 병렬 실행, MA5의 Unity 검증, MA6의 두 게임 수용으로 이어간다. 데스크톱 전환을 보류한 뒤 MA1·MA2를 순서대로 검증했다. D4 상담은 선행 조건이 없고, D5의 제작 도구와 D6의 설치·배포는 해당 단계의 인계 지점에서 연결한다.
 

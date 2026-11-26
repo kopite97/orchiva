@@ -1,0 +1,75 @@
+Window: "Orchiva", App: Orchiva.Desktop.exe.
+	0 window (창) Orchiva Secondary Actions: Raise
+		1 pane (창)
+			2 pane (창)
+				3 custom (사용자 지정) ID: Navigation
+					4 button (단추) 탐색 닫기 ID: TogglePaneButton
+						5 text (텍스트) ID: PaneTitleTextBlock
+					6 window (창) Secondary Actions: Raise ID: PaneRoot
+						7 text (텍스트) Orchiva
+						8 pane (창) ID: MenuItemsScrollViewer
+							9 group (그룹) ID: MenuItemsHost
+								10 list item (목록 항목) (selectable) 프로젝트 선택 ID: ProjectsNavigation
+								11 list item (목록 항목) (selectable) 작업 시작 ID: HomeNavigation
+								12 list item (목록 항목) (selectable) PLAN 이력 ID: HistoryNavigation
+								13 list item (목록 항목) (selectable) 프로젝트 지침 ID: InstructionsNavigation
+								14 list item (목록 항목) (selectable) 질문 / 상담 ID: ConversationNavigation
+						15 pane (창) ID: FooterItemsScrollViewer
+							16 group (그룹) ID: FooterMenuItemsHost
+								17 list item (목록 항목) (selectable) 기존 MVP 프로젝트
+								18 list item (목록 항목) (selectable) 기존 v2 이력
+								19 list item (목록 항목) (selectable) 연결 상태
+								20 list item (목록 항목) (selectable) 설정 ID: SettingsItem
+					21 status bar (상태 표시줄) ID: StatusBar
+						22 text (텍스트) 경고 아이콘 ID: StandardIcon
+						23 text (텍스트) 조회 실패 · 마지막 정보 유지 ID: Title
+						24 text (텍스트) 연결하지 못했습니다. 격리 실행부가 시작됐는지 확인한 뒤 다시 연결하세요. ID: Message
+					25 pane (창) ID: PageScroll
+						50 text (텍스트) 연결과 실행 준비
+						51 text (텍스트) 실행부 연결 상태를 확인하고 작업을 준비합니다.
+						52 text (텍스트) 실행부
+						53 text (텍스트) 실행부 시작 중
+						54 button (단추) (disabled) 격리 실행부 시작
+						55 button (단추) 다시 연결
+						56 button (단추) 연결 진단 상세
+							57 text (텍스트) 연결 진단 상세
+						58 text (텍스트) 연결 실패는 실행 실패를 의미하지 않습니다. 마지막으로 조회한 내용을 보존합니다.
+						37 text (텍스트)
+						38 scroll bar (스크롤 막대) (settable, float) 세로 Value: 0 ID: VerticalScrollBar
+		43 title bar (제목 표시줄) (settable, string) Value: Orchiva
+			44 menu bar (메뉴 모음) 시스템 ID: MenuBar
+				62 menu item (메뉴 항목) 시스템
+			46 button (단추) 최소화
+			47 button (단추) 최대화
+			48 button (단추) 닫기
+
+Document text: ```
+Orchiva
+
+프로젝트 선택
+
+작업 시작
+
+PLAN 이력
+
+프로젝트 지침
+
+질문 / 상담
+기존 MVP 프로젝트
+기존 v2 이력
+
+연결 상태
+설정
+
+
+조회 실패 · 마지막 정보 유지
+연결하지 못했습니다. 격리 실행부가 시작됐는지 확인한 뒤 다시 연결하세요.
+연결과 실행 준비
+실행부 연결 상태를 확인하고 작업을 준비합니다.
+실행부
+실행부 시작 중
+격리 실행부 시작
+다시 연결
+연결 진단 상세
+연결 실패는 실행 실패를 의미하지 않습니다. 마지막으로 조회한 내용을 보존합니다.
+```

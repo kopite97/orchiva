@@ -1,0 +1,88 @@
+{
+  "runId": "d6b-20261126-current-001",
+  "completedAt": "2026-11-26T12:16:04.400Z",
+  "sourceHead": "4f45127a39b4e5878d40cbbd7d5d37301d7966c1",
+  "packageVersion": "0.1.0-d6b-preview",
+  "manifestSha256": "ff39605a940f03c1f9e5a48d173466db58d055906dc1e8433445cb1ac7aeb39d",
+  "scope": "Current PC personal-use validation; not clean Windows installation acceptance",
+  "authMode": "ChatGPT account (CLI status only)",
+  "budget": {
+    "maxTurns": 3,
+    "maxMinutes": 30,
+    "startedAt": "2026-11-26T11:55:29.558Z",
+    "turns": [
+      {
+        "phase": "plan",
+        "reservedAt": "2026-11-26T11:55:29.559Z"
+      },
+      {
+        "phase": "production",
+        "reservedAt": "2026-11-26T11:56:42.607Z"
+      },
+      {
+        "phase": "conversation",
+        "reservedAt": "2026-11-26T11:57:58.924Z"
+      }
+    ],
+    "completedBefore": "2026-11-26T12:00:27.897Z",
+    "upperBoundElapsedSeconds": 298.339,
+    "actualApplicationTurns": 3,
+    "newTurnsAfterBaseline": 0,
+    "internalApiRequestsOrTokens": "not measured"
+  },
+  "projectId": "60531da9-dffa-4ede-83ed-7f6eeb02f6cb",
+  "resultId": "d382a05d-1a39-4908-ac67-b1aa399a14cb",
+  "conversationId": "86205b25-1ab5-4f37-9fb6-4722fa8c2ace",
+  "finalVerification": "verify-1795695225396.json",
+  "agents": 2,
+  "workspaces": 2,
+  "userMessagesPerAgent": [
+    1,
+    1
+  ],
+  "outputSha256": "084c799cd551dd1d8d5c5f9a5d593b2e931f5e36122ee5c793c1d08a19839cc0",
+  "conversationResponseSha256": "ad893279e430a58b3130788c2347ebfe68771d724e0c6c33ff5c3182a2dff382",
+  "outcomes": {
+    "N01": "deferred: existing tools and auth; VM later by user decision",
+    "N02": "deferred: installation transition not exercised",
+    "N03": "deferred: login transition not exercised; existing ChatGPT authentication reused",
+    "N04": "passed: real PLAN, production, review/export, consultation and command replay; SDK drives mutations, WinUI reads result",
+    "N05": "partial: active UI closure and idle daemon restart restored; PC reboot deferred by user",
+    "N06": "passed: owned local TCP app-daemon interruption and reconnect, unsent UI text and prior result preserved; provider WAN interruption not tested",
+    "N07": "passed: owned UI/daemon/proxy stopped, ports released; data retained"
+  },
+  "gui": {
+    "scales": [
+      100,
+      150,
+      200
+    ],
+    "scaleRestored": 100,
+    "secondaryMonitorChanged": false,
+    "settingsRestored": {
+      "theme": 0,
+      "close": 0
+    },
+    "settingsWindowClosed": true,
+    "G01": "partial: no sustained console in samples; user did not watch transient launch",
+    "G02_G11": "observed project/connection/workspace/conversation/history/settings at relevant 100/150/200% scales; compact/wide interaction works; not every page/size/theme Cartesian combination",
+    "G04": "partial: project Tab/Enter, history Tab/Enter auto-scroll, settings Tab/Shift+Tab/arrows/Enter/Space/Escape and light/dark focus observed; exhaustive integrated Milestone/media/editor keyboard routes remain",
+    "captureArtifact": "Some Hangul strokes absent in 150% captures of both Windows Settings and Orchiva. User confirms actual monitor text is normal; cause not established."
+  },
+  "failuresAndLimits": [
+    "Concurrent consultation send rejected with GLOBAL_EXECUTION_BUSY; same reserved command reconciled after production, one answered turn.",
+    "Proxy endpoint mismatch initially rejected by handshake; public daemon child advertised proxy endpoint to match UI while binding private backend. No product guard modified.",
+    "Driver initially used wrong SDK Agent entry shape; corrected to entry.agent.id.",
+    "After restart provider timeline can omit clientMessageId. Initial exact comparison failure retained locally; final verification accepts prior ID to null only and requires persisted conversation turn/message IDs, content hashes/counts and all other identities unchanged."
+  ],
+  "userDecisions": [
+    "PC reboot later",
+    "Actual monitor text normal",
+    "Finish current PC; VM later",
+    "Transient console not watched closely"
+  ],
+  "preservedLocalRoot": "C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001",
+  "sourceDataApplied": false,
+  "sourceCodeChanged": false,
+  "committedOrPushed": false
+}

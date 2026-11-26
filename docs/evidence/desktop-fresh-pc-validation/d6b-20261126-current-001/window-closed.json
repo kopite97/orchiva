@@ -1,0 +1,11 @@
+{
+  "time": "2026-11-26T20:57:00.1163815+09:00",
+  "uiPresent": false,
+  "ownedListener": [
+    {
+      "LocalAddress": "127.0.0.1",
+      "LocalPort": 60596,
+      "OwningProcess": 19608
+    }
+  ]
+}

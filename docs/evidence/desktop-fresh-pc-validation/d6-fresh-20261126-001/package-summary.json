@@ -1,0 +1,17 @@
+{
+  "sourceCommit": "19741abec12cc7315281e5223604d7ddff5c7957",
+  "version": "0.1.0-d6b-preview",
+  "packagePath": "C:/Dev/Orchiva/.desktop-local/d6-fresh-20261126-001-package",
+  "manifestSha256": "ff39605a940f03c1f9e5a48d173466db58d055906dc1e8433445cb1ac7aeb39d",
+  "files": 32640,
+  "bytes": 1154704642,
+  "buildExitCode": 0,
+  "fullManifestVerification": "passed by package-desktop.mjs build",
+  "appLaunched": false,
+  "modelCalls": 0,
+  "warnings": [
+    "Unsigned local validation build",
+    "npm lifecycle scripts for esbuild, msgpackr-extract and node-pty were not covered by allowScripts; native runtime behavior not tested"
+  ],
+  "status": "Prepared on existing development PC; fresh-PC acceptance not executed"
+}
