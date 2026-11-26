@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "rebootPerformed": false,
+  "settings": {
+    "theme": 0,
+    "close": 0
+  },
+  "scaleChangedThisRun": false,
+  "ownedProcesses": [],
+  "daemonStop": "public daemon stop --home for d6b-20261126-current-001, exit 0",
+  "vmPerformed": false,
+  "observedAt": "2026-11-26T22:10:43.4609768+09:00",
+  "preserved": [
+    "profile",
+    "source",
+    "output",
+    "failure evidence"
+  ],
+  "runId": "d6-gui-20261126-002",
+  "manifestSha256": "ff39605a940f03c1f9e5a48d173466db58d055906dc1e8433445cb1ac7aeb39d",
+  "listeners": []
+}

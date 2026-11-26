@@ -1,0 +1,93 @@
+Window: "Orchiva", App: Orchiva.Desktop.exe.
+	0 window (창) Orchiva Secondary Actions: Raise
+		1 pane (창)
+			2 pane (창)
+				3 custom (사용자 지정) ID: Navigation
+					4 button (단추) 탐색 닫기 ID: TogglePaneButton
+						5 text (텍스트) ID: PaneTitleTextBlock
+					6 window (창) Secondary Actions: Raise ID: PaneRoot
+						7 text (텍스트) Orchiva
+						8 pane (창) ID: MenuItemsScrollViewer
+							9 group (그룹) ID: MenuItemsHost
+								10 list item (목록 항목) (selectable) 프로젝트 선택 ID: ProjectsNavigation
+								11 list item (목록 항목) (selectable) 작업 시작 ID: HomeNavigation
+								12 list item (목록 항목) (selectable) PLAN 이력 ID: HistoryNavigation
+								13 list item (목록 항목) (selectable) 프로젝트 지침 ID: InstructionsNavigation
+								14 list item (목록 항목) (selectable) 질문 / 상담 ID: ConversationNavigation
+						15 pane (창) ID: FooterItemsScrollViewer
+							16 group (그룹) ID: FooterMenuItemsHost
+								17 list item (목록 항목) (selectable) 기존 MVP 프로젝트
+								18 list item (목록 항목) (selectable) 기존 v2 이력
+								19 list item (목록 항목) (selectable) 연결 상태
+								20 list item (목록 항목) (selectable) 설정 ID: SettingsItem
+					21 status bar (상태 표시줄) ID: StatusBar
+						22 text (텍스트) 정보 아이콘 ID: StandardIcon
+						23 text (텍스트) 실행부 연결됨 ID: Title
+						24 text (텍스트) 작업실에서 프로젝트·지침·제작 PLAN을 관리합니다. ID: Message
+					25 pane (창) ID: PageScroll
+						76 text (텍스트) 어떤 결과가 필요한가요? ID: PageTitle
+						77 text (텍스트) 입력을 저장하면 AI가 PLAN 템플릿의 내용을 작성합니다. ID: PageDescription
+						78 status bar (상태 표시줄) ID: Notice
+							79 text (텍스트) 성공 아이콘 ID: StandardIcon
+							80 text (텍스트) 반영됨 ID: Title
+							81 text (텍스트) 최신 파일과 실행 상태를 확인했습니다. ID: Message
+						389 text (텍스트) C:\Dev\Orchiva\.desktop-local\d6b-20261126-current-001\시험 소스 ID: ProjectLocation
+						398 text (텍스트) 새 초안 · 아직 저장하지 않았습니다. ID: RequestStatus
+						695 text field (편집) (settable, string) 요청 제목 ID: TitleInput
+							696 text (텍스트) 요청 제목
+						697 text field (편집) (settable, string) 원하는 결과 ID: GoalInput
+							698 text (텍스트) 원하는 결과
+						699 text field (편집) (settable, string) 작업 범위 ID: ScopeInput
+							700 text (텍스트) 작업 범위
+						701 text field (편집) (settable, string) 제약·참고 사항 ID: ConstraintsInput
+							702 text (텍스트) 제약·참고 사항
+						703 text (텍스트) 작업 대상
+						704 combo box (콤보 상자) 작업 분야 ID: Discipline
+						740 text (텍스트) 임시 절차적 생성: 아래 규격으로 시험용 자산을 만듭니다. 자유 문장의 화풍·음악·Unity 파티클을 생성하는 모델이 아닙니다. 수정 요청은 새 규격의 별도 결과를 만듭니다.
+						741 spinner (돌기) (settable, float) 이미지/프레임 너비 Value: 128 ID: MediaWidth
+							742 text (텍스트) 이미지/프레임 너비
+							743 text field (편집) (settable, string) 이미지/프레임 너비 최소8 최대1024 Value: 128 ID: InputBox
+						744 spinner (돌기) (settable, float) 이미지/프레임 높이 Value: 128 ID: MediaHeight
+							745 text (텍스트) 이미지/프레임 높이
+							746 text field (편집) (settable, string) 이미지/프레임 높이 최소8 최대1024 Value: 128 ID: InputBox
+						747 text field (편집) (settable, string) 색상 (#RRGGBB) Value: #55AAFF ID: MediaColor
+							748 text (텍스트) 색상 (#RRGGBB)
+						749 spinner (돌기) (settable, float) 음원/효과 길이(초) Value: 1 ID: MediaSeconds
+							750 text (텍스트) 음원/효과 길이(초)
+							751 text field (편집) (settable, string) 음원/효과 길이(초) 최소0.10000000149011612 최대10 Value: 1 ID: InputBox
+						752 spinner (돌기) (settable, float) 음원 주파수(Hz) Value: 440 ID: MediaFrequency
+							753 text (텍스트) 음원 주파수(Hz)
+							754 text field (편집) (settable, string) 음원 주파수(Hz) 최소40 최대12000 Value: 440 ID: InputBox
+						755 spinner (돌기) (settable, float) 효과 프레임 수 Value: 8 ID: MediaFrames
+							756 text (텍스트) 효과 프레임 수
+							757 text field (편집) (settable, string) 효과 프레임 수 최소2 최대16 Value: 8 ID: InputBox
+						758 text (텍스트) 아트: 투명 배경 원형 · 사운드: 44.1kHz 모노 사인파/페이드 · 효과: 가로 시트와 재생 정보 JSON. 선택한 분야에 해당하는 규격만 사용합니다.
+						705 combo box (콤보 상자) 요청 유형 ID: RequestMode
+						706 combo box (콤보 상자) 수정할 이전 작업 ID: ParentChoice
+						707 text (텍스트) 결과물과 실행 옵션
+						708 text field (편집) (settable, string) 결과물 하위 폴더 (선택) ID: OutputPathInput
+							709 text (텍스트) 결과물 하위 폴더 (선택)
+						710 combo box (콤보 상자) 모델 ID: ModelChoice
+						711 combo box (콤보 상자) 수준 ID: LevelChoice
+						712 combo box (콤보 상자) (disabled) 자동 확인 ID: ValidationChoice
+						713 text (텍스트) 파일 이름은 프로젝트 명명 지침을 따릅니다.
+						714 button (단추) 프로젝트 지침 보기
+						715 button (단추) 요청 저장
+						716 button (단추) AI로 PLAN 작성
+						717 button (단추) PLAN 확인 화면
+						37 text (텍스트) 마지막 조회 21:27:55 · 읽기 전용
+						38 scroll bar (스크롤 막대) (settable, float) 세로 Value: 230 ID: VerticalScrollBar
+							759 button (단추) 세로 작은 감소 ID: VerticalSmallDecrease
+							760 button (단추) 세로 큰 감소 ID: VerticalLargeDecrease
+							761 button (단추) 세로 큰 증가 ID: VerticalLargeIncrease
+							762 button (단추) 세로 작은 증가 ID: VerticalSmallIncrease
+		43 title bar (제목 표시줄) (settable, string) Value: Orchiva
+			44 menu bar (메뉴 모음) 시스템 ID: MenuBar
+				223 menu item (메뉴 항목) 시스템
+			46 button (단추) 최소화
+			47 button (단추) 최대화
+			48 button (단추) 닫기
+
+Document text: ```
+8
+```

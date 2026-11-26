@@ -1,0 +1,107 @@
+Window: "Orchiva", App: Orchiva.Desktop.exe.
+	0 window (창) Orchiva Secondary Actions: Raise
+		1 pane (창)
+			2 pane (창)
+				3 custom (사용자 지정) ID: Navigation
+					4 button (단추) 탐색 닫기 ID: TogglePaneButton
+						5 text (텍스트) ID: PaneTitleTextBlock
+					6 window (창) Secondary Actions: Raise ID: PaneRoot
+						7 text (텍스트) Orchiva
+						8 pane (창) ID: MenuItemsScrollViewer
+							9 group (그룹) ID: MenuItemsHost
+								10 list item (목록 항목) (selectable) 프로젝트 선택 ID: ProjectsNavigation
+								11 list item (목록 항목) (selectable) 작업 시작 ID: HomeNavigation
+								12 list item (목록 항목) (selectable) PLAN 이력 ID: HistoryNavigation
+								13 list item (목록 항목) (selectable) 프로젝트 지침 ID: InstructionsNavigation
+								14 list item (목록 항목) (selectable) 질문 / 상담 ID: ConversationNavigation
+						15 pane (창) ID: FooterItemsScrollViewer
+							16 group (그룹) ID: FooterMenuItemsHost
+								17 list item (목록 항목) (selectable) 기존 MVP 프로젝트
+								18 list item (목록 항목) (selectable) 기존 v2 이력
+								19 list item (목록 항목) (selectable) 연결 상태
+								20 list item (목록 항목) (selectable) 설정 ID: SettingsItem
+					21 status bar (상태 표시줄) ID: StatusBar
+						22 text (텍스트) 정보 아이콘 ID: StandardIcon
+						23 text (텍스트) 실행부 연결됨 ID: Title
+						24 text (텍스트) 작업실에서 프로젝트·지침·제작 PLAN을 관리합니다. ID: Message
+					25 pane (창) ID: PageScroll
+						76 text (텍스트) Milestone 자동화 ID: PageTitle
+						77 text (텍스트) 실행할 구간과 선행 작업을 확인하세요. ID: PageDescription
+						78 status bar (상태 표시줄) ID: Notice
+							79 text (텍스트) 경고 아이콘 ID: StandardIcon
+							80 text (텍스트) 확인 필요 · 입력 유지 ID: Title
+							81 text (텍스트) 편집한 로드맵을 먼저 저장하세요. ID: Message
+						174 text (텍스트) C:\Dev\Orchiva\.desktop-local\d6b-20261126-current-001\시험 소스 ID: ProjectLocation
+						175 text field (편집) (settable, string) 로드맵 JSON · docs/roadmap/roadmap.json Value: { "version": 1, "phases": [ { "id": "P01", "milestones": [ { "id": "M01", "features": [ { "id": "A", "title": "점수 규칙", "goal": "점수 규칙 문서를 작성한다.", "discipline": "planning", "outputs": [ "score.md" ] } ] } ] } ] } ID: RoadmapEditor
+							176 text (텍스트) 로드맵 JSON · docs/roadmap/roadmap.json
+						177 button (단추) 로드맵 저장
+						178 button (단추) 파일 다시 읽기
+						179 combo box (콤보 상자) Phase ID: RoadmapPhase
+						180 combo box (콤보 상자) 시작 Milestone ID: RoadmapFirst
+						181 combo box (콤보 상자) 종료 Milestone ID: RoadmapLast
+						182 button (단추) 구간 미리보기
+						183 combo box (콤보 상자) Milestone 실행 모델 ID: RunModel
+						184 combo box (콤보 상자) 추론 수준 ID: RunLevel
+						185 button (단추) Git 통합과 GitHub 동기화 ID: GitIntegrationPanel
+							186 text (텍스트) Git 통합과 GitHub 동기화
+							228 combo box (콤보 상자) 새 실행의 결과 반영 방식 ID: GitAcceptance
+							229 checkbox (확인란) Milestone 인계 전 Unity HUD 검사와 Windows Player 빌드 ID: UnityGateRequired
+							230 checkbox (확인란) 독립 Feature 최대 2개 병렬 실행 (로컬 통합) ID: ParallelWorkers
+							231 checkbox (확인란) 실패한 Feature 복구 중에도 독립 Feature 배정 ID: ContinueIndependent
+							232 text field (편집) (settable, string) 전용 로컬 통합 브랜치 Value: develop ID: GitTarget
+								233 text (텍스트) 전용 로컬 통합 브랜치
+							234 text field (편집) (settable, string) Feature 브랜치 접두사 Value: feature ID: GitPrefix
+								235 text (텍스트) Feature 브랜치 접두사
+							236 text field (편집) (settable, string) GitHub 저장소 (선택) ID: GitRepository
+								237 text (텍스트) GitHub 저장소 (선택)
+							238 text field (편집) (settable, string) GitHub 저장소 숫자 ID ID: GitRepoId
+								239 text (텍스트) GitHub 저장소 숫자 ID
+							240 text field (편집) (settable, string) 원격 시험 통합 브랜치 ID: GitBase
+								241 text (텍스트) 원격 시험 통합 브랜치
+							242 text field (편집) (settable, string) 필수 검사 이름 (쉼표로 구분) ID: GitChecks
+								243 text (텍스트) 필수 검사 이름 (쉼표로 구분)
+							244 button (단추) 프로젝트의 저장된 정책 읽기
+							245 button (단추) 기존 완료 실행의 통합 설정 고정
+							246 button (단추) 승인된 다음 Feature 통합
+							247 button (단추) 통합 SHA·Issue·PR 조회
+							248 combo box (콤보 상자) 게시할 Feature ID: GitFeature
+							249 text field (편집) (settable, string) GitHub에 공개할 PLAN ID: GitPublicPlan
+								250 text (텍스트) GitHub에 공개할 PLAN
+							251 text (텍스트) ID: GitReport
+							252 button (단추) 공개 PLAN 확인 후 Issue·PR 게시
+							253 button (단추) 원격 상태 대조
+							254 button (단추) 표시된 원격 편집 수용
+							255 button (단추) 표시된 원격본을 로컬 PLAN으로 교체
+							256 button (단추) 독립 리뷰·필수 검사 확인 후 PR 병합
+							257 button (단추) 승인 파일로 PR 기준 갱신
+							258 button (단추) 1인 개발 · 표시된 커밋의 병합 승인 (필수 검사 통과 시)
+						187 button (단추) 확인한 구간으로 실행 만들기
+						188 button (단추) 저장된 실행 목록
+						189 combo box (콤보 상자) 저장된 실행 ID: RunChoice
+						190 button (단추) 선택한 실행을 새 구간으로 재실행
+						191 button (단추) 진행 상황 조회
+						192 text (텍스트) ID: RunReport
+						193 combo box (콤보 상자) Feature 요청 ID: RunNode
+						194 button (단추) 선택한 통합 커밋의 Unity PLAN 검사
+						195 button (단추) 선택한 통합 커밋의 Unity 빌드·플레이 검사
+						196 button (단추) 선택한 Feature의 PLAN·결과 열기
+						197 button (단추) 신규 배정 일시중지
+						198 button (단추) 실행 취소 (worker 종료 후)
+						199 button (단추) 입력 확인 후 재개
+						200 text (텍스트) ID: RoadmapSummary
+						37 text (텍스트) 마지막 조회 21:27:55 · 읽기 전용
+						38 scroll bar (스크롤 막대) (settable, float) 세로 Value: 68 ID: VerticalScrollBar
+							259 button (단추) 세로 작은 감소 ID: VerticalSmallDecrease
+							260 button (단추) 세로 큰 감소 ID: VerticalLargeDecrease
+							261 button (단추) 세로 큰 증가 ID: VerticalLargeIncrease
+							262 button (단추) 세로 작은 증가 ID: VerticalSmallIncrease
+		43 title bar (제목 표시줄) (settable, string) Value: Orchiva
+			44 menu bar (메뉴 모음) 시스템 ID: MenuBar
+				223 menu item (메뉴 항목) 시스템
+			46 button (단추) 최소화
+			47 button (단추) 최대화
+			48 button (단추) 닫기
+
+Document text: ```
+feature
+```

@@ -2,7 +2,7 @@
 
 기존 제품 범위는 [MVP 설계](../design/mvp-design.md), 후속 방향은 [데스크톱 인계](../design/desktop-handoff.md)와 [전환 설계안](../design/desktop-transition.md), 작업 절차는 [공통 흐름](../agents/workflow.md), 계획 작성·상태 규칙은 [계획 규칙](AGENTS.md)을 따른다.
 
-2026-11-26 통합 인계 및 현재 PC 후속 시험 완료. MA1~MA6와 두 게임의 Polish 승인은 완료했으며 MA3 독립 리뷰는 후속이다. D6 원격·로컬 조사를 합치고 실제 PLAN·제작·상담, 창 종료/실행부 재시작 복원, 로컬 통신 장애/복구와 정리를 확인했다. 통합 WinUI의 100/150/200% 조작과 키보드 일부도 관측했다. 사용자 결정으로 깨끗한 설치/VM과 PC 재부팅은 후속이며, G01 순간 콘솔·G04 전체 경로 등 미관측 범위는 [D6 상세 PLAN](desktop-fresh-pc-validation.md)에 남겼다.
+2026-11-26 통합 인계 및 현재 PC 후속 시험 완료. MA1~MA6와 두 게임의 Polish 승인은 완료했으며 MA3 독립 리뷰는 후속이다. D6 원격·로컬 조사를 합치고 실제 PLAN·제작·상담, 창 종료/실행부 재시작 복원, 로컬 통신 장애/복구와 정리를 확인했다. 100/150/200% 조작 이후 `d6-gui-20261126-002`에서 G01 순간 콘솔 부재를 사용자 직접 관측으로 확인하고 G04 화면별 키보드 이동을 실제 배포본과 조건부 모의 GUI로 보완했다. 깨끗한 설치/VM과 PC 재부팅은 후속이며, 대비 수치·모든 상태/배율/테마 조합 전수와 실제 관측 범위는 [D6 상세 PLAN](desktop-fresh-pc-validation.md)에 구분했다.
 
 ## 등록된 계획
 
@@ -23,7 +23,7 @@
 | 12 | [MA4 자원 충돌을 고려한 제한 병렬 실행](milestone-parallel-execution.md) | `completed` | [A·B 실제 병렬, 공용 Scene 대기, A → B → C 로컬 통합과 고정 검사 3/3](../decisions/milestone-parallel-execution.md) |
 | 13 | [MA5 Unity 통합 검사·빌드와 플레이 검증](milestone-unity-validation.md) | `completed` | [MA4 통합 SHA의 Unity 검사·Windows Player 실행·실패 후 인계 복구](../decisions/milestone-unity-validation.md) |
 | 14 | [MA6 분야별 프로필 재사용과 프로젝트 수용](milestone-project-acceptance.md) | `completed` | [두 게임의 검사·Player·사용자 승인과 다음 Phase 인계](../decisions/milestone-project-acceptance.md) |
-| 15 | [D6 새 PC 설치·로그인 검증](desktop-fresh-pc-validation.md) | 8번 `active`에 통합 | 원격·로컬 기록 통합, `d6b-20261126-current-001` 정리 완료. 실제 3턴·중복 없음·로컬 통신 복구·100/150/200% 관측. N01~N03/VM·N05 재부팅은 사용자 결정으로 후속, G01/G04 등 잔여 명시. [근거](../decisions/desktop-fresh-pc-validation.md). 독립 active PLAN 아님 |
+| 15 | [D6 새 PC 설치·로그인 검증](desktop-fresh-pc-validation.md) | 8번 `active`에 통합 | 실제 3턴·중복 없음·통신 복구·100/150/200% 관측. G01 직접 관측·G04 화면별 키보드 확인 완료(조건부 모의 구분). N01~N03/VM·N05 재부팅·화면 조합 전수는 후속. [근거](../decisions/desktop-fresh-pc-validation.md). 독립 active PLAN 아님 |
 
 **Milestone 자동화 구현 순서 (2026-11-26).** [기술 검토서](../design/roadmap-pipeline-review.md)를 여섯 개의 구현 PLAN으로 나눴다. MA1→MA2에서 GitHub 없이 단일 슬롯 로컬 PoC를 끝내고, MA3에서 통합 기준 SHA를 만든 뒤 MA4의 병렬 실행, MA5의 Unity 검증, MA6의 두 게임 수용으로 이어간다. 데스크톱 전환을 보류한 뒤 MA1·MA2를 순서대로 검증했다. D4 상담은 선행 조건이 없고, D5의 제작 도구와 D6의 설치·배포는 해당 단계의 인계 지점에서 연결한다.
 

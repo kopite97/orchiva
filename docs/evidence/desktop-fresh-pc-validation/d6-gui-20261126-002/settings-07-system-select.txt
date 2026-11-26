@@ -1,0 +1,132 @@
+Window: "Orchiva", App: Orchiva.Desktop.exe.
+	0 window (창) Orchiva Secondary Actions: Raise
+		852 pane (창) 팝업 호스트
+			853 pane (창)
+				854 window (창) 팝업 Secondary Actions: Raise ID: Popup
+					855 button (단추) 닫기 ID: Light Dismiss
+					828 combo box (콤보 상자) 테마 Secondary Actions: Raise ID: ThemeChoice
+						856 list item (목록 항목) (selectable) 시스템 설정
+							857 text (텍스트) 시스템 설정
+						858 list item (목록 항목) (selectable) 밝게
+							859 text (텍스트) 밝게
+						860 list item (목록 항목) (selectable) 어둡게
+							861 text (텍스트) 어둡게
+						855 button (단추) 닫기 ID: Light Dismiss
+					829 text (텍스트) 창 닫기
+					830 text (텍스트) 닫기 버튼의 동작입니다.
+					831 combo box (콤보 상자) 닫기 버튼 동작 ID: CloseChoice
+					832 text (텍스트) 실행 도구 준비
+					833 button (단추) Git·Codex 설치와 인증 확인
+					834 text (텍스트) 상태만 확인하며 설치·로그인·인증 변경은 수행하지 않습니다. ID: ToolStatus
+					835 text (텍스트) 앱 종료는 화면과 연결 프로세스를 닫습니다. 실행 중인 제작 작업은 분리된 실행부에서 계속됩니다.
+					836 text (텍스트) 마지막 조회 21:27:55 · 읽기 전용
+					837 scroll bar (스크롤 막대) (settable, float) 세로 Value: 0 ID: VerticalScrollBar
+		1 pane (창)
+			2 pane (창)
+				3 custom (사용자 지정) ID: Navigation
+					4 button (단추) 탐색 닫기 ID: TogglePaneButton
+						5 text (텍스트) ID: PaneTitleTextBlock
+					6 window (창) Secondary Actions: Raise ID: PaneRoot
+						7 text (텍스트) Orchiva
+						8 pane (창) ID: MenuItemsScrollViewer
+							9 group (그룹) ID: MenuItemsHost
+								10 list item (목록 항목) (selectable) 프로젝트 선택 ID: ProjectsNavigation
+								11 list item (목록 항목) (selectable) 작업 시작 ID: HomeNavigation
+								12 list item (목록 항목) (selectable) PLAN 이력 ID: HistoryNavigation
+								13 list item (목록 항목) (selectable) 프로젝트 지침 ID: InstructionsNavigation
+								14 list item (목록 항목) (selectable) 질문 / 상담 ID: ConversationNavigation
+						15 pane (창) ID: FooterItemsScrollViewer
+							16 group (그룹) ID: FooterMenuItemsHost
+								17 list item (목록 항목) (selectable) 기존 MVP 프로젝트
+								18 list item (목록 항목) (selectable) 기존 v2 이력
+								19 list item (목록 항목) (selectable) 연결 상태
+								20 list item (목록 항목) (selectable) 설정 ID: SettingsItem
+					21 status bar (상태 표시줄) ID: StatusBar
+						22 text (텍스트) 정보 아이콘 ID: StandardIcon
+						23 text (텍스트) 실행부 연결됨 ID: Title
+						24 text (텍스트) 작업실에서 프로젝트·지침·제작 PLAN을 관리합니다. ID: Message
+					823 pane (창) ID: PageScroll
+						824 text (텍스트) 설정
+						825 text (텍스트) 화면 표시와 창을 닫을 때의 동작을 설정합니다.
+						826 text (텍스트) 테마
+						827 text (텍스트) 앱 전체에 적용합니다.
+						828 combo box (콤보 상자) 테마 Secondary Actions: Raise ID: ThemeChoice
+							856 list item (목록 항목) (selectable) 시스템 설정
+								857 text (텍스트) 시스템 설정
+							858 list item (목록 항목) (selectable) 밝게
+								859 text (텍스트) 밝게
+							860 list item (목록 항목) (selectable) 어둡게
+								861 text (텍스트) 어둡게
+							855 button (단추) 닫기 ID: Light Dismiss
+						829 text (텍스트) 창 닫기
+						830 text (텍스트) 닫기 버튼의 동작입니다.
+						831 combo box (콤보 상자) 닫기 버튼 동작 ID: CloseChoice
+						832 text (텍스트) 실행 도구 준비
+						833 button (단추) Git·Codex 설치와 인증 확인
+						834 text (텍스트) 상태만 확인하며 설치·로그인·인증 변경은 수행하지 않습니다. ID: ToolStatus
+						835 text (텍스트) 앱 종료는 화면과 연결 프로세스를 닫습니다. 실행 중인 제작 작업은 분리된 실행부에서 계속됩니다.
+						836 text (텍스트) 마지막 조회 21:27:55 · 읽기 전용
+						837 scroll bar (스크롤 막대) (settable, float) 세로 Value: 0 ID: VerticalScrollBar
+		43 title bar (제목 표시줄) (settable, string) Value: Orchiva
+			44 menu bar (메뉴 모음) 시스템 ID: MenuBar
+				223 menu item (메뉴 항목) 시스템
+			46 button (단추) 최소화
+			47 button (단추) 최대화
+			48 button (단추) 닫기
+		852 pane (창) 팝업 호스트
+			853 pane (창)
+				854 window (창) 팝업 Secondary Actions: Raise ID: Popup
+					855 button (단추) 닫기 ID: Light Dismiss
+					828 combo box (콤보 상자) 테마 Secondary Actions: Raise ID: ThemeChoice
+						856 list item (목록 항목) (selectable) 시스템 설정
+							857 text (텍스트) 시스템 설정
+						858 list item (목록 항목) (selectable) 밝게
+							859 text (텍스트) 밝게
+						860 list item (목록 항목) (selectable) 어둡게
+							861 text (텍스트) 어둡게
+						855 button (단추) 닫기 ID: Light Dismiss
+					829 text (텍스트) 창 닫기
+					830 text (텍스트) 닫기 버튼의 동작입니다.
+					831 combo box (콤보 상자) 닫기 버튼 동작 ID: CloseChoice
+					832 text (텍스트) 실행 도구 준비
+					833 button (단추) Git·Codex 설치와 인증 확인
+					834 text (텍스트) 상태만 확인하며 설치·로그인·인증 변경은 수행하지 않습니다. ID: ToolStatus
+					835 text (텍스트) 앱 종료는 화면과 연결 프로세스를 닫습니다. 실행 중인 제작 작업은 분리된 실행부에서 계속됩니다.
+					836 text (텍스트) 마지막 조회 21:27:55 · 읽기 전용
+					837 scroll bar (스크롤 막대) (settable, float) 세로 Value: 0 ID: VerticalScrollBar
+
+Document text: ```
+Orchiva
+
+프로젝트 선택
+
+작업 시작
+
+PLAN 이력
+
+프로젝트 지침
+
+질문 / 상담
+기존 MVP 프로젝트
+기존 v2 이력
+
+연결 상태
+설정
+
+
+실행부 연결됨
+작업실에서 프로젝트·지침·제작 PLAN을 관리합니다.
+화면 표시와 창을 닫을 때의 동작을 설정합니다.
+테마
+앱 전체에 적용합니다.
+시스템 설정
+밝게
+어둡게
+창 닫기
+닫기 버튼의 동작입니다.
+실행 도구 준비
+Git·Codex 설치와 인증 확인
+상태만 확인하며 설치·로그인·인증 변경은 수행하지 않습니다.
+앱 종료는 화면과 연결 프로세스를 닫습니다. 실행 중인 제작 작업은 분리된 실행부에서 계속됩니다.
+마지막 조회 21:27:55 · 읽기 전용
+```

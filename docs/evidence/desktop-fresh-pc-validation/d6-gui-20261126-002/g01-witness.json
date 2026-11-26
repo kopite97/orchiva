@@ -1,0 +1,12 @@
+{
+  "runId": "d6-gui-20261126-002",
+  "date": "2026-11-26",
+  "kind": "GUI and direct user observation",
+  "startupTrials": 1,
+  "scope": "Packaged Orchiva.exe start, isolated runtime start button, connection established",
+  "question": "방금 Orchiva 시작부터 ‘실행부 연결됨’까지 관측한 동안 검은 콘솔 창이 잠깐이라도 나타났나요?",
+  "userAnswer": "순간 노출 없이 정상",
+  "verdict": "passed for this observed startup",
+  "screenshots": ["g01-connected.png", "g01-after-start.png"],
+  "captureNote": "g01-connected.png filename is historical: it shows starting; g01-after-start.png shows connected. Still images alone do not establish absence of a transient window."
+}

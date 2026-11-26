@@ -55,6 +55,20 @@ public partial class App : Application
             else if (scenario == "권한 대기") { mock.Document["engine"]!["status"] = "needs-input"; await (Task)Access.Call(workspace, "LoadDocument", false)!; workspace.ShowPage("execution"); }
         };
         toolbar.Children.Add(scenarios);
+        var phaseKeyboard = new Button { Content = "Phase 키보드 검증" };
+        phaseKeyboard.Click += async (_, _) =>
+        {
+            try
+            {
+                await KeyboardFixture.ShowPhase(workspace, mock);
+                File.WriteAllText(Path.Combine(output, "keyboard-phase.json"), "{\"displayed\":true,\"synthetic\":true}");
+            }
+            catch (Exception error)
+            {
+                File.WriteAllText(Path.Combine(output, "keyboard-phase.json"), JsonSerializer.Serialize(new { displayed = false, error = error.ToString() }));
+            }
+        };
+        toolbar.Children.Add(phaseKeyboard);
         window.Content = null;
         var outer = new Grid(); outer.RowDefinitions.Add(new() { Height = GridLength.Auto }); outer.RowDefinitions.Add(new() { Height = new GridLength(1, GridUnitType.Star) });
         outer.Children.Add(toolbar); Grid.SetRow(root, 1); outer.Children.Add(root); window.Content = outer;

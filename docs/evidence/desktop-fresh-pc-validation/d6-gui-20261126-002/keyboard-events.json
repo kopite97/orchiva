@@ -1,0 +1,1268 @@
+[
+  {
+    "label": "connection-01-tab",
+    "key": "Tab",
+    "time": "2026-11-26T12:27:37.064Z",
+    "reportedFocus": "0 window (창) Orchiva Secondary Actions: Raise"
+  },
+  {
+    "label": "connection-02-tab",
+    "key": "Tab",
+    "time": "2026-11-26T12:27:49.294Z",
+    "reportedFocus": "0 window (창) Orchiva Secondary Actions: Raise"
+  },
+  {
+    "label": "connection-03-diagnostics",
+    "key": "Tab",
+    "time": "2026-11-26T12:28:00.896Z",
+    "reportedFocus": "2 pane (창)"
+  },
+  {
+    "label": "connection-04-expand",
+    "key": "Return",
+    "time": "2026-11-26T12:28:05.495Z",
+    "reportedFocus": "70 text (텍스트) 프로젝트 작업 연결 데이터: C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\profile\\data 실행부: C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\profile\\paseo 주소: 127.0.0.1:60596 서버: desktop-d5"
+  },
+  {
+    "label": "connection-05-detail-text",
+    "key": "Tab",
+    "time": "2026-11-26T12:28:12.362Z",
+    "reportedFocus": "70 text (텍스트) 프로젝트 작업 연결 데이터: C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\profile\\data 실행부: C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\profile\\paseo 주소: 127.0.0.1:60596 서버: desktop-d5"
+  },
+  {
+    "label": "navigation-01-projects",
+    "key": "Tab",
+    "time": "2026-11-26T12:28:18.693Z",
+    "reportedFocus": "70 text (텍스트) 프로젝트 작업 연결 데이터: C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\profile\\data 실행부: C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\profile\\paseo 주소: 127.0.0.1:60596 서버: desktop-d5"
+  },
+  {
+    "label": "projects-01-open",
+    "key": "Return",
+    "time": "2026-11-26T12:28:25.061Z",
+    "reportedFocus": "2 pane (창)"
+  },
+  {
+    "label": "projects-02-footer",
+    "key": "Tab",
+    "time": "2026-11-26T12:28:33.127Z",
+    "reportedFocus": "2 pane (창)"
+  },
+  {
+    "label": "projects-03-add",
+    "key": "Tab",
+    "time": "2026-11-26T12:28:38.543Z",
+    "reportedFocus": "2 pane (창)"
+  },
+  {
+    "label": "setup-01-open",
+    "key": "Return",
+    "time": "2026-11-26T12:28:45.440Z",
+    "reportedFocus": "89 text field (편집) (settable, string) 프로젝트 이름 ID: ProjectNameInput"
+  },
+  {
+    "label": "setup-03-back-list",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:29:07.423Z",
+    "reportedFocus": "89 text field (편집) (settable, string) 프로젝트 이름 ID: ProjectNameInput"
+  },
+  {
+    "label": "setup-04-preview-text",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:29:12.444Z",
+    "reportedFocus": "89 text field (편집) (settable, string) 프로젝트 이름 ID: ProjectNameInput"
+  },
+  {
+    "label": "setup-05-preview-button",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:29:17.208Z",
+    "reportedFocus": "89 text field (편집) (settable, string) 프로젝트 이름 ID: ProjectNameInput"
+  },
+  {
+    "label": "setup-06-register",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:29:21.843Z",
+    "reportedFocus": "89 text field (편집) (settable, string) 프로젝트 이름 ID: ProjectNameInput"
+  },
+  {
+    "label": "setup-07-source",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:29:26.759Z",
+    "reportedFocus": "89 text field (편집) (settable, string) 프로젝트 이름 ID: ProjectNameInput"
+  },
+  {
+    "label": "setup-08-name",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:29:31.408Z",
+    "reportedFocus": "89 text field (편집) (settable, string) 프로젝트 이름 ID: ProjectNameInput"
+  },
+  {
+    "label": "projects-04-list",
+    "key": "Tab",
+    "time": "2026-11-26T12:30:10.662Z",
+    "reportedFocus": "2 pane (창)"
+  },
+  {
+    "label": "home-01-open",
+    "key": "Return",
+    "time": "2026-11-26T12:30:15.142Z",
+    "reportedFocus": "0 window (창) Orchiva Secondary Actions: Raise"
+  },
+  {
+    "label": "projects-05-space-select",
+    "key": "space",
+    "time": "2026-11-26T12:30:32.310Z",
+    "reportedFocus": "0 window (창) Orchiva Secondary Actions: Raise"
+  },
+  {
+    "label": "projects-06-list-recheck",
+    "key": "Tab",
+    "time": "2026-11-26T12:30:43.309Z",
+    "reportedFocus": "2 pane (창)"
+  },
+  {
+    "label": "projects-07-space",
+    "key": "space",
+    "time": "2026-11-26T12:30:47.589Z",
+    "reportedFocus": "2 pane (창)"
+  },
+  {
+    "label": "home-03-new",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:31:13.757Z",
+    "reportedFocus": "2 pane (창)"
+  },
+  {
+    "label": "home-04-conversation",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:31:18.142Z",
+    "reportedFocus": "2 pane (창)"
+  },
+  {
+    "label": "home-05-effects",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:31:23.709Z",
+    "reportedFocus": "2 pane (창)"
+  },
+  {
+    "label": "home-06-sound",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:31:28.374Z",
+    "reportedFocus": "2 pane (창)"
+  },
+  {
+    "label": "home-07-art",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:31:35.191Z",
+    "reportedFocus": "2 pane (창)"
+  },
+  {
+    "label": "home-08-code",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:31:42.291Z",
+    "reportedFocus": "2 pane (창)"
+  },
+  {
+    "label": "home-09-planning",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:31:52.274Z",
+    "reportedFocus": "2 pane (창)"
+  },
+  {
+    "label": "home-10-configuration",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:31:56.792Z",
+    "reportedFocus": "2 pane (창)"
+  },
+  {
+    "label": "home-11-milestone",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:32:01.824Z",
+    "reportedFocus": "2 pane (창)"
+  },
+  {
+    "label": "milestone-01-open",
+    "key": "Return",
+    "time": "2026-11-26T12:32:07.057Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "milestone-03-save",
+    "key": "Tab",
+    "time": "2026-11-26T12:32:21.290Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "milestone-04-reload",
+    "key": "Tab",
+    "time": "2026-11-26T12:32:26.625Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "milestone-05-phase",
+    "key": "Tab",
+    "time": "2026-11-26T12:32:33.941Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "milestone-06-first",
+    "key": "Tab",
+    "time": "2026-11-26T12:32:40.308Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "milestone-07-last",
+    "key": "Tab",
+    "time": "2026-11-26T12:32:44.974Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "milestone-08-preview",
+    "key": "Tab",
+    "time": "2026-11-26T12:32:50.558Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "milestone-09-model",
+    "key": "Tab",
+    "time": "2026-11-26T12:33:20.825Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "milestone-10-level",
+    "key": "Tab",
+    "time": "2026-11-26T12:33:27.758Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "milestone-11-git-expander",
+    "key": "Tab",
+    "time": "2026-11-26T12:33:35.225Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "milestone-12-git-open",
+    "key": "Return",
+    "time": "2026-11-26T12:33:53.090Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "git-01-acceptance",
+    "key": "Tab",
+    "time": "2026-11-26T12:33:59.325Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "git-02-reopen",
+    "key": "Return",
+    "time": "2026-11-26T12:34:29.724Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "git-03-acceptance-visible",
+    "key": "Tab",
+    "time": "2026-11-26T12:34:36.025Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "git-04-unity",
+    "key": "Tab",
+    "time": "2026-11-26T12:34:43.657Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "git-05-parallel",
+    "key": "Tab",
+    "time": "2026-11-26T12:34:49.857Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "git-06-independent",
+    "key": "Tab",
+    "time": "2026-11-26T12:34:55.623Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "git-07-target",
+    "key": "Tab",
+    "time": "2026-11-26T12:35:02.207Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "git-08-prefix",
+    "key": "Tab",
+    "time": "2026-11-26T12:35:07.438Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "git-09-repository",
+    "key": "Tab",
+    "time": "2026-11-26T12:35:12.655Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "git-10-repository-id",
+    "key": "Tab",
+    "time": "2026-11-26T12:35:17.639Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "git-11-base",
+    "key": "Tab",
+    "time": "2026-11-26T12:35:23.603Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "git-12-checks",
+    "key": "Tab",
+    "time": "2026-11-26T12:35:28.539Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "git-13-policy",
+    "key": "Tab",
+    "time": "2026-11-26T12:35:33.836Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "git-14-configure",
+    "key": "Tab",
+    "time": "2026-11-26T12:35:40.322Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "git-15-configure-visible",
+    "key": "Tab",
+    "time": "2026-11-26T12:36:19.321Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "git-16-advance",
+    "key": "Tab",
+    "time": "2026-11-26T12:36:27.589Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "git-17-read",
+    "key": "Tab",
+    "time": "2026-11-26T12:36:32.604Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "git-18-feature",
+    "key": "Tab",
+    "time": "2026-11-26T12:36:38.150Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "git-19-public-plan",
+    "key": "Tab",
+    "time": "2026-11-26T12:36:43.631Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "git-20-publish",
+    "key": "Tab",
+    "time": "2026-11-26T12:36:49.315Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "git-21-observe",
+    "key": "Tab",
+    "time": "2026-11-26T12:36:55.301Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "git-22-adopt",
+    "key": "Tab",
+    "time": "2026-11-26T12:37:03.916Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "git-23-overwrite",
+    "key": "Tab",
+    "time": "2026-11-26T12:37:09.216Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "git-24-merge",
+    "key": "Tab",
+    "time": "2026-11-26T12:37:16.000Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "git-25-refresh-base",
+    "key": "Tab",
+    "time": "2026-11-26T12:37:21.966Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "git-26-owner-merge",
+    "key": "Tab",
+    "time": "2026-11-26T12:37:27.883Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "milestone-13-create",
+    "key": "Tab",
+    "time": "2026-11-26T12:37:34.233Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "milestone-14-list",
+    "key": "Tab",
+    "time": "2026-11-26T12:37:44.618Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "milestone-15-choice",
+    "key": "Tab",
+    "time": "2026-11-26T12:37:51.820Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "milestone-16-rerun",
+    "key": "Tab",
+    "time": "2026-11-26T12:37:58.469Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "milestone-17-status",
+    "key": "Tab",
+    "time": "2026-11-26T12:38:04.152Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "milestone-18-node",
+    "key": "Tab",
+    "time": "2026-11-26T12:38:12.136Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "milestone-19-unity-plan",
+    "key": "Tab",
+    "time": "2026-11-26T12:38:21.618Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "milestone-20-unity-build",
+    "key": "Tab",
+    "time": "2026-11-26T12:38:29.036Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "milestone-21-open-node",
+    "key": "Tab",
+    "time": "2026-11-26T12:38:39.550Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "milestone-22-pause",
+    "key": "Tab",
+    "time": "2026-11-26T12:38:48.237Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "milestone-23-cancel",
+    "key": "Tab",
+    "time": "2026-11-26T12:38:54.937Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "milestone-24-resume",
+    "key": "Tab",
+    "time": "2026-11-26T12:39:00.586Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "milestone-25-wrap",
+    "key": "Tab",
+    "time": "2026-11-26T12:39:07.236Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "instructions-01-list",
+    "key": "Tab",
+    "time": "2026-11-26T12:39:36.351Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "instructions-02-down",
+    "key": "Down",
+    "time": "2026-11-26T12:39:42.954Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "instructions-03-end",
+    "key": "End",
+    "time": "2026-11-26T12:39:49.516Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "instructions-04-path",
+    "key": "Tab",
+    "time": "2026-11-26T12:39:57.797Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "instructions-05-scope",
+    "key": "Tab",
+    "time": "2026-11-26T12:40:04.229Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "instructions-06-content",
+    "key": "Tab",
+    "time": "2026-11-26T12:40:11.297Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "instructions-07-save",
+    "key": "Tab",
+    "time": "2026-11-26T12:40:17.330Z",
+    "reportedFocus": "174 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "configuration-01-save",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:40:41.946Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "configuration-02-source-link",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:43:23.933Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "configuration-03-output",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:43:29.599Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "configuration-04-branch",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:43:35.882Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "history-02-new",
+    "key": "Tab",
+    "time": "2026-11-26T12:43:51.198Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "history-03-list",
+    "key": "Tab",
+    "time": "2026-11-26T12:44:00.599Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "history-04-select",
+    "key": "space",
+    "time": "2026-11-26T12:44:05.281Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "history-05-execution",
+    "key": "Tab",
+    "time": "2026-11-26T12:44:13.014Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "history-06-result",
+    "key": "Tab",
+    "time": "2026-11-26T12:44:19.878Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "history-07-legacy-expand",
+    "key": "Tab",
+    "time": "2026-11-26T12:44:28.378Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "history-08-legacy-open",
+    "key": "Return",
+    "time": "2026-11-26T12:44:35.245Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "history-09-legacy-fetch",
+    "key": "Tab",
+    "time": "2026-11-26T12:44:40.895Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "history-10-legacy-import",
+    "key": "Tab",
+    "time": "2026-11-26T12:44:46.644Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "plan-01-last",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:44:59.064Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "plan-02-run",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:45:04.746Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "plan-03-confirm",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:45:12.599Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "plan-04-reload",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:45:18.729Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "plan-05-instructions",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:45:25.814Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "plan-06-edit",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:45:30.449Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "plan-07-text",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:45:37.098Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "result-01-last",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:45:59.499Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "result-02-check",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:46:04.279Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "result-03-modify",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:46:11.913Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "result-04-approve",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:46:16.701Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "result-05-evidence",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:46:22.461Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "result-06-expand",
+    "key": "Return",
+    "time": "2026-11-26T12:46:28.713Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "result-07-evidence-text",
+    "key": "Tab",
+    "time": "2026-11-26T12:46:35.595Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "result-08-return-expander",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:46:40.696Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "result-09-memo",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:46:45.546Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "result-10-check-confirm",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:46:50.547Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "result-11-quality-confirm",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:46:55.797Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "apply-02-file",
+    "key": "Tab",
+    "time": "2026-11-26T12:47:20.461Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "apply-03-select-preview",
+    "key": "space",
+    "time": "2026-11-26T12:47:25.113Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "apply-04-preview-text",
+    "key": "Tab",
+    "time": "2026-11-26T12:47:34.944Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "apply-05-confirm",
+    "key": "Tab",
+    "time": "2026-11-26T12:47:40.461Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "apply-06-back",
+    "key": "Tab",
+    "time": "2026-11-26T12:47:45.626Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "request-01-last",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:48:07.692Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "request-02-ai-plan",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:48:13.027Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "request-03-save",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:48:18.067Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "request-04-instructions",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:48:24.329Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "request-05-validation",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:48:30.445Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "request-06-level",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:48:35.961Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "request-07-model",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:48:40.843Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "request-08-output",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:48:46.275Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "request-09-parent",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:48:51.476Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "request-10-type",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:48:56.462Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "request-11-domain",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:49:01.596Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "request-12-constraints",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:49:07.059Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "request-13-scope",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:49:12.312Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "request-14-goal",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:49:17.026Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "request-15-title",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:49:21.742Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "media-01-domain-down",
+    "key": "Down",
+    "time": "2026-11-26T12:49:32.969Z",
+    "reportedFocus": "708 text field (편집) (settable, string) 결과물 하위 폴더 (선택) ID: OutputPathInput"
+  },
+  {
+    "label": "media-02-art",
+    "key": "Return",
+    "time": "2026-11-26T12:49:39.375Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "media-03-width",
+    "key": "Tab",
+    "time": "2026-11-26T12:49:44.575Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "media-04-height",
+    "key": "Tab",
+    "time": "2026-11-26T12:49:52.509Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "media-05-color",
+    "key": "Tab",
+    "time": "2026-11-26T12:49:59.027Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "media-06-duration",
+    "key": "Tab",
+    "time": "2026-11-26T12:50:06.575Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "media-07-frequency",
+    "key": "Tab",
+    "time": "2026-11-26T12:50:14.406Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "media-08-frames",
+    "key": "Tab",
+    "time": "2026-11-26T12:50:19.259Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "media-09-exit-fields",
+    "key": "Tab",
+    "time": "2026-11-26T12:50:25.609Z",
+    "reportedFocus": "389 text (텍스트) C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: ProjectLocation"
+  },
+  {
+    "label": "conversation-01-project",
+    "key": "Tab",
+    "time": "2026-11-26T12:50:41.677Z",
+    "reportedFocus": "777 text (텍스트) 원본 프로젝트 경로: 선택 전 ID: PathText"
+  },
+  {
+    "label": "conversation-02-project-select",
+    "key": "Down",
+    "time": "2026-11-26T12:50:48.775Z",
+    "reportedFocus": "777 text (텍스트) 원본 프로젝트 경로: C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: PathText"
+  },
+  {
+    "label": "conversation-03-refresh",
+    "key": "Tab",
+    "time": "2026-11-26T12:50:54.225Z",
+    "reportedFocus": "777 text (텍스트) 원본 프로젝트 경로: C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: PathText"
+  },
+  {
+    "label": "conversation-04-reload",
+    "key": "Return",
+    "time": "2026-11-26T12:51:00.526Z",
+    "reportedFocus": "777 text (텍스트) 원본 프로젝트 경로: C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: PathText"
+  },
+  {
+    "label": "conversation-05-new",
+    "key": "Tab",
+    "time": "2026-11-26T12:51:05.393Z",
+    "reportedFocus": "777 text (텍스트) 원본 프로젝트 경로: C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: PathText"
+  },
+  {
+    "label": "conversation-06-stored",
+    "key": "Tab",
+    "time": "2026-11-26T12:51:27.958Z",
+    "reportedFocus": "777 text (텍스트) 원본 프로젝트 경로: C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: PathText"
+  },
+  {
+    "label": "conversation-07-select-existing",
+    "key": "Down",
+    "time": "2026-11-26T12:51:33.708Z",
+    "reportedFocus": "777 text (텍스트) 원본 프로젝트 경로: C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: PathText"
+  },
+  {
+    "label": "conversation-08-turn",
+    "key": "Tab",
+    "time": "2026-11-26T12:51:40.810Z",
+    "reportedFocus": "777 text (텍스트) 원본 프로젝트 경로: C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: PathText"
+  },
+  {
+    "label": "conversation-09-message",
+    "key": "Tab",
+    "time": "2026-11-26T12:51:47.225Z",
+    "reportedFocus": "777 text (텍스트) 원본 프로젝트 경로: C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: PathText"
+  },
+  {
+    "label": "conversation-10-send",
+    "key": "Tab",
+    "time": "2026-11-26T12:51:52.857Z",
+    "reportedFocus": "777 text (텍스트) 원본 프로젝트 경로: C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: PathText"
+  },
+  {
+    "label": "conversation-11-state-refresh",
+    "key": "Tab",
+    "time": "2026-11-26T12:51:58.927Z",
+    "reportedFocus": "777 text (텍스트) 원본 프로젝트 경로: C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: PathText"
+  },
+  {
+    "label": "conversation-12-permission-list",
+    "key": "Tab",
+    "time": "2026-11-26T12:52:05.342Z",
+    "reportedFocus": "777 text (텍스트) 원본 프로젝트 경로: C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: PathText"
+  },
+  {
+    "label": "conversation-13-permission-action",
+    "key": "Tab",
+    "time": "2026-11-26T12:52:11.008Z",
+    "reportedFocus": "777 text (텍스트) 원본 프로젝트 경로: C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: PathText"
+  },
+  {
+    "label": "conversation-14-permission-submit",
+    "key": "Tab",
+    "time": "2026-11-26T12:52:16.425Z",
+    "reportedFocus": "777 text (텍스트) 원본 프로젝트 경로: C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: PathText"
+  },
+  {
+    "label": "conversation-15-cycle",
+    "key": "Tab",
+    "time": "2026-11-26T12:52:21.558Z",
+    "reportedFocus": "777 text (텍스트) 원본 프로젝트 경로: C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: PathText"
+  },
+  {
+    "label": "conversation-draft-01-stored",
+    "key": "Tab",
+    "time": "2026-11-26T12:52:45.458Z",
+    "reportedFocus": "777 text (텍스트) 원본 프로젝트 경로: C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: PathText"
+  },
+  {
+    "label": "conversation-draft-02-model",
+    "key": "Tab",
+    "time": "2026-11-26T12:52:50.991Z",
+    "reportedFocus": "777 text (텍스트) 원본 프로젝트 경로: C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: PathText"
+  },
+  {
+    "label": "conversation-draft-03-level",
+    "key": "Tab",
+    "time": "2026-11-26T12:52:56.853Z",
+    "reportedFocus": "777 text (텍스트) 원본 프로젝트 경로: C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: PathText"
+  },
+  {
+    "label": "conversation-draft-04-access-focus-only",
+    "key": "Tab",
+    "time": "2026-11-26T12:53:02.354Z",
+    "reportedFocus": "777 text (텍스트) 원본 프로젝트 경로: C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: PathText"
+  },
+  {
+    "label": "conversation-draft-05-approval-focus-only",
+    "key": "Tab",
+    "time": "2026-11-26T12:53:09.735Z",
+    "reportedFocus": "777 text (텍스트) 원본 프로젝트 경로: C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\시험 소스 ID: PathText"
+  },
+  {
+    "label": "settings-01-theme",
+    "key": "Tab",
+    "time": "2026-11-26T12:53:27.537Z",
+    "reportedFocus": "834 text (텍스트) 상태만 확인하며 설치·로그인·인증 변경은 수행하지 않습니다. ID: ToolStatus"
+  },
+  {
+    "label": "settings-02-open-theme",
+    "key": "Return",
+    "time": "2026-11-26T12:53:33.434Z",
+    "reportedFocus": "834 text (텍스트) 상태만 확인하며 설치·로그인·인증 변경은 수행하지 않습니다. ID: ToolStatus"
+  },
+  {
+    "label": "settings-03-light-select",
+    "key": "Down",
+    "time": "2026-11-26T12:53:41.165Z",
+    "reportedFocus": "834 text (텍스트) 상태만 확인하며 설치·로그인·인증 변경은 수행하지 않습니다. ID: ToolStatus"
+  },
+  {
+    "label": "settings-04-light",
+    "key": "Return",
+    "time": "2026-11-26T12:53:47.585Z",
+    "reportedFocus": "834 text (텍스트) 상태만 확인하며 설치·로그인·인증 변경은 수행하지 않습니다. ID: ToolStatus"
+  },
+  {
+    "label": "settings-05-close",
+    "key": "Tab",
+    "time": "2026-11-26T12:53:52.583Z",
+    "reportedFocus": "834 text (텍스트) 상태만 확인하며 설치·로그인·인증 변경은 수행하지 않습니다. ID: ToolStatus"
+  },
+  {
+    "label": "settings-06-diagnostics",
+    "key": "Tab",
+    "time": "2026-11-26T12:53:57.340Z",
+    "reportedFocus": "834 text (텍스트) 상태만 확인하며 설치·로그인·인증 변경은 수행하지 않습니다. ID: ToolStatus"
+  },
+  {
+    "label": "settings-07-system-select",
+    "key": "Up",
+    "time": "2026-11-26T12:54:09.571Z",
+    "reportedFocus": "834 text (텍스트) 상태만 확인하며 설치·로그인·인증 변경은 수행하지 않습니다. ID: ToolStatus"
+  },
+  {
+    "label": "settings-08-restored",
+    "key": "Return",
+    "time": "2026-11-26T12:54:17.857Z",
+    "reportedFocus": "834 text (텍스트) 상태만 확인하며 설치·로그인·인증 변경은 수행하지 않습니다. ID: ToolStatus"
+  },
+  {
+    "label": "legacy-projects-01-refresh",
+    "key": "Tab",
+    "time": "2026-11-26T12:54:39.605Z",
+    "reportedFocus": "2 pane (창)"
+  },
+  {
+    "label": "legacy-history-01-disabled-skip",
+    "key": "Tab",
+    "time": "2026-11-26T12:54:50.622Z",
+    "reportedFocus": "886 text (텍스트) 목록에서 작업을 선택하면 PLAN과 보존된 결과를 확인할 수 있습니다."
+  },
+  {
+    "label": "shell-01-main-navigation",
+    "key": "Tab",
+    "time": "2026-11-26T12:54:57.385Z",
+    "reportedFocus": "886 text (텍스트) 목록에서 작업을 선택하면 PLAN과 보존된 결과를 확인할 수 있습니다."
+  },
+  {
+    "label": "shell-02-arrow-navigation",
+    "key": "Down",
+    "time": "2026-11-26T12:55:03.000Z",
+    "reportedFocus": "886 text (텍스트) 목록에서 작업을 선택하면 PLAN과 보존된 결과를 확인할 수 있습니다."
+  },
+  {
+    "label": "shell-03-open-workroom",
+    "key": "Return",
+    "time": "2026-11-26T12:55:09.201Z",
+    "reportedFocus": "2 pane (창)"
+  },
+  {
+    "label": "connection-06-start",
+    "key": "Tab",
+    "time": "2026-11-26T12:56:11.605Z",
+    "reportedFocus": "933 text (텍스트) 프로젝트 작업 연결 데이터: C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\profile\\data 실행부: C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\profile\\paseo 주소: 127.0.0.1:60596 서버: desktop-d5"
+  },
+  {
+    "label": "connection-07-reconnect",
+    "key": "Tab",
+    "time": "2026-11-26T12:56:18.203Z",
+    "reportedFocus": "933 text (텍스트) 프로젝트 작업 연결 데이터: C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\profile\\data 실행부: C:\\Dev\\Orchiva\\.desktop-local\\d6b-20261126-current-001\\profile\\paseo 주소: 127.0.0.1:60596 서버: desktop-d5"
+  },
+  {
+    "label": "mock-execution-01-refresh",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:57:34.635Z",
+    "reportedFocus": "86 text (텍스트) C:/UI-Fixture/한글 프로젝트/Source ID: ProjectLocation"
+  },
+  {
+    "label": "mock-execution-02-expander",
+    "key": "Tab",
+    "time": "2026-11-26T12:57:40.603Z",
+    "reportedFocus": "86 text (텍스트) C:/UI-Fixture/한글 프로젝트/Source ID: ProjectLocation"
+  },
+  {
+    "label": "mock-execution-03-pending-read",
+    "key": "Tab",
+    "time": "2026-11-26T12:57:46.168Z",
+    "reportedFocus": "86 text (텍스트) C:/UI-Fixture/한글 프로젝트/Source ID: ProjectLocation"
+  },
+  {
+    "label": "mock-execution-04-pending-choice",
+    "key": "Tab",
+    "time": "2026-11-26T12:57:53.369Z",
+    "reportedFocus": "86 text (텍스트) C:/UI-Fixture/한글 프로젝트/Source ID: ProjectLocation"
+  },
+  {
+    "label": "mock-execution-05-details",
+    "key": "Tab",
+    "time": "2026-11-26T12:57:58.970Z",
+    "reportedFocus": "86 text (텍스트) C:/UI-Fixture/한글 프로젝트/Source ID: ProjectLocation"
+  },
+  {
+    "label": "mock-execution-06-action-focus",
+    "key": "Tab",
+    "time": "2026-11-26T12:58:05.219Z",
+    "reportedFocus": "86 text (텍스트) C:/UI-Fixture/한글 프로젝트/Source ID: ProjectLocation"
+  },
+  {
+    "label": "mock-execution-07-confirm-focus",
+    "key": "Tab",
+    "time": "2026-11-26T12:58:12.020Z",
+    "reportedFocus": "86 text (텍스트) C:/UI-Fixture/한글 프로젝트/Source ID: ProjectLocation"
+  },
+  {
+    "label": "mock-execution-08-submit-focus",
+    "key": "Tab",
+    "time": "2026-11-26T12:58:17.753Z",
+    "reportedFocus": "86 text (텍스트) C:/UI-Fixture/한글 프로젝트/Source ID: ProjectLocation"
+  },
+  {
+    "label": "mock-execution-09-resume-input",
+    "key": "Tab",
+    "time": "2026-11-26T12:58:24.219Z",
+    "reportedFocus": "86 text (텍스트) C:/UI-Fixture/한글 프로젝트/Source ID: ProjectLocation"
+  },
+  {
+    "label": "mock-execution-10-resume",
+    "key": "Tab",
+    "time": "2026-11-26T12:58:32.419Z",
+    "reportedFocus": "86 text (텍스트) C:/UI-Fixture/한글 프로젝트/Source ID: ProjectLocation"
+  },
+  {
+    "label": "mock-execution-11-reconcile",
+    "key": "Tab",
+    "time": "2026-11-26T12:58:39.435Z",
+    "reportedFocus": "86 text (텍스트) C:/UI-Fixture/한글 프로젝트/Source ID: ProjectLocation"
+  },
+  {
+    "label": "mock-execution-12-retry",
+    "key": "Tab",
+    "time": "2026-11-26T12:58:47.902Z",
+    "reportedFocus": "86 text (텍스트) C:/UI-Fixture/한글 프로젝트/Source ID: ProjectLocation"
+  },
+  {
+    "label": "mock-execution-13-stop",
+    "key": "Tab",
+    "time": "2026-11-26T12:58:54.703Z",
+    "reportedFocus": "86 text (텍스트) C:/UI-Fixture/한글 프로젝트/Source ID: ProjectLocation"
+  },
+  {
+    "label": "mock-execution-14-result",
+    "key": "Tab",
+    "time": "2026-11-26T12:59:00.652Z",
+    "reportedFocus": "86 text (텍스트) C:/UI-Fixture/한글 프로젝트/Source ID: ProjectLocation"
+  },
+  {
+    "label": "mock-execution-15-plan",
+    "key": "Tab",
+    "time": "2026-11-26T12:59:07.585Z",
+    "reportedFocus": "86 text (텍스트) C:/UI-Fixture/한글 프로젝트/Source ID: ProjectLocation"
+  },
+  {
+    "label": "mock-execution-16-cycle",
+    "key": "Tab",
+    "time": "2026-11-26T12:59:31.785Z",
+    "reportedFocus": "86 text (텍스트) C:/UI-Fixture/한글 프로젝트/Source ID: ProjectLocation"
+  },
+  {
+    "label": "mock-apply-01-undo",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:59:53.267Z",
+    "reportedFocus": "86 text (텍스트) C:/UI-Fixture/한글 프로젝트/Source ID: ProjectLocation"
+  },
+  {
+    "label": "mock-apply-02-key",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T12:59:59.951Z",
+    "reportedFocus": "86 text (텍스트) C:/UI-Fixture/한글 프로젝트/Source ID: ProjectLocation"
+  },
+  {
+    "label": "mock-apply-03-continue",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T13:00:06.600Z",
+    "reportedFocus": "86 text (텍스트) C:/UI-Fixture/한글 프로젝트/Source ID: ProjectLocation"
+  },
+  {
+    "label": "mock-apply-04-choice",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T13:00:16.784Z",
+    "reportedFocus": "86 text (텍스트) C:/UI-Fixture/한글 프로젝트/Source ID: ProjectLocation"
+  },
+  {
+    "label": "mock-apply-05-history",
+    "key": "Shift_L+Tab",
+    "time": "2026-11-26T13:00:24.885Z",
+    "reportedFocus": "86 text (텍스트) C:/UI-Fixture/한글 프로젝트/Source ID: ProjectLocation"
+  },
+  {
+    "label": "mock-phase-02-note",
+    "key": "Tab",
+    "time": "2026-11-26T13:05:09.949Z",
+    "reportedFocus": "61 text (텍스트) C:/UI-Fixture/한글 프로젝트/Source ID: ProjectLocation"
+  },
+  {
+    "label": "mock-phase-03-approve",
+    "key": "Tab",
+    "time": "2026-11-26T13:05:17.815Z",
+    "reportedFocus": "61 text (텍스트) C:/UI-Fixture/한글 프로젝트/Source ID: ProjectLocation"
+  },
+  {
+    "label": "mock-phase-04-reject",
+    "key": "Tab",
+    "time": "2026-11-26T13:05:26.248Z",
+    "reportedFocus": "61 text (텍스트) C:/UI-Fixture/한글 프로젝트/Source ID: ProjectLocation"
+  },
+  {
+    "label": "mock-phase-05-exit",
+    "key": "Tab",
+    "time": "2026-11-26T13:05:33.247Z",
+    "reportedFocus": "61 text (텍스트) C:/UI-Fixture/한글 프로젝트/Source ID: ProjectLocation"
+  },
+  {
+    "label": "mock-phase-07-compact-note",
+    "key": "Tab",
+    "time": "2026-11-26T13:06:07.574Z",
+    "reportedFocus": "61 text (텍스트) C:/UI-Fixture/한글 프로젝트/Source ID: ProjectLocation"
+  },
+  {
+    "label": "mock-phase-08-compact-approve",
+    "key": "Tab",
+    "time": "2026-11-26T13:06:18.329Z",
+    "reportedFocus": "61 text (텍스트) C:/UI-Fixture/한글 프로젝트/Source ID: ProjectLocation"
+  },
+  {
+    "label": "mock-phase-09-compact-reject",
+    "key": "Tab",
+    "time": "2026-11-26T13:06:25.464Z",
+    "reportedFocus": "61 text (텍스트) C:/UI-Fixture/한글 프로젝트/Source ID: ProjectLocation"
+  },
+  {
+    "label": "mock-phase-10-escape",
+    "key": "Escape",
+    "time": "2026-11-26T13:06:46.894Z",
+    "reportedFocus": "61 text (텍스트) C:/UI-Fixture/한글 프로젝트/Source ID: ProjectLocation"
+  }
+]

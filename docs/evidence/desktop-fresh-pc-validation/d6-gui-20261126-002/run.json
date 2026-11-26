@@ -1,0 +1,8 @@
+{
+  "runId": "d6-gui-20261126-002",
+  "profileRun": "d6b-20261126-current-001",
+  "uiPid": 28480,
+  "startedAt": "2026-11-26T21:26:34.7648176+09:00",
+  "sourceHead": "f9473f8c5b7492efc7113a31a4cbeab264c5ae01",
+  "scope": "G01 startup human witness and G04 keyboard; no new model turns; reboot/VM deferred"
+}

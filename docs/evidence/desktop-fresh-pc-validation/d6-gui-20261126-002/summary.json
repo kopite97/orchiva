@@ -1,0 +1,47 @@
+{
+  "runId": "d6-gui-20261126-002",
+  "sourceHead": "f9473f8c5b7492efc7113a31a4cbeab264c5ae01",
+  "packageVersion": "0.1.0-d6b-preview",
+  "manifestSha256": "ff39605a940f03c1f9e5a48d173466db58d055906dc1e8433445cb1ac7aeb39d",
+  "profileRun": "d6b-20261126-current-001",
+  "G01": {
+    "verdict": "passed for one witnessed startup",
+    "witness": "순간 노출 없이 정상"
+  },
+  "G04": {
+    "verdict": "passed for documented per-screen keyboard paths",
+    "coverage": "README.md",
+    "keyboardEvents": 211,
+    "pngCaptures": 224,
+    "syntheticOnly": [
+      "execution and recovery",
+      "apply history and undo controls",
+      "conditional Phase review"
+    ],
+    "limits": [
+      "not every state/scale/theme combination",
+      "no numeric contrast measurement or screen-reader acceptance",
+      "high-impact actions focused, not invoked",
+      "page entry/focus seeding also used mouse"
+    ]
+  },
+  "models": {
+    "newTurns": 0,
+    "agents": 2,
+    "workspaces": 2,
+    "messages": [
+      1,
+      1
+    ]
+  },
+  "mockChecks": 21,
+  "mockPhaseDisplayed": true,
+  "changes": "test harness and documentation/evidence only; production source/package unchanged",
+  "cleanupPassed": true,
+  "deferred": [
+    "PC reboot",
+    "clean installation/VM",
+    "MA3 independent review"
+  ],
+  "git": "local changes, not committed or pushed"
+}

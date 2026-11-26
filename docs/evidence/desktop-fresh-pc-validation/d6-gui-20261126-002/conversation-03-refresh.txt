@@ -1,0 +1,114 @@
+Window: "Orchiva", App: Orchiva.Desktop.exe.
+	0 window (창) Orchiva Secondary Actions: Raise
+		1 pane (창)
+			2 pane (창)
+				3 custom (사용자 지정) ID: Navigation
+					4 button (단추) 탐색 닫기 ID: TogglePaneButton
+						5 text (텍스트) ID: PaneTitleTextBlock
+					6 window (창) Secondary Actions: Raise ID: PaneRoot
+						7 text (텍스트) Orchiva
+						8 pane (창) ID: MenuItemsScrollViewer
+							9 group (그룹) ID: MenuItemsHost
+								10 list item (목록 항목) (selectable) 프로젝트 선택 ID: ProjectsNavigation
+								11 list item (목록 항목) (selectable) 작업 시작 ID: HomeNavigation
+								12 list item (목록 항목) (selectable) PLAN 이력 ID: HistoryNavigation
+								13 list item (목록 항목) (selectable) 프로젝트 지침 ID: InstructionsNavigation
+								14 list item (목록 항목) (selectable) 질문 / 상담 ID: ConversationNavigation
+						15 pane (창) ID: FooterItemsScrollViewer
+							16 group (그룹) ID: FooterMenuItemsHost
+								17 list item (목록 항목) (selectable) 기존 MVP 프로젝트
+								18 list item (목록 항목) (selectable) 기존 v2 이력
+								19 list item (목록 항목) (selectable) 연결 상태
+								20 list item (목록 항목) (selectable) 설정 ID: SettingsItem
+					21 status bar (상태 표시줄) ID: StatusBar
+						22 text (텍스트) 정보 아이콘 ID: StandardIcon
+						23 text (텍스트) 실행부 연결됨 ID: Title
+						24 text (텍스트) 작업실에서 프로젝트·지침·제작 PLAN을 관리합니다. ID: Message
+					767 pane (창)
+						768 text (텍스트) 질문 · 상담
+						769 status bar (상태 표시줄) ID: Notice
+							770 text (텍스트) 성공 아이콘 ID: StandardIcon
+							771 text (텍스트) 반영됨 ID: Title
+							772 text (텍스트) 대화 기록과 실행 상태를 확인했습니다. ID: Message
+						773 button (단추) 프로젝트 목록
+						774 combo box (콤보 상자) 프로젝트 ID: ProjectChoice
+						775 button (단추) 대화 목록 새로 고침
+						776 button (단추) 새 대화
+						777 text (텍스트) 원본 프로젝트 경로: C:\Dev\Orchiva\.desktop-local\d6b-20261126-current-001\시험 소스 ID: PathText
+						778 combo box (콤보 상자) 저장된 대화 ID: ConversationChoice
+						779 combo box (콤보 상자) 모델 ID: ModelChoice
+						780 combo box (콤보 상자) 추론 수준 ID: LevelChoice
+						781 combo box (콤보 상자) 접근 권한 ID: AccessChoice
+						782 combo box (콤보 상자) 승인 방식 ID: ApprovalChoice
+						783 text (텍스트) 현재 Codex는 보수적 승인(untrusted)을 지원하지 않습니다.
+						784 text (텍스트) 읽기 전용 · 필요 시 승인 파일 쓰기와 명령의 네트워크 접근 제한 · 웹 검색 도구 꺼짐 · 조회 명령 사용 가능 추가 권한 요청을 허용하면 표시된 작업은 기존 제한을 넘을 수 있습니다. ID: PolicyText
+						785 text (텍스트) 수정 권한에서는 원본 프로젝트가 직접 바뀔 수 있습니다. 제작의 선택 반영·되돌리기는 이 대화에 적용되지 않습니다. 모델·권한·승인 방식 변경은 새 대화에서 적용합니다.
+						786 text (텍스트) 새 대화 · 아직 저장하지 않았습니다. ID: StateText
+						787 combo box (콤보 상자) 대화 이력 · 턴 선택 ID: TurnChoice
+						788 text (텍스트) 질문이 여기에 표시됩니다. ID: QuestionText
+						789 text (텍스트) 답변이 여기에 표시됩니다. ID: ResponseText
+						790 text field (편집) (settable, string) 메시지 ID: InputText
+							791 text (텍스트) 메시지
+						792 button (단추) 보내기 ID: SendButton
+						793 button (단추) 상태 새로 고침
+						794 button (단추) (disabled) 현재 작업 중단 ID: StopButton
+						795 text (텍스트) 실행 승인 요청
+						796 combo box (콤보 상자) 대기 중인 요청 ID: PermissionChoice
+						797 text (텍스트) 대기 중인 승인 요청이 없습니다. ID: PermissionText
+						798 combo box (콤보 상자) 응답 선택 ID: PermissionAction
+						799 button (단추) 선택한 승인 응답 보내기
+						800 text (텍스트) ID: JournalText
+						801 scroll bar (스크롤 막대) (settable, float) 세로 Value: 0 ID: VerticalScrollBar
+		43 title bar (제목 표시줄) (settable, string) Value: Orchiva
+			44 menu bar (메뉴 모음) 시스템 ID: MenuBar
+				223 menu item (메뉴 항목) 시스템
+			46 button (단추) 최소화
+			47 button (단추) 최대화
+			48 button (단추) 닫기
+
+Document text: ```
+Orchiva
+
+프로젝트 선택
+
+작업 시작
+
+PLAN 이력
+
+프로젝트 지침
+
+질문 / 상담
+기존 MVP 프로젝트
+기존 v2 이력
+
+연결 상태
+설정
+
+
+실행부 연결됨
+작업실에서 프로젝트·지침·제작 PLAN을 관리합니다.
+질문 · 상담
+
+반영됨
+대화 기록과 실행 상태를 확인했습니다.
+프로젝트 목록
+대화 목록 새로 고침
+새 대화
+원본 프로젝트 경로: C:\Dev\Orchiva\.desktop-local\d6b-20261126-current-001\시험 소스
+현재 Codex는 보수적 승인(untrusted)을 지원하지 않습니다.
+읽기 전용 · 필요 시 승인
+파일 쓰기와 명령의 네트워크 접근 제한 · 웹 검색 도구 꺼짐 · 조회 명령 사용 가능
+추가 권한 요청을 허용하면 표시된 작업은 기존 제한을 넘을 수 있습니다.
+수정 권한에서는 원본 프로젝트가 직접 바뀔 수 있습니다. 제작의 선택 반영·되돌리기는 이 대화에 적용되지 않습니다. 모델·권한·승인 방식 변경은 새 대화에서 적용합니다.
+새 대화 · 아직 저장하지 않았습니다.
+질문이 여기에 표시됩니다.
+답변이 여기에 표시됩니다.
+메시지
+질문하거나 필요한 작업을 요청하세요.
+보내기
+상태 새로 고침
+현재 작업 중단
+실행 승인 요청
+대기 중인 승인 요청이 없습니다.
+선택한 승인 응답 보내기
+```

@@ -1,0 +1,111 @@
+Window: "Orchiva", App: Orchiva.Desktop.exe.
+	0 window (창) Orchiva Secondary Actions: Raise
+		1 pane (창)
+			2 pane (창)
+				3 custom (사용자 지정) ID: Navigation
+					4 button (단추) 탐색 닫기 ID: TogglePaneButton
+						5 text (텍스트) ID: PaneTitleTextBlock
+					6 window (창) Secondary Actions: Raise ID: PaneRoot
+						7 text (텍스트) Orchiva
+						8 pane (창) ID: MenuItemsScrollViewer
+							9 group (그룹) ID: MenuItemsHost
+								10 list item (목록 항목) (selectable) 프로젝트 선택 ID: ProjectsNavigation
+								11 list item (목록 항목) (selectable) 작업 시작 ID: HomeNavigation
+								12 list item (목록 항목) (selectable) PLAN 이력 ID: HistoryNavigation
+								13 list item (목록 항목) (selectable) 프로젝트 지침 ID: InstructionsNavigation
+								14 list item (목록 항목) (selectable) 질문 / 상담 ID: ConversationNavigation
+						15 pane (창) ID: FooterItemsScrollViewer
+							16 group (그룹) ID: FooterMenuItemsHost
+								17 list item (목록 항목) (selectable) 기존 MVP 프로젝트
+								18 list item (목록 항목) (selectable) 기존 v2 이력
+								19 list item (목록 항목) (selectable) 연결 상태
+								20 list item (목록 항목) (selectable) 설정 ID: SettingsItem
+					21 status bar (상태 표시줄) ID: StatusBar
+						22 text (텍스트) 정보 아이콘 ID: StandardIcon
+						23 text (텍스트) 실행부 연결됨 ID: Title
+						24 text (텍스트) 작업실에서 프로젝트·지침·제작 PLAN을 관리합니다. ID: Message
+					25 pane (창) ID: PageScroll
+						76 text (텍스트) PLAN 이력 ID: PageTitle
+						77 text (텍스트) 요청부터 실행·검토·소스 반영까지 이어서 확인합니다. ID: PageDescription
+						78 status bar (상태 표시줄) ID: Notice
+							79 text (텍스트) 성공 아이콘 ID: StandardIcon
+							80 text (텍스트) 반영됨 ID: Title
+							81 text (텍스트) 최신 파일과 실행 상태를 확인했습니다. ID: Message
+						389 text (텍스트) C:\Dev\Orchiva\.desktop-local\d6b-20261126-current-001\시험 소스 ID: ProjectLocation
+						398 text (텍스트) 완료 · 저장 버전 18 · d6b-20261126-current-001-coding PLAN 작성: 작성 완료 ID: RequestStatus
+						399 button (단추) 작업 이력 불러오기
+						400 button (단추) 새 요청 작성
+						401 list (목록) 프로젝트 PLAN 이력 ID: RequestChoice
+							419 list item (목록 항목) (selectable) D6 개인 사용 실제 제작 검증 · 완료
+								420 text (텍스트) D6 개인 사용 실제 제작 검증 · 완료
+						404 text (텍스트) 선택한 PLAN의 이력
+						405 text (텍스트) PLAN 1 · 2026-11-26T11:56:10.811Z docs/plans/plan-d6b-20261126-current-001-coding.md 결과 · d382a05d-1a39-4908-ac67-b1aa399a14cb 2026-11-26T11:58:06.673Z 검토 · d382a05d-1a39-4908-ac67-b1aa399a14cb 완료 승인 · 2026-11-26T11:58:36.864Z 고정된 검사와 answer.txt 실제 byte 확인 내보내기 C:\Dev\Orchiva\.desktop-local\d6b-20261126-current-001\결과물\plan-d6b-20261126-current-001-coding\d382a05d-1a39-4908-ac67-b1aa399a14cb ID: HistorySummary
+						406 button (단추) PLAN 열기
+						407 button (단추) 실행 / 복구
+						408 button (단추) 결과 상세
+						409 button (단추) 기존 v2 이력 가져오기
+							410 text (텍스트) 기존 v2 이력 가져오기
+							421 text field (편집) (settable, string) 연결된 실행부의 기존 요청 식별자 ID: LegacyToken
+								422 text (텍스트) 연결된 실행부의 기존 요청 식별자
+							423 button (단추) 원본을 보존하고 보관용 이력 가져오기
+						37 text (텍스트) 마지막 조회 21:27:55 · 읽기 전용
+						38 scroll bar (스크롤 막대) (settable, float) 세로 Value: 268 ID: VerticalScrollBar
+		43 title bar (제목 표시줄) (settable, string) Value: Orchiva
+			44 menu bar (메뉴 모음) 시스템 ID: MenuBar
+				223 menu item (메뉴 항목) 시스템
+			46 button (단추) 최소화
+			47 button (단추) 최대화
+			48 button (단추) 닫기
+
+Document text: ```
+Orchiva
+
+프로젝트 선택
+
+작업 시작
+
+PLAN 이력
+
+프로젝트 지침
+
+질문 / 상담
+기존 MVP 프로젝트
+기존 v2 이력
+
+연결 상태
+설정
+
+
+실행부 연결됨
+작업실에서 프로젝트·지침·제작 PLAN을 관리합니다.
+요청부터 실행·검토·소스 반영까지 이어서 확인합니다.
+
+반영됨
+최신 파일과 실행 상태를 확인했습니다.
+C:\Dev\Orchiva\.desktop-local\d6b-20261126-current-001\시험 소스
+완료 · 저장 버전 18 · d6b-20261126-current-001-coding
+PLAN 작성: 작성 완료
+작업 이력 불러오기
+새 요청 작성
+D6 개인 사용 실제 제작 검증 · 완료
+선택한 PLAN의 이력
+PLAN 1 · 2026-11-26T11:56:10.811Z
+docs/plans/plan-d6b-20261126-current-001-coding.md
+
+결과 · d382a05d-1a39-4908-ac67-b1aa399a14cb
+2026-11-26T11:58:06.673Z
+
+검토 · d382a05d-1a39-4908-ac67-b1aa399a14cb
+완료 승인 · 2026-11-26T11:58:36.864Z
+고정된 검사와 answer.txt 실제 byte 확인
+
+내보내기
+C:\Dev\Orchiva\.desktop-local\d6b-20261126-current-001\결과물\plan-d6b-20261126-current-001-coding\d382a05d-1a39-4908-ac67-b1aa399a14cb
+PLAN 열기
+실행 / 복구
+결과 상세
+기존 v2 이력 가져오기
+연결된 실행부의 기존 요청 식별자
+원본을 보존하고 보관용 이력 가져오기
+마지막 조회 21:27:55 · 읽기 전용
+```

@@ -1,0 +1,122 @@
+Window: "Orchiva", App: Orchiva.Desktop.exe.
+	0 window (창) Orchiva Secondary Actions: Raise
+		1 pane (창)
+			2 pane (창)
+				3 custom (사용자 지정) ID: Navigation
+					4 button (단추) 탐색 닫기 ID: TogglePaneButton
+						5 text (텍스트) ID: PaneTitleTextBlock
+					6 window (창) Secondary Actions: Raise ID: PaneRoot
+						7 text (텍스트) Orchiva
+						8 pane (창) ID: MenuItemsScrollViewer
+							9 group (그룹) ID: MenuItemsHost
+								10 list item (목록 항목) (selectable) 프로젝트 선택 ID: ProjectsNavigation
+								11 list item (목록 항목) (selectable) 작업 시작 ID: HomeNavigation
+								12 list item (목록 항목) (selectable) PLAN 이력 ID: HistoryNavigation
+								13 list item (목록 항목) (selectable) 프로젝트 지침 ID: InstructionsNavigation
+								14 list item (목록 항목) (selectable) 질문 / 상담 ID: ConversationNavigation
+						15 pane (창) ID: FooterItemsScrollViewer
+							16 group (그룹) ID: FooterMenuItemsHost
+								17 list item (목록 항목) (selectable) 기존 MVP 프로젝트
+								18 list item (목록 항목) (selectable) 기존 v2 이력
+								19 list item (목록 항목) (selectable) 연결 상태
+								20 list item (목록 항목) (selectable) 설정 ID: SettingsItem
+					21 status bar (상태 표시줄) ID: StatusBar
+						22 text (텍스트) 정보 아이콘 ID: StandardIcon
+						23 text (텍스트) 실행부 연결됨 ID: Title
+						24 text (텍스트) 작업실에서 프로젝트·지침·제작 PLAN을 관리합니다. ID: Message
+					823 pane (창) ID: PageScroll
+						892 text (텍스트) 작업 시작 ID: PageTitle
+						893 text (텍스트) 프로젝트의 작업 분야와 요청 유형을 선택하세요. ID: PageDescription
+						894 status bar (상태 표시줄) ID: Notice
+							895 text (텍스트) 성공 아이콘 ID: StandardIcon
+							896 text (텍스트) 반영됨 ID: Title
+							897 text (텍스트) 최신 파일과 실행 상태를 확인했습니다. ID: Message
+						898 button (단추) Milestone 자동화 ID: RoadmapEntry
+						899 text (텍스트) 현재 프로젝트
+						900 text (텍스트) D6 배포 통합 시험 소스: C:\Dev\Orchiva\.desktop-local\d6b-20261126-current-001\시험 소스 결과물: C:\Dev\Orchiva\.desktop-local\d6b-20261126-current-001\결과물 ID: HomeProject
+						901 button (단추) 프로젝트 설정
+						902 text (텍스트) 작업 분야
+						903 button (단추) 기획
+							904 text (텍스트) 기획
+							905 text (텍스트) 구조 · 문서 · 콘텐츠
+						906 button (단추) 코딩
+							907 text (텍스트) 코딩
+							908 text (텍스트) 기능 · 개선 · 오류 수정
+						909 button (단추) 아트
+							910 text (텍스트) 아트
+							911 text (텍스트) 임시 도형 PNG
+						912 button (단추) 사운드
+							913 text (텍스트) 사운드
+							914 text (텍스트) 임시 합성음 WAV
+						915 button (단추) 특수효과
+							916 text (텍스트) 특수효과
+							917 text (텍스트) 임시 확산 링 시트
+						918 button (단추) 질문 / 상담
+							919 text (텍스트) 질문 / 상담
+							920 text (텍스트) 자유롭게 대화
+						921 text (텍스트) 요청 시작
+						922 button (단추) 새 요청 →
+						923 button (단추) 수정 요청 →
+						924 text (텍스트) 수정 요청은 이전 작업과 연결합니다. 같은 목표의 실패 복구는 실행 화면에서 재개하세요.
+						836 text (텍스트) 마지막 조회 21:27:55 · 읽기 전용
+						837 scroll bar (스크롤 막대) (settable, float) 세로 Value: 0 ID: VerticalScrollBar
+		43 title bar (제목 표시줄) (settable, string) Value: Orchiva
+			44 menu bar (메뉴 모음) 시스템 ID: MenuBar
+				223 menu item (메뉴 항목) 시스템
+			46 button (단추) 최소화
+			47 button (단추) 최대화
+			48 button (단추) 닫기
+
+Document text: ```
+Orchiva
+
+프로젝트 선택
+
+작업 시작
+
+PLAN 이력
+
+프로젝트 지침
+
+질문 / 상담
+기존 MVP 프로젝트
+기존 v2 이력
+
+연결 상태
+설정
+
+
+실행부 연결됨
+작업실에서 프로젝트·지침·제작 PLAN을 관리합니다.
+프로젝트의 작업 분야와 요청 유형을 선택하세요.
+
+반영됨
+최신 파일과 실행 상태를 확인했습니다.
+Milestone 자동화
+현재 프로젝트
+D6 배포 통합 시험
+소스: C:\Dev\Orchiva\.desktop-local\d6b-20261126-current-001\시험 소스
+결과물: C:\Dev\Orchiva\.desktop-local\d6b-20261126-current-001\결과물
+프로젝트 설정
+작업 분야
+기획
+구조 · 문서 · 콘텐츠
+
+코딩
+기능 · 개선 · 오류 수정
+
+아트
+임시 도형 PNG
+
+사운드
+임시 합성음 WAV
+
+특수효과
+임시 확산 링 시트
+자유롭게 대화
+요청 시작
+새 요청 →
+수정 요청 →
+수정 요청은 이전 작업과 연결합니다. 같은 목표의 실패 복구는 실행 화면에서 재개하세요.
+마지막 조회 21:27:55 · 읽기 전용
+```

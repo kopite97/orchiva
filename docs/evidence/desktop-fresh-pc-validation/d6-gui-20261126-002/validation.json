@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "markdownFiles": 5,
+  "relativeLinks": 206,
+  "jsonFiles": 12,
+  "utf8": true,
+  "oneActivePlan": true,
+  "mockBuild": {
+    "warnings": 0,
+    "errors": 0
+  },
+  "mockChecks": 21,
+  "phaseDisplayed": true
+}

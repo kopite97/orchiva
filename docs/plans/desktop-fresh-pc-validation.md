@@ -1,6 +1,6 @@
 # D6 새 PC 설치·로그인 검증
 
-- 상태: 상위 [데스크톱 전환](desktop-transition.md) `active`의 D6 상세 단계 · 현재 PC 시험·정리 완료, 재부팅·깨끗한 설치/VM·GUI 잔여는 후속 (독립 active PLAN 아님)
+- 상태: 상위 [데스크톱 전환](desktop-transition.md) `active`의 D6 상세 단계 · 현재 PC 시험·G01 직접 관측·G04 화면별 키보드 확인 완료, 재부팅·깨끗한 설치/VM·화면 조합 전수는 후속 (독립 active PLAN 아님)
 - 작성일: 2026-11-17 · Asia/Seoul
 - 관련 설계: [데스크톱 전환](../design/desktop-transition.md), [배포 안내](../guides/desktop-package.md)
 - 선행 조건: [D6 배포·통합 작업](desktop-transition.md)의 시험할 배포본 고정, 별도 Windows 11 x64 PC 또는 깨끗한 VM, 사용자 로그인 참여
@@ -61,6 +61,25 @@
 - [x] 결정 기록·배포 안내·D6 계획·목록을 함께 갱신했다.
 
 ## 실행 및 검증 기록
+
+### 2026-11-26 G01 직접 관측과 G04 화면별 키보드 후속
+
+사용자가 재부팅·VM을 계속 후속으로 두고 G01 순간 콘솔과 G04 전체 키보드 이동 검증을 지시했다. 관측 실행 ID는 `d6-gui-20261126-002`, 소스 기준은 `f9473f8c5b7492efc7113a31a4cbeab264c5ae01`이다. 고정된 `0.1.0-d6b-preview` 배포본과 완료된 시험 전용 `d6b-20261126-current-001` profile을 재사용하여 조회했다. 새 모델 턴, 제작 요청 저장, Git 게시/병합, 원본 적용, 권한 변경은 없다. 과거 기록의 G01/G04 잔여 판정은 당시 이력이며 아래 관측이 보완한다.
+
+| 항목 | 판정 | 절차·근거·한계 |
+| --- | --- | --- |
+| G01 | 통과 · 이번 시작 1회 직접 관측 | 준비됨 확인 후 exe 시작 → 격리 실행부 시작 → 연결됨을 함께 관측했다. 사용자는 **“순간 노출 없이 정상”**이라고 답했다. [사용자 확인](../evidence/desktop-fresh-pc-validation/d6-gui-20261126-002/g01-witness.json). 정지 화면만으로 순간 노출 부재를 추정한 것이 아니며 모든 시작 조건의 반복 시험은 아니다. |
+| G04 | 통과 · 화면별 키보드 이동 범위 | 배포본의 프로젝트/초기화/작업실/설정/지침/요청/미디어/PLAN/이력/결과/반영/상담/Milestone·Git/연결/앱 설정/기존 MVP 빈 화면을 순회했다. Tab·Shift+Tab, 탐색/목록 방향키, Enter·Space, 펼침, 긴 페이지 자동 스크롤과 가시 포커스를 확인했다. 실행/복구·반영 복원 하단·조건부 Phase 검토는 같은 제품 XAML을 사용하는 **모의 GUI**로 보완했다. [경로별 증거](../evidence/desktop-fresh-pc-validation/d6-gui-20261126-002/README.md). |
+| 대비·조합 | 육안 확인 · 수치/전 조합 제외 | 실제 어두운 화면과 밝은 설정, 모의 밝은 실행·복원·Phase에서 글자와 포커스 경계를 구별했다. Phase는 1280×900과 800×600에서 추가 확인했다. 대비 비율 측정·스크린리더·모든 상태×배율×테마 조합 전수 및 실제 권한 응답/파괴적 버튼 활성화는 포함하지 않는다. |
+| 보존 대조 | 통과 · 추가 모델 호출 없음 | 실제 GUI 종료 전 readonly `driver.mjs verify` 통과: Agent 2, Workspace 2, 메시지 각 1, 기존 결과·응답·파일 정체성 보존. [대조](../evidence/desktop-fresh-pc-validation/d6-gui-20261126-002/preserved-run-verify.json). |
+
+조건부 Phase를 모델 실행 없이 관측하기 위해 `Orchiva.Desktop.UiTests`에 **Phase 키보드 검증** 진입점을 추가했다. 모의 응답을 기존 `roadmap-open`/`run-read` 표시 경로로 전달하며 실제 Bridge는 연결하지 않고 Phase 판정 저장은 거절한다. 최초 fixture는 프로젝트 로드 조건을 준비하지 않아 표시 검사가 실패했다. 실패 JSON을 보존하고 `roadmap-open`을 거치도록 보완했다. 최종 build는 경고/오류 0, 기존 모의 검사 21개 및 Phase 표시 검사 통과, Computer Use에서 메모 → 승인 → 반려 → 다음 컨트롤 이동과 compact 자동 스크롤, Escape 닫기를 확인했다. 제품 코드·고정 배포본을 변경한 것은 아니다.
+
+배포본의 초기 로드맵은 저장 revision이 없는 기본 예시여서 구간 미리보기에 저장 안내가 표시됐다. 저장하지 않고 포커스만 점검했으며 이를 키보드 결함으로 판정하지 않았다. UI Automation의 `focused_element`는 일부 이전 텍스트를 반복 보고했으므로 판정은 실제 화면의 테두리·캐럿·선택 표시를 사용했다. 도구의 사용자 입력 감지/캡처 오류 뒤에는 재관측했고 불확실한 중간 시도를 통과 근거로 삼지 않았다.
+
+마지막 [정리](../evidence/desktop-fresh-pc-validation/d6-gui-20261126-002/cleanup.json): 배포 앱과 모의 앱 종료, 시험 home의 공개 daemon stop 성공, 소유 프로세스와 60596/54927 listener 0. theme/close는 0으로 복원했고 이번에는 배율을 변경하지 않았다. profile·소스·산출물·실패 근거는 보존했으며 manifest 지문도 동일하다. [정적 검증](../evidence/desktop-fresh-pc-validation/d6-gui-20261126-002/validation.json)은 변경 Markdown 5개·상대 링크·증거 JSON·UTF-8·단일 active PLAN·diff 확인을 포함한다. 제품 TypeScript 테스트나 전체 배포 재빌드를 반복한 결과와 혼동하지 않는다.
+
+검증 종료 후 사용자가 이번 G01·G04 증거·모의 하네스·문서 변경을 커밋하고 main에 push하도록 지시했다. 증거 JSON의 로컬 저장 상태는 검증 종료 당시 이력이며 최종 반영 커밋은 Git 이력을 따른다. 재부팅, VM/깨끗한 설치, MA3 독립 리뷰는 계속 후속이다. 전체 D6/공개 배포 수용 완료로 확대하지 않는다.
 
 ### 2026-11-26 검증 기록 main 반영 지시
 

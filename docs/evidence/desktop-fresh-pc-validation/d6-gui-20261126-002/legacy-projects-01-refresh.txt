@@ -1,0 +1,73 @@
+Window: "Orchiva", App: Orchiva.Desktop.exe.
+	0 window (창) Orchiva Secondary Actions: Raise
+		1 pane (창)
+			2 pane (창)
+				3 custom (사용자 지정) ID: Navigation
+					4 button (단추) 탐색 닫기 ID: TogglePaneButton
+						5 text (텍스트) ID: PaneTitleTextBlock
+					6 window (창) Secondary Actions: Raise ID: PaneRoot
+						7 text (텍스트) Orchiva
+						8 pane (창) ID: MenuItemsScrollViewer
+							9 group (그룹) ID: MenuItemsHost
+								10 list item (목록 항목) (selectable) 프로젝트 선택 ID: ProjectsNavigation
+								11 list item (목록 항목) (selectable) 작업 시작 ID: HomeNavigation
+								12 list item (목록 항목) (selectable) PLAN 이력 ID: HistoryNavigation
+								13 list item (목록 항목) (selectable) 프로젝트 지침 ID: InstructionsNavigation
+								14 list item (목록 항목) (selectable) 질문 / 상담 ID: ConversationNavigation
+						15 pane (창) ID: FooterItemsScrollViewer
+							16 group (그룹) ID: FooterMenuItemsHost
+								17 list item (목록 항목) (selectable) 기존 MVP 프로젝트
+								18 list item (목록 항목) (selectable) 기존 v2 이력
+								19 list item (목록 항목) (selectable) 연결 상태
+								20 list item (목록 항목) (selectable) 설정 ID: SettingsItem
+					21 status bar (상태 표시줄) ID: StatusBar
+						22 text (텍스트) 정보 아이콘 ID: StandardIcon
+						23 text (텍스트) 실행부 연결됨 ID: Title
+						24 text (텍스트) 작업실에서 프로젝트·지침·제작 PLAN을 관리합니다. ID: Message
+					823 pane (창) ID: PageScroll
+						870 text (텍스트) 프로젝트
+						871 text (텍스트) 연결한 실행부의 실제 프로젝트 정보를 읽습니다.
+						872 text (텍스트) 기존 MVP 프로젝트 없음
+						873 text (텍스트) 작업실에서 프로젝트를 추가하세요.
+						874 text (텍스트) 이전 환경의 프로젝트를 자동으로 가져오지 않습니다.
+						875 button (단추) 프로젝트와 이력 새로 고침
+						876 text (텍스트) 프로젝트 추가·초기화·새 요청은 작업실에서 시작하세요.
+						836 text (텍스트) 마지막 조회 21:27:55 · 읽기 전용
+						837 scroll bar (스크롤 막대) (settable, float) 세로 Value: 0 ID: VerticalScrollBar
+		43 title bar (제목 표시줄) (settable, string) Value: Orchiva
+			44 menu bar (메뉴 모음) 시스템 ID: MenuBar
+				223 menu item (메뉴 항목) 시스템
+			46 button (단추) 최소화
+			47 button (단추) 최대화
+			48 button (단추) 닫기
+
+Document text: ```
+Orchiva
+
+프로젝트 선택
+
+작업 시작
+
+PLAN 이력
+
+프로젝트 지침
+
+질문 / 상담
+기존 MVP 프로젝트
+기존 v2 이력
+
+연결 상태
+설정
+
+
+실행부 연결됨
+작업실에서 프로젝트·지침·제작 PLAN을 관리합니다.
+프로젝트
+연결한 실행부의 실제 프로젝트 정보를 읽습니다.
+기존 MVP 프로젝트 없음
+작업실에서 프로젝트를 추가하세요.
+이전 환경의 프로젝트를 자동으로 가져오지 않습니다.
+프로젝트와 이력 새로 고침
+프로젝트 추가·초기화·새 요청은 작업실에서 시작하세요.
+마지막 조회 21:27:55 · 읽기 전용
+```
