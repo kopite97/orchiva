@@ -62,6 +62,17 @@
 
 ## 실행 및 검증 기록
 
+### 2026-11-26 개인용 고정 배포와 기본 프로필 전환
+
+사용자 지시로 검증한 배포본을 개인용 고정 위치에 복사하고 기존 기본 프로필을 전환했다. 실행 ID는 `personal-20261126-001`, 소스 기준은 `3a9569c`다. [전환 요약](../evidence/desktop-fresh-pc-validation/personal-20261126-001/summary.json)과 [실제 연결 화면](../evidence/desktop-fresh-pc-validation/personal-20261126-001/connected-projects.png)을 보존한다.
+
+- 설치: `%LOCALAPPDATA%/Programs/Orchiva/0.1.0-d6b-preview-ff39605a`. 전체 32,640파일 / 1,154,704,642 bytes 검사 통과, manifest SHA-256 `ff39605a940f03c1f9e5a48d173466db58d055906dc1e8433445cb1ac7aeb39d`. 기존 배포 폴더와 검증본 원본은 보존했다.
+- 백업: `%LOCALAPPDATA%/Orchiva.Desktop/backups/personal-20261126-001`. 전환 전 기본 profile 47파일을 전부 복사하고 SHA-256 대조 통과. 개인 데이터·로컬 journal은 공유 증거에 복사하지 않았다.
+- 전환: 동봉 Node와 `scripts/desktop-maintenance.mjs inspect` → 확인한 profile/package hash의 `switch` 성공. 기본 profile의 data/Paseo home과 endpoint 유지, 기존 47파일 중 profile·Paseo 설정 2개만 변경, 나머지 45파일 일치. 완료 journal `6d4f51e8-6c45-477b-a9dc-9b88102c3962`, pending 없음. 이전 기본 배포는 2026-11-17 배포 003이었다.
+- 실제 실행: 개발 설정 override 없이 고정 위치의 exe 실행, 통합 WinUI에서 실행부 연결과 빈 프로젝트 목록 확인. 실행 후에는 로그·상태 갱신과 불변 데이터 보존을 구분하며 앱 설정·기존 update 이력 3파일은 재대조했다. 바탕 화면/시작 메뉴에 `Orchiva` 바로가기 생성. 앱과 idle 실행부를 사용 준비 상태로 열어두었다.
+- 경계: 실제 프로젝트 등록·초기화·모델 호출은 0회. 다음 단계는 사용자가 선택한 실제 소스/결과물 경로의 등록이며 모델 호출은 별도 조율한다. PC 재부팅·VM·MA3 독립 리뷰는 계속 후속이다. 신규 개발·정식 공개 배포 완료를 뜻하지 않는다. 전환 후 사용자가 이 기록·문서의 커밋 및 main push를 지시했다. 요약 JSON의 로컬 저장 표기는 전환 종료 당시 상태이며 최종 반영 커밋은 Git 이력을 따른다.
+
+
 ### 2026-11-26 G01 직접 관측과 G04 화면별 키보드 후속
 
 사용자가 재부팅·VM을 계속 후속으로 두고 G01 순간 콘솔과 G04 전체 키보드 이동 검증을 지시했다. 관측 실행 ID는 `d6-gui-20261126-002`, 소스 기준은 `f9473f8c5b7492efc7113a31a4cbeab264c5ae01`이다. 고정된 `0.1.0-d6b-preview` 배포본과 완료된 시험 전용 `d6b-20261126-current-001` profile을 재사용하여 조회했다. 새 모델 턴, 제작 요청 저장, Git 게시/병합, 원본 적용, 권한 변경은 없다. 과거 기록의 G01/G04 잔여 판정은 당시 이력이며 아래 관측이 보완한다.

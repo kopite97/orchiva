@@ -1,0 +1,54 @@
+{
+  "runId": "personal-20261126-001",
+  "date": "2026-11-26",
+  "timezone": "Asia/Seoul",
+  "sourceHead": "3a9569c1230d6e0f8846961460ed25827c3084a8",
+  "package": {
+    "version": "0.1.0-d6b-preview",
+    "files": 32640,
+    "bytes": 1154704642,
+    "sha256": "ff39605a940f03c1f9e5a48d173466db58d055906dc1e8433445cb1ac7aeb39d",
+    "target": "%LOCALAPPDATA%/Programs/Orchiva/0.1.0-d6b-preview-ff39605a"
+  },
+  "profile": "%LOCALAPPDATA%/Orchiva.Desktop/runtime-v1",
+  "backup": "%LOCALAPPDATA%/Orchiva.Desktop/backups/personal-20261126-001",
+  "backupVerifiedFiles": 47,
+  "offlineSwitch": {
+    "passed": true,
+    "journal": "6d4f51e8-6c45-477b-a9dc-9b88102c3962",
+    "unchangedFiles": 45,
+    "changedFiles": [
+      "profile.json",
+      "paseo/config.json"
+    ],
+    "dataHomeAndPaseoHomeAndEndpointPreserved": true,
+    "pending": false
+  },
+  "gui": {
+    "connected": true,
+    "projectListEmpty": true,
+    "leftOpen": true,
+    "evidence": "connected-projects.png"
+  },
+  "afterLaunch": {
+    "stableFilesVerified": 3,
+    "requests": 0,
+    "projectRegistryExists": false,
+    "pendingUpdate": false,
+    "note": "Runtime log/status updates after startup are expected; preservation hash comparison of all 47 original files was performed offline before launch."
+  },
+  "shortcuts": [
+    "Desktop/Orchiva.lnk",
+    "Start Menu/Programs/Orchiva.lnk"
+  ],
+  "modelCalls": 0,
+  "registeredProjects": 0,
+  "oldPackageRetained": true,
+  "deferred": [
+    "PC reboot",
+    "VM / clean installation",
+    "MA3 independent review"
+  ],
+  "next": "User selects actual project source/output paths before registration and a separate model budget before calls.",
+  "git": "local documentation/evidence, not committed or pushed"
+}
